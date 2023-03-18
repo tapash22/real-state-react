@@ -3,7 +3,6 @@ import { BiBed, BiBath, BiArea } from "react-icons/bi";
 
 function House({ house }) {
   const {
-    name,
     type,
     image,
     country,
@@ -11,7 +10,6 @@ function House({ house }) {
     bedroom,
     bathroom,
     surface,
-    year,
     price,
   } = house;
   return (
