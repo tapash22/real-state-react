@@ -2,16 +2,7 @@ import React from "react";
 import { BiBed, BiBath, BiArea } from "react-icons/bi";
 
 function House({ house }) {
-  const {
-    type,
-    image,
-    country,
-    address,
-    bedroom,
-    bathroom,
-    surface,
-    price,
-  } = house;
+  const { type, image, country, address, bedroom, bathroom, surface, price } = house;
   return (
     <div className="bg-white shadow-1 my-3 rounded-lg p-5 rounded-tl-[40px] w-full max-w-[350px] hover:shadow-2xl cursor-pointer transition">
       <img src={image} alt="" className="mb-8 h-[180px] w-full rounded-sm" />
