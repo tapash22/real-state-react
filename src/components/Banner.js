@@ -4,17 +4,17 @@ import Search from "./Search";
 
 function Banner(props) {
   return (
-    <div>
+    <section>
       <div className="bg-white max-w-[1440] flex">
-        <div className="w-2/3 bg-white p-3 block mx-auto">
-          <div className="flex justify-start p-5 mt-16">
-            <span className="text-violet-400 text-xl font-bold ">Rent</span>
-            <span className="text-xl font-bold mx-2 text-black">
+        <div className=" bg-white p-3 block mx-auto items-center">
+          <div className="flex justify-center p-5 h-36 items-end ">
+            <span className=" text-3xl font-bold uppercase items-end ">Rent</span>
+            <span className="text-3xl font-bold mx-2 uppercase ">
               Your dream house with us!
             </span>
           </div>
-          <div className="mx-5">
-            <p className="text-justify text-sm ">
+          <div className="h-36 mx-16">
+            <p className="text-justify text-sm">
               Unlike the pretense of 50 Shades where Ana Steele gets pushed into
               doing things that made her uncomfortable, real Dom/sub
               relationships are about creating a place of safety and trust — and
@@ -22,14 +22,14 @@ function Banner(props) {
             </p>
           </div>
         </div>
-        <div className=" w-1/3 flex-1 lg:flex justify-end py-3">
-          <img src={image} alt="" className="w-full p-5" />
+        <div className="block justify-end py-2 w-full">
+          <img src={image} alt="" className="w-full p-1" />
         </div>
       </div>
       <div>
         <Search />
       </div>
-    </div>
+    </section>
   );
 }
 

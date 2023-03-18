@@ -7,7 +7,7 @@ import PropertyDropdown from "./PropertyDropdown";
 function Search(props) {
   const { handelClick } = useContext(HouseContext);
   return (
-    <div className="shadow-1 bg-violet-500 rounded-lg p-3 mx-5">
+    <div className="shadow-lg bg-violet-100 rounded-lg p-2 mx-16">
       <div className="px-[30px] py-3 max-w-[1170] mx-auto grid grid-cols-4 justify-between gap-2 lg:gap-x-3 relative lg:top-4 lg:shadow-1 bg-white lg:bg-transparent lg:backdrop-blur rounded-lg">
         <CountryDropdown />
         <PropertyDropdown />

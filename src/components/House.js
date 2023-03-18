@@ -4,7 +4,7 @@ import { BiBed, BiBath, BiArea } from "react-icons/bi";
 function House({ house }) {
   const { type, image, country, address, bedroom, bathroom, surface, price } = house;
   return (
-    <div className="bg-white shadow-1 my-3 rounded-lg p-5 rounded-tl-[40px] w-full max-w-[350px] hover:shadow-2xl cursor-pointer transition">
+    <div className="bg-white shadow-1 my-3 rounded-lg p-5 w-full max-w-[350px] hover:shadow-2xl cursor-pointer transition">
       <img src={image} alt="" className="mb-8 h-[180px] w-full rounded-sm" />
       <div className="mb-4 text-sm flex gap-x-2">
         <div className="bg-green-300 rounded-full text-white px-3 py-1">
