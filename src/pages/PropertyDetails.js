@@ -13,11 +13,11 @@ function PropertyDetails(props) {
     console.log(houseView);
 
     return (
-        <section>
+        <section className='p-4'>
             <div className='container mx-auto min-h-[800] mb-14 '>
                 <div className='flex flex-row items-center justify-between'>
                     <div>
-                        <h2 className='text-2xl font-semibold '>
+                        <h2 className='text-2xl font-semibold text-start'>
                             {houseView.name}
                         </h2>
                         <h3 className='text-lg mb-4'>
@@ -62,8 +62,8 @@ function PropertyDetails(props) {
 
                     <div className='flex-1 bg-white w-full mb-8 border border-gray-300 rounded-lg px-6 py-8'>
                         <div className='flex items-center gap-x-4 mb-8'>
-                            <div className='w-20 h-20 p-1 border border-gray-300 rounded-full'>
-                                <img src={houseView.agent.image} alt='' />
+                            <div className='w-20 h-20 border border-gray-300 rounded-full'>
+                                <img src={houseView.agent.image} alt='' className='rounded-full w-20 h-20' />
                             </div>
                             <div>
                                 <div className='font-bold text-lg'>
@@ -74,11 +74,11 @@ function PropertyDetails(props) {
                         </div>
                         <div>
 
-                        <form className='flex flex-col gap-y-4'>
-                        <input type='text' placeholder='name' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' />
-                        <input type='text' placeholder='email' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' />
-                        <input type='text' placeholder='phone' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' />
-                        <textarea placeholder='Write something' className='border border-gray-300 focus:border-violet-700 outline-none resize-none rounded w-full p-4 h-36 text-sm text-gray-400'></textarea>
+                        <form className='flex flex-col gap-y-2'>
+                        <input type='text' placeholder='name' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-12 text-sm' />
+                        <input type='text' placeholder='email' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-12 text-sm' />
+                        <input type='text' placeholder='phone' className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-12 text-sm' />
+                        <textarea placeholder='Write something' className='border border-gray-300 focus:border-violet-700 outline-none resize-none rounded w-full p-4 h-32 text-sm text-gray-400'></textarea>
                         <div className='flex gap-x-2'>
                             <button className='bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-full transition'>Send Message</button>
                             <button className='border border-violet-700 hover:border-violet-500  hover:text-violet-500 rounded p-4 text-sm w-full transition'>

@@ -36,7 +36,7 @@ function House({ house }) {
         </div>
       </div>
       <div className="text-lg font-semibold text-violet-500 mb-4 text-start">
-        {price}
+        Tk {price}
       </div>
     </div>
   );
