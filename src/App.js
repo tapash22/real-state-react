@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 
 import Home from './pages/Home';
 import PropertyDetails from './pages/PropertyDetails'
+import SignupForm from './pages/SignUpForm';
+import SignInForm from './pages/SignInForm';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/property/:id' element={<PropertyDetails />} />
+        <Route path='/signin' element={<SignInForm />} />
+        <Route path='/signup' element={<SignupForm />} />
       </Routes>
       <Footer />
     </div>
