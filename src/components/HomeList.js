@@ -20,7 +20,7 @@ function HomeList(props) {
   return (
     <section className="mb-20">
       <div className="container mx-auto my-10">
-        <div className="grid grid-cols-4 gap-2">
+        <div className=" grid grid-cols-2 md:grid md:grid-cols-3 lg:grid-cols-4 gap-2">
           {houses.map((house) => {
             return (
               <Link to={`/property/${house.id}`} key={house.id}>

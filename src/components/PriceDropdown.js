@@ -38,7 +38,7 @@ const PriceDropdown = () => {
         </RiWallet3Line>
         <div>
           <div className="text-[15px] font-medium">{price}</div>
-          <div className="text-[13px]">choose your price</div>
+          <div className="text-[13px] md:hidden lg:block">choose your price</div>
         </div>
       </Menu.Button>
 

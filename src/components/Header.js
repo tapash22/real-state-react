@@ -6,7 +6,7 @@ function Header(props) {
     return (
         <div className='flex justify-between p-5 bg-violet-500'>
             <div>
-                <Link to='/' className='text-black font-bold uppercase'>
+                <Link to='/' className='text-white font-bold text-2xl uppercase tracking-widest '>
                 {/* <img src={Logo} alt=''/> */}
                 HomeLand
                 </Link>

@@ -22,7 +22,7 @@ const CountryDropdown = () => {
         </RiMapPinLine>
         <div>
           <div className="text-[15px] font-medium">{country}</div>
-          <div className="text-[13px]">Select your place</div>
+          <div className="text-[13px] md:hidden lg:block">Select your place</div>
         </div>
       </Menu.Button>
 

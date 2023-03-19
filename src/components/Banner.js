@@ -5,16 +5,15 @@ import Search from "./Search";
 function Banner(props) {
   return (
     <section>
-      <div className="bg-white max-w-[1440] flex">
-        <div className=" bg-white p-3 block mx-auto items-center">
-          <div className="flex justify-center p-5 h-36 items-end ">
-            <span className=" text-3xl font-bold uppercase items-end ">Rent</span>
-            <span className="text-3xl font-bold mx-2 uppercase ">
-              Your dream house with us!
+      <div className="bg-white  flex h-full items-center">
+        <div className=" bg-white p-10 block mx-auto">
+          <div className="flex justify-start mb-4 ">
+            <span className="text-3xl font-bold uppercase mx-4 text-start ">
+              Rent Your dream house with us 
             </span>
           </div>
-          <div className="h-36 mx-16">
-            <p className="text-justify text-sm">
+          <div className="flex ">
+            <p className="text-justify text-sm mx-4 font-semibold">
               Unlike the pretense of 50 Shades where Ana Steele gets pushed into
               doing things that made her uncomfortable, real Dom/sub
               relationships are about creating a place of safety and trust — and
@@ -22,8 +21,8 @@ function Banner(props) {
             </p>
           </div>
         </div>
-        <div className="block justify-end py-2 w-full">
-          <img src={image} alt="" className="w-full p-1" />
+        <div className="hidden md:block lg:block lg:w-full">
+          <img src={image} alt="" className="w-full h-full p-1 rounded-xl shadow-md" />
         </div>
       </div>
       <div>
