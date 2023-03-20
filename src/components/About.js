@@ -8,20 +8,19 @@ function About(props) {
     {
       id:1,
       title:'Budget Friendly',
-      des:'Properties are most budget friendly so you have opportunity to find the best one',
-      icon:'<TbMoneybag className="text-5xl font-bold text-violet-600" />'
+      des:'Properties are most budget friendly so you have opportunity to find the best one'
     },
     {
       id:2,
       title:'Prime Location',
       des:'Properties are most budget friendly so you have opportunity to find the best one',
-      icon:'<FaSearchLocation className="text-5xl font-bold text-violet-600" />'
+      
     },
     {
       id:3,
       title:'Trusted By Thousand',
       des:'Properties are most budget friendly so you have opportunity to find the best one',
-      icon:'<FaRegHandshake className="text-5xl font-bold text-violet-600" />'
+      
     }
   ];
 

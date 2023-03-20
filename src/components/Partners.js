@@ -1,7 +1,34 @@
 import React from 'react';
 import Partner from './Partner'
+import logo from '../logo.svg';
 
 function Partners(props) {
+    const partners =[
+        {
+            id:1,
+            image:'logo'
+        },
+        {
+            id:2,
+            image:'logo'
+        },
+        {
+            id:3,
+            image:'logo'
+        },
+        {
+            id:4,
+            image:'logo'
+        },
+        {
+            id:5,
+            image:'logo'
+        },
+        {
+            id:6,
+            image:'logo'
+        },
+    ]
     return (
         <section>
             <div className='container mx-auto my-10'>
@@ -10,12 +37,13 @@ function Partners(props) {
                 <h2 className='text-center text-2xl font-bold py-2 text-black'>Reliable Partner’s</h2>
                 </div>
                 <div className='py-2 mx-auto grid grid-cols-3 lg:grid-cols-6 gap-2'>
-                    <Partner />
-                    <Partner />
-                    <Partner />
-                    <Partner />
-                    <Partner />
-                    <Partner />
+                    {
+                        partners.map((partner)=>{
+                            const {icon} = partner;
+                            <Partner icon={icon} />
+                        })
+                    }
+            
                 </div>
 
             </div>

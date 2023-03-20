@@ -1,12 +1,12 @@
 import React from 'react';
-import { FaSearchLocation,TbMoneybag,FaRegHandshake } from "react-icons/ri";
+import { FaRegHandshake } from "react-icons/fa";
 
 function AboutPart(props) {
     return (
         <div>
             <div className="p-2 w-full h-32 shadow-1 flex justify-start my-1">
               <div className="flex justify-center w-44">
-                {props.about.icon}
+              <FaRegHandshake className="text-7xl font-bold text-violet-500" />
               </div>
               <div>
                 <h6 className="text-start text-xl font-bold p-1">{props.about.title}</h6>
