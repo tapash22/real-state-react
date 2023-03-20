@@ -6,27 +6,27 @@ function Partners(props) {
     const partners =[
         {
             id:1,
-            image:'logo'
+            image:logo
         },
         {
             id:2,
-            image:'logo'
+            image:logo
         },
         {
             id:3,
-            image:'logo'
+            image:logo
         },
         {
             id:4,
-            image:'logo'
+            image:logo
         },
         {
             id:5,
-            image:'logo'
+            image:logo
         },
         {
             id:6,
-            image:'logo'
+            image:logo
         },
     ]
     return (
@@ -39,8 +39,8 @@ function Partners(props) {
                 <div className='py-2 mx-auto grid grid-cols-3 lg:grid-cols-6 gap-2'>
                     {
                         partners.map((partner)=>{
-                            const {icon} = partner;
-                            <Partner icon={icon} />
+                            
+                          return  <Partner partner={partner} />
                         })
                     }
             
