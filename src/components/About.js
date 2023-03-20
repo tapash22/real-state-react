@@ -3,6 +3,28 @@ import house1 from "../assets/house1.jpg";
 import AboutPart from "./AboutPart";
 
 function About(props) {
+
+  const abouts =[
+    {
+      id:1,
+      title:'Budget Friendly',
+      des:'Properties are most budget friendly so you have opportunity to find the best one',
+      icon:'<TbMoneybag className="text-5xl font-bold text-violet-600" />'
+    },
+    {
+      id:2,
+      title:'Prime Location',
+      des:'Properties are most budget friendly so you have opportunity to find the best one',
+      icon:'<FaSearchLocation className="text-5xl font-bold text-violet-600" />'
+    },
+    {
+      id:3,
+      title:'Trusted By Thousand',
+      des:'Properties are most budget friendly so you have opportunity to find the best one',
+      icon:'<FaRegHandshake className="text-5xl font-bold text-violet-600" />'
+    }
+  ];
+
   return (
     <section>
       <div className="container mx-auto my-10">
@@ -23,9 +45,13 @@ function About(props) {
             <img src={house1} alt="" />
           </div>
           <div className="flex justify-center flex-col w-1/2 p-4">
-            <AboutPart />
-            <AboutPart />
-            <AboutPart />
+            {
+              abouts.map((about)=>{
+                return (
+                  <AboutPart about={about} />
+                )
+              })
+            }
           </div>
         </div>
       </div>

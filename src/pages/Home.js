@@ -2,6 +2,7 @@ import React from 'react';
 import About from '../components/About';
 import Agents from '../components/Agents';
 import Banner from '../components/Banner';
+import ClientsReview from '../components/ClientsReview';
 import Demo from '../components/Demo';
 import HomeList from '../components/HomeList';
 import Partners from '../components/Partners';
@@ -15,8 +16,8 @@ function Home(props) {
             <About />
             <Demo />
             <PlaceList />
+            <ClientsReview />
             <Partners />
-
             <Agents />
         </div>
     );

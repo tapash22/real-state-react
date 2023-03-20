@@ -21,4 +21,10 @@
     .dropdown-menu{
         @apply px-6 py-8 text-[15px] space-y-6 shadow-md bg-white absolute w-full z-10 list-none rounded-b-lg;
     }
+    .res-slide{
+        @apply w-full h-[350px] flex justify-center;
+    }
+    .swiper-nav-btns{
+        @apply w-[100px] h-[50px] p-2 flex justify-between items-center;
+    }
 }
