@@ -4,6 +4,7 @@ import Agents from '../components/Agents';
 import Banner from '../components/Banner';
 import ClientsReview from '../components/ClientsReview';
 import Demo from '../components/Demo';
+import EmailPage from '../components/EmailPage';
 import HomeList from '../components/HomeList';
 import Partners from '../components/Partners';
 import PlaceList from '../components/PlaceList';
@@ -19,6 +20,7 @@ function Home(props) {
             <ClientsReview />
             <Partners />
             <Agents />
+            <EmailPage />
         </div>
     );
 }
