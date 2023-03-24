@@ -17,11 +17,11 @@ function Place(props) {
         <div className="absolute z-50 w-full ">
           {text ? (
             <div className="flex justify-center -mt-20  mx-auto w-full rounded-lg">
-              <p className="p-2 flex flex-col  w-[150px] bg-violet-300">
-                <span className="text-center text-sm text-violet-500 font-bold">
+              <p className=" flex flex-col  w-[150px] bg-white border-2 rounded-2xl border-gray-400">
+                <span className="text-center text-lg text-violet-900 font-normal ">
                    {props.place.title}
                 </span>
-                <span className="text-center text-sm font-normal">{props.place.sq}</span>
+                <span className="text-center text-sm font-extralight text-violet-800 ">{props.place.sq}</span>
               </p>
             </div>
           ) : (
