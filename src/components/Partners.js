@@ -40,7 +40,7 @@ function Partners(props) {
                     {
                         partners.map((partner)=>{
                             
-                          return  <Partner partner={partner} />
+                          return  <Partner key={partner.id} partner={partner} />
                         })
                     }
             

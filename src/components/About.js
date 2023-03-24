@@ -47,7 +47,7 @@ function About(props) {
             {
               abouts.map((about)=>{
                 return (
-                  <AboutPart about={about} />
+                  <AboutPart key={about.id} about={about} />
                 )
               })
             }

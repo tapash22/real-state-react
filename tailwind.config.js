@@ -21,6 +21,9 @@ module.exports = {
       xl:'1280px'
     },
     extend: {
+      backgroundImage:{
+        
+      },
       colors:{
         primary:'#101828',
         secondary:'#7F56D9'

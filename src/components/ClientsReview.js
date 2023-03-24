@@ -57,7 +57,7 @@ function ClientsReview(props) {
           {images.map((image) => {
             return (
               <SwiperSlide className="res-slide ">
-                <SwiperContent image={image} />
+                <SwiperContent key={image.id} image={image} />
               </SwiperSlide>
             );
           })}
