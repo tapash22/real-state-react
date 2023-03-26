@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 
+
 function Place(props) {
   const [text, setText] = useState(false);
   return (
     <div>
+      
       <div
         className="border-2 border-violet-200 rounded-2xl opacity-90 hover:opacity-100 mb-8"
         onMouseOver={() => setText(true)}
@@ -29,6 +31,7 @@ function Place(props) {
           )}
         </div>
       </div>
+
     </div>
   );
 }

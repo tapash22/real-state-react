@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import PropertyDetails from './pages/PropertyDetails'
 import SignupForm from './pages/SignUpForm';
 import SignInForm from './pages/SignInForm';
+import AgentsDetails from './pages/AgentsDetails';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/property/:id' element={<PropertyDetails />} />
+        <Route path='/agents/:id' element={<AgentsDetails />} />
         <Route path='/signin' element={<SignInForm />} />
         <Route path='/signup' element={<SignupForm />} />
       </Routes>

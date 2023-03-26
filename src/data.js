@@ -176,4 +176,703 @@ import house3lg from "./assets/house3lg.jpg";
   },
 ];
 
+export const placeList = [
+  {
+    id: 1,
+    title: "Gulshan",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Bonani",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "300Ft",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Aftab Nogor",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 5,
+    title: "Tangail",
+    image: house1,
+    sq: "1800",
+    fuImage: house1lg,
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Purbachol",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        fuImage: house1lg,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 7,
+    title: "Dhanmondi",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 8,
+    title: "Baridhara",
+    image: house1,
+    fuImage: house1lg,
+    sq: "1800",
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 2,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+      {
+        id: 3,
+        name: "Group of Company",
+        details: "some thing have some new demo ",
+        place: ["one", "two", "three", "four", "five"],
+        image: house1,
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          {
+            id: 1,
+            name: "tttt",
+          },
+          {
+            id: 2,
+            name: "tttt",
+          },
+          {
+            id: 3,
+            name: "tttt",
+          },
+          {
+            id: 4,
+            name: "tttt",
+          },
+        ],
+      },
+    ],
+  },
+];
 export default houseDate;

@@ -27,7 +27,8 @@ function SingleAgent(props) {
             {list ? (
               <div className="flex justify-start items-start border-2 mx-auto w-full  rounded-lg">
                 <ul className='border-x-slate-100'>
-                    <li className='flex justify-center items-center list-none my-3'>
+
+                   <li className='flex justify-center items-center list-none my-3'>
                         <RiMapPinLine className="text-violet-900 text-2xl font-medium"/>
                     </li>
                     <li className='flex justify-center items-center list-none  my-3'>

@@ -27,4 +27,13 @@
     .swiper-nav-btns{
         @apply w-[100px] h-[50px] p-2 flex justify-between items-center;
     }
+
+}
+
+.images{
+    background-image: url('./assets//house1lg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 500px;
+    object-fit: cover;
 }

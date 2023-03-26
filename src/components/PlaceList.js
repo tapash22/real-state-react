@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import Place from './Place';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
@@ -6,60 +7,11 @@ import { FreeMode, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import hotel1 from "../assets/house1.jpg";
+import { placeList } from "../data";
 import Place from "./Place";
 
 function PlaceList(props) {
-  const placeList = [
-    {
-      id: 1,
-      title: "Rose villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 2,
-      title: "Red Palace",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 3,
-      title: "Green villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 4,
-      title: "Paul villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 5,
-      title: "... villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 6,
-      title: "... villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 7,
-      title: "... villa",
-      image: hotel1,
-      sq: "1800",
-    },
-    {
-      id: 8,
-      title: "... villa",
-      image: hotel1,
-      sq: "1800",
-    },
-  ];
+  
 
   return (
     <section>
@@ -83,15 +35,16 @@ function PlaceList(props) {
             modules={[FreeMode, Pagination]}
             className="mySwiper"
           >
-            
-              {placeList.map((place) => {
-
-                return  (<SwiperSlide>
-                <Place key={place.id} place={place} /><br/>
+            {placeList.map((place) => {
+              return (
+                <SwiperSlide>
+                  <Link to={`/agents/${place.id}`} key={place.id}>
+                    <Place key={place.id} place={place} />
+                    <br />
+                  </Link>
                 </SwiperSlide>
-                )
-              })}
-            
+              );
+            })}
           </Swiper>
         </div>
       </div>
