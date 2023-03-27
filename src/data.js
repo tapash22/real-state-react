@@ -183,6 +183,11 @@ export const placeList = [
     image: house1,
     fuImage: house1lg,
     sq: "1800",
+    lists:[
+      'one',
+      'two',
+      'three'
+    ],
     agencies: [
       {
         id: 1,

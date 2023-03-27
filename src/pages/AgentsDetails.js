@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import SingleAgencies from "../components/SingleAgencies";
 import { placeList } from "../data";
 // import house1lg from "../assets/house1lg.jpg";
 
@@ -9,37 +10,36 @@ function AgentsDetails(props) {
     return place.id === parseInt(id);
   });
   const p = placeDetails.map((place1) => {
-    const {agencies} = place1
-    return agencies;
-  });
-
-  const pp = p.map((agencis) => {
-    // const { name, details, address } = agencis;
     return (
-      <div className="block border-2 border-sky-200 " >
-        <div className="flex justify-center ">
-          <img
-            src={
-              "https://png.pngtree.com/template/20191014/ourmid/pngtree-building-and-construction-logo-design-template-image_317780.jpg"
-            }
-            alt=""
-            className="h-[150px]"
-          />
+      <div >
+        <div>
+          {place1.title}
         </div>
         <div>
-          <h2 className="font-normal text-xl p-2 text-center underline text-violet-600">
-            {agencis.id}
-          </h2>
-          <p className="font-extralight text-sm text-center text-violet-500">
-            {agencis.address}
-          </p>
-          <p className="p-2 text-center text-sm font-thin text-violet-500">
-            {/* {place.length} place and {project.length} project running */}
-          </p>
+          <SingleAgencies agen={place1.agencies} />
         </div>
       </div>
     );
   });
+
+  // const tt = placeList.agencies[];
+  // console.log(tt);
+
+  // const ppp = p.map((p2,i)=>{
+
+  //   for(let p in p2[i]){
+  //     console.log(...p);
+  //   }
+  //   console.log(p2[i]);
+  // })
+
+
+  // const pp = p.map((agencis) => {
+  //   // const { name, details, address } = agencis;
+  //   return (
+
+  //   );
+  // });
 
   //   const agencies = placeDetails.agencies.m ((agents) => {
   //     const {name,address} = agents;
@@ -62,9 +62,9 @@ function AgentsDetails(props) {
           </div>
         </div>
 
-        <section className="container">
-          <div className="w-full p-2 grid grid-cols-1 lg:grid-cols-3 gap-2  ">
-            {pp}
+        <section className="container flex justify-between">
+          <div className="w-full h-[300px] p-2   ">
+            {p}
           </div>
         </section>
       </div>
