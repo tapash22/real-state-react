@@ -1,23 +1,28 @@
 import React from 'react';
+import Agencies from './Agencies';
 
 function SingleAgencies(props) {
     let singlePlace = props.agen;
-    console.log(singlePlace);
+
+    const arr =[];
+    
     return (
-        <div className=''>
-            <div className='p-4 rounded-lg border-2'>
+        <div className='w-full'>
+            <div className='p-4 rounded-lg border-2 hidden'>
                 {
                    singlePlace.map((single)=>{
-                    return (
-                        <div>
-                            {single.name}
-                        </div>
-                    )
-                   })
+                   return arr.push(single);
                 }
-                {/* {props.agen.name}
-                {props.agen.details}
-                {props.agen.address} */}
+            )}
+            </div>
+            <div className='grid grid-cols-3 gap-4 h-[400px]'>
+                {
+                    arr.map((ar)=>{
+                        return (
+                            <Agencies ar={ar} key={ar.id} />
+                        )
+                    })
+                }
             </div>
         </div>
         

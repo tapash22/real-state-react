@@ -32,8 +32,13 @@
 
 .images{
     background-image: url('./assets//house1lg.jpg');
+    height: 450px;
     background-size: cover;
-    background-attachment: fixed;
-    min-height: 500px;
-    object-fit: cover;
+    background-repeat: no-repeat;
+
+
+    /* background-size: cover;
+    object-fit: cover; */
+    
+    /* object-fit: contain; */
 }

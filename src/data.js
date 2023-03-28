@@ -194,7 +194,7 @@ export const placeList = [
         name: "Group of Company",
         details: "some thing have some new demo ",
         place: ["one", "two", "three", "four", "five"],
-        image: house1,
+        image: 'https://thumbs.dreamstime.com/b/building-logo-icon-vector-metro-city-builders-illustration-building-logo-icon-vector-metro-city-illustration-isolated-white-140632109.jpg',
         address: "bonosree,rampura, Dhaka",
         project: [
           {
@@ -220,7 +220,7 @@ export const placeList = [
         name: "Group of Company",
         details: "some thing have some new demo ",
         place: ["one", "two", "three", "four", "five"],
-        image: house1,
+        image: 'https://thumbs.dreamstime.com/b/building-logo-icon-vector-metro-city-builders-illustration-building-logo-icon-vector-metro-city-illustration-isolated-white-140632109.jpg',
         address: "bonosree,rampura, Dhaka",
         project: [
           {
@@ -246,7 +246,7 @@ export const placeList = [
         name: "Group of Company",
         details: "some thing have some new demo ",
         place: ["one", "two", "three", "four", "five"],
-        image: house1,
+        image: 'https://thumbs.dreamstime.com/b/building-logo-icon-vector-metro-city-builders-illustration-building-logo-icon-vector-metro-city-illustration-isolated-white-140632109.jpg',
         address: "bonosree,rampura, Dhaka",
         project: [
           {
