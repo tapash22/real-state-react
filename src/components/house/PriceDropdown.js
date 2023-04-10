@@ -5,7 +5,7 @@ import {
   RiArrowUpSLine,
 } from "react-icons/ri";
 import { Menu } from "@headlessui/react";
-import { HouseContext } from "./HouseContext";
+import { HouseContext } from "../HouseContext";
 
 const PriceDropdown = () => {
   const { price, setPrice } = useContext(HouseContext);

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { HouseContext } from "./HouseContext";
+import { HouseContext } from "../HouseContext";
 import { Link } from "react-router-dom";
 import { ImSpinner2 } from "react-icons/im";
 import House from "./House";

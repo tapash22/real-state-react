@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import house1 from "../assets/house1.jpg";
+import house1 from "../../assets/house1.jpg";
 import { RiMapPinLine } from "react-icons/ri";
 
 function SingleAgent(props) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Partner from './Partner'
-import logo from '../logo.svg';
+import logo from '../../logo.svg';
 
 function Partners(props) {
     const partners =[

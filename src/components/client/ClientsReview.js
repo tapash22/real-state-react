@@ -4,9 +4,9 @@ import { A11y, Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ClientSwiperNavButtons from "./ClientSwiperNavButtons";
-import house1 from "../assets/house1.jpg";
-import SwiperContent from "./SwiperContent";
+import ClientSwiperNavButtons from "../swiper/ClientSwiperNavButtons";
+import house1 from "../../assets/house1.jpg";
+import SwiperContent from "../swiper/SwiperContent";
 
 
 function ClientsReview(props) {

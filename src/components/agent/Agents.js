@@ -1,6 +1,6 @@
 import React from "react";
 import SingleAgent from "./SingleAgent";
-import house1 from "../assets/house1.jpg";
+import house1 from "../../assets/house1.jpg";
 
 function Agents(props) {
   const agents = [

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import CountryDropdown from "./CountryDropdown";
-import { HouseContext } from "./HouseContext";
+import { HouseContext } from "../HouseContext";
 import PriceDropdown from "./PriceDropdown";
 import PropertyDropdown from "./PropertyDropdown";
 

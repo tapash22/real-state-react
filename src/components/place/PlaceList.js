@@ -7,7 +7,7 @@ import { FreeMode, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import { placeList } from "../data";
+import { placeList } from "../../data";
 import Place from "./Place";
 
 function PlaceList(props) {

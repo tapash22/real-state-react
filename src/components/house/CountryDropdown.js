@@ -1,41 +1,41 @@
 import React, { useContext, useState } from "react";
-import { RiHome5Line, RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
+import { RiMapPinLine, RiArrowDownLine, RiArrowUpLine } from "react-icons/ri";
 import { Menu } from "@headlessui/react";
-import { HouseContext } from "./HouseContext";
+import { HouseContext } from "../HouseContext";
 
-const PropertyDropdown = () => {
-  const { property, setProperty, properties } = useContext(HouseContext);
+const CountryDropdown = () => {
+  const { country, setcountry, countries } = useContext(HouseContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Menu as="div" className="dropdown relative">
       <Menu.Button
         onClick={() => setIsOpen(!isOpen)}
-        className="dropdown-btn w-full text-left"
+        className="dropdown-btn w-full text-right"
       >
-        <RiHome5Line className="dropdown-icon-primary">
+        <RiMapPinLine className="dropdown-icon-primary">
           {isOpen ? (
-            <RiArrowUpSLine className="dropdown-icon-primary"></RiArrowUpSLine>
+            <RiArrowUpLine className="dropdown-icon-primary"></RiArrowUpLine>
           ) : (
-            <RiArrowDownSLine className="dropdown-icon-primary"></RiArrowDownSLine>
+            <RiArrowDownLine className="dropdown-icon-primary"></RiArrowDownLine>
           )}
-        </RiHome5Line>
+        </RiMapPinLine>
         <div>
-          <div className="text-[15px] font-medium">{property}</div>
+          <div className="text-[15px] font-medium">{country}</div>
           <div className="text-[13px] md:hidden lg:block">Select your place</div>
         </div>
       </Menu.Button>
 
       <Menu.Items className="dropdown-menu">
-        {properties.map((property, index) => {
+        {countries.map((country, index) => {
           return (
             <Menu.Item
               as="li"
-              onClick={() => setProperty(property)}
+              onClick={() => setcountry(country)}
               className="cursor-pointer hover:text-violet-700 transition"
               key={index}
             >
-              {property}
+              {country}
             </Menu.Item>
           );
         })}
@@ -44,4 +44,4 @@ const PropertyDropdown = () => {
   );
 };
 
-export default PropertyDropdown;
+export default CountryDropdown;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Agencies(props) {
-    const {name,details,image,address,place,project} = props.ar;
+    const {name,image,address,place,project} = props.ar;
     return (
         <div className=''>
             <div className='block border-violet-500 border-2 rounded-lg py-2'>
@@ -16,7 +16,6 @@ function Agencies(props) {
                 <div className='flex justify-center p-2 bg-violet-200'>
                     <button className='uppercase text-sm font-semibold tracking-wide p-2 rounded-lg border-2 border-violet-400 bg-white'>view</button>
                 </div>
-
             </div>
         </div>
     );

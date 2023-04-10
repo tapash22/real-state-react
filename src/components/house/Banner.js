@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../assets/house1.jpg";
+import image from "../../assets/house1.jpg";
 import Search from "./Search";
 
 function Banner(props) {

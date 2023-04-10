@@ -1,13 +1,13 @@
 import React from 'react';
-import About from '../components/About';
-import Agents from '../components/Agents';
-import Banner from '../components/Banner';
-import ClientsReview from '../components/ClientsReview';
+import About from '../components/about/About';
+import Agents from '../components/agent/Agents';
+import Banner from '../components/house/Banner';
+import ClientsReview from '../components/client/ClientsReview';
 import Demo from '../components/Demo';
 import EmailPage from '../components/EmailPage';
-import HomeList from '../components/HomeList';
-import Partners from '../components/Partners';
-import PlaceList from '../components/PlaceList';
+import HomeList from '../components/house/HomeList';
+import Partners from '../components/partner/Partners';
+import PlaceList from '../components/place/PlaceList';
 
 function Home(props) {
     return (
