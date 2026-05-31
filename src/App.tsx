@@ -8,7 +8,7 @@ import Header from "./components/Header";
 //pages
 
 import AgentsDetails from "./pages/AgentsDetails";
-import Home from "./pages/Home";
+import { Home } from "./pages/Home";
 import PropertyDetails from "./pages/PropertyDetails";
 import SignInForm from "./pages/SignInForm";
 import SignUpForm from "./pages/SignUpForm";

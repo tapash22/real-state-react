@@ -1,21 +1,12 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
+import type { House } from "../data";
 import { houseData } from "../data";
 
-/* -----------------------------
-  Types
------------------------------- */
-
-export interface House {
-  id?: number | string;
-  country: string;
-  type: string;
-  price: string;
-}
-
+/* ----------------------------- */
 type HouseContextType = {
   houses: House[];
   country: string;
-  setcountry: React.Dispatch<React.SetStateAction<string>>;
+  setCountry: React.Dispatch<React.SetStateAction<string>>;
   countries: string[];
   property: string;
   setProperty: React.Dispatch<React.SetStateAction<string>>;
@@ -23,93 +14,62 @@ type HouseContextType = {
   setPrice: React.Dispatch<React.SetStateAction<string>>;
   properties: string[];
   isLoading: boolean;
-  handelClick: () => void;
+  handleClick: () => void;
 };
 
-/* -----------------------------
-  Context
------------------------------- */
-
+/* ----------------------------- */
 export const HouseContext = createContext<HouseContextType | undefined>(
   undefined,
 );
 
-/* -----------------------------
-  Provider Props
------------------------------- */
+export function HouseContextProvider({ children }: { children: ReactNode }) {
+  const [houses, setHouses] = useState<House[]>(houseData);
 
-interface Props {
-  children: ReactNode;
-}
-
-/* -----------------------------
-  Provider
------------------------------- */
-
-export function HouseContextProvider({ children }: Props) {
-  const [houses, setHouses] = useState<House[]>(houseData as House[]);
-
-  const [country, setcountry] = useState<string>("location any country");
+  const [country, setCountry] = useState("location any country");
   const [countries, setCountries] = useState<string[]>([]);
 
-  const [property, setProperty] = useState<string>("property any type");
+  const [property, setProperty] = useState("property any type");
   const [properties, setProperties] = useState<string[]>([]);
 
-  const [price, setPrice] = useState<string>("0 1000000");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [price, setPrice] = useState("0 1000000");
+  const [isLoading, setIsLoading] = useState(false);
 
-  /* -----------------------------
-    Load countries
-  ------------------------------ */
+  /* ----------------------------- */
   useEffect(() => {
-    const allCountry = (houseData as House[]).map((h) => h.country);
-    const uniqueCountries = ["location any country", ...new Set(allCountry)];
-    setCountries(uniqueCountries);
+    const allCountries = houseData.map((h) => h.country);
+    setCountries(["location any country", ...new Set(allCountries)]);
   }, []);
 
-  /* -----------------------------
-    Load properties
-  ------------------------------ */
   useEffect(() => {
-    const allProperties = (houseData as House[]).map((h) => h.type);
-    const uniqueProperties = ["property any type", ...new Set(allProperties)];
-    setProperties(uniqueProperties);
+    const allProperties = houseData.map((h) => h.type);
+    setProperties(["property any type", ...new Set(allProperties)]);
   }, []);
 
-  /* -----------------------------
-    Helpers
-  ------------------------------ */
+  /* ----------------------------- */
   const isDefault = (str: string) => str.toLowerCase().includes("any");
 
-  const handelClick = (): void => {
+  const handleClick = () => {
     setIsLoading(true);
 
-    const [min, max] = price.split(" ").map((p) => parseInt(p));
-    const minPrice = min || 0;
-    const maxPrice = max || Infinity;
+    const [min = 0, max = Infinity] = price.split(" ").map(Number);
 
-    const newHouses = (houseData as House[]).filter((house) => {
-      const housePrice = parseInt(house.price);
+    const filtered = houseData.filter((house) => {
+      const housePrice = Number(house.price);
 
-      const matchCountry = isDefault(country)
-        ? true
-        : house.country === country;
+      const matchCountry = isDefault(country) || house.country === country;
 
-      const matchProperty = isDefault(property)
-        ? true
-        : house.type === property;
+      const matchProperty = isDefault(property) || house.type === property;
 
-      const matchPrice = isDefault(price)
-        ? true
-        : housePrice >= minPrice && housePrice <= maxPrice;
+      const matchPrice =
+        isDefault(price) || (housePrice >= min && housePrice <= max);
 
       return matchCountry && matchProperty && matchPrice;
     });
 
     setTimeout(() => {
-      setHouses(newHouses.length ? newHouses : []);
+      setHouses(filtered);
       setIsLoading(false);
-    }, 1000);
+    }, 800);
   };
 
   return (
@@ -117,7 +77,7 @@ export function HouseContextProvider({ children }: Props) {
       value={{
         houses,
         country,
-        setcountry,
+        setCountry,
         countries,
         property,
         setProperty,
@@ -125,7 +85,7 @@ export function HouseContextProvider({ children }: Props) {
         setPrice,
         properties,
         isLoading,
-        handelClick,
+        handleClick,
       }}
     >
       {children}

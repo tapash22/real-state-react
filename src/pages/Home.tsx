@@ -1,14 +1,14 @@
-import About from "../components/about/About";
-import Agents from "../components/agent/Agents";
-import ClientsReview from "../components/client/ClientsReview";
-import Demo from "../components/Demo";
-import EmailPage from "../components/EmailPage";
-import Banner from "../components/house/Banner";
-import HomeList from "../components/house/HomeList";
-import Partners from "../components/partner/Partners";
-import PlaceList from "../components/place/PlaceList";
+import { About } from "../components/about/About";
+import { Agents } from "../components/agent/Agents";
+import { ClientsReview } from "../components/client/ClientsReview";
+import { Demo } from "../components/Demo";
+import { EmailPage } from "../components/EmailPage";
+import { Banner } from "../components/house/Banner";
+import { HomeList } from "../components/house/HomeList";
+import { Partners } from "../components/partner/Partners";
+import { PlaceList } from "../components/place/PlaceList";
 
-function Home(props) {
+export function Home() {
   return (
     <div>
       <Banner />
@@ -23,5 +23,3 @@ function Home(props) {
     </div>
   );
 }
-
-export default Home;

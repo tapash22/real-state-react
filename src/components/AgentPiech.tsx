@@ -1,7 +1,6 @@
-import React from "react";
+import { RiMapPinLine } from "react-icons/ri";
 
-
-function AgentPiech(props) {
+export function AgentPiech() {
   return (
     <ul className="-mt-80 ml-2 z-50">
       <li className="flex justify-center items-center list-none w-10 h-10 rounded-full bg-violet-600 my-2">
@@ -16,5 +15,3 @@ function AgentPiech(props) {
     </ul>
   );
 }
-
-export default AgentPiech;
