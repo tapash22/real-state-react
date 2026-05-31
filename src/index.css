@@ -2,35 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-    body{
+@layer base {
+    body {
         @apply font-primary bg-gray-200;
     }
-    .dropdown{
-        @apply w-full lg:max-w-[296px] cursor-pointer;
+
+    .dropdown {
+        @apply w-full max-w-[296px] cursor-pointer;
     }
-    .dropdown-btn{
+
+    .dropdown-btn {
         @apply flex h-[64px] items-center px-[18px] border rounded-lg;
     }
-    .dropdown-icon-primary{
+
+    .dropdown-icon-primary {
         @apply text-2xl mr-[18px] text-violet-700;
     }
-    .dropdown-icon-secondary{
+
+    .dropdown-icon-secondary {
         @apply text-2xl text-violet-700 ml-auto;
     }
-    .dropdown-menu{
+
+    .dropdown-menu {
         @apply px-6 py-8 text-[15px] space-y-6 shadow-md bg-white absolute w-full z-10 list-none rounded-b-lg;
     }
-    .res-slide{
+
+    .res-slide {
         @apply w-full h-[350px] flex justify-center;
     }
-    .swiper-nav-btns{
+
+    .swiper-nav-btns {
         @apply w-[100px] h-[50px] p-2 flex justify-between items-center;
     }
 
 }
 
-.images{
+.images {
     background-image: url('./assets//house1lg.jpg');
     height: 450px;
     background-size: cover;
@@ -39,6 +46,6 @@
 
     /* background-size: cover;
     object-fit: cover; */
-    
+
     /* object-fit: contain; */
 }

@@ -1,7 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-function Footer(props) {
+type FooterProps = {
+  // add props later if needed
+};
+
+export default function Footer(_props: FooterProps) {
   //   const date = new Date().getFullYear();
   return (
     <div className=" bg-gray-200 text-center py-8">
@@ -56,7 +59,9 @@ function Footer(props) {
           </ul>
         </div>
         <div className="p-2 w-1/6">
-          <h2 className="text-center mb-4 font-semibold text-xl tracking-wider">Support</h2>
+          <h2 className="text-center mb-4 font-semibold text-xl tracking-wider">
+            Support
+          </h2>
           <ul className="p-0 m-0">
             <li className="flex justify-center py-1">
               <Link to="#" className="font-thin text-sm text-violet-500">
@@ -91,8 +96,10 @@ function Footer(props) {
         </div>
 
         <div className="p-2 w-2/6 justify-end">
-          <div className="text-xl flex tracking-wider
-           justify-center font-semibold py-2 ">
+          <div
+            className="text-xl flex tracking-wider
+           justify-center font-semibold py-2 "
+          >
             Address
           </div>
           <div className="text-sm tracking-wider text-center py-2 px-12 mx-5 mb-4 ">
@@ -103,5 +110,3 @@ function Footer(props) {
     </div>
   );
 }
-
-export default Footer;
