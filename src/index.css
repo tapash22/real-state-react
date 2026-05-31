@@ -2,31 +2,79 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================
+   THEME VARIABLES
+========================= */
+
+:root {
+    /* Light Theme */
+    --bg: #f3f4f6;
+    --text: #0f172a;
+    --primary: #4f46e5;
+    --secondary: #10b981;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --muted: #64748b;
+}
+
+.dark {
+    /* Dark Theme */
+    --bg: #0f172a;
+    --text: #e2e8f0;
+    --primary: #a78bfa;
+    --secondary: #34d399;
+    --card: #1e293b;
+    --border: #334155;
+    --muted: #94a3b8;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+
 @layer base {
     body {
-        @apply font-primary bg-gray-200;
+        @apply font-primary;
+        background: var(--bg);
+        color: var(--text);
+        transition: all 0.3s ease;
     }
+}
 
+/* =========================
+   COMPONENTS
+========================= */
+
+@layer components {
+
+    /* Dropdown */
     .dropdown {
         @apply w-full max-w-[296px] cursor-pointer;
     }
 
     .dropdown-btn {
         @apply flex h-[64px] items-center px-[18px] border rounded-lg;
+        background: var(--card);
+        border-color: var(--border);
     }
 
     .dropdown-icon-primary {
-        @apply text-2xl mr-[18px] text-violet-700;
+        @apply text-2xl mr-[18px];
+        color: var(--primary);
     }
 
     .dropdown-icon-secondary {
-        @apply text-2xl text-violet-700 ml-auto;
+        @apply text-2xl ml-auto;
+        color: var(--primary);
     }
 
     .dropdown-menu {
-        @apply px-6 py-8 text-[15px] space-y-6 shadow-md bg-white absolute w-full z-10 list-none rounded-b-lg;
+        @apply px-6 py-8 text-[15px] space-y-6 shadow-md absolute w-full z-10 list-none rounded-b-lg;
+        background: var(--card);
+        border: 1px solid var(--border);
     }
 
+    /* Swiper */
     .res-slide {
         @apply w-full h-[350px] flex justify-center;
     }
@@ -35,17 +83,41 @@
         @apply w-[100px] h-[50px] p-2 flex justify-between items-center;
     }
 
+    /* Image Section */
+    .images {
+        height: 450px;
+        background-image: url('./assets/house1lg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 12px;
+    }
 }
 
-.images {
-    background-image: url('./assets//house1lg.jpg');
-    height: 450px;
-    background-size: cover;
-    background-repeat: no-repeat;
+/* =========================
+   UTILITIES
+========================= */
 
+@layer utilities {
 
-    /* background-size: cover;
-    object-fit: cover; */
+    .scrollbar-thin {
+        overflow: auto;
+    }
 
-    /* object-fit: contain; */
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background-color: var(--primary);
+        border-radius: 10px;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background-color: #64748b;
+    }
 }
