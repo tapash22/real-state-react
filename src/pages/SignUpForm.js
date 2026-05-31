@@ -1,19 +1,18 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUpForm(props) {
   const [user, setUser] = useState("");
   const [pward, setPward] = useState("");
   const [cpward, setCpward] = useState("");
-  const [error, setError] = useState(false);
-  const [sussess, setSusseess] = useState(true);
+  // const [error, setError] = useState(false);
+  // const [sussess, setSusseess] = useState(true);
 
-  const userRef = useRef();
+  // const userRef = useRef();
 
   const signupFormHandler = (e) => {
     e.preventDefault();
     const userObj = { user, pward, cpward };
-    
 
     if (userObj) {
       if (!user.length) {
@@ -27,13 +26,11 @@ function SignUpForm(props) {
       if (!match) {
         console.log("password not match");
       }
-      console.log('new user')
-
-    }else{
-        console.log("auth issue");
+      console.log("new user");
+    } else {
+      console.log("auth issue");
     }
-    console.log(userObj)
-
+    console.log(userObj);
   };
 
   return (

@@ -1,19 +1,19 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignInForm(props) {
   const [user, setUser] = useState("");
   const [pward, setPward] = useState("");
+  // eslint-disable-next-line
   const [cpward, setCpward] = useState("");
-  const [error, setError] = useState(false);
-  const [sussess, setSusseess] = useState(true);
+  // const [error, setError] = useState(false);
+  // const [sussess, setSusseess] = useState(true);
 
-  const userRef = useRef();
+  // const userRef = useRef();
 
   const signinFormHandler = (e) => {
     e.preventDefault();
     const userObj = { user, pward, cpward };
-    
 
     if (userObj) {
       if (!user.length) {
@@ -22,20 +22,20 @@ function SignInForm(props) {
       if (!pward.length) {
         console.log("password not found");
       }
-      console.log('login user')
-
-    }else{
-        console.log("auth issue");
+      console.log("login user");
+    } else {
+      console.log("auth issue");
     }
-    console.log(userObj)
-
+    console.log(userObj);
   };
 
   return (
     <div>
       <div className="flex justify-center py-10">
         <div className="min-w-[400px] p-3 shadow-xl rounded-xl border-4 border-violet-500">
-          <h1 className="text-xl font-bold py-4 tracking-wider ">SignIn Form</h1>
+          <h1 className="text-xl font-bold py-4 tracking-wider ">
+            SignIn Form
+          </h1>
 
           <form onSubmit={signinFormHandler}>
             <div className="flex flex-col p-1">

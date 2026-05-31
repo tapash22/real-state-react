@@ -1,8 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 // import Place from './Place';
-import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -11,8 +10,6 @@ import { placeList } from "../../data";
 import Place from "./Place";
 
 function PlaceList(props) {
-  
-
   return (
     <section>
       <div className="container mx-auto my-10">
@@ -37,7 +34,7 @@ function PlaceList(props) {
           >
             {placeList.map((place) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={place.id}>
                   <Link to={`/agents/${place.id}`} key={place.id}>
                     <Place key={place.id} place={place} />
                     <br />

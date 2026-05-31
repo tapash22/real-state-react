@@ -1,6 +1,5 @@
-import React from "react";
-import SingleAgent from "./SingleAgent";
 import house1 from "../../assets/house1.jpg";
+import SingleAgent from "./SingleAgent";
 
 function Agents(props) {
   const agents = [
@@ -26,7 +25,7 @@ function Agents(props) {
       ],
     },
     {
-      id: 1,
+      id: 2,
       title: "Tapsh paul",
       statuses: "status",
       image: house1,
@@ -47,7 +46,7 @@ function Agents(props) {
       ],
     },
     {
-      id: 1,
+      id: 3,
       title: "Tapsh paul",
       statuses: "status",
       image: house1,
@@ -91,7 +90,7 @@ function Agents(props) {
 
         <div className="py-2 mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 w-full lg:w-3/4">
           {agents.map((agent) => {
-            return <SingleAgent agent={agent} />;
+            return <SingleAgent key={agent.id} agent={agent} />;
           })}
         </div>
       </div>

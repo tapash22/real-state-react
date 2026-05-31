@@ -1,8 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
-import  houseData  from '../data';
+import { createContext, useEffect, useState } from "react";
+import houseData from "../data";
 
 export const HouseContext = createContext();
-
 
 function HouseContextProvider({ children }) {
   const [houses, setHouses] = useState(houseData);
@@ -54,11 +53,11 @@ function HouseContextProvider({ children }) {
         housePrice >= minPrice &&
         housePrice <= maxPrice
       ) {
-        return house;
+        return true;
       }
 
       if (isDefault(country) && isDefault(property) && isDefault(price)) {
-        return house;
+        return true;
       }
 
       if (!isDefault(country) && isDefault(property) && isDefault(price)) {
@@ -70,9 +69,7 @@ function HouseContextProvider({ children }) {
       }
 
       if (!isDefault(price) && isDefault(country) && isDefault(property)) {
-        if (housePrice >= minPrice && housePrice <= maxPrice) {
-          return house;
-        }
+        return housePrice >= minPrice && housePrice <= maxPrice;
       }
 
       if (!isDefault(country) && !isDefault(property)) {
@@ -80,21 +77,29 @@ function HouseContextProvider({ children }) {
       }
 
       if (!isDefault(country) && isDefault(property)) {
-        if (housePrice >= minPrice && housePrice <= maxPrice) {
-          return house.country === country;
-        }
+        return (
+          house.country === country &&
+          housePrice >= minPrice &&
+          housePrice <= maxPrice
+        );
       }
 
-      if (isDefault(property) && isDefault(property)) {
-        if (housePrice >= minPrice && housePrice <= maxPrice) {
-          return house.type === property;
-        }
+      if (!isDefault(property) && isDefault(country)) {
+        return (
+          house.type === property &&
+          housePrice >= minPrice &&
+          housePrice <= maxPrice
+        );
       }
+
+      return false;
     });
 
     setTimeout(() => {
-      return (newHouses.length < 1 ? setHouses([]) : setHouses(newHouses),
-      setIsLoading(false));
+      return (
+        newHouses.length < 1 ? setHouses([]) : setHouses(newHouses),
+        setIsLoading(false)
+      );
     }, 1000);
 
     return newHouses;
