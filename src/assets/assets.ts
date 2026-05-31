@@ -4,6 +4,7 @@ import house1lg from "./house1lg.jpg";
 import house2 from "./house2.jpg";
 import house2lg from "./house2lg.jpg";
 
+import brand from "./brand.png";
 import house3 from "./house3.jpg";
 import house3lg from "./house3lg.jpg";
 
@@ -14,6 +15,7 @@ const assets = {
   house2lg,
   house3,
   house3lg,
+  brand,
 };
 
 export default assets;
