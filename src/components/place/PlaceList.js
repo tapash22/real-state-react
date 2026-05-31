@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 // import Place from './Place';
-import { FreeMode, Pagination } from "swiper";
+import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
-import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { placeList } from "../../data";
 import Place from "./Place";

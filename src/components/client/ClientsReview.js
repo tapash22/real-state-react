@@ -1,8 +1,9 @@
 // import Swiper from "swiper";
-import { A11y, Navigation, Pagination } from "swiper";
+import { A11y, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 import "swiper/css";
 import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
 import house1 from "../../assets/house1.jpg";
 import ClientSwiperNavButtons from "../swiper/ClientSwiperNavButtons";
 import SwiperContent from "../swiper/SwiperContent";
