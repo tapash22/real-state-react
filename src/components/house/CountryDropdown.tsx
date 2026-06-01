@@ -6,13 +6,13 @@ import { HouseContext } from "../HouseContext";
 // 1. Context type (IMPORTANT)
 type HouseContextType = {
   country: string;
-  setcountry: (value: string) => void;
+  setCountry: (value: string) => void;
   countries: string[];
 };
 
 export function CountryDropdown() {
   const context = useContext(HouseContext) as HouseContextType;
-  const { country, setcountry, countries } = context;
+  const { country, setCountry, countries } = context;
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -47,7 +47,7 @@ export function CountryDropdown() {
           <Menu.Item key={index}>
             {({ active }) => (
               <li
-                onClick={() => setcountry(item)}
+                onClick={() => setCountry(item)}
                 className={`cursor-pointer px-3 py-2 rounded-md transition ${
                   active ? "text-violet-700 bg-violet-50" : ""
                 }`}

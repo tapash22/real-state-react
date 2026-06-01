@@ -72,10 +72,10 @@ export default function Header(_props: HeaderProps) {
               x="135"
               y="74"
               fill="currentColor"
-              font-family="Poppins, system-ui, -apple-system, sans-serif"
-              font-weight="700"
-              font-size="48px"
-              letter-spacing="0.5px"
+              fontFamily="Poppins, system-ui, -apple-system, sans-serif"
+              fontWeight="700"
+              fontSize="48px"
+              letterSpacing="0.5px"
             >
               Thikana
             </text>
