@@ -21,25 +21,39 @@ export function HomeList() {
 
   if (isLoading) {
     return (
-      <ImSpinner2 className="mx-auto animate-spin text-violet-700 text-4xl mt-[200px]" />
+      <div className="flex justify-center items-center min-h-[300px] w-full">
+        <ImSpinner2
+          style={{ color: "var(--button-bg)" }}
+          className="animate-spin text-4xl"
+        />
+      </div>
     );
   }
 
   if (!houses.length) {
     return (
-      <div className="text-center text-3xl text-gray-400 mt-48">Not found</div>
+      <div
+        style={{ color: "var(--text-paragraph)" }}
+        className="text-center text-2xl font-semibold mt-24 opacity-60"
+      >
+        No verified properties found matching your search criteria.
+      </div>
     );
   }
 
   return (
-    <div className="my-10 w-full px-10">
-      <div className="flex flex-row justify-center items-center gap-10 p-5">
+    <section className="my-12 w-full px-6 md:px-10 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-stretch">
         {houses.map((house) => (
-          <Link to={`/property/${house.id}`} key={house.id}>
+          <Link
+            to={`/property/${house.id}`}
+            key={house.id}
+            className="no-underline block focus:outline-none"
+          >
             <HouseCard house={house} />
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

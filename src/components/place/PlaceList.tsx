@@ -10,34 +10,48 @@ import { PlaceCard } from "./PlaceCard";
 
 export function PlaceList() {
   return (
-    <div className="my-10 w-full px-10">
+    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
       {/* HEADER */}
-      <div className="py-4 mx-auto">
-        <p className="text-sm font-normal text-center text-violet-600">
+      <div className="pb-6 text-center space-y-1">
+        <p
+          style={{ color: "var(--button-bg)" }}
+          className="text-sm font-extrabold uppercase tracking-widest"
+        >
           Explore cities
         </p>
-        <h2 className="text-center text-2xl font-bold py-2 text-black">
+        <h2
+          style={{ color: "var(--text-heading)" }}
+          className="text-2xl md:text-3xl font-extrabold tracking-tight"
+        >
           Find Your Neighborhood
         </h2>
       </div>
 
       {/* SWIPER */}
       <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
+        spaceBetween={24}
         freeMode={true}
         pagination={{ clickable: true }}
         modules={[FreeMode, Pagination]}
-        className="mySwiper"
+        className="pb-12"
+        // Dynamically adjusts visible slides based on screen real estate
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          640: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
       >
         {placeList.map((place: Place) => (
           <SwiperSlide key={place.id}>
-            <Link to={`/agents/${place.id}`}>
+            <Link
+              to={`/agents/${place.id}`}
+              className="block focus:outline-none"
+            >
               <PlaceCard place={place} />
             </Link>
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 }

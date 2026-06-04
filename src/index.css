@@ -6,26 +6,72 @@
    THEME VARIABLES
 ========================= */
 
+
 :root {
-    /* Light Theme */
-    --bg: #f3f4f6;
-    --text: #0f172a;
-    --primary: #4f46e5;
-    --secondary: #10b981;
-    --card: #ffffff;
-    --border: #e5e7eb;
-    --muted: #64748b;
+    /* ==========================================
+       LIGHT THEME (Your Original + Palette)
+       ========================================== */
+    --bg: #F8FAFC;
+    --text: #0F172A;
+    --primary: #4F46E5;
+    --secondary: #10B981;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --muted: #64748B;
+
+    /* Layout Mapping */
+    --nav-bg: #F8FAFC;
+    --nav-link: #112240;
+    --footer-bg: #112240;
+    --footer-title: #FFFFFF;
+    --footer-link: rgba(255, 255, 255, 0.7);
+    --button-bg: #14B8A6;
+    /* Palette Teal */
+    --text-paragraph: #64748B;
+    /* Palette Slate */
+    --text-heading: #112240;
+    /* Palette Navy */
 }
 
 .dark {
-    /* Dark Theme */
-    --bg: #0f172a;
-    --text: #e2e8f0;
-    --primary: #a78bfa;
-    --secondary: #34d399;
-    --card: #1e293b;
-    --border: #334155;
-    --muted: #94a3b8;
+    /* ==========================================
+       DARK THEME (Balanced & Inverted)
+       ========================================== */
+    /* Dominant Deep Navy for body background */
+    --bg: #0B132B;
+
+    /* Crisp white/slate mix for high readability text */
+    --text: #F1F5F9;
+
+    --primary: #6366F1;
+    /* Slightly brightened for dark mode contrast */
+    --secondary: #34D399;
+    /* Slightly brightened */
+
+    /* Slightly lighter navy than background so cards pop out */
+    --card: #112240;
+
+    /* Semi-transparent slate gray for borders */
+    --border: rgba(100, 116, 139, 0.2);
+
+    /* Lightened gray for secondary notes */
+    --muted: #94A3B8;
+
+    /* Layout Mapping for Dark Mode */
+    --nav-bg: #0B132B;
+    --nav-link: #F1F5F9;
+
+    /* Keep footer uniform or slightly offset */
+    --footer-bg: #070D1F;
+    --footer-title: #FFFFFF;
+    --footer-link: rgba(241, 245, 249, 0.7);
+
+    /* Brand Accent Colors remain bold and interactive */
+    --button-bg: #14B8A6;
+    --text-paragraph: #94A3B8;
+    /* Muted text gets lighter on dark bg */
+    --text-heading: #FFFFFF;
+    /* Headings become pure white */
 }
 
 /* =========================

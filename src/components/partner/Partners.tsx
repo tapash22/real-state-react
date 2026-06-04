@@ -6,7 +6,6 @@ type PartnerItem = {
   image: string;
 };
 
-// ✅ Move outside component (prevents re-creation on re-render)
 const partners: PartnerItem[] = [
   { id: 1, image: logo },
   { id: 2, image: logo },
@@ -18,21 +17,29 @@ const partners: PartnerItem[] = [
 
 export function Partners() {
   return (
-    <div className="my-10 w-full px-10">
-      {/* Header */}
-      <div className="py-4 mx-auto text-center">
-        <p className="text-sm font-normal text-violet-600">Our Partners</p>
-        <h2 className="text-2xl font-bold py-2 text-black">
-          Reliable Partners
+    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+      {/* HEADER */}
+      <div className="pb-8 text-center space-y-1">
+        <p
+          style={{ color: "var(--button-bg)" }}
+          className="text-sm font-extrabold uppercase tracking-widest"
+        >
+          Our Partners
+        </p>
+        <h2
+          style={{ color: "var(--text-heading)" }}
+          className="text-2xl md:text-3xl font-extrabold tracking-tight"
+        >
+          Trusted by Industry Leaders
         </h2>
       </div>
 
-      {/* Grid */}
-      <div className="p-5 flex flex-row justify-center items-center gap-5">
+      {/* RESPONSIVE GRID LAYOUT */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center justify-center p-2">
         {partners.map((partner) => (
           <Partner key={partner.id} image={partner.image} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

@@ -20,15 +20,27 @@ export function Search(_props: SearchProps) {
   const { handleClick } = context as HouseContextType;
 
   return (
-    <div className="shadow-lg bg-violet-100 rounded-lg p-2 mx-16">
-      <div className="px-[30px] py-3 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-2 relative bg-white rounded-lg">
+    /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
+    <div
+      style={{ backgroundColor: "rgba(20, 184, 166, 0.15)" }}
+      className="shadow-xl rounded-2xl p-2 mx-4  backdrop-blur-sm transition-all duration-300"
+    >
+      <div
+        style={{
+          backgroundColor: "var(--card)",
+          borderColor: "var(--border)",
+        }}
+        className="px-[30px] py-3 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-4 items-center relative border rounded-xl transition-colors duration-300"
+      >
         <CountryDropdown />
         <PropertyDropdown />
         <PriceDropdown />
 
+        {/* Search Submission CTA */}
         <button
           onClick={handleClick}
-          className="bg-violet-500 rounded-tr-lg rounded-br-lg px-6 text-white"
+          style={{ backgroundColor: "var(--button-bg)" }}
+          className="w-full md:h-full py-3 md:py-0 rounded-lg px-6 text-white font-semibold transition-opacity hover:opacity-90 shadow-sm cursor-pointer"
           type="button"
         >
           Search

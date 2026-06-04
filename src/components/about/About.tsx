@@ -1,14 +1,12 @@
 import house1 from "../../assets/house1.jpg";
 import { AboutPart } from "./AboutPart";
 
-// 1. Define type for about item
 type AboutItem = {
   id: number;
   title: string;
   des: string;
 };
 
-// 2. Define props type (you are not using props yet, so optional)
 type AboutProps = {
   // add later if needed
 };
@@ -33,38 +31,57 @@ export function About(_props: AboutProps) {
   ];
 
   return (
-    <div className="my-10 w-full px-10">
-      <div className="flex flex-col justify-start items-start  p-5 w-full ">
-        <div className="w-full flex-flex-col justify-center items-center h-auto py-2">
-          <h2 className=" text-center text-sm font-bold ">Why choose us</h2>
+    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+      <div className="flex flex-col gap-10 w-full">
+        {/* TOP HEADER TYPOGRAPHY */}
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 max-w-3xl mx-auto">
+          <h2
+            style={{ color: "var(--button-bg)" }}
+            className="text-sm font-extrabold uppercase tracking-widest"
+          >
+            Why choose us
+          </h2>
 
-          <h3 className="text-2xl text-center font-semibold py-2 w-full">
+          <h3
+            style={{ color: "var(--text-heading)" }}
+            className="text-2xl md:text-3xl font-extrabold tracking-tight"
+          >
             WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT
           </h3>
 
-          <p className="text-sm font-medium text-center w-full">
-            This is very beautiful house and it's south face view and use
-            materials are imported from Italy. there have 4 room, 3 wash room
-            and every room have 2 window with attach balcony
+          <p
+            style={{ color: "var(--text-paragraph)" }}
+            className="text-sm font-medium leading-relaxed"
+          >
+            This is a very beautiful house with a south-facing view. The
+            structural materials used are imported directly from Italy. It
+            features 4 spacious rooms, 3 washrooms, and every room includes 2
+            windows with an attached balcony.
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-y-2 gap-x-2 p-2 w-full h-full">
-          <div className="w-1/2 min-h-[300px] overflow-hidden">
+        {/* BOTTOM CONTENT GRID */}
+        <div className="flex flex-col lg:flex-row gap-8 w-full items-center">
+          {/* IMAGE BLOCK */}
+          <div
+            style={{ borderColor: "var(--border)" }}
+            className="w-full lg:w-1/2 h-[350px] md:h-[450px] overflow-hidden rounded-2xl shadow-md border"
+          >
             <img
               src={house1}
-              alt="house"
-              className="w-full h-full object-cover"
+              alt="Beautiful modern home exterior"
+              className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           </div>
 
-          <div className="flex justify-center gap-3 p-5 flex-col w-1/2">
+          {/* DYNAMIC CARD ITEMS BLOCK */}
+          <div className="flex flex-col gap-4 w-full lg:w-1/2">
             {abouts.map((about) => (
               <AboutPart key={about.id} about={about} />
             ))}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

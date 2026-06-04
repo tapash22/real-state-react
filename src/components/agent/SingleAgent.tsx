@@ -2,7 +2,6 @@ import { useState } from "react";
 import { RiMapPinLine } from "react-icons/ri";
 import house1 from "../../assets/house1.jpg";
 
-// 1. Types (match your Agents structure)
 type AgentIcon = {
   id: number;
   title: string;
@@ -16,50 +15,85 @@ type Agent = {
   icons: AgentIcon[];
 };
 
-// 2. Props type
 type SingleAgentProps = {
   agent: Agent;
 };
 
 export function SingleAgent({ agent }: SingleAgentProps) {
-  const [list, setList] = useState<boolean>(false);
+  const [showIcons, setShowIcons] = useState<boolean>(false);
 
   return (
-    <div>
+    <div className="w-full h-full flex group">
       <div
-        className="rounded-2xl opacity-90 hover:opacity-100 overflow-hidden"
-        onMouseEnter={() => setList(true)}
-        onMouseLeave={() => setList(false)}
+        style={{
+          backgroundColor: "var(--card)",
+          borderColor: "var(--border)",
+        }}
+        className="relative z-10 w-full overflow-hidden rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-lg flex flex-col justify-between"
+        onMouseEnter={() => setShowIcons(true)}
+        onMouseLeave={() => setShowIcons(false)}
       >
-        <div className="relative">
+        <div className="relative w-full overflow-hidden aspect-[4/5] bg-black/5">
+          {/* IMAGE */}
           <img
             src={agent.image || house1}
             alt={agent.title}
-            className="w-full relative min-h-[300px]"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
 
-          <div className="shadow-1 bg-gray-100 border-b-2 my-2 border-violet-600 p-2">
-            <h2 className="text-large font-semibold">{agent.title}</h2>
-            <p className="text-sm font-normal mb-2">{agent.statuses}</p>
-          </div>
-
-          {/* Hover Icons */}
-          {list && (
-            <div className="absolute top-1 left-1 z-50">
-              <div className="flex justify-start items-start border-2 mx-auto w-full rounded-lg bg-white/90">
-                <ul>
-                  {agent.icons.map((icon) => (
-                    <li
-                      key={icon.id}
-                      className="flex justify-center items-center list-none my-3 px-2"
-                    >
-                      <RiMapPinLine className="text-violet-900 text-2xl font-medium" />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* HOVER ACTION ICONS PANEL */}
+          <div
+            className={`absolute top-4 left-4 z-20 transition-all duration-300 ease-out ${
+              showIcons
+                ? "opacity-100 translate-x-0"
+                : "opacity-0 -translate-x-4 pointer-events-none"
+            }`}
+          >
+            <div
+              style={{
+                backgroundColor: "var(--card)",
+                borderColor: "var(--border)",
+              }}
+              className="border p-1.5 rounded-xl shadow-md backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95"
+            >
+              <ul className="flex flex-col gap-1 list-none p-0 m-0">
+                {agent.icons.map((icon) => (
+                  <li
+                    key={icon.id}
+                    title={icon.title}
+                    style={{ backgroundColor: "rgba(20, 184, 166, 0.1)" }}
+                    className="flex justify-center items-center p-2 rounded-lg transition-colors duration-200 hover:bg-black/5 dark:hover:bg-white/5"
+                  >
+                    <RiMapPinLine
+                      style={{ color: "var(--button-bg)" }}
+                      className="text-lg font-medium"
+                    />
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
+          </div>
+        </div>
+
+        {/* METADATA OVERLAY FOOTER */}
+        <div
+          style={{
+            borderColor: "var(--button-bg)",
+          }}
+          className="p-5 border-t-4 w-full transition-colors duration-300 mt-auto"
+        >
+          <h4
+            style={{ color: "var(--text-heading)" }}
+            className="text-lg font-bold tracking-tight line-clamp-1"
+          >
+            {agent.title}
+          </h4>
+          <p
+            style={{ color: "var(--text-paragraph)" }}
+            className="text-xs font-semibold uppercase tracking-wider mt-0.5 opacity-80"
+          >
+            {agent.statuses}
+          </p>
         </div>
       </div>
     </div>

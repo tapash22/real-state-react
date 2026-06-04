@@ -3,23 +3,42 @@ import { Place } from "../../data";
 type PlaceProps = {
   place: Place;
 };
+
 export function PlaceCard({ place }: PlaceProps) {
   return (
-    <div className="relative border-2 border-violet-200 rounded-2xl opacity-90 hover:opacity-100 mb-8 overflow-hidden group">
+    <div
+      style={{ borderColor: "var(--border)" }}
+      className="relative border rounded-2xl mb-8 overflow-hidden group shadow-sm bg-black/5 transition-all duration-300"
+    >
       {/* IMAGE */}
       <img
         src={place.image}
         alt={place.title}
-        className="w-full min-h-[350px] object-cover rounded-xl p-1"
+        className="w-full h-[380px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
       />
 
-      {/* HOVER CONTENT */}
-      <div className="absolute inset-0 flex items-end justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-        <div className="mb-6 bg-white border-2 border-gray-300 rounded-2xl px-4 py-2 shadow-lg">
-          <p className="text-center text-lg text-violet-900 font-normal">
+      {/* GRADIENT OVERLAY (Guarantees card content pops beautifully) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
+
+      {/* HOVER CONTENT CARD */}
+      <div className="absolute inset-0 flex items-end justify-center p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+        <div
+          style={{
+            backgroundColor: "var(--card)",
+            borderColor: "var(--border)",
+          }}
+          className="w-full text-center border rounded-xl p-4 shadow-xl backdrop-blur-md"
+        >
+          <p
+            style={{ color: "var(--text-heading)" }}
+            className="text-lg font-bold tracking-tight transition-colors duration-300"
+          >
             {place.title}
           </p>
-          <p className="text-center text-sm font-extralight text-violet-800">
+          <p
+            style={{ color: "var(--text-paragraph)" }}
+            className="text-xs font-semibold tracking-wide uppercase mt-0.5 opacity-80 transition-colors duration-300"
+          >
             {place.sq}
           </p>
         </div>

@@ -8,7 +8,6 @@ import house1 from "../../assets/house1.jpg";
 import { ClientSwiperNavButtons } from "../swiper/ClientSwiperNavButtons";
 import { SwiperContent } from "../swiper/SwiperContent";
 
-// 1. Type for review item
 type ClientReview = {
   id: number;
   image: string;
@@ -18,7 +17,6 @@ type ClientReview = {
   name: string;
 };
 
-// 2. Props (optional for now)
 type ClientsReviewProps = {
   // add later if needed
 };
@@ -29,53 +27,62 @@ export function ClientsReview(_props: ClientsReviewProps) {
       id: 1,
       image: house1,
       title: "Testimonial",
-      des: "this is very beautiful house and it's south face view and use materials are imported from Italy. there have 4 room, 3 wash room and every room have 2 window with attach balcony",
+      des: "This is a very beautiful house with a south-facing view. The structural materials used are imported directly from Italy. It features 4 spacious rooms, 3 washrooms, and every room includes 2 windows with an attached balcony.",
       tag: "Reviews From Our Happy Client",
-      name: "Tapash paul",
+      name: "Tapash Paul",
     },
     {
       id: 2,
       image: house1,
       title: "Testimonial",
-      des: "this is very beautiful house and it's south face view and use materials are imported from Italy. there have 4 room, 3 wash room and every room have 2 window with attach balcony",
+      des: "This is a very beautiful house with a south-facing view. The structural materials used are imported directly from Italy. It features 4 spacious rooms, 3 washrooms, and every room includes 2 windows with an attached balcony.",
       tag: "Reviews From Our Happy Client",
-      name: "Tapash paul",
+      name: "Tapash Paul",
     },
     {
       id: 3,
       image: house1,
       title: "Testimonial",
-      des: "this is very beautiful house and it's south face view and use materials are imported from Italy. there have 4 room, 3 wash room and every room have 2 window with attach balcony",
+      des: "This is a very beautiful house with a south-facing view. The structural materials used are imported directly from Italy. It features 4 spacious rooms, 3 washrooms, and every room includes 2 windows with an attached balcony.",
       tag: "Reviews From Our Happy Client",
-      name: "Tapash paul",
+      name: "Tapash Paul",
     },
     {
       id: 4,
       image: house1,
       title: "Testimonial",
-      des: "this is very beautiful house and it's south face view and use materials are imported from Italy. there have 4 room, 3 wash room and every room have 2 window with attach balcony",
+      des: "This is a very beautiful house with a south-facing view. The structural materials used are imported directly from Italy. It features 4 spacious rooms, 3 washrooms, and every room includes 2 windows with an attached balcony.",
       tag: "Reviews From Our Happy Client",
-      name: "Tapash paul",
+      name: "Tapash Paul",
     },
   ];
 
   return (
-    <div className="my-10 w-full px-10 py-5 bg-gray-100">
+    <section
+      style={{
+        backgroundColor: "var(--card)",
+        borderColor: "var(--border)",
+      }}
+      className="my-16 w-full border-y md:rounded-2xl md:border max-w-7xl mx-auto overflow-hidden transition-colors duration-300 shadow-sm"
+    >
       <Swiper
-        className="p-8"
+        className="px-6 py-10 md:p-12"
         modules={[Navigation, Pagination, A11y]}
         slidesPerView={1}
+        spaceBetween={40}
       >
         {/* Slides */}
         {images.map((item) => (
-          <SwiperSlide className="" key={item.id}>
+          <SwiperSlide key={item.id}>
             <SwiperContent image={item} />
           </SwiperSlide>
         ))}
 
-        {/* Navigation */}
-        <ClientSwiperNavButtons />
+        {/* Navigation Layer */}
+        <div className="mt-6 flex justify-end">
+          <ClientSwiperNavButtons />
+        </div>
       </Swiper>
-    </div>
+    </section>
   );
 }

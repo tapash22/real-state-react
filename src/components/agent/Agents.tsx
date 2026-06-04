@@ -1,13 +1,11 @@
 import house1 from "../../assets/house1.jpg";
 import { SingleAgent } from "./SingleAgent";
 
-// 1. Type for icons
 type AgentIcon = {
   id: number;
   title: string;
 };
 
-// 2. Type for agent
 type Agent = {
   id: number;
   title: string;
@@ -16,7 +14,6 @@ type Agent = {
   icons: AgentIcon[];
 };
 
-// 3. Props (currently unused but kept for scalability)
 type AgentsProps = {
   // add later if needed
 };
@@ -25,63 +22,73 @@ export function Agents(_props: AgentsProps) {
   const agents: Agent[] = [
     {
       id: 1,
-      title: "Tapsh paul",
-      statuses: "status",
+      title: "Tapash Paul",
+      statuses: "Senior Property Consultant",
       image: house1,
       icons: [
-        { id: 1, title: "jjj" },
-        { id: 2, title: "jjj" },
-        { id: 3, title: "jjj" },
+        { id: 1, title: "Location" },
+        { id: 2, title: "Contact" },
+        { id: 3, title: "Verified" },
       ],
     },
     {
       id: 2,
-      title: "Tapsh paul",
-      statuses: "status",
+      title: "Syed Alamin",
+      statuses: "Real Estate Broker",
       image: house1,
       icons: [
-        { id: 1, title: "jjj" },
-        { id: 2, title: "jjj" },
-        { id: 3, title: "jjj" },
+        { id: 1, title: "Location" },
+        { id: 2, title: "Contact" },
+        { id: 3, title: "Verified" },
       ],
     },
     {
       id: 3,
-      title: "Tapsh paul",
-      statuses: "status",
+      title: "Nadia Rahman",
+      statuses: "Leasing Specialist",
       image: house1,
       icons: [
-        { id: 1, title: "jjj" },
-        { id: 2, title: "jjj" },
-        { id: 3, title: "jjj" },
+        { id: 1, title: "Location" },
+        { id: 2, title: "Contact" },
+        { id: 3, title: "Verified" },
       ],
     },
   ];
 
   return (
-    <div className="my-10 w-full px-10">
-      {/* top SIDE */}
+    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+      {/* TOP SIDE / HEADER */}
+      <div className="w-full flex flex-col justify-center items-center text-center space-y-3 max-w-3xl mx-auto mb-10">
+        <h2
+          style={{ color: "var(--button-bg)" }}
+          className="text-sm font-extrabold uppercase tracking-widest"
+        >
+          Our Agents
+        </h2>
 
-      <div className="w-full flex-flex-col justify-center items-center h-auto py-2">
-        <h2 className=" text-center text-sm font-bold ">Our Agents</h2>
-
-        <h3 className="text-2xl text-center font-semibold py-2 w-full">
-          Here Is Our Experts.
+        <h3
+          style={{ color: "var(--text-heading)" }}
+          className="text-2xl md:text-3xl font-extrabold tracking-tight w-full"
+        >
+          Meet Our Experts
         </h3>
 
-        <p className="text-sm font-medium text-center w-full">
-          This is very beautiful house and it's south face view and use
-          materials are imported from Italy. there have 4 room, 3 wash room and
-          every room have 2 window with attach balcony.
+        <p
+          style={{ color: "var(--text-paragraph)" }}
+          className="text-sm font-medium leading-relaxed w-full"
+        >
+          Our certified experts are dedicated to guiding you through your
+          property journey with unmatched market intelligence, transparent
+          terms, and complete support.
         </p>
       </div>
 
-      {/* bottom SIDE */}
-      <div className="p-5 flex flex-row justify-center items-center gap-5">
+      {/* BOTTOM SIDE / RESPONSIVE GRID */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-stretch">
         {agents.map((agent) => (
           <SingleAgent key={agent.id} agent={agent} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

@@ -2,7 +2,6 @@ import { About } from "../components/about/About";
 import { Agents } from "../components/agent/Agents";
 import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
-import { EmailPage } from "../components/EmailPage";
 import { Banner } from "../components/house/Banner";
 import { HomeList } from "../components/house/HomeList";
 import { Partners } from "../components/partner/Partners";
@@ -19,7 +18,6 @@ export function Home() {
       <ClientsReview />
       <Partners />
       <Agents />
-      <EmailPage />
     </div>
   );
 }
