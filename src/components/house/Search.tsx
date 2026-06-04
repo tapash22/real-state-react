@@ -21,16 +21,13 @@ export function Search(_props: SearchProps) {
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div
-      style={{ backgroundColor: "rgba(20, 184, 166, 0.15)" }}
-      className="shadow-xl rounded-2xl p-2 mx-4  backdrop-blur-sm transition-all duration-300"
-    >
+    <div className=" p-10 mx-4  bg-transparent transition-all duration-300">
       <div
         style={{
-          backgroundColor: "var(--card)",
+          backgroundColor: "rgba(20, 184, 166, 0.09)",
           borderColor: "var(--border)",
         }}
-        className="px-[30px] py-3 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-4 items-center relative border rounded-xl transition-colors duration-300"
+        className="px-[30px] py-5 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-4 items-center relative border rounded-xl transition-colors duration-300 shadow-xl  backdrop-blur-sm"
       >
         <CountryDropdown />
         <PropertyDropdown />

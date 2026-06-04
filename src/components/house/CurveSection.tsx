@@ -9,13 +9,12 @@ type CurveSectionProps = {
 };
 
 export function CurveSection({
-  backgroundColor = "var(--bg)", // Dynamic fallback matching theme setup
+  backgroundColor = "var(--bg)",
   showTopCurve = false,
   showBottomCurve = true,
   curveHeight = 80,
   children,
 }: CurveSectionProps) {
-  // Reusable path element from your SVG
   const CurveSvgPath = () => (
     <path
       d="M0,120 C360,0 1080,0 1440,120 L1440,120 L0,120 Z"
@@ -24,7 +23,11 @@ export function CurveSection({
   );
 
   return (
-    <section className="w-full transition-colors duration-300">
+    /* We add bg-[var(--bg)] here so the canvas background behind the SVGs defaults to your site background */
+    <section
+      style={{ backgroundColor: "var(--bg)" }}
+      className="w-full transition-colors duration-300"
+    >
       {/* Top Curve */}
       {showTopCurve && (
         <svg
