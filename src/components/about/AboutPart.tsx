@@ -14,17 +14,15 @@ type AboutPartProps = {
 
 export function AboutPart({ about }: AboutPartProps) {
   return (
-    <div>
-      <div className="p-2 w-full h-32 shadow-1 flex justify-start my-1">
-        <div className="flex justify-center w-44">
-          <FaRegHandshake className="text-7xl font-bold text-violet-500" />
-        </div>
+    <div className="p-5 w-full h-full shadow-1 flex justify-start items-center my-1 gap-3 rounded-lg">
+      <div className="flex justify-center w-auto">
+        <FaRegHandshake className="text-7xl font-bold text-violet-500" />
+      </div>
 
-        <div>
-          <h6 className="text-start text-xl font-bold p-1">{about.title}</h6>
+      <div className="space-y-2">
+        <h6 className="text-start text-xl font-bold">{about.title}</h6>
 
-          <p className="text-sm p-1 text-justify">{about.des}</p>
-        </div>
+        <p className="text-sm text-justify">{about.des}</p>
       </div>
     </div>
   );

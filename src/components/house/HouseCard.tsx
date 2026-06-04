@@ -1,4 +1,5 @@
-import { BiArea, BiBath, BiBed } from "react-icons/bi";
+import { BiArea, BiBath, BiBed, BiBoltCircle, BiStar } from "react-icons/bi";
+
 import type { House } from "../../data";
 
 type HouseProps = {
@@ -10,49 +11,144 @@ export function HouseCard({ house }: HouseProps) {
     house;
 
   return (
-    <div className="bg-white shadow-1 my-3 rounded-lg p-5 w-full max-w-[350px] hover:shadow-2xl cursor-pointer transition">
-      {/* IMAGE */}
-      <img
-        src={image}
-        alt={address}
-        className="mb-8 h-[180px] w-full rounded-sm object-cover"
-      />
+    <div className="group relative w-full ">
+      {/* CARD */}
+      <div
+        className="
+          relative z-10 overflow-hidden rounded-[30px]
+          border border-[#dbe3ea]
+          bg-white
+          transition-all duration-500
+          ease-[cubic-bezier(0.22,1,0.36,1)]
+          group-hover:-translate-y-3
+          group-hover:scale-[1.03]
+          group-hover:shadow-2xl
+          cursor-pointer
+        "
+        style={{
+          boxShadow: `
+            4px 4px 0 #f4f7fa,
+            10px 10px 0 #e9eef4,
+            14px 14px 0 #dde6ef,
+            0 20px 50px rgba(15, 23, 42, 0.06)
+          `,
+        }}
+      >
+        {/* IMAGE */}
+        <div className="relative overflow-hidden">
+          <img
+            src={image}
+            alt={address}
+            className="
+              h-[220px] w-full object-cover
+              transition-transform duration-500
+              ease-[cubic-bezier(0.22,1,0.36,1)]
+              group-hover:scale-105
+            "
+          />
 
-      {/* TAGS */}
-      <div className="mb-4 text-sm flex gap-x-2">
-        <div className="bg-green-300 rounded-full text-white px-3 py-1">
-          {type}
+          {/* CONFIRMED BADGE */}
+          <div
+            className="
+              absolute left-3 top-3
+              rounded-full bg-white
+              px-4 py-2
+              text-sm font-semibold
+              text-[#0f2f45]
+              shadow-md
+            "
+          >
+            Confirmed
+          </div>
         </div>
 
-        <div className="bg-violet-500 rounded-full text-white px-3 py-1">
-          {country}
+        {/* CONTENT */}
+        <div className="p-5">
+          {/* TYPE + COUNTRY */}
+          <div className="mb-4 flex gap-2 text-sm">
+            <div className="rounded-full bg-green-400 px-3 py-1 text-white">
+              {type}
+            </div>
+
+            <div className="rounded-full bg-violet-500 px-3 py-1 text-white">
+              {country}
+            </div>
+          </div>
+
+          {/* TITLE + RATING */}
+          <div className="flex items-center justify-between gap-3">
+            <h3
+              className="
+                line-clamp-2
+                text-xl
+                whitespace-nowrap
+                font-bold
+                tracking-wider
+                text-[#072b45]
+              "
+            >
+              {address}
+            </h3>
+
+            <div className="flex justify-center items-center gap-1 whitespace-nowrap text-sm">
+              <BiStar className="text-[18px] text-yellow-400" />
+
+              <span className="font-semibold text-sm">4.8</span>
+
+              <span className="font-semibold text-sm">(62)</span>
+            </div>
+          </div>
+
+          {/* DESCRIPTION */}
+          <div className="mt-3 flex items-center gap-2 text-[15px] text-slate-600">
+            <BiBoltCircle className="text-xl font-medium" />
+
+            <span className="font-medium text-sm tracking-wide text-wrap leading-7 text-start">
+              Modern living with premium
+            </span>
+          </div>
+
+          {/* FEATURES */}
+          <div className="my-5 flex flex-row justify-start items-center gap-5">
+            <div className="flex flex-row justify-between gap-2 items-center text-gray-600">
+              <BiBed className="text-xl font-bold" />
+              <span className="font-bold text-sm">{bedroom}</span>
+            </div>
+
+            <div className="flex flex-row justify-between gap-2 items-center text-gray-600">
+              <BiBath className="text-xl font-bold" />
+              <span className="font-bold text-sm">{bathroom}</span>
+            </div>
+
+            <div className="flex flex-row justify-between gap-2 items-center text-gray-600">
+              <BiArea className="text-xl font-bold" />
+              <span className="font-bold text-sm">{surface}</span>
+            </div>
+          </div>
+
+          {/* PRICE */}
+          <div className="text-slate-600 flex justify-start items-center gap-2 text-sm font-semibold">
+            From
+            <span className="text-3xl font-bold text-[#072b45]">
+              Tk {price}
+            </span>
+            /month
+          </div>
         </div>
-      </div>
 
-      {/* ADDRESS */}
-      <div className="text-lg font-semibold max-w-[260px]">{address}</div>
+        {/* FOOTER */}
+        <div
+          className="
+            flex items-center gap-2
+            border-t border-gray-200
+            px-5 py-4
+            font-semibold text-[#072b45]
+          "
+        >
+          <span className="h-[10px] w-[10px] rounded-full bg-green-500" />
 
-      {/* FEATURES */}
-      <div className="flex gap-x-4 my-4">
-        <div className="flex items-center text-gray-600 gap-1">
-          <BiBed className="text-[20px]" />
-          <div>{bedroom}</div>
+          <span>Available now</span>
         </div>
-
-        <div className="flex items-center text-gray-600 gap-1">
-          <BiBath className="text-[20px]" />
-          <div>{bathroom}</div>
-        </div>
-
-        <div className="flex items-center text-gray-600 gap-1">
-          <BiArea className="text-[20px]" />
-          <div>{surface}</div>
-        </div>
-      </div>
-
-      {/* PRICE */}
-      <div className="text-lg font-semibold text-violet-500 mb-4">
-        Tk {price}
       </div>
     </div>
   );

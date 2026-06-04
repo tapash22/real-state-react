@@ -15,7 +15,7 @@ type HouseContextType = {
 export function Search(_props: SearchProps) {
   const context = useContext(HouseContext);
 
-  if (!context) return null; // ✅ safe guard
+  if (!context) return null;
 
   const { handleClick } = context as HouseContextType;
 

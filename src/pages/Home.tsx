@@ -10,7 +10,7 @@ import { PlaceList } from "../components/place/PlaceList";
 
 export function Home() {
   return (
-    <div>
+    <div className="w-full h-full">
       <Banner />
       <HomeList />
       <About />

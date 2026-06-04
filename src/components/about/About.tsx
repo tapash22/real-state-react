@@ -18,49 +18,53 @@ export function About(_props: AboutProps) {
     {
       id: 1,
       title: "Budget Friendly",
-      des: "Properties are most budget friendly so you have opportunity to find the best one",
+      des: "We offer a wide range of affordable rooms and apartments designed to fit every budget. Whether you're a student or working professional, you can easily find a comfortable place to live without overspending, while still enjoying essential facilities and a quality lifestyle.",
     },
     {
       id: 2,
       title: "Prime Location",
-      des: "Properties are most budget friendly so you have opportunity to find the best one",
+      des: "Our properties are located in highly convenient and prime areas close to universities, offices, transportation hubs, and daily essential services. This ensures you save time on travel and enjoy a smooth, stress-free living experience in the heart of the city.",
     },
     {
       id: 3,
-      title: "Trusted By Thousand",
-      des: "Properties are most budget friendly so you have opportunity to find the best one",
+      title: "Trusted By Thousands",
+      des: "Thousands of students, professionals, and families trust our platform to find safe, verified, and reliable homes. We prioritize transparency, security, and quality so you can book your next home with complete confidence and peace of mind.",
     },
   ];
 
   return (
-    <section>
-      <div className="container mx-auto my-10">
-        <h2 className="py-2 text-sm font-bold text-start">Why choose us</h2>
+    <div className="my-10 w-full px-10">
+      <div className="flex flex-col justify-start items-start  p-5 w-full ">
+        <div className="w-full flex-flex-col justify-center items-center h-auto py-2">
+          <h2 className=" text-center text-sm font-bold ">Why choose us</h2>
 
-        <div className="flex flex-col lg:flex-row gap-x-2 gap-y-2">
-          <div className="text-2xl text-start font-semibold py-2 w-1/2">
+          <h3 className="text-2xl text-center font-semibold py-2 w-full">
             WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT
-          </div>
+          </h3>
 
-          <div className="text-sm text-justify py-2 px-10 w-1/2">
-            this is very beautiful house and it's south face view and use
+          <p className="text-sm font-medium text-center w-full">
+            This is very beautiful house and it's south face view and use
             materials are imported from Italy. there have 4 room, 3 wash room
             and every room have 2 window with attach balcony
-          </div>
+          </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-y-2 gap-x-2 p-2">
-          <div className="w-1/2 min-h-[300px] flex justify-center items-center">
-            <img src={house1} alt="house" />
+        <div className="flex flex-col lg:flex-row gap-y-2 gap-x-2 p-2 w-full h-full">
+          <div className="w-1/2 min-h-[300px] overflow-hidden">
+            <img
+              src={house1}
+              alt="house"
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          <div className="flex justify-center flex-col w-1/2 p-4">
+          <div className="flex justify-center gap-3 p-5 flex-col w-1/2">
             {abouts.map((about) => (
               <AboutPart key={about.id} about={about} />
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

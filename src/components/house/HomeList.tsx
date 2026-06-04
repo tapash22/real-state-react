@@ -32,16 +32,14 @@ export function HomeList() {
   }
 
   return (
-    <section className="mb-20">
-      <div className="container mx-auto my-10">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-          {houses.map((house) => (
-            <Link to={`/property/${house.id}`} key={house.id}>
-              <HouseCard house={house} />
-            </Link>
-          ))}
-        </div>
+    <div className="my-10 w-full px-10">
+      <div className="flex flex-row justify-center items-center gap-10 p-5">
+        {houses.map((house) => (
+          <Link to={`/property/${house.id}`} key={house.id}>
+            <HouseCard house={house} />
+          </Link>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
