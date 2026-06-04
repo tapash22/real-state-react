@@ -38,7 +38,7 @@ export function SingleAgent({ agent }: SingleAgentProps) {
             className="w-full relative min-h-[300px]"
           />
 
-          <div className="shadow-1 bg-white border-b-4 my-2 border-violet-600 p-2">
+          <div className="shadow-1 bg-gray-100 border-b-2 my-2 border-violet-600 p-2">
             <h2 className="text-large font-semibold">{agent.title}</h2>
             <p className="text-sm font-normal mb-2">{agent.statuses}</p>
           </div>

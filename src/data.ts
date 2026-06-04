@@ -186,4 +186,20 @@ export const placeList: Place[] = [
     sq: "1800",
     agencies: [],
   },
+  {
+    id: 3,
+    title: "Bonani1",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    agencies: [],
+  },
+  {
+    id: 4,
+    title: "Gulshan2",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    agencies: [],
+  },
 ];

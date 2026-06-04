@@ -60,7 +60,7 @@ export function ClientsReview(_props: ClientsReviewProps) {
   ];
 
   return (
-    <section className="container mx-auto my-10">
+    <div className="my-10 w-full px-10 py-5 bg-gray-100">
       <Swiper
         className="p-8"
         modules={[Navigation, Pagination, A11y]}
@@ -68,7 +68,7 @@ export function ClientsReview(_props: ClientsReviewProps) {
       >
         {/* Slides */}
         {images.map((item) => (
-          <SwiperSlide className="res-slide" key={item.id}>
+          <SwiperSlide className="" key={item.id}>
             <SwiperContent image={item} />
           </SwiperSlide>
         ))}
@@ -76,6 +76,6 @@ export function ClientsReview(_props: ClientsReviewProps) {
         {/* Navigation */}
         <ClientSwiperNavButtons />
       </Swiper>
-    </section>
+    </div>
   );
 }

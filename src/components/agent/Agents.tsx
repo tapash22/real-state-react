@@ -59,34 +59,29 @@ export function Agents(_props: AgentsProps) {
   ];
 
   return (
-    <section>
-      <div className="container mx-auto my-10 flex flex-col lg:flex-row gap-x-2">
-        {/* LEFT SIDE */}
-        <div className="py-2 mx-auto w-full lg:w-1/4">
-          <p className="text-sm font-normal text-start text-violet-600">
-            Our Agents
-          </p>
+    <div className="my-10 w-full px-10">
+      {/* top SIDE */}
 
-          <h2 className="text-start text-2xl font-bold py-2 text-black">
-            Here Is Our Experts.
-          </h2>
+      <div className="w-full flex-flex-col justify-center items-center h-auto py-2">
+        <h2 className=" text-center text-sm font-bold ">Our Agents</h2>
 
-          <div className="flex justify-start">
-            <p className="text-justify w-[250px]">
-              This is very beautiful house and it's south face view and use
-              materials are imported from Italy. there have 4 room, 3 wash room
-              and every room have 2 window with attach balcony.
-            </p>
-          </div>
-        </div>
+        <h3 className="text-2xl text-center font-semibold py-2 w-full">
+          Here Is Our Experts.
+        </h3>
 
-        {/* RIGHT SIDE */}
-        <div className="py-2 mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 w-full lg:w-3/4">
-          {agents.map((agent) => (
-            <SingleAgent key={agent.id} agent={agent} />
-          ))}
-        </div>
+        <p className="text-sm font-medium text-center w-full">
+          This is very beautiful house and it's south face view and use
+          materials are imported from Italy. there have 4 room, 3 wash room and
+          every room have 2 window with attach balcony.
+        </p>
       </div>
-    </section>
+
+      {/* bottom SIDE */}
+      <div className="p-5 flex flex-row justify-center items-center gap-5">
+        {agents.map((agent) => (
+          <SingleAgent key={agent.id} agent={agent} />
+        ))}
+      </div>
+    </div>
   );
 }

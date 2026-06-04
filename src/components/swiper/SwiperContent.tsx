@@ -16,39 +16,33 @@ type SwiperContentProps = {
 
 export function SwiperContent({ image }: SwiperContentProps) {
   return (
-    <div className="flex flex-row rounded-lg items-center">
+    <div className="flex flex-col lg:flex-row w-full rounded-lg justify-center items-stretch ">
       {/* LEFT IMAGE */}
-      <div className="w-1/2 h-[300px] p-4 flex justify-center items-center">
+      {/* <div className="w-full lg:w-1/2 h-[350px] p-4 flex justify-center items-center">
         <img
           src={image.image}
           alt={image.name}
-          className="w-2/4 h-[280px] rounded-xl border-4 border-violet-500"
+          className="w-full h-full object-cover rounded-xl border-4 border-violet-500"
         />
-      </div>
+      </div> */}
 
       {/* RIGHT CONTENT */}
-      <div className="w-1/2 flex justify-center">
-        <div className="border-2 p-4 rounded-lg w-[500px] bg-violet-600">
-          <p className="text-sm font-normal text-start text-white">
-            {image.title}
-          </p>
+      <div className="w-full lg:w-1/2 flex items-center justify-center ">
+        <div className="border-2 rounded-lg w-full  bg-violet-600 p-10">
+          <p className="text-sm font-normal text-white">{image.title}</p>
 
-          <h2 className="text-start text-2xl font-bold py-2 text-black mb-2 w-[250px]">
-            {image.tag}
-          </h2>
+          <h2 className="text-2xl font-bold py-2 text-white">{image.tag}</h2>
 
-          <p className="text-sm font-normal text-justify mb-4 text-white">
+          <p className="text-sm font-normal text-white/90 mb-4 text-justify">
             {image.des}
           </p>
 
-          <div className="flex flex-row justify-between">
-            <h2 className="text-sm font-semibold p-2 text-white">
-              {image.name}
-            </h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-sm font-semibold text-white">{image.name}</h2>
 
             {/* Stars */}
-            <div className="flex flex-row gap-1 p-2">
-              {[...Array(4)].map((_, i) => (
+            <div className="flex gap-1">
+              {[...Array(5)].map((_, i) => (
                 <AiFillStar key={i} className="text-sm text-white" />
               ))}
             </div>

@@ -18,23 +18,21 @@ const partners: PartnerItem[] = [
 
 export function Partners() {
   return (
-    <section>
-      <div className="container mx-auto my-10">
-        {/* Header */}
-        <div className="py-4 mx-auto text-center">
-          <p className="text-sm font-normal text-violet-600">Our Partners</p>
-          <h2 className="text-2xl font-bold py-2 text-black">
-            Reliable Partners
-          </h2>
-        </div>
-
-        {/* Grid */}
-        <div className="py-2 mx-auto grid grid-cols-3 lg:grid-cols-6 gap-2">
-          {partners.map((partner) => (
-            <Partner key={partner.id} image={partner.image} />
-          ))}
-        </div>
+    <div className="my-10 w-full px-10">
+      {/* Header */}
+      <div className="py-4 mx-auto text-center">
+        <p className="text-sm font-normal text-violet-600">Our Partners</p>
+        <h2 className="text-2xl font-bold py-2 text-black">
+          Reliable Partners
+        </h2>
       </div>
-    </section>
+
+      {/* Grid */}
+      <div className="p-5 flex flex-row justify-center items-center gap-5">
+        {partners.map((partner) => (
+          <Partner key={partner.id} image={partner.image} />
+        ))}
+      </div>
+    </div>
   );
 }
