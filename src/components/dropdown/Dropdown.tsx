@@ -21,19 +21,21 @@ export function Dropdown({
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <Menu as="div" className="dropdown relative w-full">
-      {/* DROPDOWN TRIGGER BUTTON */}
+    <Menu
+      as="div"
+      className="dropdown relative w-full border-l-2 rounded-tl-sm rounded-bl-sm"
+    >
+      {/* TRIGGER BUTTON */}
       <Menu.Button
         onClick={() => setIsOpen(!isOpen)}
         style={{ color: "var(--text-heading)" }}
-        className="dropdown-btn w-full text-left flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 cursor-pointer"
+        className="dropdown-btn w-full text-left flex items-center justify-between py-2 px-4  hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 cursor-pointer"
       >
         <div className="flex items-center gap-3">
           <Icon
             style={{ color: "var(--button-bg)" }}
             className="text-xl shrink-0"
           />
-
           <div className="text-left">
             <div className="text-[15px] font-bold tracking-wide whitespace-nowrap">
               {selectedValue}
@@ -46,7 +48,6 @@ export function Dropdown({
             </div>
           </div>
         </div>
-
         <div
           style={{ color: "var(--text-paragraph)" }}
           className="transition-transform duration-200"
@@ -59,13 +60,13 @@ export function Dropdown({
         </div>
       </Menu.Button>
 
-      {/* FLOATING OVERLAY DROPDOWN LIST */}
+      {/* DROPDOWN LIST WITH YOUR SCROLLBAR UTILITIES */}
       <Menu.Items
         style={{
           backgroundColor: "var(--card)",
           borderColor: "var(--border)",
         }}
-        className="dropdown-menu absolute top-full left-0 mt-2 min-w-[200px] w-full shadow-xl border rounded-xl p-1.5 z-50 transition-colors duration-300 list-none whitespace-nowrap divide-y divide-[var(--border)]"
+        className="dropdown-menu absolute top-full left-0 mt-2 min-w-[200px] w-full max-h-[250px] overflow-y-auto scrollbar-thin shadow-xl border  p-1.5 z-50 list-none divide-y divide-[var(--border)]"
       >
         {options.map((item, index) => (
           <Menu.Item key={index}>
@@ -81,7 +82,7 @@ export function Dropdown({
                     : "transparent",
                   color: active ? "var(--button-bg)" : "var(--text-heading)",
                 }}
-                className="cursor-pointer px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 whitespace-nowrap"
+                className="cursor-pointer p-3  text-sm font-semibold transition-colors duration-150 whitespace-nowrap tracking-wide"
               >
                 {item}
               </li>

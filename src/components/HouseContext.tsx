@@ -69,7 +69,7 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
     setTimeout(() => {
       setHouses(filtered);
       setIsLoading(false);
-    }, 800);
+    }, 2000);
   };
 
   return (

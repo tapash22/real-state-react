@@ -1,48 +1,54 @@
-import { useContext } from "react";
-import { ImSpinner2 } from "react-icons/im";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { House } from "../../data";
+import { NoProperties } from "../empty/NoProperties";
 import { HouseContext } from "../HouseContext";
+import { GsapLoader } from "../loader/GsapLoader";
 import { HouseCard } from "./HouseCard";
 
 type HouseContextType = {
   houses: House[];
   isLoading: boolean;
+  property: string;
 };
 
 export function HomeList() {
   const context = useContext(HouseContext);
+  const [searchValue, setSearchValue] = useState<string | null>("House");
+  const { houses, isLoading, property } = context as HouseContextType;
+
+  // 1. RUN ALL HOOKS UNCONDITIONALLY AT THE TOP
+  useEffect(() => {
+    // Safely check if context and houses exist before running log logic
+    if (context && (context as HouseContextType).houses?.length !== 0) {
+      if (property === "property any type") {
+        setSearchValue("Try To Best");
+      } else {
+        setSearchValue(property);
+      }
+
+      console.log(
+        "Loaded active data count:",
+        (context as HouseContextType).houses.length,
+      );
+    }
+  }, [context, property]);
 
   if (!context) {
     return null;
   }
 
-  const { houses, isLoading } = context as HouseContextType;
-
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[300px] w-full">
-        <ImSpinner2
-          style={{ color: "var(--button-bg)" }}
-          className="animate-spin text-4xl"
-        />
-      </div>
-    );
+    return <GsapLoader searchType={searchValue} />;
   }
 
   if (!houses.length) {
-    return (
-      <div
-        style={{ color: "var(--text-paragraph)" }}
-        className="text-center text-2xl font-semibold mt-24 opacity-60"
-      >
-        No verified properties found matching your search criteria.
-      </div>
-    );
+    return <NoProperties />;
   }
 
   return (
     <section className="my-12 w-full px-6 md:px-10 max-w-7xl mx-auto">
+      {property}ll
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-stretch">
         {houses.map((house) => (
           <Link

@@ -9,7 +9,9 @@ export function AppLayout() {
         backgroundColor: "var(--bg)",
         color: "var(--text-heading)",
       }}
-      className="min-h-screen flex flex-col transition-colors duration-300"
+      /* Added your custom scrollbar utilities 'overflow-y-auto h-screen scrollbar-thin' 
+         so it manages the window frame layout seamlessly */
+      className="h-screen w-full flex flex-col overflow-y-auto scrollbar-thin transition-colors duration-300"
     >
       {/* STICKY HEADER WRAPPER */}
       <header
