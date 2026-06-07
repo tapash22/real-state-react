@@ -12,10 +12,10 @@ export function Banner(_props: BannerProps) {
       backgroundColor="var(--card)"
       showTopCurve={false}
       showBottomCurve={true}
-      curveHeight={180}
+      curveHeight={150}
     >
       {/* We use relative positioning here so the absolute image targets this specific boundary */}
-      <div className="relative ">
+      <div className="relative z-10">
         {/* Responsive Grid: Stacks on mobile, splits 50/50 on large screens */}
         <div className="w-full h-full flex flex-row ">
           <div className="space-y-6 w-1/2 h-auto flex flex-col justify-center items-start p-10 ">
@@ -51,6 +51,7 @@ export function Banner(_props: BannerProps) {
             />
           </div>
         </div>
+
         <Search />
       </div>
     </CurveSection>

@@ -26,7 +26,7 @@ export function CurveSection({
     /* We add bg-[var(--bg)] here so the canvas background behind the SVGs defaults to your site background */
     <section
       style={{ backgroundColor: "var(--bg)" }}
-      className="w-full transition-colors duration-300"
+      className="w-full transition-colors duration-300 "
     >
       {/* Top Curve */}
       {showTopCurve && (

@@ -1,14 +1,22 @@
 import { useContext } from "react";
+import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
+import { priceOptions } from "../../data";
+import { Dropdown } from "../dropdown/Dropdown";
 import { HouseContext } from "../HouseContext";
-import { CountryDropdown } from "./CountryDropdown";
-import { PriceDropdown } from "./PriceDropdown";
-import { PropertyDropdown } from "./PropertyDropdown";
 
 type SearchProps = {
   // add later if needed
 };
 
 type HouseContextType = {
+  country: string;
+  setCountry: (value: string) => void;
+  countries: string[];
+  property: string;
+  setProperty: (value: string) => void;
+  properties: string[];
+  price: string;
+  setPrice: (value: string) => void;
   handleClick: () => void;
 };
 
@@ -17,11 +25,23 @@ export function Search(_props: SearchProps) {
 
   if (!context) return null;
 
-  const { handleClick } = context as HouseContextType;
+  const {
+    country,
+    setCountry,
+    countries,
+    property,
+    setProperty,
+    properties,
+    price,
+    setPrice,
+    handleClick,
+  } = context as HouseContextType;
+
+  // const { handleClick } = context as HouseContextType;
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className=" p-10 mx-4  bg-transparent transition-all duration-300">
+    <div className=" p-10 mx-4  bg-transparent transition-all duration-300 z-50">
       <div
         style={{
           backgroundColor: "rgba(20, 184, 166, 0.09)",
@@ -29,9 +49,27 @@ export function Search(_props: SearchProps) {
         }}
         className="px-[30px] py-5 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-4 items-center relative border rounded-xl transition-colors duration-300 shadow-xl  backdrop-blur-sm"
       >
-        <CountryDropdown />
-        <PropertyDropdown />
-        <PriceDropdown />
+        <Dropdown
+          selectedValue={country}
+          onSelect={setCountry}
+          options={countries}
+          label="Select your place"
+          Icon={RiMapPinLine}
+        />
+        <Dropdown
+          selectedValue={property}
+          onSelect={setProperty}
+          options={properties}
+          label="Select type"
+          Icon={RiHome5Line}
+        />
+        <Dropdown
+          selectedValue={price}
+          onSelect={setPrice}
+          options={priceOptions}
+          label="Choose your price"
+          Icon={RiWallet3Line}
+        />
 
         {/* Search Submission CTA */}
         <button

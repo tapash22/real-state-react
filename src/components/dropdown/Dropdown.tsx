@@ -1,43 +1,48 @@
 import { Menu } from "@headlessui/react";
-import { useContext, useState } from "react";
-import { RiArrowDownSLine, RiArrowUpSLine, RiHome5Line } from "react-icons/ri";
-import { HouseContext } from "../HouseContext";
+import { useState } from "react";
+import { IconType } from "react-icons";
+import { RiArrowDownLine, RiArrowUpLine } from "react-icons/ri";
 
-type HouseContextType = {
-  property: string;
-  setProperty: (value: string) => void;
-  properties: string[];
+type DropdownProps = {
+  selectedValue: string;
+  onSelect: (value: string) => void;
+  options: string[];
+  label: string;
+  Icon: IconType;
 };
 
-export function PropertyDropdown() {
-  const context = useContext(HouseContext) as HouseContextType;
-  const { property, setProperty, properties } = context;
-
+export function Dropdown({
+  selectedValue,
+  onSelect,
+  options,
+  label,
+  Icon,
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <Menu as="div" className="dropdown relative w-full">
-      {/* BUTTON */}
+      {/* DROPDOWN TRIGGER BUTTON */}
       <Menu.Button
         onClick={() => setIsOpen(!isOpen)}
         style={{ color: "var(--text-heading)" }}
         className="dropdown-btn w-full text-left flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 cursor-pointer"
       >
         <div className="flex items-center gap-3">
-          <RiHome5Line
+          <Icon
             style={{ color: "var(--button-bg)" }}
             className="text-xl shrink-0"
           />
 
           <div className="text-left">
             <div className="text-[15px] font-bold tracking-wide whitespace-nowrap">
-              {property}
+              {selectedValue}
             </div>
             <div
               style={{ color: "var(--text-paragraph)" }}
-              className="text-[13px] md:hidden lg:block font-medium"
+              className="text-[13px] md:hidden lg:block font-medium whitespace-nowrap"
             >
-              Select type
+              {label}
             </div>
           </div>
         </div>
@@ -47,27 +52,27 @@ export function PropertyDropdown() {
           className="transition-transform duration-200"
         >
           {isOpen ? (
-            <RiArrowUpSLine className="text-xl" />
+            <RiArrowUpLine className="text-xl" />
           ) : (
-            <RiArrowDownSLine className="text-xl" />
+            <RiArrowDownLine className="text-xl" />
           )}
         </div>
       </Menu.Button>
 
-      {/* DROPDOWN LIST */}
+      {/* FLOATING OVERLAY DROPDOWN LIST */}
       <Menu.Items
         style={{
           backgroundColor: "var(--card)",
           borderColor: "var(--border)",
         }}
-        className="dropdown-menu shadow-xl border rounded-xl mt-3 p-1.5 absolute w-full z-50 transition-colors duration-300 list-none"
+        className="dropdown-menu absolute top-full left-0 mt-2 min-w-[200px] w-full shadow-xl border rounded-xl p-1.5 z-50 transition-colors duration-300 list-none whitespace-nowrap divide-y divide-[var(--border)]"
       >
-        {properties.map((item, index) => (
+        {options.map((item, index) => (
           <Menu.Item key={index}>
             {({ active }) => (
               <li
                 onClick={() => {
-                  setProperty(item);
+                  onSelect(item);
                   setIsOpen(false);
                 }}
                 style={{
@@ -76,7 +81,7 @@ export function PropertyDropdown() {
                     : "transparent",
                   color: active ? "var(--button-bg)" : "var(--text-heading)",
                 }}
-                className="cursor-pointer px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150"
+                className="cursor-pointer px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors duration-150 whitespace-nowrap"
               >
                 {item}
               </li>

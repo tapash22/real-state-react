@@ -203,3 +203,9 @@ export const placeList: Place[] = [
     agencies: [],
   },
 ];
+
+export const priceOptions = [
+  "1000000-20000000",
+  "3000000-40000000",
+  "5000000-60000000",
+];
