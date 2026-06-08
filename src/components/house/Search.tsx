@@ -41,7 +41,7 @@ export function Search(_props: SearchProps) {
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className="p-5 bg-back/30 transition-all duration-300 z-20">
+    <div className="p-5 transition-all duration-300 z-20">
       <div
         style={{
           backgroundColor: "color-mix(in srgb, var(--bg) 30%, transparent)",

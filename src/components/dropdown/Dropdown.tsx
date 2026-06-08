@@ -29,31 +29,32 @@ export function Dropdown({
       <Menu.Button
         onClick={() => setIsOpen(!isOpen)}
         style={{ color: "var(--text-heading)" }}
-        className="dropdown-btn w-full text-left flex items-center justify-between py-2 px-4  hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 cursor-pointer"
+        className="dropdown-btn w-full text-left flex items-center justify-between py-2 px-5  hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-200 cursor-pointer"
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
           <Icon
             style={{ color: "var(--button-bg)" }}
             className="text-xl shrink-0"
+            size={30}
           />
-          <div className="text-left">
-            <div className="text-[15px] font-bold tracking-wide whitespace-nowrap">
+          <div className="text-left space-y-1">
+            <p className="text-sm font-bold tracking-widest whitespace-nowrap ">
               {selectedValue}
-            </div>
-            <div
+            </p>
+            <p
               style={{ color: "var(--text-paragraph)" }}
-              className="text-[13px] md:hidden lg:block font-medium whitespace-nowrap"
+              className="text-[13px] md:hidden lg:block font-medium whitespace-nowrap text-center"
             >
               {label}
-            </div>
+            </p>
           </div>
         </div>
         <div
           style={{ color: "var(--text-paragraph)" }}
-          className="transition-transform duration-200"
+          className="transition-transform duration-200 p-2"
         >
           {isOpen ? (
-            <RiArrowUpLine className="text-xl" />
+            <RiArrowUpLine className="text-xl" size={22} />
           ) : (
             <RiArrowDownLine className="text-xl" />
           )}
@@ -78,11 +79,11 @@ export function Dropdown({
                 }}
                 style={{
                   backgroundColor: active
-                    ? "rgba(20, 184, 166, 0.15)"
+                    ? "rgba(20, 184, 166, 0.10)"
                     : "transparent",
                   color: active ? "var(--button-bg)" : "var(--text-heading)",
                 }}
-                className="cursor-pointer p-3  text-sm font-semibold transition-colors duration-150 whitespace-nowrap tracking-wide"
+                className="cursor-pointer p-3  text-sm font-semibold transition-colors duration-150 whitespace-nowrap tracking-wider text-center"
               >
                 {item}
               </li>

@@ -12,7 +12,7 @@ export function CurveSection({
   backgroundColor = "var(--bg)",
   showTopCurve = false,
   showBottomCurve = true,
-  curveHeight = 80,
+  curveHeight = 100,
   children,
 }: CurveSectionProps) {
   const CurveSvgPath = () => (

@@ -19,6 +19,18 @@
     --border: #E5E7EB;
     --muted: #64748B;
 
+    --card-shadow:
+        6px 6px 0px color-mix(in srgb, var(--bg) 92%, transparent),
+        12px 12px 0px color-mix(in srgb, var(--bg) 82%, transparent),
+        18px 18px 0px color-mix(in srgb, var(--bg) 72%, transparent),
+        0px 20px 40px color-mix(in srgb, var(--bg) 55%, transparent);
+
+    --card-shadow-hover:
+        10px 10px 0px color-mix(in srgb, var(--bg) 88%, transparent),
+        18px 18px 0px color-mix(in srgb, var(--bg) 75%, transparent),
+        24px 24px 0px color-mix(in srgb, var(--bg) 65%, transparent),
+        0px 30px 60px color-mix(in srgb, var(--bg) 45%, transparent);
+
     /* scrollbar explain */
     --scrollbar-track: #c2c5cae7;
     --scrollbar-thumb: #041952e1;
@@ -61,6 +73,18 @@
 
     /* Lightened gray for secondary notes */
     --muted: #94A3B8;
+
+    --card-shadow:
+        6px 6px 0px color-mix(in srgb, black 18%, var(--bg)),
+        12px 12px 0px color-mix(in srgb, black 28%, var(--bg)),
+        18px 18px 0px color-mix(in srgb, black 38%, var(--bg)),
+        0px 20px 40px color-mix(in srgb, black 55%, transparent);
+
+    --card-shadow-hover:
+        10px 10px 0px color-mix(in srgb, black 22%, var(--bg)),
+        18px 18px 0px color-mix(in srgb, black 35%, var(--bg)),
+        26px 26px 0px color-mix(in srgb, black 48%, var(--bg)),
+        0px 35px 70px color-mix(in srgb, black 70%, transparent);
 
     /* Layout Mapping for Dark Mode */
     --nav-bg: #0B132B;

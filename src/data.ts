@@ -146,6 +146,50 @@ export const houseData: House[] = [
       phone: "01674345763",
     },
   },
+  {
+    id: 5,
+    type: "House",
+    name: "House 5",
+    description:
+      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
+    image: assets.house3,
+    imageLg: assets.house3lg,
+    country: "Canada",
+    address: "Bonosree, rampura,dhaka",
+    bedroom: "4",
+    bathroom: "3",
+    surface: "2000 sq ft",
+    year: "2023",
+    price: "4000000",
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "tapash paul",
+      phone: "01674345763",
+    },
+  },
+  {
+    id: 6,
+    type: "House",
+    name: "House 6",
+    description:
+      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
+    image: assets.house1,
+    imageLg: assets.house1lg,
+    country: "America",
+    address: "Bonosree, rampura,dhaka",
+    bedroom: "4",
+    bathroom: "3",
+    surface: "2000 sq ft",
+    year: "2023",
+    price: "5000000",
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "tapash paul",
+      phone: "01674345763",
+    },
+  },
 ];
 
 /* -----------------------------

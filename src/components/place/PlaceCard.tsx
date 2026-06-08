@@ -21,23 +21,22 @@ export function PlaceCard({ place }: PlaceProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
 
       {/* HOVER CONTENT CARD */}
-      <div className="absolute inset-0 flex items-end justify-center p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+      <div className="absolute inset-0 flex items-end justify-center p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-80 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
         <div
           style={{
             backgroundColor: "var(--card)",
-            borderColor: "var(--border)",
           }}
-          className="w-full text-center border rounded-xl p-4 shadow-xl backdrop-blur-md"
+          className="w-full text-center border-b-4 border-(--border) rounded-tl-lg rounded-tr-lg p-2 shadow-xl backdrop-blur-md space-y-2"
         >
           <p
             style={{ color: "var(--text-heading)" }}
-            className="text-lg font-bold tracking-tight transition-colors duration-300"
+            className="text-xl font-bold tracking-tight transition-colors duration-300"
           >
             {place.title}
           </p>
           <p
             style={{ color: "var(--text-paragraph)" }}
-            className="text-xs font-semibold tracking-wide uppercase mt-0.5 opacity-80 transition-colors duration-300"
+            className="text-sm font-semibold tracking-wide uppercase  opacity-100 transition-colors duration-300"
           >
             {place.sq}
           </p>

@@ -19,10 +19,10 @@ export function HouseCard({ house }: HouseProps) {
           // Re-engineered layered shadow system using CSS variable tones
           // to perfectly mirror structural layers in light and dark layouts
           boxShadow: `
-            4px 4px 0px var(--bg),
-            10px 10px 0px rgba(0, 0, 0, 0.03),
-            14px 14px 0px rgba(0, 0, 0, 0.02),
-            0px 20px 40px rgba(0, 0, 0, 0.06)
+            6px 6px 0px var(--bg),
+            12px 12px 0px rgba(0, 0, 0, 0.04),
+            18px 18px 0px rgba(0, 0, 0, 0.05),
+            0px 20px 40px rgba(0, 0, 0, 0.2)
           `,
         }}
         className="
@@ -50,15 +50,15 @@ export function HouseCard({ house }: HouseProps) {
             />
 
             {/* FLOATING STATUS BADGE */}
-            <div className="absolute left-4 top-4 rounded-full bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm px-3.5 py-1.5 text-xs font-bold text-slate-900 dark:text-slate-100 shadow-sm">
+            <div className="absolute left-4 top-4 rounded-full bg-white/80 dark:bg-slate-900/90 backdrop-blur-sm px-5 py-2 text-sm font-semibold tracking-wider text-slate-900 dark:text-slate-100 shadow-lg">
               Confirmed
             </div>
           </div>
 
           {/* METRICS & DESCRIPTION CONTAINER */}
-          <div className="p-5">
+          <div className="p-5 space-y-3">
             {/* TAXONOMY / CHIPS */}
-            <div className="mb-3 flex flex-wrap gap-2 text-xs font-bold tracking-wide">
+            <div className=" flex flex-wrap gap-2 text-xs font-bold tracking-wide">
               <span className="rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-3 py-1">
                 {type}
               </span>
@@ -84,13 +84,13 @@ export function HouseCard({ house }: HouseProps) {
 
               <div
                 style={{ color: "var(--text-heading)" }}
-                className="flex items-center gap-1 text-sm font-bold shrink-0"
+                className="flex items-center justify-center gap-1 text-sm font-bold shrink-0"
               >
                 <BiStar className="text-amber-400 text-base" />
                 <span>4.8</span>
                 <span
                   style={{ color: "var(--text-paragraph)" }}
-                  className="font-normal text-xs opacity-80"
+                  className="font-normal tracking-wider text-xs opacity-80"
                 >
                   (62)
                 </span>
@@ -100,7 +100,7 @@ export function HouseCard({ house }: HouseProps) {
             {/* SELLING VALUE MARKER */}
             <div
               style={{ color: "var(--text-paragraph)" }}
-              className="mt-2.5 flex items-center gap-1.5 text-sm transition-colors duration-300"
+              className="py-2 flex items-center gap-1.5 text-sm transition-colors duration-300"
             >
               <BiBoltCircle
                 style={{ color: "var(--button-bg)" }}
@@ -117,17 +117,17 @@ export function HouseCard({ house }: HouseProps) {
                 color: "var(--text-paragraph)",
                 borderColor: "var(--border)",
               }}
-              className="my-4 pt-4 border-t flex items-center gap-4 text-xs font-bold transition-all duration-300"
+              className="py-4 border-t border-b flex justify-center items-center gap-4 text-xs font-bold transition-all duration-300 "
             >
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <BiBed className="text-lg opacity-80" />
                 <span>{bedroom} Beds</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <BiBath className="text-lg opacity-80" />
                 <span>{bathroom} Baths</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <BiArea className="text-lg opacity-80" />
                 <span>{surface}</span>
               </div>
@@ -138,7 +138,7 @@ export function HouseCard({ house }: HouseProps) {
         {/* BOTTOM PRICE & BOOKING STATUS FOOTER ROW */}
         <div
           style={{ borderColor: "var(--border)" }}
-          className="border-t p-5 flex flex-wrap items-center justify-between gap-2 pt-4 mt-auto"
+          className="border-t p-5 flex flex-wrap items-center justify-between gap-2 "
         >
           <div
             style={{ color: "var(--text-paragraph)" }}
