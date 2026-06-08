@@ -23,7 +23,7 @@ export function Dropdown({
   return (
     <Menu
       as="div"
-      className="dropdown relative w-full border-l-2 rounded-tl-sm rounded-bl-sm"
+      className="dropdown relative w-full border-l-2 border-[var(--border)] rounded-tl-sm rounded-bl-sm"
     >
       {/* TRIGGER BUTTON */}
       <Menu.Button

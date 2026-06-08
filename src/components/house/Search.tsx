@@ -41,8 +41,13 @@ export function Search(_props: SearchProps) {
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className="p-5 bg-transparent transition-all duration-300 z-20">
-      <div className="px-[30px] py-5 max-w-[1170px] mx-auto md:grid md:grid-cols-4 gap-0 items-center relative rounded-xl transition-colors  bg-(--bg) duration-300 shadow-xl shadow-(--footer-bg) ring-1 ring-(--border)  backdrop-blur-lg   ">
+    <div className="p-5 bg-back/30 transition-all duration-300 z-20">
+      <div
+        style={{
+          backgroundColor: "color-mix(in srgb, var(--bg) 30%, transparent)",
+        }}
+        className="px-[30px] py-5 w-full  md:grid md:grid-cols-4 gap-0 items-center relative rounded-xl transition-colors duration-300 shadow-sm shadow-(--footer-bg) backdrop-blur-lg "
+      >
         <Dropdown
           selectedValue={country}
           onSelect={setCountry}
@@ -69,7 +74,7 @@ export function Search(_props: SearchProps) {
         <button
           onClick={handleClick}
           style={{ backgroundColor: "var(--button-bg)" }}
-          className="w-full md:h-full py-3 md:py-0 rounded-r-lg px-6 text-white font-semibold transition-opacity hover:opacity-90 shadow-sm cursor-pointer"
+          className="w-full md:h-full py-3 md:py-0 rounded-r-lg px-5 text-(--text) font-semibold transition-opacity hover:opacity-100 shadow-sm tracking-widest cursor-pointer"
           type="button"
         >
           Search
