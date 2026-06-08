@@ -8,6 +8,7 @@ import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { HomeList } from "../components/house/HomeList";
+import RealEstateSearchModule from "../components/map-search/RealEstateSearchModule";
 import { Partners } from "../components/partner/Partners";
 import { PlaceList } from "../components/place/PlaceList";
 
@@ -80,6 +81,9 @@ export function Home() {
 
         <div data-scroll-fade>
           <Agents />
+        </div>
+        <div>
+          <RealEstateSearchModule />
         </div>
       </div>
     </div>

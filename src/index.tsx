@@ -4,6 +4,9 @@ import App from "./App";
 import "./index.css";
 import { Providers } from "./providers/Providers";
 
+//  ADD HERE (GLOBAL STYLES)
+import "leaflet/dist/leaflet.css";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );
