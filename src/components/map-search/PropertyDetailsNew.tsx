@@ -95,7 +95,7 @@ export default function PropertyDetails() {
 
   if (!context) return null;
 
-  const { houses, isLoading } = context as HouseContextType;
+  const { houses, isLoading } = context as unknown as HouseContextType;
 
   if (isLoading) {
     return (
