@@ -6,14 +6,14 @@ type DemoProps = {
 
 export function Demo(_props: DemoProps) {
   return (
-    <div className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto">
+    <div className="my-16 w-3/4 px-16 ">
       <div
         style={{
           // Uses your primary brand color with a protective background mask for flawless text contrast
           backgroundImage: `linear-gradient(135deg, var(--button-bg) 0%, rgba(15, 23, 42, 0.9) 100%)`,
           borderColor: "var(--border)",
         }}
-        className="relative overflow-hidden rounded-2xl p-8 md:p-12 w-full border shadow-xl transition-all duration-300"
+        className="relative overflow-hidden rounded-2xl p-8 md:p-12 w-full border shadow-xl shadow-gray-100/10 transition-all duration-300"
       >
         {/* Subtle Decorative Background Element for texture */}
         <div className="absolute top-0 right-0 -mt-12 -mr-12 w-72 h-72 bg-white/5 rounded-full blur-2xl pointer-events-none" />

@@ -31,10 +31,10 @@ export function About(_props: AboutProps) {
   ];
 
   return (
-    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+    <section className="my-16 w-full px-16 transition-colors duration-300">
       <div className="flex flex-col gap-10 w-full">
         {/* TOP HEADER TYPOGRAPHY */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 max-w-3xl mx-auto">
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-5 max-w-6xl mx-auto">
           <h2
             style={{ color: "var(--button-bg)" }}
             className="text-sm font-extrabold uppercase tracking-widest"
@@ -44,14 +44,14 @@ export function About(_props: AboutProps) {
 
           <h3
             style={{ color: "var(--text-heading)" }}
-            className="text-2xl md:text-3xl font-extrabold tracking-tight"
+            className="text-2xl md:text-3xl font-extrabold tracking-wider whitespace-nowrap"
           >
             WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT
           </h3>
 
           <p
             style={{ color: "var(--text-paragraph)" }}
-            className="text-sm font-medium leading-relaxed"
+            className="text-sm font-medium tracking-wider leading-relaxed"
           >
             This is a very beautiful house with a south-facing view. The
             structural materials used are imported directly from Italy. It

@@ -53,10 +53,21 @@ export function Agents(_props: AgentsProps) {
         { id: 3, title: "Verified" },
       ],
     },
+    {
+      id: 4,
+      title: "Nadia Rahman 2",
+      statuses: "Leasing Specialist",
+      image: house1,
+      icons: [
+        { id: 1, title: "Location" },
+        { id: 2, title: "Contact" },
+        { id: 3, title: "Verified" },
+      ],
+    },
   ];
 
   return (
-    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+    <section className="my-16 w-full px-16 transition-colors duration-300">
       {/* TOP SIDE / HEADER */}
       <div className="w-full flex flex-col justify-center items-center text-center space-y-3 max-w-3xl mx-auto mb-10">
         <h2
@@ -84,7 +95,7 @@ export function Agents(_props: AgentsProps) {
       </div>
 
       {/* BOTTOM SIDE / RESPONSIVE GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center items-stretch">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-center items-stretch">
         {agents.map((agent) => (
           <SingleAgent key={agent.id} agent={agent} />
         ))}

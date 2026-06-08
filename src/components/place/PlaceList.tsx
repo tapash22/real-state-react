@@ -10,7 +10,7 @@ import { PlaceCard } from "./PlaceCard";
 
 export function PlaceList() {
   return (
-    <section className="my-16 w-full px-6 md:px-10 max-w-7xl mx-auto transition-colors duration-300">
+    <section className="my-16 w-full px-16  transition-colors duration-300">
       {/* HEADER */}
       <div className="pb-6 text-center space-y-1">
         <p
@@ -38,7 +38,7 @@ export function PlaceList() {
         breakpoints={{
           0: { slidesPerView: 1 },
           640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
         }}
       >
         {placeList.map((place: Place) => (

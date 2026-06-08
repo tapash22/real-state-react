@@ -33,7 +33,7 @@ export function SingleAgent({ agent }: SingleAgentProps) {
         onMouseEnter={() => setShowIcons(true)}
         onMouseLeave={() => setShowIcons(false)}
       >
-        <div className="relative w-full overflow-hidden aspect-[4/5] bg-black/5">
+        <div className="relative w-full overflow-hidden aspect-[2/1] bg-black/5">
           {/* IMAGE */}
           <img
             src={agent.image || house1}

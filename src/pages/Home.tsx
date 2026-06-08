@@ -53,7 +53,7 @@ export function Home() {
     <div className="w-full h-full">
       <Banner />
 
-      <div className="w-full space-y-4">
+      <div className="w-full space-y-5">
         <div data-scroll-fade>
           <HomeList />
         </div>
@@ -62,7 +62,7 @@ export function Home() {
           <About />
         </div>
 
-        <div data-scroll-fade>
+        <div data-scroll-fade className="flex justify-center">
           <Demo />
         </div>
 

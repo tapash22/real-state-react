@@ -14,14 +14,14 @@ export function PlaceCard({ place }: PlaceProps) {
       <img
         src={place.image}
         alt={place.title}
-        className="w-full h-[380px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
+        className="w-full h-[380px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105 border-2 rounded-2xl border-(--border)"
       />
 
       {/* GRADIENT OVERLAY (Guarantees card content pops beautifully) */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
 
       {/* HOVER CONTENT CARD */}
-      <div className="absolute inset-0 flex items-end justify-center p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-80 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
+      <div className="absolute inset-0 flex items-end justify-center p-2 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-80 transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)]">
         <div
           style={{
             backgroundColor: "var(--card)",

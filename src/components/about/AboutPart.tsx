@@ -17,7 +17,7 @@ export function AboutPart({ about }: AboutPartProps) {
         backgroundColor: "var(--card)",
         borderColor: "var(--border)",
       }}
-      className="p-5 w-full flex flex-col sm:flex-row justify-start items-center sm:items-start gap-4 rounded-xl border shadow-sm transition-all duration-300 hover:shadow-md"
+      className="p-5 w-full flex flex-col sm:flex-row justify-start items-center  gap-5 rounded-xl border shadow-sm transition-all duration-300 hover:shadow-md"
     >
       {/* ICON HOUSING */}
       <div
