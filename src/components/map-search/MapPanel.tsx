@@ -57,6 +57,9 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   useEffect(() => {
     if (!map) return;
 
+    // Force Leaflet to recalculate its CSS container dimensions
+    map.invalidateSize();
+
     const bounds = map.getBounds();
     onBoundsChange({
       north: bounds.getNorthEast().lat,

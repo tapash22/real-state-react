@@ -53,6 +53,13 @@ export default function RealEstateSearchModule() {
   const [mapBounds, setMapBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleBoundsChange = useCallback((bounds: MapBounds) => {
     setMapBounds(bounds);
@@ -60,7 +67,6 @@ export default function RealEstateSearchModule() {
 
   useEffect(() => {
     setIsLoading(true);
-
     const networkLatency = setTimeout(() => {
       const results = mockDatabaseFetch(mapBounds, CENTRAL_DATABASE);
       setFilteredProperties(results);
@@ -70,22 +76,55 @@ export default function RealEstateSearchModule() {
     return () => clearTimeout(networkLatency);
   }, [mapBounds]);
 
-  return (
-    <div style={styles.container}>
-      <ListPanel
-        properties={filteredProperties}
-        isLoading={isLoading}
-        hoveredId={hoveredId}
-        setHoveredId={setHoveredId}
-      />
+  const hasProperties = filteredProperties.length > 0;
 
-      <MapPanel
-        properties={CENTRAL_DATABASE}
-        initialCenter={[40.4167, -3.7037]}
-        hoveredId={hoveredId}
-        setHoveredId={setHoveredId}
-        onBoundsChange={handleBoundsChange}
-      />
+  return (
+    <div style={isMobile ? styles.mobileContainer : styles.desktopContainer}>
+      {/* MAP WRAPPER CONTAINER */}
+      <div
+        style={isMobile ? styles.mobileMapWrapper : styles.desktopMapWrapper}
+        className="border-8 border-(--border) rounded-lg shadow-lg"
+      >
+        <MapPanel
+          properties={filteredProperties} // Corrected reference to feed dynamic layout updates back
+          initialCenter={[40.4167, -3.7037]}
+          hoveredId={hoveredId}
+          setHoveredId={setHoveredId}
+          onBoundsChange={handleBoundsChange}
+        />
+
+        {/* Floating warning alert badge on Mobile Map Viewports */}
+        {isMobile && !isLoading && !hasProperties && (
+          <div style={styles.mobileEmptyState}>
+            📍 No rentals found in this area. Zoom out to discover spaces!
+          </div>
+        )}
+      </div>
+
+      {/* LIST PANEL WRAPPER CONTAINER */}
+      {isMobile ? (
+        hasProperties && (
+          <div style={styles.mobileListWrapper}>
+            <ListPanel
+              properties={filteredProperties}
+              isLoading={isLoading}
+              hoveredId={hoveredId}
+              setHoveredId={setHoveredId}
+              isMobile={true}
+            />
+          </div>
+        )
+      ) : (
+        <div style={styles.desktopListWrapper}>
+          <ListPanel
+            properties={filteredProperties}
+            isLoading={isLoading}
+            hoveredId={hoveredId}
+            setHoveredId={setHoveredId}
+            isMobile={false}
+          />
+        </div>
+      )}
     </div>
   );
 }

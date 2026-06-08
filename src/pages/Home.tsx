@@ -82,7 +82,7 @@ export function Home() {
         <div data-scroll-fade>
           <Agents />
         </div>
-        <div>
+        <div className=" w-full p-5 ">
           <RealEstateSearchModule />
         </div>
       </div>

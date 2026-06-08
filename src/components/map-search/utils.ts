@@ -23,7 +23,11 @@ export const mockDatabaseFetch = (
   bounds: MapBounds | null,
   database: Property[],
 ): Property[] => {
-  if (!bounds) return database;
+  // If bounds don't exist or haven't fully expanded from zero, return everything
+  // if (!bounds) return database;
+  if (!bounds || (bounds.north === 0 && bounds.south === 0)) {
+    return database;
+  }
   return database.filter((prop) => {
     return (
       prop.lat >= bounds.south &&
