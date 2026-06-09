@@ -33,12 +33,14 @@ export function SingleAgent({ agent }: SingleAgentProps) {
         onMouseEnter={() => setShowIcons(true)}
         onMouseLeave={() => setShowIcons(false)}
       >
-        <div className="relative w-full overflow-hidden aspect-[2/1] bg-black/5">
+        <div className="relative w-full overflow-hidden aspect-[4/3] lg:aspect-[1/2] bg-black/5">
           {/* IMAGE */}
           <img
             src={agent.image || house1}
             alt={agent.title}
-            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+            className="w-full h-full object-cover object-center"
+
+            // className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
 
           {/* HOVER ACTION ICONS PANEL */}
@@ -80,17 +82,17 @@ export function SingleAgent({ agent }: SingleAgentProps) {
           style={{
             borderColor: "var(--button-bg)",
           }}
-          className="p-5 border-t-4 w-full transition-colors duration-300 mt-auto"
+          className="p-3 border-t-2 w-full transition-colors duration-300  "
         >
           <h4
             style={{ color: "var(--text-heading)" }}
-            className="text-lg font-bold tracking-tight line-clamp-1"
+            className="text-md lg:text-lg font-medium lg:font-bold tracking-wide line-clamp-1"
           >
             {agent.title}
           </h4>
           <p
             style={{ color: "var(--text-paragraph)" }}
-            className="text-xs font-semibold uppercase tracking-wider mt-0.5 opacity-80"
+            className="text-xs font-normal lg:font-semibold uppercase tracking-wider  opacity-80"
           >
             {agent.statuses}
           </p>

@@ -47,7 +47,7 @@ export function HomeList() {
   }
 
   return (
-    <section className="my-16 w-full px-16">
+    <section className="my-5 lg:my-16 w-full px-8 lg:px-16">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center items-stretch">
         {houses.map((house) => (
           <Link

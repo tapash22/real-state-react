@@ -16,14 +16,6 @@ export function HouseCard({ house }: HouseProps) {
         style={{
           backgroundColor: "var(--card)",
           borderColor: "var(--border)",
-          // Re-engineered layered shadow system using CSS variable tones
-          // to perfectly mirror structural layers in light and dark layouts
-          // boxShadow: `
-          //   6px 6px 0px var(--bg),
-          //   12px 12px 0px rgba(0, 0, 0, 0.04),
-          //   18px 18px 0px rgba(0, 0, 0, 0.05),
-          //   0px 20px 40px rgba(0, 0, 0, 0.2)
-          // `,
         }}
         className="
           relative z-10 overflow-hidden rounded-[24px] border w-full flex flex-col justify-between
@@ -35,11 +27,12 @@ export function HouseCard({ house }: HouseProps) {
           dark:shadow-black/20 dark:hover:shadow-black/50
           cursor-pointer
           custom-neo-shadow
+          space-y-2
         "
       >
-        <div>
+        <div className="">
           {/* MEDIA HERO */}
-          <div className="relative overflow-hidden aspect-[4/3] w-full bg-black/5">
+          <div className="relative overflow-hidden aspect-[5/3] lg:aspect-[4/3] w-full bg-black/5">
             <img
               src={image}
               alt={address}
@@ -51,16 +44,16 @@ export function HouseCard({ house }: HouseProps) {
             />
 
             {/* FLOATING STATUS BADGE */}
-            <div className="absolute left-4 top-4 rounded-full bg-white/80 dark:bg-slate-900/90 backdrop-blur-sm px-5 py-2 text-sm font-semibold tracking-wider text-slate-900 dark:text-slate-100 shadow-lg">
+            <div className="absolute left-4 top-4 rounded-full bg-white/80 dark:bg-slate-900/90 backdrop-blur-sm px-3 py-2 text-xs lg:text-sm font-semibold tracking-wider text-slate-900 dark:text-slate-100 shadow-lg">
               Confirmed
             </div>
           </div>
 
           {/* METRICS & DESCRIPTION CONTAINER */}
-          <div className="p-5 space-y-3">
+          <div className="p-3 lg:p-5 space-y-3">
             {/* TAXONOMY / CHIPS */}
-            <div className=" flex flex-wrap gap-2 text-xs font-bold tracking-wide">
-              <span className="rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-3 py-1">
+            <div className=" flex flex-wrap items-center gap-2 tracking-wide ">
+              <span className="rounded-full bg-emerald-500/10 text-xs lg:text-sm font-normal lg:font-medium text-emerald-600 dark:text-emerald-400 px-2 py-1">
                 {type}
               </span>
               <span
@@ -68,7 +61,7 @@ export function HouseCard({ house }: HouseProps) {
                   backgroundColor: "rgba(20, 184, 166, 0.12)",
                   color: "var(--button-bg)",
                 }}
-                className="rounded-full px-3 py-1"
+                className="rounded-full px-2 py-1 text-xs lg:text-sm font-normal lg:font-medium"
               >
                 {country}
               </span>
@@ -78,7 +71,7 @@ export function HouseCard({ house }: HouseProps) {
             <div className="flex items-start justify-between gap-3">
               <h3
                 style={{ color: "var(--text-heading)" }}
-                className="text-lg font-bold tracking-tight line-clamp-1 truncate transition-colors duration-300"
+                className="text-md lg:text-lg font-medium lg:font-bold tracking-tight line-clamp-1 truncate transition-colors duration-300"
               >
                 {address}
               </h3>
@@ -101,68 +94,81 @@ export function HouseCard({ house }: HouseProps) {
             {/* SELLING VALUE MARKER */}
             <div
               style={{ color: "var(--text-paragraph)" }}
-              className="py-2 flex items-center gap-1.5 text-sm transition-colors duration-300"
+              className="flex items-center gap-1 lg:gap-2 text-sm transition-colors duration-300"
             >
               <BiBoltCircle
                 style={{ color: "var(--button-bg)" }}
                 className="text-lg shrink-0"
               />
-              <span className="line-clamp-1 truncate">
+              <span className="line-clamp-1 truncate text-sm lg:text-lg font-normal lg:font-medium tracking-wide">
                 Modern living with premium access
               </span>
             </div>
-
-            {/* INTERIOR PROPERTY SPECIFICATIONS */}
-            <div
-              style={{
-                color: "var(--text-paragraph)",
-                borderColor: "var(--border)",
-              }}
-              className="py-4 border-t border-b flex justify-center items-center gap-4 text-xs font-bold transition-all duration-300 "
-            >
-              <div className="flex items-center gap-2">
-                <BiBed className="text-lg opacity-80" />
-                <span>{bedroom} Beds</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BiBath className="text-lg opacity-80" />
-                <span>{bathroom} Baths</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BiArea className="text-lg opacity-80" />
-                <span>{surface}</span>
-              </div>
-            </div>
           </div>
         </div>
+        {/* INTERIOR PROPERTY SPECIFICATIONS */}
+        <div
+          style={{
+            color: "var(--text-paragraph)",
+            borderColor: "var(--border)",
+          }}
+          className="p-3 border-t border-b border-[var(--border)] grid grid-cols-3 gap-1 text-xs font-bold transition-all duration-300   "
+        >
+          <div className="flex items-center gap-1 lg:gap-2">
+            <BiBed className="text-sm lg:text-lg opacity-80" />
+            <span className="text-xs font-semibold tracking-wide">
+              {bedroom} Beds
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <BiBath className="text-sm lg:text-lg opacity-80 " />
+            <span className="text-xs font-semibold tracking-wide">
+              {bathroom} Baths
+            </span>
+          </div>
+          <div className="flex items-center gap-2 ">
+            <BiArea className="text-sm lg:text-lg opacity-80 text-white" />
+            <span className="text-xs font-semibold tracking-wide">
+              {surface}
+            </span>
+          </div>
+        </div>
+        {/* INTERIOR PROPERTY SPECIFICATIONS END*/}
 
         {/* BOTTOM PRICE & BOOKING STATUS FOOTER ROW */}
         <div
           style={{ borderColor: "var(--border)" }}
-          className="border-t p-5 flex flex-wrap items-center justify-between gap-2 "
+          className="p-3 lg:p-5 flex flex-wrap items-center justify-between gap-2 "
         >
           <div
             style={{ color: "var(--text-paragraph)" }}
-            className="text-xs font-semibold"
+            className="space-x-1 flex items-center"
           >
-            From{" "}
+            <span className="text-xs font-medium lg:font-bold tracking-wide">
+              From
+            </span>
             <span
               style={{ color: "var(--text-heading)" }}
-              className="text-2xl font-extrabold tracking-tight block sm:inline"
+              className="text-md lg:text-2xl font-bold lg:font-extrabold tracking-tight block sm:inline"
             >
               Tk {price}
-            </span>{" "}
-            /mo
+            </span>
+            <span className="text-xs font-medium lg:font-bold tracking-wide">
+              /mo
+            </span>
           </div>
 
           <div
             style={{ color: "var(--text-heading)" }}
-            className="flex items-center gap-1.5 text-xs font-bold"
+            className="flex items-center gap-1 lg:gap-2"
           >
             <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Available now</span>
+            <span className="text-sm font-medium lg:text-xl lg:font-bold tracking-tight">
+              Available now
+            </span>
           </div>
         </div>
+        {/* BOTTOM PRICE & BOOKING STATUS FOOTER ROW END*/}
       </div>
     </div>
   );

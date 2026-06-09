@@ -31,27 +31,27 @@ export function About(_props: AboutProps) {
   ];
 
   return (
-    <section className="my-16 w-full px-16 transition-colors duration-300">
+    <section className="my-8 lg:my-16 w-full px-8 lg:px-16 transition-colors duration-300">
       <div className="flex flex-col gap-10 w-full">
         {/* TOP HEADER TYPOGRAPHY */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-5 max-w-6xl mx-auto">
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-2 lg:space-y-5 lg:max-w-6xl ">
           <h2
             style={{ color: "var(--button-bg)" }}
-            className="text-sm font-extrabold uppercase tracking-widest"
+            className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
           >
             Why choose us
           </h2>
 
           <h3
             style={{ color: "var(--text-heading)" }}
-            className="text-2xl md:text-3xl font-extrabold tracking-wider whitespace-nowrap"
+            className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
           >
             WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT
           </h3>
 
           <p
             style={{ color: "var(--text-paragraph)" }}
-            className="text-sm font-medium tracking-wider leading-relaxed"
+            className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
           >
             This is a very beautiful house with a south-facing view. The
             structural materials used are imported directly from Italy. It
@@ -61,7 +61,7 @@ export function About(_props: AboutProps) {
         </div>
 
         {/* BOTTOM CONTENT GRID */}
-        <div className="flex flex-col lg:flex-row gap-8 w-full items-center">
+        <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 w-full items-center">
           {/* IMAGE BLOCK */}
           <div
             style={{ borderColor: "var(--border)" }}
@@ -75,7 +75,7 @@ export function About(_props: AboutProps) {
           </div>
 
           {/* DYNAMIC CARD ITEMS BLOCK */}
-          <div className="flex flex-col gap-4 w-full lg:w-1/2">
+          <div className="flex flex-col gap-2 lg:gap-4 w-full lg:w-1/2">
             {abouts.map((about) => (
               <AboutPart key={about.id} about={about} />
             ))}

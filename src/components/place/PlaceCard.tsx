@@ -8,7 +8,7 @@ export function PlaceCard({ place }: PlaceProps) {
   return (
     <div
       style={{ borderColor: "var(--border)" }}
-      className="relative border rounded-2xl mb-8 overflow-hidden group shadow-sm bg-black/5 transition-all duration-300"
+      className="relative border rounded-2xl mb-0 lg:mb-8 overflow-hidden group shadow-sm bg-black/5 transition-all duration-300"
     >
       {/* IMAGE */}
       <img

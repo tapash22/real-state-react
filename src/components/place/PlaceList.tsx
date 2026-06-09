@@ -10,21 +10,22 @@ import { PlaceCard } from "./PlaceCard";
 
 export function PlaceList() {
   return (
-    <section className="my-16 w-full px-16  transition-colors duration-300">
+    <section className="my-5 lg:my-16 w-full px-8 lg:px-16  transition-colors duration-300">
       {/* HEADER */}
-      <div className="pb-6 text-center space-y-1">
-        <p
+      <div className="py-3 text-center space-y-1">
+        <h2
           style={{ color: "var(--button-bg)" }}
-          className="text-sm font-extrabold uppercase tracking-widest"
+          className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
         >
           Explore cities
-        </p>
-        <h2
+        </h2>
+
+        <h3
           style={{ color: "var(--text-heading)" }}
-          className="text-2xl md:text-3xl font-extrabold tracking-tight"
+          className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
         >
           Find Your Neighborhood
-        </h2>
+        </h3>
       </div>
 
       {/* SWIPER */}
