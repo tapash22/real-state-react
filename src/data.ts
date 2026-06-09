@@ -240,6 +240,52 @@ export const houseData: House[] = [
 //   }
 // }
 
+// Q & A
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export const faqData: FAQItem[] = [
+  {
+    id: 1,
+    question: "Are you a real estate agency?",
+    answer:
+      "No, we're not a real estate agency. HousingAnywhere is an online platform connecting people looking for their next home with landlords looking for tenants.",
+  },
+
+  {
+    id: 2,
+    question: "How does the renting process work?",
+    answer:
+      "You can find and rent your next home safely and entirely online. Listings include detailed descriptions, photos, videos, and floor plans. You can message landlords directly, exchange documents, and securely book your stay through the platform.",
+  },
+
+  {
+    id: 3,
+    question: "When do I pay for the booking?",
+    answer:
+      "You'll pay the first month's rent and, depending on the region, a Tenant Protection fee. Once the payment is received, your booking is confirmed and you'll receive the landlord's contact details. Remaining rental costs are paid directly to the landlord.",
+  },
+
+  {
+    id: 4,
+    question: "Can I cancel my booking?",
+    answer:
+      "Yes, you can cancel your stay at any time before moving in. Depending on the cancellation policy and timing, you may receive a full or partial refund. The Tenant Protection fee is non-refundable.",
+  },
+
+  {
+    id: 5,
+    question: "Do I need to visit the property before booking?",
+    answer:
+      "No, visiting is not required. Listings provide detailed descriptions, photos, videos, and floor plans to help you understand the property. You can also communicate with landlords directly before booking.",
+  },
+];
+
+// Q & A End
+
 /* -----------------------------
   Place List
 ------------------------------ */

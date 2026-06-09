@@ -76,6 +76,29 @@ export default function RealEstateSearchModule() {
     return () => clearTimeout(networkLatency);
   }, [mapBounds]);
 
+  // use with api implement
+
+  //   useEffect(() => {
+  //   if (!mapBounds) return;
+  //   setIsLoading(true);
+
+  //   // Example backend API integration
+  //   axios.get('/api/v1/rentals/search', {
+  //     params: {
+  //       north: mapBounds.north,
+  //       south: mapBounds.south,
+  //       east: mapBounds.east,
+  //       west: mapBounds.west
+  //     }
+  //   })
+  //   .then((response) => {
+  //     setFilteredProperties(response.data.listings);
+  //   })
+  //   .catch((error) => console.error("Search fetch failed", error))
+  //   .finally(() => setIsLoading(false));
+
+  // }, [mapBounds]);
+
   const hasProperties = filteredProperties.length > 0;
 
   return (

@@ -204,6 +204,11 @@
     }
 }
 
+/* client card */
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
 /* scrollbar explain with details using  */
 /* width */
 .scrollbar-thin {
