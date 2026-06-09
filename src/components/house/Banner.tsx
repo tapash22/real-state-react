@@ -22,27 +22,27 @@ export function Banner() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      // 🎯 1. Title entrance bounce
+      //  1. Title entrance bounce
       tl.fromTo(
         titleRef.current,
         { y: -120, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.2, ease: "bounce.out" },
       )
-        // 🎯 2. Initial word placement reveal
+        //  2. Initial word placement reveal
         .fromTo(
           subtitleTextRef.current,
           { y: 15, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
           "-=0.4",
         )
-        // 🎯 3. Description paragraph animation
+        //  3. Description paragraph animation
         .fromTo(
           paraRef.current,
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
           "-=0.5",
         )
-        // 🎯 4. Search bar wrapper fade and pop
+        //  4. Search bar wrapper fade and pop
         .fromTo(
           searchRef.current,
           { y: 40, opacity: 0, scale: 0.96 },

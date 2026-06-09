@@ -1,43 +1,70 @@
 import { gsap } from "gsap";
 import { useCallback, useEffect, useRef, useState } from "react";
-
+import { IconType } from "react-icons";
+import { FaUserCircle } from "react-icons/fa";
 import house1 from "../../assets/house1.jpg";
 
 type Review = {
   id: number;
   image: string;
   name: string;
+  icon: IconType;
+  speech: string;
 };
 
 export function ClientsReview() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false); // Track hover state
 
   const reviews: Review[] = [
-    { id: 1, image: house1, name: "Tapash Paul" },
-    { id: 2, image: house1, name: "John Doe" },
-    { id: 3, image: house1, name: "Alex Smith" },
-    { id: 4, image: house1, name: "Sarah Khan" },
+    {
+      id: 1,
+      image: house1,
+      name: "Tapash Paul",
+      icon: FaUserCircle,
+
+      speech:
+        "Thikana made finding a rental super easy and stress-free. The process was smooth, and I quickly got a verified place that matched my needs perfectly.",
+    },
+    {
+      id: 2,
+      image: house1,
+      name: "John Doe",
+      icon: FaUserCircle,
+
+      speech:
+        "I used Thikana for a short-term stay and it was very convenient. Listings were accurate and communication with owners was fast and reliable.",
+    },
+    {
+      id: 3,
+      image: house1,
+      name: "Alex Smith",
+      icon: FaUserCircle,
+
+      speech:
+        "Great platform for flexible rentals. I found a clean, well-located home within hours. The entire experience felt safe and transparent.",
+    },
+    {
+      id: 4,
+      image: house1,
+      name: "Sarah Khan",
+      icon: FaUserCircle,
+      speech:
+        "Highly recommend Thikana for anyone looking for quick rental solutions. Everything was well organized and very user-friendly from start to finish.",
+    },
   ];
 
-  // =========================
-  // SAFE TOUCH / MOUSE X
-  // =========================
   const getX = (e: MouseEvent | TouchEvent) => {
     if ("touches" in e && e.touches.length > 0) {
       return e.touches[0]?.clientX ?? 0;
     }
-
     if ("changedTouches" in e && e.changedTouches.length > 0) {
       return e.changedTouches[0]?.clientX ?? 0;
     }
-
     return (e as MouseEvent).clientX ?? 0;
   };
 
-  // =========================
-  // NEXT / PREV
-  // =========================
   const next = useCallback(() => {
     setCurrentIndex((p) => (p === reviews.length - 1 ? 0 : p + 1));
   }, [reviews.length]);
@@ -46,50 +73,56 @@ export function ClientsReview() {
     setCurrentIndex((p) => (p === 0 ? reviews.length - 1 : p - 1));
   }, [reviews.length]);
 
-  // =========================
-  // GSAP POSITION ENGINE (RESPONSIVE)
-  // =========================
+  // ============================================
+  // GSAP ENGINE (INFINITE MODULO WRAPPING)
+  // ============================================
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     const items = container.querySelectorAll<HTMLElement>(".carousel-card");
+    const total = reviews.length;
 
     const getSpacing = () => {
       const w = window.innerWidth;
-
-      if (w < 640) return container.offsetWidth * 0.85; // mobile
-      if (w < 1024) return container.offsetWidth * 0.55; // tablet
-      return container.offsetWidth * 0.42; // desktop
+      if (w < 640) return container.offsetWidth * 1.05;
+      if (w < 1024) return container.offsetWidth * 0.75;
+      return container.offsetWidth * 0.5;
     };
 
     const spacing = getSpacing();
 
     items.forEach((item, i) => {
-      const offset = i - currentIndex;
+      let offset = i - currentIndex;
+
+      if (offset < -total / 2) offset += total;
+      if (offset > total / 2) offset -= total;
+
+      const isActive = offset === 0;
 
       gsap.to(item, {
         x: offset * spacing,
-        scale: offset === 0 ? 1 : 0.82,
-        opacity: Math.abs(offset) > 2 ? 0 : 1,
-        zIndex: offset === 0 ? 10 : 1,
+        scale: isActive ? 1 : 0.85,
+        opacity: Math.abs(offset) > 1.5 ? 0 : 1,
+        zIndex: isActive ? 10 : 1,
         duration: 0.8,
         ease: "power3.out",
       });
     });
-  }, [currentIndex]);
+  }, [currentIndex, reviews.length]);
 
-  // =========================
-  // AUTO LOOP
-  // =========================
+  // ============================================
+  // CONDITIONAL AUTO LOOP (PAUSES ON HOVER)
+  // ============================================
   useEffect(() => {
+    // If user is hovering over the cards, do not start the interval
+    if (isHovered) return;
+
     const interval = setInterval(() => next(), 3500);
     return () => clearInterval(interval);
-  }, [next]);
+  }, [next, isHovered]);
 
-  // =========================
-  // SWIPE
-  // =========================
+  // SWIPE ENGINE
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -120,13 +153,12 @@ export function ClientsReview() {
     };
   }, [next, prev]);
 
-  // =========================
-  // UI
-  // =========================
   return (
     <section className="w-full overflow-hidden px-4 sm:px-6 md:px-16 bg-[var(--border)]">
       <div
         ref={containerRef}
+        onMouseEnter={() => setIsHovered(true)} // Pause auto loop
+        onMouseLeave={() => setIsHovered(false)} // Resume auto loop
         className="
           relative
           flex
@@ -135,7 +167,7 @@ export function ClientsReview() {
           perspective-[1200px]
           cursor-grab
           active:cursor-grabbing
-          h-[300px] sm:h-[360px] md:h-[400px]
+          h-[420px]
           overflow-hidden
         "
       >
@@ -147,19 +179,20 @@ export function ClientsReview() {
               absolute
               flex
               flex-col sm:flex-row
-              w-[85%] sm:w-[65%] md:w-[45%] lg:w-[40%]
-              h-[260px] sm:h-[320px] md:h-[350px]
+              w-[90%] sm:w-[65%] md:w-[45%] lg:w-[50%]
+              h-[360px] sm:h-[350px]
               rounded-2xl sm:rounded-3xl
               overflow-hidden
               bg-[var(--bg)]
               border-2
               border-[var(--border)]
-              shadow-md
+              shadow-lg
+              shadow-[var(--shadow)]
               dark:border-slate-800
             "
           >
             {/* IMAGE */}
-            <div className="w-full sm:w-1/2 h-full overflow-hidden">
+            <div className="w-full sm:w-1/2 lg:w-1/2 h-[55%] sm:h-full overflow-hidden">
               <img
                 src={review.image}
                 alt={review.name}
@@ -168,14 +201,33 @@ export function ClientsReview() {
             </div>
 
             {/* CONTENT */}
-            <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text)]">
-                {review.name}
-              </h2>
+            <div className="w-full sm:w-1/2 h-[45%] sm:h-full p-3 lg:p-6 flex flex-col justify-center items-center space-y-2 lg:space-y-5 ">
+              {/* header */}
+              <div className="flex flex-row lg:flex-col justify-center  items-center gap-2 w-full">
+                <div className="w-10 h-10 lg:w-16 lg:h-16 ring-0 lg:ring-2 lg:ring-[var(--border)] flex justify-center items-center rounded-full shadow-none z-50 lg:shadow-xl lg:shadow-[var(--shadow)]">
+                  <FaUserCircle
+                    className="
+                    w-10 h-10
+                    lg:w-[50px] lg:h-[50px]
+                    text-white
+                    lg:drop-shadow-[0_6px_6px_rgba(255,255,255,0.43)]
+                  "
+                  />
+                </div>
+                <h2 className="text-lg md:text-3xl font-medium md:font-bold text-[var(--text)] text-center">
+                  {review.name}
+                </h2>
+              </div>
+              {/* header end*/}
 
-              <p className="mt-2 sm:mt-4 text-sm sm:text-base text-[var(--muted)] leading-relaxed">
-                Premium client testimonial showcasing luxury real estate
-                experience, trust, and satisfaction.
+              <p className="text-sm sm:text-base text-[var(--muted)]  border-b-2 border-t-2 text-center border-[var(--border)] py-2 lg:py-5">
+                <span className="sm:hidden">
+                  {review.speech.length > 100
+                    ? `${review.speech.slice(0, 100)}...`
+                    : review.speech}
+                </span>
+
+                <span className="hidden sm:inline ">{review.speech}</span>
               </p>
             </div>
           </div>
