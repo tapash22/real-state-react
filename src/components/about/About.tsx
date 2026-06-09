@@ -34,7 +34,7 @@ export function About(_props: AboutProps) {
     <section className="my-8 lg:my-16 w-full px-8 lg:px-16 transition-colors duration-300">
       <div className="flex flex-col gap-10 w-full">
         {/* TOP HEADER TYPOGRAPHY */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-2 lg:space-y-5 lg:max-w-6xl ">
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
           <h2
             style={{ color: "var(--button-bg)" }}
             className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"

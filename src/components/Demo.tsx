@@ -6,7 +6,7 @@ type DemoProps = {
 
 export function Demo(_props: DemoProps) {
   return (
-    <div className="my-0 lg:my-16 w-fit lg:w-3/4 px-8 lg:px-16 ">
+    <div className="my-0 w-fit lg:w-3/4 px-8 lg:px-16 ">
       <div
         style={{
           // Uses your primary brand color with a protective background mask for flawless text contrast
