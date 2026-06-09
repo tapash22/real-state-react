@@ -36,18 +36,18 @@ export function ClientsReview() {
   };
 
   // =========================
-  // NEXT / PREV (STABLE)
+  // NEXT / PREV
   // =========================
   const next = useCallback(() => {
-    setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((p) => (p === reviews.length - 1 ? 0 : p + 1));
   }, [reviews.length]);
 
   const prev = useCallback(() => {
-    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    setCurrentIndex((p) => (p === 0 ? reviews.length - 1 : p - 1));
   }, [reviews.length]);
 
   // =========================
-  // GSAP POSITION ENGINE
+  // GSAP POSITION ENGINE (RESPONSIVE)
   // =========================
   useEffect(() => {
     const container = containerRef.current;
@@ -55,12 +55,22 @@ export function ClientsReview() {
 
     const items = container.querySelectorAll<HTMLElement>(".carousel-card");
 
+    const getSpacing = () => {
+      const w = window.innerWidth;
+
+      if (w < 640) return container.offsetWidth * 0.85; // mobile
+      if (w < 1024) return container.offsetWidth * 0.55; // tablet
+      return container.offsetWidth * 0.42; // desktop
+    };
+
+    const spacing = getSpacing();
+
     items.forEach((item, i) => {
       const offset = i - currentIndex;
 
       gsap.to(item, {
-        x: offset * 380,
-        scale: offset === 0 ? 1 : 0.78,
+        x: offset * spacing,
+        scale: offset === 0 ? 1 : 0.82,
         opacity: Math.abs(offset) > 2 ? 0 : 1,
         zIndex: offset === 0 ? 10 : 1,
         duration: 0.8,
@@ -73,15 +83,12 @@ export function ClientsReview() {
   // AUTO LOOP
   // =========================
   useEffect(() => {
-    const interval = setInterval(() => {
-      next();
-    }, 3500);
-
+    const interval = setInterval(() => next(), 3500);
     return () => clearInterval(interval);
   }, [next]);
 
   // =========================
-  // DRAG / SWIPE
+  // SWIPE
   // =========================
   useEffect(() => {
     const container = containerRef.current;
@@ -117,19 +124,19 @@ export function ClientsReview() {
   // UI
   // =========================
   return (
-    <section className="overflow-x-hidden w-full px-16 bg-[var(--border)] mx-auto">
+    <section className="w-full overflow-hidden px-4 sm:px-6 md:px-16 bg-[var(--border)]">
       <div
         ref={containerRef}
         className="
           relative
-          h-[400px]
           flex
           items-center
           justify-center
           perspective-[1200px]
           cursor-grab
           active:cursor-grabbing
-          px-20
+          h-[300px] sm:h-[360px] md:h-[400px]
+          overflow-hidden
         "
       >
         {reviews.map((review) => (
@@ -139,35 +146,34 @@ export function ClientsReview() {
               carousel-card
               absolute
               flex
-              w-[45%]
-              h-[350px]
-              rounded-3xl
+              flex-col sm:flex-row
+              w-[85%] sm:w-[65%] md:w-[45%] lg:w-[40%]
+              h-[260px] sm:h-[320px] md:h-[350px]
+              rounded-2xl sm:rounded-3xl
               overflow-hidden
               bg-[var(--bg)]
               border-2
               border-[var(--border)]
               shadow-md
-              shadow-[var(--shadow)]
-
               dark:border-slate-800
             "
           >
-            {/* LEFT IMAGE */}
-            <div className="w-1/2 h-full overflow-hidden">
+            {/* IMAGE */}
+            <div className="w-full sm:w-1/2 h-full overflow-hidden">
               <img
                 src={review.image}
                 alt={review.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
 
-            {/* RIGHT CONTENT */}
-            <div className="w-1/2 p-6 flex flex-col justify-center">
-              <h2 className="text-3xl font-bold text-[var(--text)]">
+            {/* CONTENT */}
+            <div className="w-full sm:w-1/2 p-4 sm:p-6 flex flex-col justify-center">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[var(--text)]">
                 {review.name}
               </h2>
 
-              <p className="mt-4 text-[var(--muted)] leading-relaxed">
+              <p className="mt-2 sm:mt-4 text-sm sm:text-base text-[var(--muted)] leading-relaxed">
                 Premium client testimonial showcasing luxury real estate
                 experience, trust, and satisfaction.
               </p>

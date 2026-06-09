@@ -1,22 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
-  <!-- Background is transparent; shapes are maximized to fill the 512x512 canvas grid tightly -->
-  <g transform="translate(0, 15)">
-    <!-- House Roof Line -->
-    <path d="M54.3 226.7L235.5 81.3c12.3-9.8 29.7-9.8 42 0l181.2 145.4c8.5 6.8 20.8 5.3 27.6-3.2s5.3-20.8-3.2-27.6L302 50.5c-26.6-21.3-64.4-21.3-91 0L29.9 195.9c-8.5 6.8-10 19.1-3.2 27.6s19.1 10 27.6 3.2z" fill="#1e2d4a"/>
-    <!-- Chimney Structure -->
-    <path d="M400 100h35v65l-35-28v-37z" fill="#1e2d4a"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg-circle { fill: #5c6f84; }
+      .house-t { fill: #112233; fill-rule: evenodd; }
+      .bubble-orange { fill: #f2a115; }
+      .bubble-teal { fill: #20b2aa; }
+      .dots { fill: #5c6f84; }
+    </style>
+  </defs>
+
+  <circle cx="250" cy="250" r="230" class="bg-circle" />
+
+  <g transform="translate(0, -10)">
+    <path d="M 160,260 L 220,260 L 220,380 L 195,380 L 160,405 L 160,260 Z" class="bubble-orange" rx="5" />
     
-    <!-- Central 'T' Framework Component -->
-    <path d="M195 220h122v40h-41v180h-40V260h-41v-40zm41 220h40c0 5.5-4.5 10-10 10h-20c-5.5 0-10-4.5-10-10z" fill="#1e2d4a"/>
+    <path d="M 280,260 L 340,260 L 340,405 L 305,380 L 280,380 L 280,260 Z" class="bubble-teal" />
     
-    <!-- Left Hand Negotiation Chat Bubble (Orange-Amber) -->
-    <path d="M165 260h-85c-11 0-20 9-20 20v85c0 11 9 20 20 20h20l-20 35 45-35h40c11 0 20-9 20-20v-85c0-11-9-20-20-20z" fill="#f2a115"/>
-    
-    <!-- Right Hand Live Status Chat Bubble (Teal-Mint) -->
-    <path d="M347 260h85c11 0 20 9 20 20v85c0 11-9 20-20 20h-40l45 35-20-35h-20c-11 0-20-9-20-20v-85c0-11 9-20 20-20z" fill="#20b2aa"/>
-    <!-- Negotiation Context Dots inside Teal Bubble -->
-    <rect x="367" y="310" width="12" height="12" rx="2" fill="#7bf2da"/>
-    <rect x="387" y="310" width="12" height="12" rx="2" fill="#7bf2da"/>
-    <rect x="407" y="310" width="12" height="12" rx="2" fill="#7bf2da"/>
+    <g class="dots">
+      <rect x="292" y="320" width="10" height="10" rx="1" />
+      <rect x="307" y="320" width="10" height="10" rx="1" />
+      <rect x="322" y="320" width="10" height="10" rx="1" />
+    </g>
+
+    <path d="
+      M 250,100 L 440,215 L 415,240 L 390,225 L 390,260 L 415,260 L 415,280 L 390,280 L 390,225 L 250,140 L 110,225 L 85,200 Z 
+      M 165,225 L 335,225 L 335,260 L 270,260 L 270,410 C 270,430 230,430 230,410 L 230,260 L 165,260 Z" 
+      class="house-t" />
   </g>
 </svg>

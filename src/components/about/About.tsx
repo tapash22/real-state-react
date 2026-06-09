@@ -70,7 +70,7 @@ export function About(_props: AboutProps) {
             <img
               src={house1}
               alt="Beautiful modern home exterior"
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.02]"
+              className="w-full h-full object-cover object-top"
             />
           </div>
 

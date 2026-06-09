@@ -22,7 +22,12 @@ export default function Agencies({ ar }: AgenciesProps): JSX.Element {
   return (
     <div className="block border-violet-500 border-2 rounded-lg py-2">
       <div className="flex justify-center">
-        <img src={image} alt="building" className="w-[100px] h-[100px]" />
+        <img
+          src={image}
+          alt="building"
+          className="w-[100px] h-[100px]"
+          fetchPriority="high"
+        />
       </div>
 
       <div className="grid grid-cols-1 grid-rows-3 gap-1">
