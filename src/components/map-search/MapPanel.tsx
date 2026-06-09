@@ -2,9 +2,12 @@ import L from "leaflet";
 import React, { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { MapBounds, Property } from "../../types/types";
+
 import { MapMarker } from "./MapMarker";
 import { styles } from "./styles";
 import { debounce } from "./utils";
+
+import { ViewportRecenterController } from "./ViewportRecenterController";
 
 interface MapBoundsHandlerProps {
   onBoundsChange: (bounds: MapBounds) => void;
@@ -36,8 +39,10 @@ const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
   return null;
 };
 
+// 2. Add 'center' prop right here into your component interface contract
 interface MapPanelProps {
   properties: Property[];
+  center: [number, number]; //  Added this line
   initialCenter: [number, number];
   hoveredId: number | null;
   setHoveredId: (id: number | null) => void;
@@ -46,6 +51,7 @@ interface MapPanelProps {
 
 export const MapPanel: React.FC<MapPanelProps> = ({
   properties,
+  center, //  3. Destructure the center property value here
   initialCenter,
   hoveredId,
   setHoveredId,
@@ -81,6 +87,9 @@ export const MapPanel: React.FC<MapPanelProps> = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+
+        {/* 🗺️ 4. Injected your brand-new external recenter helper file component */}
+        <ViewportRecenterController center={center} />
 
         <MapBoundsHandler onBoundsChange={onBoundsChange} />
 

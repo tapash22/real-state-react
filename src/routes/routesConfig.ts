@@ -9,6 +9,7 @@ import AgentsDetails from "../pages/AgentsDetails";
 import { Home } from "../pages/Home";
 
 import PropertyDetails from "../components/map-search/PropertyDetails";
+import RealEstateSearchModule from "../pages/RealEstateSearchModule";
 import SignInForm from "../pages/SignInForm";
 import SignUpForm from "../pages/SignUpForm";
 
@@ -28,19 +29,24 @@ export const routesConfig: RouteObject[] = [
         index: true,
         element: createElement(Home),
       },
-      //last use page route details
-      // {
-      //   path: "property/:id",
-      //   element: createElement(PropertyDetails),
-      // },
+      //  Map Search & Filters Page
+      {
+        path: "search",
+        element: createElement(RealEstateSearchModule),
+      },
+      // Updated Property Details Page
       {
         path: "property/:id",
         element: createElement(PropertyDetails),
       },
+
+      // Agent Details Page
       {
         path: "agents/:id",
         element: createElement(AgentsDetails),
       },
+
+      // Authentication Pages
       {
         path: "signin",
         element: createElement(SignInForm),
@@ -49,6 +55,12 @@ export const routesConfig: RouteObject[] = [
         path: "signup",
         element: createElement(SignUpForm),
       },
+
+      //last use page route details
+      // {
+      //   path: "property/:id",
+      //   element: createElement(PropertyDetails),
+      // },
     ],
   },
 ];

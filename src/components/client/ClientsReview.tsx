@@ -230,6 +230,8 @@ export function ClientsReview() {
                 <span className="hidden sm:inline ">{review.speech}</span>
               </p>
             </div>
+
+            {/* CONTENT END*/}
           </div>
         ))}
       </div>

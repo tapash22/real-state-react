@@ -2,15 +2,16 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
 
+// using component are import and use
 import { About } from "../components/about/About";
 import { Agents } from "../components/agent/Agents";
 import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { HomeList } from "../components/house/HomeList";
-import RealEstateSearchModule from "../components/map-search/RealEstateSearchModule";
 import { Partners } from "../components/partner/Partners";
 import { PlaceList } from "../components/place/PlaceList";
+// import { HomeList } from "../components/house/HomeList";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,9 +82,6 @@ export function Home() {
 
         <div data-scroll-fade>
           <Agents />
-        </div>
-        <div className=" w-full p-5 ">
-          <RealEstateSearchModule />
         </div>
       </div>
     </div>

@@ -31,6 +31,11 @@
         24px 24px 0px color-mix(in srgb, var(--bg) 65%, transparent),
         0px 30px 60px color-mix(in srgb, var(--bg) 45%, transparent);
 
+    --bg-shadow: #ffffff;
+    /* The base backdrop element matching light theme cards */
+    --border-color: #e5e7eb;
+    /* Light border color (gray-200) */
+
     /* scrollbar explain */
     --scrollbar-track: #c2c5cae7;
     --scrollbar-thumb: #041952e1;
@@ -85,6 +90,11 @@
         18px 18px 0px color-mix(in srgb, black 35%, var(--bg)),
         26px 26px 0px color-mix(in srgb, black 48%, var(--bg)),
         0px 35px 70px color-mix(in srgb, black 70%, transparent);
+
+    --bg-shadow: #1e1e1e;
+    /* The base backdrop element matching dark theme cards */
+    --border-color: #2a2a2a;
+    /* Sleek dark border line color */
 
     /* Layout Mapping for Dark Mode */
     --nav-bg: #0B132B;
@@ -201,6 +211,24 @@
 
     .scrollbar-thin::-webkit-scrollbar-thumb:hover {
         background-color: #64748b;
+    }
+
+
+
+    /* =========================
+        Dynamic custom layered box-shadow utility class
+    ========================= */
+
+    .custom-neo-shadow {
+        box-shadow:
+            6px 6px 0px var(--bg-shadow),
+            12px 12px 0px rgba(0, 0, 0, 0.04),
+            18px 18px 0px rgba(0, 0, 0, 0.05),
+            0px 20px 40px rgba(0, 0, 0, 0.2);
+
+        /* Applies your updated dark/light border automatically */
+        border: 2px solid var(--border-color);
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
 }
 

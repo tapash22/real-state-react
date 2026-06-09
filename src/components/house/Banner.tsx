@@ -11,7 +11,9 @@ export function Banner() {
   const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // 1. Initial Guard Clause
     if (
+      !containerRef.current ||
       !titleRef.current ||
       !subtitleTextRef.current ||
       !paraRef.current ||
@@ -19,74 +21,69 @@ export function Banner() {
     )
       return;
 
+    // 2. Create stable, non-null local references for nested closures
+    const subtitleEl = subtitleTextRef.current;
+    const titleEl = titleRef.current;
+    const paraEl = paraRef.current;
+    const searchEl = searchRef.current;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      //  1. Title entrance bounce
+      // Core Entrance Sequence using stable local variables
       tl.fromTo(
-        titleRef.current,
+        titleEl,
         { y: -120, opacity: 0 },
         { y: 0, opacity: 1, duration: 1.2, ease: "bounce.out" },
       )
-        //  2. Initial word placement reveal
         .fromTo(
-          subtitleTextRef.current,
+          subtitleEl,
           { y: 15, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
           "-=0.4",
         )
-        //  3. Description paragraph animation
         .fromTo(
-          paraRef.current,
+          paraEl,
           { y: 30, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
           "-=0.5",
         )
-        //  4. Search bar wrapper fade and pop
         .fromTo(
-          searchRef.current,
+          searchEl,
           { y: 40, opacity: 0, scale: 0.96 },
           { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power4.out" },
           "-=0.4",
         );
 
-      // 🔄 Continuous Word Counting Switcher Mechanism
+      // 🔄 Infinite Text Loop Configuration Engine
       const words = ["Days.", "Months.", "Lifetime."];
       let currentIndex = 0;
 
-      // Set baseline state securely
-      if (subtitleTextRef.current) {
-        // If words[currentIndex] is undefined, it safely falls back to ""
-        subtitleTextRef.current.textContent = words[currentIndex] ?? "";
-      }
+      // Set initial word safely
+      subtitleEl.textContent = words[currentIndex] ?? "";
 
       function playWordLoop() {
         const loopTl = gsap.timeline({
           onComplete: () => {
-            // Safely advance the index or reset it to 0
-            currentIndex = (currentIndex + 1) % words.length;
-            if (subtitleTextRef.current) {
-              subtitleTextRef.current.textContent = words[currentIndex] ?? "";
-            }
-            // Trigger the next loop pass infinitely
             playWordLoop();
           },
         });
 
         loopTl
-          // 1. Maintain readability delay
           .to({}, { duration: 2 })
-          // 2. Roll current word UP and OUT
-          .to(subtitleTextRef.current, {
-            y: -20,
+          // TypeScript is now 100% confident subtitleEl is an HTMLSpanElement
+          .to(subtitleEl, {
+            y: -28,
             opacity: 0,
             duration: 0.35,
             ease: "power3.in",
           })
-          // 3. Teleport word down instantly while invisible
-          .set(subtitleTextRef.current, { y: 20 })
-          // 4. Roll new count word UP and IN
-          .to(subtitleTextRef.current, {
+          .call(() => {
+            currentIndex = (currentIndex + 1) % words.length;
+            subtitleEl.textContent = words[currentIndex] ?? "";
+          })
+          .set(subtitleEl, { y: 28 })
+          .to(subtitleEl, {
             y: 0,
             opacity: 1,
             duration: 0.45,
@@ -94,8 +91,8 @@ export function Banner() {
           });
       }
 
-      // Initialize the looping engine
-      playWordLoop();
+      // Fire off loop engine
+      tl.add(() => playWordLoop(), "-=0.2");
     }, containerRef);
 
     return () => ctx.revert();

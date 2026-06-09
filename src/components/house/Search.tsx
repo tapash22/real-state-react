@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { priceOptions } from "../../data";
 import { Dropdown } from "../dropdown/Dropdown";
 import { HouseContext } from "../HouseContext";
@@ -23,6 +24,9 @@ type HouseContextType = {
 export function Search(_props: SearchProps) {
   const context = useContext(HouseContext);
 
+  // Initialize navigate hook
+  const navigate = useNavigate();
+
   if (!context) return null;
 
   const {
@@ -37,7 +41,11 @@ export function Search(_props: SearchProps) {
     handleClick,
   } = context as HouseContextType;
 
-  // const { handleClick } = context as HouseContextType;
+  //  Wrap handler to combine context filter updates and path redirecting
+  const handleSearchSubmit = () => {
+    handleClick(); // Process the states inside HouseContext
+    navigate("/search"); // Force move user straight to the Map page view
+  };
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
@@ -72,7 +80,7 @@ export function Search(_props: SearchProps) {
 
         {/* Search Submission CTA */}
         <button
-          onClick={handleClick}
+          onClick={handleSearchSubmit}
           style={{ backgroundColor: "var(--button-bg)" }}
           className="w-full md:h-full py-3 md:py-0 rounded-r-lg px-5 text-(--text) font-semibold transition-opacity hover:opacity-100 shadow-sm tracking-widest cursor-pointer"
           type="button"

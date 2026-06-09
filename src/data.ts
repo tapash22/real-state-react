@@ -55,6 +55,360 @@ export interface House {
 
 /* -----------------------------
   Houses Data
+  houseData new format update to use
+export const houseData: any[] = [
+  {
+    id: "maldonado-54-madrid",
+    title: "Room for Rent – Maldonado 54, Madrid",
+    address: {
+      street: "Calle de Maldonado",
+      houseNumber: "54",
+      neighborhood: "Salamanca",
+      city: "Madrid",
+      country: "Spain"
+    },
+    status: "New",
+    registrationPossible: {
+      required: true,
+      localTerm: "empadronamiento"
+    },
+    bookingDates: {
+      checkIn: "2026-06-13",
+      checkOut: "2026-07-21"
+    },
+    pricing: {
+      monthlyRent: 430,
+      currency: "EUR",
+      includesBills: true,
+      depositRequired: true,
+      tenantProtectionFee: 175,
+      initialTotalToConfirm: 605,
+      calculationBasis: "Monthly basis"
+    },
+    propertyDetails: {
+      type: "Private room in apartment",
+      roomSizeSqm: 10,
+      totalPropertySizeSqm: 135,
+      isFurnished: true,
+      totalCapacity: 7,
+      currentHousematesCount: 7,
+      housematesGender: "mixed"
+    },
+    facilitiesAndAmenities: {
+      unisexBathroom: true,
+      sharedToilet: true,
+      sharedKitchen: true,
+      sharedKitchenware: true,
+      hasLivingRoom: false,
+      wifi: true,
+      bed: true,
+      tv: true
+    },
+    houseRulesAndPreferences: {
+      allowedAgeRange: {
+        min: 18,
+        max: 35
+      },
+      genderPreference: "No preference",
+      preferredTenantTypes: ["Students", "working professionals"],
+      suitableForCouples: false,
+      playingMusicalInstruments: "Negotiable",
+      petsAllowed: false,
+      smokingAllowed: false
+    },
+    cancellationPolicy: {
+      type: "Strict cancellation",
+      rules: [
+        {
+          timeframe: "Within 24 hours of confirmation",
+          refund: "Full refund of first month's rent"
+        },
+        {
+          timeframe: "After 24 hours of confirmation",
+          refund: "No refund"
+        }
+      ],
+      notes: "The Tenant Protection fee is non-refundable."
+    },
+    landlord: {
+      id: "sergio-01",
+      name: "Sergio",
+      type: "Rental company",
+      isVerified: true,
+      isExcellentLandlord: true,
+      rating: 4.6,
+      totalReviews: 144,
+      confirmedRentals: 208,
+      responseTime: "Responds within a day",
+      responseRatePercent: 88,
+      joinedDate: "2024-05-09",
+      languagesSpoken: ["English", "Spanish"],
+      totalListings: 579,
+      descriptionSnippet: "Somos una empresa que contamos con más de 500 habitaciones de alquiler en España..."
+    }
+  },
+  {
+    id: "gran-via-12-madrid",
+    title: "Premium Room next to Metro – Gran Vía 12, Madrid",
+    address: {
+      street: "Gran Vía",
+      houseNumber: "12",
+      neighborhood: "Centro",
+      city: "Madrid",
+      country: "Spain"
+    },
+    status: "Trending",
+    registrationPossible: {
+      required: true,
+      localTerm: "empadronamiento"
+    },
+    bookingDates: {
+      checkIn: "2026-07-01",
+      checkOut: "2026-12-31"
+    },
+    pricing: {
+      monthlyRent: 550,
+      currency: "EUR",
+      includesBills: false,
+      depositRequired: true,
+      tenantProtectionFee: 150,
+      initialTotalToConfirm: 700,
+      calculationBasis: "Monthly basis"
+    },
+    propertyDetails: {
+      type: "Private room in apartment",
+      roomSizeSqm: 15,
+      totalPropertySizeSqm: 160,
+      isFurnished: true,
+      totalCapacity: 5,
+      currentHousematesCount: 4,
+      housematesGender: "mixed"
+    },
+    facilitiesAndAmenities: {
+      unisexBathroom: false,
+      sharedToilet: false,
+      sharedKitchen: true,
+      sharedKitchenware: true,
+      hasLivingRoom: true,
+      wifi: true,
+      bed: true,
+      tv: true
+    },
+    houseRulesAndPreferences: {
+      allowedAgeRange: {
+        min: 20,
+        max: 30
+      },
+      genderPreference: "No preference",
+      preferredTenantTypes: ["Students"],
+      suitableForCouples: false,
+      playingMusicalInstruments: "No",
+      petsAllowed: false,
+      smokingAllowed: true
+    },
+    cancellationPolicy: {
+      type: "Flexible cancellation",
+      rules: [
+        {
+          timeframe: "Up to 15 days before check-in",
+          refund: "Full refund"
+        }
+      ],
+      notes: "The Tenant Protection fee is non-refundable."
+    },
+    landlord: {
+      id: "marta-02",
+      name: "Marta",
+      type: "Private landlord",
+      isVerified: true,
+      isExcellentLandlord: false,
+      rating: 4.2,
+      totalReviews: 18,
+      confirmedRentals: 22,
+      responseTime: "Responds within a few hours",
+      responseRatePercent: 95,
+      joinedDate: "2025-01-15",
+      languagesSpoken: ["English", "Spanish", "French"],
+      totalListings: 3,
+      descriptionSnippet: "Hola! Soy Marta, gestiono algunos pisos compartidos en el centro de Madrid para estudiantes internacionales..."
+    }
+  },
+  {
+    id: "diagonal-230-barcelona",
+    title: "Bright Room with Balcony – Avinguda Diagonal, Barcelona",
+    address: {
+      street: "Avinguda Diagonal",
+      houseNumber: "230",
+      neighborhood: "Poblenou",
+      city: "Barcelona",
+      country: "Spain"
+    },
+    status: "New",
+    registrationPossible: {
+      required: true,
+      localTerm: "empadronamiento"
+    },
+    bookingDates: {
+      checkIn: "2026-09-01",
+      checkOut: "2027-02-28"
+    },
+    pricing: {
+      monthlyRent: 490,
+      currency: "EUR",
+      includesBills: true,
+      depositRequired: true,
+      tenantProtectionFee: 180,
+      initialTotalToConfirm: 670,
+      calculationBasis: "Monthly basis"
+    },
+    propertyDetails: {
+      type: "Private room in apartment",
+      roomSizeSqm: 12,
+      totalPropertySizeSqm: 110,
+      isFurnished: true,
+      totalCapacity: 4,
+      currentHousematesCount: 3,
+      housematesGender: "female"
+    },
+    facilitiesAndAmenities: {
+      unisexBathroom: true,
+      sharedToilet: true,
+      sharedKitchen: true,
+      sharedKitchenware: true,
+      hasLivingRoom: true,
+      wifi: true,
+      bed: true,
+      tv: false
+    },
+    houseRulesAndPreferences: {
+      allowedAgeRange: {
+        min: 18,
+        max: 32
+      },
+      genderPreference: "Females only",
+      preferredTenantTypes: ["Students", "working professionals"],
+      suitableForCouples: false,
+      playingMusicalInstruments: "No",
+      petsAllowed: false,
+      smokingAllowed: false
+    },
+    cancellationPolicy: {
+      type: "Strict cancellation",
+      rules: [
+        {
+          timeframe: "Within 24 hours of confirmation",
+          refund: "Full refund"
+        }
+      ],
+      notes: "The Tenant Protection fee is non-refundable."
+    },
+    landlord: {
+      id: "lucia-bcn",
+      name: "Lucia",
+      type: "Rental company",
+      isVerified: true,
+      isExcellentLandlord: true,
+      rating: 4.8,
+      totalReviews: 89,
+      confirmedRentals: 140,
+      responseTime: "Responds within an hour",
+      responseRatePercent: 100,
+      joinedDate: "2023-11-02",
+      languagesSpoken: ["English", "Spanish", "Catalan"],
+      totalListings: 42,
+      descriptionSnippet: "We offer cozy and well-located flatshares across Barcelona. Our mission is to make your stay hassle-free..."
+    }
+  },
+  {
+    id: "arago-415-barcelona",
+    title: "Cosy Room near Sagrada Família – Carrer d'Aragó, Barcelona",
+    address: {
+      street: "Carrer d'Aragó",
+      houseNumber: "415",
+      neighborhood: "Eixample",
+      city: "Barcelona",
+      country: "Spain"
+    },
+    status: "Popular",
+    registrationPossible: {
+      required: false,
+      localTerm: "Not allowed"
+    },
+    bookingDates: {
+      checkIn: "2026-06-20",
+      checkOut: "2026-08-31"
+    },
+    pricing: {
+      monthlyRent: 390,
+      currency: "EUR",
+      includesBills: true,
+      depositRequired: false,
+      tenantProtectionFee: 120,
+      initialTotalToConfirm: 510,
+      calculationBasis: "Monthly basis"
+    },
+    propertyDetails: {
+      type: "Private room in apartment",
+      roomSizeSqm: 9,
+      totalPropertySizeSqm: 95,
+      isFurnished: true,
+      totalCapacity: 3,
+      currentHousematesCount: 2,
+      housematesGender: "mixed"
+    },
+    facilitiesAndAmenities: {
+      unisexBathroom: true,
+      sharedToilet: true,
+      sharedKitchen: true,
+      sharedKitchenware: true,
+      hasLivingRoom: false,
+      wifi: true,
+      bed: true,
+      tv: false
+    },
+    houseRulesAndPreferences: {
+      allowedAgeRange: {
+        min: 18,
+        max: 35
+      },
+      genderPreference: "No preference",
+      preferredTenantTypes: ["working professionals"],
+      suitableForCouples: false,
+      playingMusicalInstruments: "No",
+      petsAllowed: true,
+      smokingAllowed: false
+    },
+    cancellationPolicy: {
+      type: "Moderate",
+      rules: [
+        {
+          timeframe: "30 days before check-in",
+          refund: "50% refund"
+        }
+      ],
+      notes: "The Tenant Protection fee is non-refundable."
+    },
+    landlord: {
+      id: "javier-04",
+      name: "Javier",
+      type: "Private landlord",
+      isVerified: true,
+      isExcellentLandlord: false,
+      rating: 4.5,
+      totalReviews: 32,
+      confirmedRentals: 31,
+      responseTime: "Responds within a day",
+      responseRatePercent: 90,
+      joinedDate: "2024-02-20",
+      languagesSpoken: ["English", "Spanish"],
+      totalListings: 2,
+      descriptionSnippet: "Hi, I am Javier. I have a room available in my flat in Eixample. Quiet environment, looking for clean flatmates..."
+    }
+  }
+];
+
+// houseData new format update to use
+
 ------------------------------ */
 
 export const houseData: House[] = [
@@ -148,97 +502,6 @@ export const houseData: House[] = [
   },
 ];
 
-// home data need to implement future
-// {
-//   "id": "maldonado-54-madrid",
-//   "title": "Room for Rent – Maldonado 54, Madrid",
-//   "address": {
-//     "street": "Calle de Maldonado",
-//     "houseNumber": "54",
-//     "neighborhood": "Salamanca",
-//     "city": "Madrid",
-//     "country": "Spain"
-//   },
-//   "status": "New",
-//   "registrationPossible": {
-//     "required": true,
-//     "localTerm": "empadronamiento"
-//   },
-//   "bookingDates": {
-//     "checkIn": "2026-06-13",
-//     "checkOut": "2026-07-21"
-//   },
-//   "pricing": {
-//     "monthlyRent": 430,
-//     "currency": "EUR",
-//     "includesBills": true,
-//     "depositRequired": true,
-//     "tenantProtectionFee": 175,
-//     "initialTotalToConfirm": 605,
-//     "calculationBasis": "Monthly basis"
-//   },
-//   "propertyDetails": {
-//     "type": "Private room in apartment",
-//     "roomSizeSqm": 10,
-//     "totalPropertySizeSqm": 135,
-//     "isFurnished": true,
-//     "totalCapacity": 7,
-//     "currentHousematesCount": 7,
-//     "housematesGender": "mixed"
-//   },
-//   "facilitiesAndAmenities": {
-//     "unisexBathroom": true,
-//     "sharedToilet": true,
-//     "sharedKitchen": true,
-//     "sharedKitchenware": true,
-//     "hasLivingRoom": false,
-//     "wifi": true,
-//     "bed": true,
-//     "tv": true
-//   },
-//   "houseRulesAndPreferences": {
-//     "allowedAgeRange": {
-//       "min": 18,
-//       "max": 35
-//     },
-//     "genderPreference": "No preference",
-//     "preferredTenantTypes": ["Students", "working professionals"],
-//     "suitableForCouples": false,
-//     "playingMusicalInstruments": "Negotiable",
-//     "petsAllowed": false,
-//     "smokingAllowed": false
-//   },
-//   "cancellationPolicy": {
-//     "type": "Strict cancellation",
-//     "rules": [
-//       {
-//         "timeframe": "Within 24 hours of confirmation",
-//         "refund": "Full refund of first month's rent"
-//       },
-//       {
-//         "timeframe": "After 24 hours of confirmation",
-//         "refund": "No refund"
-//       }
-//     ],
-//     "notes": "The Tenant Protection fee is non-refundable."
-//   },
-//   "landlord": {
-//     "id": "sergio-01",
-//     "name": "Sergio",
-//     "type": "Rental company",
-//     "isVerified": true,
-//     "isExcellentLandlord": true,
-//     "rating": 4.6,
-//     "totalReviews": 144,
-//     "confirmedRentals": 208,
-//     "responseTime": "Responds within a day",
-//     "responseRatePercent": 88,
-//     "joinedDate": "2024-05-09",
-//     "languagesSpoken": ["English", "Spanish"],
-//     "totalListings": 579,
-//     "descriptionSnippet": "Somos una empresa que contamos con más de 500 habitaciones de alquiler en España. Nos encargamos de garantizar a nuestro inquilino la mayor confianza..."
-//   }
-// }
 
 // Q & A
 export interface FAQItem {

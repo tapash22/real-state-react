@@ -18,12 +18,12 @@ export function HouseCard({ house }: HouseProps) {
           borderColor: "var(--border)",
           // Re-engineered layered shadow system using CSS variable tones
           // to perfectly mirror structural layers in light and dark layouts
-          boxShadow: `
-            6px 6px 0px var(--bg),
-            12px 12px 0px rgba(0, 0, 0, 0.04),
-            18px 18px 0px rgba(0, 0, 0, 0.05),
-            0px 20px 40px rgba(0, 0, 0, 0.2)
-          `,
+          // boxShadow: `
+          //   6px 6px 0px var(--bg),
+          //   12px 12px 0px rgba(0, 0, 0, 0.04),
+          //   18px 18px 0px rgba(0, 0, 0, 0.05),
+          //   0px 20px 40px rgba(0, 0, 0, 0.2)
+          // `,
         }}
         className="
           relative z-10 overflow-hidden rounded-[24px] border w-full flex flex-col justify-between
@@ -34,6 +34,7 @@ export function HouseCard({ house }: HouseProps) {
           shadow-lg hover:shadow-xl 
           dark:shadow-black/20 dark:hover:shadow-black/50
           cursor-pointer
+          custom-neo-shadow
         "
       >
         <div>
