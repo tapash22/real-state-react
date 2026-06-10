@@ -36,22 +36,261 @@ export interface Place {
   agencies: Agency[];
 }
 
+// export interface House {
+//   id: number;
+//   type: string;
+//   rating: number;
+//   name: string;
+//   description: string;
+//   image: string;
+//   imageLg: string;
+//   country: string;
+//   address: string;
+
+//   bedroom: string;
+//   bathroom: string;
+//   surface: string;
+//   year: string;
+//   price: string;
+//   agent: Agent;
+// }
+
 export interface House {
   id: number;
   type: string;
   name: string;
+  rating: number;
+  lat: number;
+  lng: number;
+
   description: string;
   image: string;
-  imageLg: string;
+  imageLg: string; // Same as above
   country: string;
   address: string;
-  bedroom: string;
-  bathroom: string;
-  surface: string;
-  year: string;
-  price: string;
+  bedroom: string; // Typed as string because your data uses "4"
+  bathroom: string; // Typed as string because your data uses "3"
+  surface: string; // e.g., "2000 sq ft"
+  year: string; // Typed as string because your data uses "2023"
+  price: string; // Typed as string because your data uses "2000000"
   agent: Agent;
 }
+
+export const houseData: House[] = [
+  {
+    id: 5,
+    type: "Social hub",
+    name: "Student Residence in Dhanmondi",
+    description:
+      "Cozy student residence property located in a vibrant community space.",
+    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400",
+    imageLg:
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400",
+    country: "Bangladesh",
+    address: "Dhanmondi 27, Dhaka",
+    bedroom: "1",
+    bathroom: "1",
+    surface: "N/A",
+    year: "2024",
+    price: "786",
+    rating: 4.8,
+    lat: 23.7465,
+    lng: 90.376,
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "Tapash Paul",
+      phone: "01674345763",
+    },
+  },
+  {
+    id: 6,
+    type: "3 housemates",
+    name: "Private Room in Mohammadpur",
+    description:
+      "Shared apartment setup with a private room and a welcoming community.",
+    image: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=400",
+    imageLg:
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=400",
+    country: "Bangladesh",
+    address: "Mohammadpur, Dhaka",
+    bedroom: "1",
+    bathroom: "1",
+    surface: "N/A",
+    year: "2024",
+    price: "420",
+    rating: 4.3,
+    lat: 23.7639,
+    lng: 90.3589,
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "Tapash Paul",
+      phone: "01674345763",
+    },
+  },
+  {
+    id: 7,
+    type: "3 housemates",
+    name: "Private Room in Mirpur DOHS",
+    description:
+      "Affordable shared living experience with a private room setup.",
+    image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=400",
+    imageLg:
+      "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=400",
+    country: "Bangladesh",
+    address: "Mirpur DOHS, Dhaka",
+    bedroom: "1",
+    bathroom: "1",
+    surface: "N/A",
+    year: "2024",
+    price: "390",
+    rating: 4.7,
+    lat: 23.8223,
+    lng: 90.3654,
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "Tapash Paul",
+      phone: "01674345763",
+    },
+  },
+  {
+    id: 8,
+    type: "Entire apartment",
+    name: "Luxury Apartment in Gulshan",
+    description:
+      "Premium luxury apartment boasting scenic views in the heart of Gulshan.",
+    image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400",
+    imageLg:
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400",
+    country: "Bangladesh",
+    address: "Gulshan 2, Dhaka",
+    bedroom: "2",
+    bathroom: "2",
+    surface: "1200 sq ft",
+    year: "2025",
+    price: "1066",
+    rating: 4.9,
+    lat: 23.7925,
+    lng: 90.4078,
+    agent: {
+      image:
+        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
+      name: "Tapash Paul",
+      phone: "01674345763",
+    },
+  },
+];
+
+// Q & A
+
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export const faqData: FAQItem[] = [
+  {
+    id: 1,
+    question: "Are you a real estate agency?",
+    answer:
+      "No, we're not a real estate agency. HousingAnywhere is an online platform connecting people looking for their next home with landlords looking for tenants.",
+  },
+
+  {
+    id: 2,
+    question: "How does the renting process work?",
+    answer:
+      "You can find and rent your next home safely and entirely online. Listings include detailed descriptions, photos, videos, and floor plans. You can message landlords directly, exchange documents, and securely book your stay through the platform.",
+  },
+
+  {
+    id: 3,
+    question: "When do I pay for the booking?",
+    answer:
+      "You'll pay the first month's rent and, depending on the region, a Tenant Protection fee. Once the payment is received, your booking is confirmed and you'll receive the landlord's contact details. Remaining rental costs are paid directly to the landlord.",
+  },
+
+  {
+    id: 4,
+    question: "Can I cancel my booking?",
+    answer:
+      "Yes, you can cancel your stay at any time before moving in. Depending on the cancellation policy and timing, you may receive a full or partial refund. The Tenant Protection fee is non-refundable.",
+  },
+
+  {
+    id: 5,
+    question: "Do I need to visit the property before booking?",
+    answer:
+      "No, visiting is not required. Listings provide detailed descriptions, photos, videos, and floor plans to help you understand the property. You can also communicate with landlords directly before booking.",
+  },
+];
+
+// Q & A End
+
+/* -----------------------------
+  Place List
+------------------------------ */
+
+export const placeList: Place[] = [
+  {
+    id: 1,
+    title: "Gulshan",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    lists: ["one", "two", "three"],
+    agencies: [
+      {
+        id: 1,
+        name: "Group of Company",
+        details: "some thing have some new demo",
+        place: ["one", "two", "three", "four", "five"],
+        image: "https://thumbs.dreamstime.com/b/building-logo-icon-vector.jpg",
+        address: "bonosree,rampura, Dhaka",
+        project: [
+          { id: 1, name: "tttt" },
+          { id: 2, name: "tttt" },
+          { id: 3, name: "tttt" },
+          { id: 4, name: "tttt" },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 2,
+    title: "Bonani",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    agencies: [],
+  },
+  {
+    id: 3,
+    title: "Bonani1",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    agencies: [],
+  },
+  {
+    id: 4,
+    title: "Gulshan2",
+    image: assets.house1,
+    fuImage: assets.house1lg,
+    sq: "1800",
+    agencies: [],
+  },
+];
+
+export const priceOptions = [
+  "1000000-20000000",
+  "3000000-40000000",
+  "5000000-60000000",
+];
 
 /* -----------------------------
   Houses Data
@@ -410,203 +649,3 @@ export const houseData: any[] = [
 // houseData new format update to use
 
 ------------------------------ */
-
-export const houseData: House[] = [
-  {
-    id: 1,
-    type: "House",
-    name: "House 1",
-    description:
-      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
-    image: assets.house1,
-    imageLg: assets.house1lg,
-    country: "Bangladesh",
-    address: "Bonosree, rampura,dhaka",
-    bedroom: "4",
-    bathroom: "3",
-    surface: "2000 sq ft",
-    year: "2023",
-    price: "1000000",
-    agent: {
-      image:
-        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
-      name: "tapash paul",
-      phone: "01674345763",
-    },
-  },
-  {
-    id: 2,
-    type: "House",
-    name: "House 2",
-    description:
-      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
-    image: assets.house2,
-    imageLg: assets.house2lg,
-    country: "India",
-    address: "Bonosree, rampura,dhaka",
-    bedroom: "4",
-    bathroom: "3",
-    surface: "2000 sq ft",
-    year: "2023",
-    price: "2000000",
-    agent: {
-      image:
-        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
-      name: "tapash paul",
-      phone: "01674345763",
-    },
-  },
-  {
-    id: 3,
-    type: "House",
-    name: "House 3",
-    description:
-      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
-    image: assets.house3,
-    imageLg: assets.house3lg,
-    country: "Canada",
-    address: "Bonosree, rampura,dhaka",
-    bedroom: "4",
-    bathroom: "3",
-    surface: "2000 sq ft",
-    year: "2023",
-    price: "4000000",
-    agent: {
-      image:
-        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
-      name: "tapash paul",
-      phone: "01674345763",
-    },
-  },
-  {
-    id: 4,
-    type: "House",
-    name: "House 4",
-    description:
-      "this is very beautiful house and it's south face view and use metarials are imported from italie. there have 4 room, 3 wash room and every room have 2 window with attach balcone",
-    image: assets.house1,
-    imageLg: assets.house1lg,
-    country: "America",
-    address: "Bonosree, rampura,dhaka",
-    bedroom: "4",
-    bathroom: "3",
-    surface: "2000 sq ft",
-    year: "2023",
-    price: "5000000",
-    agent: {
-      image:
-        "https://media.istockphoto.com/id/1270067126/photo/smiling-indian-man-looking-at-camera.jpg",
-      name: "tapash paul",
-      phone: "01674345763",
-    },
-  },
-];
-
-
-// Q & A
-export interface FAQItem {
-  id: number;
-  question: string;
-  answer: string;
-}
-
-export const faqData: FAQItem[] = [
-  {
-    id: 1,
-    question: "Are you a real estate agency?",
-    answer:
-      "No, we're not a real estate agency. HousingAnywhere is an online platform connecting people looking for their next home with landlords looking for tenants.",
-  },
-
-  {
-    id: 2,
-    question: "How does the renting process work?",
-    answer:
-      "You can find and rent your next home safely and entirely online. Listings include detailed descriptions, photos, videos, and floor plans. You can message landlords directly, exchange documents, and securely book your stay through the platform.",
-  },
-
-  {
-    id: 3,
-    question: "When do I pay for the booking?",
-    answer:
-      "You'll pay the first month's rent and, depending on the region, a Tenant Protection fee. Once the payment is received, your booking is confirmed and you'll receive the landlord's contact details. Remaining rental costs are paid directly to the landlord.",
-  },
-
-  {
-    id: 4,
-    question: "Can I cancel my booking?",
-    answer:
-      "Yes, you can cancel your stay at any time before moving in. Depending on the cancellation policy and timing, you may receive a full or partial refund. The Tenant Protection fee is non-refundable.",
-  },
-
-  {
-    id: 5,
-    question: "Do I need to visit the property before booking?",
-    answer:
-      "No, visiting is not required. Listings provide detailed descriptions, photos, videos, and floor plans to help you understand the property. You can also communicate with landlords directly before booking.",
-  },
-];
-
-// Q & A End
-
-/* -----------------------------
-  Place List
------------------------------- */
-
-export const placeList: Place[] = [
-  {
-    id: 1,
-    title: "Gulshan",
-    image: assets.house1,
-    fuImage: assets.house1lg,
-    sq: "1800",
-    lists: ["one", "two", "three"],
-    agencies: [
-      {
-        id: 1,
-        name: "Group of Company",
-        details: "some thing have some new demo",
-        place: ["one", "two", "three", "four", "five"],
-        image: "https://thumbs.dreamstime.com/b/building-logo-icon-vector.jpg",
-        address: "bonosree,rampura, Dhaka",
-        project: [
-          { id: 1, name: "tttt" },
-          { id: 2, name: "tttt" },
-          { id: 3, name: "tttt" },
-          { id: 4, name: "tttt" },
-        ],
-      },
-    ],
-  },
-
-  {
-    id: 2,
-    title: "Bonani",
-    image: assets.house1,
-    fuImage: assets.house1lg,
-    sq: "1800",
-    agencies: [],
-  },
-  {
-    id: 3,
-    title: "Bonani1",
-    image: assets.house1,
-    fuImage: assets.house1lg,
-    sq: "1800",
-    agencies: [],
-  },
-  {
-    id: 4,
-    title: "Gulshan2",
-    image: assets.house1,
-    fuImage: assets.house1lg,
-    sq: "1800",
-    agencies: [],
-  },
-];
-
-export const priceOptions = [
-  "1000000-20000000",
-  "3000000-40000000",
-  "5000000-60000000",
-];

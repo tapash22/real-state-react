@@ -15,12 +15,12 @@ type HouseContextType = {
 };
 
 // 🗺️ Coordinate Registry to center your map on the selected place/country
-const COUNTRY_COORDINATES: Record<string, [number, number]> = {
-  bangladesh: [23.8103, 90.4125], // Dhaka Center
-  india: [20.5937, 78.9629], // Delhi Region Center
-  canada: [56.1304, -106.3468], // Ottawa Region Center
-  america: [37.0902, -95.7129], // Washington/Central Center
-};
+// const COUNTRY_COORDINATES: Record<string, [number, number]> = {
+//   bangladesh: [23.8103, 90.4125], // Dhaka Center
+//   india: [20.5937, 78.9629], // Delhi Region Center
+//   canada: [56.1304, -106.3468], // Ottawa Region Center
+//   america: [37.0902, -95.7129], // Washington/Central Center
+// };
 
 // this is old data list which are implement
 // const CENTRAL_DATABASE: Property[] = [
@@ -79,22 +79,19 @@ export default function RealEstateSearchModule() {
     price: "Choose your price",
   }) as HouseContextType;
 
-  // Change this line inside your component:
-  // const [filteredProperties, setFilteredProperties] = useState<
-  //   (Property & { country?: string })[]
-  // >([]);
-
   const [filteredProperties, setFilteredProperties] = useState<any[]>([]);
   const [mapBounds, setMapBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
-  // Default map viewport focus node
+  // Set the initial focal point strictly to Dhaka Center where your properties are located
   const [mapCenter, setMapCenter] = useState<[number, number]>([
-    23.8103, 90.4125,
+    23.7925,
+    90.4078, // Center near Gulshan/Dhanmondi data cluster
   ]);
 
+  // Handle screen resize for responsive layouts
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener("resize", handleResize);
@@ -106,9 +103,7 @@ export default function RealEstateSearchModule() {
   }, []);
 
   // 💾 FUTURE-PROOFING STORAGE ENGINE
-  // This effect captures the search event data and records it to browser storage for future features
   useEffect(() => {
-    // Only save valid active queries, skip default placeholder states
     if (!country || country === "Select your place") return;
 
     const currentSearchPayload = {
@@ -118,18 +113,10 @@ export default function RealEstateSearchModule() {
       searchedPriceRange: price !== "Choose your price" ? price : "Any Budget",
     };
 
-    // Print out search parameters to console for testing/debugging your future actions
-    console.log(
-      "Saving Search Parameter Data Matrix for future use:",
-      currentSearchPayload,
-    );
-
-    // Pull down historical searches log array, add new payload, write back to disk
     const existingHistory = JSON.parse(
       localStorage.getItem("recent_searches") || "[]",
     );
 
-    // De-duplicate: Don't stack consecutive identical clicks
     if (
       existingHistory[0]?.searchedCountry !== country ||
       existingHistory[0]?.searchedPropertyType !== property
@@ -137,20 +124,23 @@ export default function RealEstateSearchModule() {
       const updatedHistory = [currentSearchPayload, ...existingHistory].slice(
         0,
         10,
-      ); // Limit to last 10 entries
+      );
       localStorage.setItem("recent_searches", JSON.stringify(updatedHistory));
     }
-  }, [country, property, price]); // Fires immediately on component mount when parameters route in
+  }, [country, property, price]);
 
-  // 🔄 Dynamic Map Positioning Matrix Adjustments
+  // 🔄 Dynamic Map Positioning Matrix Adjustments based on chosen country selection
   useEffect(() => {
     if (!country || country === "Select your place" || country === "All")
       return;
-    const normalizedCountry = country.toLowerCase().trim();
 
-    // Move focus directly to the matched geographic capital target area
-    if (COUNTRY_COORDINATES[normalizedCountry]) {
-      setMapCenter(COUNTRY_COORDINATES[normalizedCountry]);
+    const matchingProperty = houseData.find(
+      (house) =>
+        house.country.toLowerCase().trim() === country.toLowerCase().trim(),
+    );
+
+    if (matchingProperty) {
+      setMapCenter([matchingProperty.lat, matchingProperty.lng]);
     }
   }, [country]);
 
@@ -158,29 +148,19 @@ export default function RealEstateSearchModule() {
   useEffect(() => {
     setIsLoading(true);
     const networkLatency = setTimeout(() => {
-      // Inject coordinates into your custom dataset on-the-fly to lay out your map pins
+      // Clean and map properties strictly utilizing built-in houseData coordinates
       const preparedData = houseData.map((house) => {
-        const normalizedCountry = house.country.toLowerCase().trim();
-        const baseCoords = COUNTRY_COORDINATES[normalizedCountry] || [
-          23.8103, 90.4125,
-        ];
-
-        // Scatter markers sharing the same country designation slightly so they don't block each other
-        const offset = house.id * 0.012;
-
         return {
           ...house,
-          lat: baseCoords[0] + (house.id % 2 === 0 ? offset : -offset),
-          lng: baseCoords[1] + (house.id % 3 === 0 ? offset : -offset),
+          lat: house.lat,
+          lng: house.lng,
           title: house.name,
-          rating: 4.7,
+          price: parseInt(house.price, 10),
         };
       });
 
-      let baseResults = mockDatabaseFetch(
-        mapBounds,
-        preparedData as unknown as Property[],
-      );
+      // Apply global dropdown parameter criteria filters first
+      let baseResults = preparedData;
 
       // 1. Evaluate Country Filters
       if (country && country !== "Select your place" && country !== "All") {
@@ -191,7 +171,12 @@ export default function RealEstateSearchModule() {
       }
 
       // 2. Evaluate Property Structure Layout Types
-      if (property && property !== "Select type" && property !== "All") {
+      if (
+        property &&
+        property !== "Select type" &&
+        property !== "All" &&
+        property !== "property any type"
+      ) {
         baseResults = baseResults.filter(
           (item: any) =>
             item.type?.toLowerCase() === property.toLowerCase().trim(),
@@ -206,9 +191,24 @@ export default function RealEstateSearchModule() {
           const maxBudget = parseInt(digits[1] || "99999999", 10);
 
           baseResults = baseResults.filter((item: any) => {
-            const numericalPrice = parseInt(item.price, 10);
-            return numericalPrice >= minBudget && numericalPrice <= maxBudget;
+            return item.price >= minBudget && item.price <= maxBudget;
           });
+        }
+      }
+
+      // Secondary boundary checks against map position
+      if (mapBounds) {
+        // We explicitly cast the return array BACK to our original rich shape type
+        // to prevent TypeScript from complaining about missing fields from Property[]
+        const boundedResults = mockDatabaseFetch(
+          mapBounds,
+          baseResults as unknown as Property[],
+        ) as typeof preparedData;
+
+        // Safety Fallback: If map viewport parameters strip away items,
+        // maintain the global filtered dropdown choices on-screen
+        if (boundedResults.length > 0) {
+          baseResults = boundedResults;
         }
       }
 
@@ -220,27 +220,6 @@ export default function RealEstateSearchModule() {
   }, [mapBounds, country, property, price]);
 
   const hasProperties = filteredProperties.length > 0;
-
-  // use with api implement
-  //   useEffect(() => {
-  //   if (!mapBounds) return;
-  //   setIsLoading(true);
-
-  //   // Example backend API integration
-  //   axios.get('/api/v1/rentals/search', {
-  //     params: {
-  //       north: mapBounds.north,
-  //       south: mapBounds.south,
-  //       east: mapBounds.east,
-  //       west: mapBounds.west
-  //     }
-  //   })
-  //   .then((response) => {
-  //     setFilteredProperties(response.data.listings);
-  //   })
-  //   .catch((error) => console.error("Search fetch failed", error))
-  //   .finally(() => setIsLoading(false));
-  // }, [mapBounds]);
 
   return (
     <div style={isMobile ? styles.mobileContainer : styles.desktopContainer}>

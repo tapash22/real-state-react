@@ -151,7 +151,7 @@ export function Banner() {
         {/* FLOATING SEARCH CONTAINER BAR */}
         <div
           ref={searchRef}
-          className="m-5  shadow-md shadow-violet-100/10 dark:shadow-gray-200 backdrop-blur-xl rounded-2xl "
+          className="m-5 shadow-md shadow-violet-100/10 dark:shadow-gray-200 backdrop-blur-xl rounded-2xl "
         >
           <Search />
         </div>
