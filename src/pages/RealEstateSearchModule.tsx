@@ -1,12 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { ListPanel } from "../components/map-search/ListPanel";
 import { MapPanel } from "../components/map-search/MapPanel";
 import { styles } from "../components/map-search/styles";
 import { mockDatabaseFetch } from "../components/map-search/utils";
 import { MapBounds, Property } from "../types/types";
-// 1. Import your shared global House Context
+
+// Import your shared global House Context & Cards
+import { Link } from "react-router-dom";
 import { HouseContext } from "../components/HouseContext";
-import { houseData } from "../data";
+import { NoProperties } from "../components/empty/NoProperties";
+import { HouseCard } from "../components/house/HouseCard";
+import { GsapLoader } from "../components/loader/GsapLoader";
+import { House, houseData } from "../data";
 
 type HouseContextType = {
   country: string;
@@ -76,11 +80,11 @@ export default function RealEstateSearchModule() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
+  const [searchValue, setSearchValue] = useState<string | null>("House");
 
-  // Set the initial focal point strictly to Dhaka Center where your properties are located
+  // Set initial focal point to Dhaka Center (near Gulshan/Dhanmondi data cluster)
   const [mapCenter, setMapCenter] = useState<[number, number]>([
-    23.7925,
-    90.4078, // Center near Gulshan/Dhanmondi data cluster
+    23.7925, 90.4078,
   ]);
 
   // Handle screen resize for responsive layouts
@@ -93,6 +97,15 @@ export default function RealEstateSearchModule() {
   const handleBoundsChange = useCallback((bounds: MapBounds) => {
     setMapBounds(bounds);
   }, []);
+
+  // Update GsapLoader text whenever the property type changes
+  useEffect(() => {
+    if (property === "property any type" || property === "Select type") {
+      setSearchValue("Try To Best");
+    } else {
+      setSearchValue(property);
+    }
+  }, [property]);
 
   // 💾 FUTURE-PROOFING STORAGE ENGINE
   useEffect(() => {
@@ -190,15 +203,11 @@ export default function RealEstateSearchModule() {
 
       // Secondary boundary checks against map position
       if (mapBounds) {
-        // We explicitly cast the return array BACK to our original rich shape type
-        // to prevent TypeScript from complaining about missing fields from Property[]
         const boundedResults = mockDatabaseFetch(
           mapBounds,
           baseResults as unknown as Property[],
         ) as typeof preparedData;
 
-        // Safety Fallback: If map viewport parameters strip away items,
-        // maintain the global filtered dropdown choices on-screen
         if (boundedResults.length > 0) {
           baseResults = boundedResults;
         }
@@ -212,6 +221,8 @@ export default function RealEstateSearchModule() {
   }, [mapBounds, country, property, price]);
 
   const hasProperties = filteredProperties.length > 0;
+
+  if (!context) return null;
 
   return (
     <div style={isMobile ? styles.mobileContainer : styles.desktopContainer}>
@@ -252,13 +263,13 @@ export default function RealEstateSearchModule() {
         )}
       </div>
 
-      {/* RENDER LIST FEED AND META SUMMARY DATA */}
+      {/* RENDER HOUSES LIST FEED AND META SUMMARY DATA */}
       {(!isMobile || hasProperties) && (
         <div
           style={
             isMobile ? styles.mobileListWrapper : styles.desktopListWrapper
           }
-          className="flex flex-col h-full"
+          className="flex flex-col h-full bg-white dark:bg-zinc-950"
         >
           {/* Data Print Block: Clear readout panel highlighting active pipeline values */}
           <div className="px-6 py-4 border-b border-(--border) bg-gray-50/70 dark:bg-zinc-900/70 shadow-sm z-10">
@@ -282,15 +293,34 @@ export default function RealEstateSearchModule() {
             </div>
           </div>
 
-          {/* Interactive Property Cards Stream */}
-          <div className="flex-1 overflow-y-auto">
-            <ListPanel
-              properties={filteredProperties as unknown as Property[]}
-              isLoading={isLoading}
-              hoveredId={hoveredId}
-              setHoveredId={setHoveredId}
-              isMobile={isMobile}
-            />
+          {/* Streamlining List View Feed Container */}
+          <div className="flex-1 overflow-y-auto px-4 py-6 scrollbar-thin">
+            {isLoading ? (
+              <div className="flex justify-center items-center h-48">
+                <GsapLoader searchType={searchValue} />
+              </div>
+            ) : !hasProperties ? (
+              <NoProperties />
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 justify-center items-stretch">
+                {filteredProperties.map((house: House) => (
+                  <Link
+                    to={`/property/${house.id}`}
+                    key={house.id}
+                    className={`no-underline block focus:outline-none rounded-xl transition-all duration-200 ${
+                      hoveredId === house.id
+                        ? "ring-2 ring-emerald-500 scale-[1.01] shadow-md"
+                        : ""
+                    }`}
+                    onMouseEnter={() => setHoveredId(house.id)}
+                    onMouseLeave={() => setHoveredId(null)}
+                  >
+                    {/* Explicitly passing data properties structure straight into HouseCard */}
+                    <HouseCard house={house} />
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
