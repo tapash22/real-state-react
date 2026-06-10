@@ -14,14 +14,6 @@ type HouseContextType = {
   price: string;
 };
 
-// 🗺️ Coordinate Registry to center your map on the selected place/country
-// const COUNTRY_COORDINATES: Record<string, [number, number]> = {
-//   bangladesh: [23.8103, 90.4125], // Dhaka Center
-//   india: [20.5937, 78.9629], // Delhi Region Center
-//   canada: [56.1304, -106.3468], // Ottawa Region Center
-//   america: [37.0902, -95.7129], // Washington/Central Center
-// };
-
 // this is old data list which are implement
 // const CENTRAL_DATABASE: Property[] = [
 //   {
