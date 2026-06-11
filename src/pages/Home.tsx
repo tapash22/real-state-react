@@ -8,10 +8,8 @@ import { Agents } from "../components/agent/Agents";
 import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
-import { HomeList } from "../components/house/HomeList";
 import { Partners } from "../components/partner/Partners";
 import { PlaceList } from "../components/place/PlaceList";
-// import { HomeList } from "../components/house/HomeList";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,10 +54,6 @@ export function Home() {
       <Banner />
 
       <div className="w-full space-y-5">
-        <div data-scroll-fade>
-          <HomeList />
-        </div>
-
         <div data-scroll-fade>
           <About />
         </div>
