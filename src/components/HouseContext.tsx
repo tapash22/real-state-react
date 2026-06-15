@@ -3,7 +3,7 @@ import type { House } from "../data";
 import { houseData } from "../data";
 
 /* ----------------------------- */
-type HouseContextType = {
+export type HouseContextType = {
   houses: House[];
   country: string;
   setCountry: React.Dispatch<React.SetStateAction<string>>;
@@ -11,6 +11,7 @@ type HouseContextType = {
   property: string;
   setProperty: React.Dispatch<React.SetStateAction<string>>;
   price: string;
+  prices: string[];
   setPrice: React.Dispatch<React.SetStateAction<string>>;
   properties: string[];
   isLoading: boolean;
@@ -31,7 +32,9 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
   const [property, setProperty] = useState("property any type");
   const [properties, setProperties] = useState<string[]>([]);
 
-  const [price, setPrice] = useState("0 1000000");
+  const [price, setPrice] = useState("All Prices");
+  const [prices, setPrices] = useState<string[]>([]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   /* ----------------------------- */
@@ -43,6 +46,20 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const allProperties = houseData.map((h) => h.type);
     setProperties(["property any type", ...new Set(allProperties)]);
+  }, []);
+
+  // Fixed: Dynamically generate clean, readable pricing tier buckets based on database range
+  useEffect(() => {
+    const staticPriceTiers = [
+      "All Prices",
+      "100-300",
+      "300-600",
+      "600-900",
+      "900-1500",
+      "1500-3000",
+      "3000+",
+    ];
+    setPrices(staticPriceTiers);
   }, []);
 
   /* ----------------------------- */
@@ -83,6 +100,7 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
         setProperty,
         price,
         setPrice,
+        prices,
         properties,
         isLoading,
         handleClick,

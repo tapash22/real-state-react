@@ -6,18 +6,15 @@ import { MapBounds, Property } from "../types/types";
 
 // Import your shared global House Context & Cards
 import { Link } from "react-router-dom";
-import { HouseContext } from "../components/HouseContext";
+import {
+  HouseContext,
+  type HouseContextType,
+} from "../components/HouseContext";
 import { NoProperties } from "../components/empty/NoProperties";
 import { FilterBar } from "../components/filter/FilterBar";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
 import { House, houseData } from "../data";
-
-type HouseContextType = {
-  country: string;
-  property: string;
-  price: string;
-};
 
 // this is old data list which are implement
 // const CENTRAL_DATABASE: Property[] = [
@@ -67,6 +64,9 @@ type HouseContextType = {
 //   },
 // ];
 
+// this use for using search type to show UI
+//   globalProperty
+
 export default function RealEstateSearchModule() {
   const context = useContext(HouseContext);
 
@@ -74,10 +74,16 @@ export default function RealEstateSearchModule() {
     country,
     property: globalProperty,
     price: globalPrice,
+    properties,
+    prices,
   } = (context || {
     country: "Select your place",
     property: "Select type",
     price: "Choose your price",
+    properties: ["All Types", "Apartment", "House", "Studio"],
+    prices: ["All Prices", "300-600", "600-900", "900+"],
+    setProperty: () => {},
+    setPrice: () => {},
   }) as HouseContextType;
 
   // 2. Local view-only filter states (Does not bleed back into global context)
@@ -95,6 +101,13 @@ export default function RealEstateSearchModule() {
   const [mapCenter, setMapCenter] = useState<[number, number]>([
     23.7925, 90.4078,
   ]);
+
+  // ─── 3. SCREEN RESPONSIVENESS LISTENER ───
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 💾 STORAGE ENGINE (Fixed variable references here)
   useEffect(() => {
@@ -241,10 +254,6 @@ export default function RealEstateSearchModule() {
     localProperty,
   ]);
 
-  const handleBoundsChange = useCallback((bounds: MapBounds) => {
-    setMapBounds(bounds);
-  }, []);
-
   // Filter Engine Combining Global Context + Local Sub-Filters
   useEffect(() => {
     setIsLoading(true);
@@ -347,6 +356,10 @@ export default function RealEstateSearchModule() {
     localProperty,
   ]);
 
+  const handleBoundsChange = useCallback((bounds: MapBounds) => {
+    setMapBounds(bounds);
+  }, []);
+
   const hasProperties = filteredProperties.length > 0;
 
   if (!context) return null;
@@ -354,6 +367,7 @@ export default function RealEstateSearchModule() {
   return (
     <div className="flex flex-col w-full h-screen bg-white dark:bg-zinc-950">
       {/* FilterBar acting completely decoupled from landing search context variables */}
+
       <FilterBar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -361,6 +375,10 @@ export default function RealEstateSearchModule() {
         setLocalPrice={setLocalPrice}
         localProperty={localProperty}
         setLocalProperty={setLocalProperty}
+        priceList={prices || ["All Prices", "300-600", "600-900", "900+"]}
+        propertyList={
+          properties || ["All Types", "Apartment", "House", "Studio"]
+        }
       />
 
       {/* Main Panel View Area */}

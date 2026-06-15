@@ -1,5 +1,6 @@
 import { FaChevronDown, FaRegBell } from "react-icons/fa";
 import { LuSlidersHorizontal } from "react-icons/lu";
+import { Dropdown } from "../dropdown/Dropdown";
 
 interface FilterBarProps {
   // Current local filter values from parent
@@ -9,6 +10,8 @@ interface FilterBarProps {
   setLocalPrice: (price: string) => void;
   localProperty: string;
   setLocalProperty: (type: string) => void;
+  priceList: string[];
+  propertyList: string[];
 }
 
 export function FilterBar({
@@ -18,6 +21,8 @@ export function FilterBar({
   setLocalPrice,
   localProperty,
   setLocalProperty,
+  priceList,
+  propertyList,
 }: FilterBarProps) {
   const tabs = ["Anyone", "Students", "Professionals", "Families"];
 
@@ -30,6 +35,27 @@ export function FilterBar({
           <button className="flex items-center rounded-full border border-sky-100 bg-sky-50 px-4 py-2 font-medium text-sky-900 transition-colors hover:bg-sky-100/80">
             7 Jul – 20 Aug 2026 (± 2 weeks)
           </button>
+          <div className="w-auto">
+            <Dropdown
+              selectedValue={localPrice}
+              onSelect={setLocalPrice}
+              options={priceList}
+              label="Price Range"
+              DropdrownIcon={FaChevronDown}
+              smallSize={true}
+            />
+          </div>
+
+          <div className="w-48">
+            <Dropdown
+              selectedValue={localProperty}
+              onSelect={setLocalProperty}
+              options={propertyList}
+              label="Property Type"
+              DropdrownIcon={FaChevronDown}
+              smallSize={true}
+            />
+          </div>
 
           {/* Local Price Filter Button */}
           <button
@@ -94,6 +120,7 @@ export function FilterBar({
 
       {/* Lower Demographic Sub-Tabs */}
       <div className="flex items-center gap-6 text-sm font-medium border-t border-gray-100 pt-2.5">
+        {activeTab}
         {tabs.map((tab) => {
           const isActive = activeTab === tab;
           return (

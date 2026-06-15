@@ -80,7 +80,7 @@ export const houseData: House[] = [
   {
     id: 5,
     type: "Social hub",
-    name: "Student Residence in Dhanmondi",
+    name: " Residence in Dhanmondi",
     description:
       "Cozy student residence property located in a vibrant community space.",
     image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400",
