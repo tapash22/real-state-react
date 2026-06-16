@@ -57,40 +57,6 @@ export function FilterBar({
             />
           </div>
 
-          {/* Local Price Filter Button */}
-          <button
-            onClick={() =>
-              setLocalPrice(
-                localPrice === "All Prices" ? "300-600" : "All Prices",
-              )
-            }
-            className={`flex items-center rounded-full border px-4 py-2 transition-colors ${
-              localPrice !== "All Prices"
-                ? "border-emerald-500 bg-emerald-50 text-emerald-900 font-medium"
-                : "border-gray-300 bg-white hover:border-gray-400"
-            }`}
-          >
-            {localPrice !== "All Prices" ? `Budget: ${localPrice}` : "Price"}
-            <FaChevronDown className="ms-1.5 h-3 w-3 text-gray-400" />
-          </button>
-
-          {/* Local Property Type Filter Button */}
-          <button
-            onClick={() =>
-              setLocalProperty(
-                localProperty === "All Types" ? "Apartment" : "All Types",
-              )
-            }
-            className={`flex items-center rounded-full border px-4 py-2 transition-colors ${
-              localProperty !== "All Types"
-                ? "border-emerald-500 bg-emerald-50 text-emerald-900 font-medium"
-                : "border-gray-300 bg-white hover:border-gray-400"
-            }`}
-          >
-            {localProperty !== "All Types" ? localProperty : "Property type"}
-            <FaChevronDown className="ms-1.5 h-3 w-3 text-gray-400" />
-          </button>
-
           {/* Neighborhoods Display */}
           <button className="flex items-center rounded-full border border-gray-300 bg-white px-4 py-2 transition-colors hover:border-gray-400">
             Neighborhoods

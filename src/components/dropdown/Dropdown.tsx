@@ -76,10 +76,9 @@ export function Dropdown({
       {/* DROPDOWN LIST WITH YOUR SCROLLBAR UTILITIES */}
       <Menu.Items
         style={{
-          backgroundColor: "var(--card)",
           borderColor: "var(--border)",
         }}
-        className="dropdown-menu absolute top-full left-0  min-w-[100px] w-full max-h-[250px] overflow-y-auto scrollbar-thin shadow-xl border  p-1.5 z-50 list-none divide-y divide-[var(--border)]"
+        className={`dropdown-menu absolute top-full left-0  min-w-[100px] w-full max-h-[250px] overflow-y-auto scrollbar-thin shadow-xl border  p-1.5 z-50 list-none divide-y divide-[var(--border)] ${smallSize ? "bg-white" : "bg-[var(--car)]"}`}
       >
         {options.map((item, index) => (
           <Menu.Item key={index}>
@@ -90,13 +89,11 @@ export function Dropdown({
                   setIsOpen(false);
                 }}
                 style={{
-                  backgroundColor:
-                    active && smallSize === false
-                      ? "rgba(20, 184, 166, 0.10)"
-                      : "transparent",
-                  color: active ? "var(--button-bg)" : "var(--text-heading)",
+                  backgroundColor: active
+                    ? "rgba(20, 184, 166, 0.10)"
+                    : "transparent",
                 }}
-                className={`cursor-pointer transition-colors duration-150 whitespace-nowrap tracking-wider text-center  ${smallSize ? "p-1 text-xs font-medium" : "p-3  text-sm font-semibold"}`}
+                className={`cursor-pointer transition-colors duration-150 whitespace-nowrap tracking-wider text-center  ${smallSize ? "p-1 text-xs font-medium  text-[var(--muted)]" : "p-3  text-sm font-semibold text-[var(--text-heading)]"}`}
               >
                 {item}
               </li>
