@@ -98,19 +98,21 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({ data }) => {
           {data.highlights?.map((highlight, index) => (
             <div
               key={index}
-              className="flex flex-col bg-white rounded-lg overflow-hidden"
+              className="flex flex-col bg-white rounded-lg overflow-hidden space-y-2"
             >
               <img
                 src={highlight.image}
                 alt={highlight.title}
-                className="w-full h-32 object-cover rounded-xl mb-3"
+                className="w-full h-28 object-cover rounded-tl-xl rounded-tr-xl "
               />
-              <h3 className="font-bold text-[var(--text)]  text-sm mb-1">
-                {highlight.title}
-              </h3>
-              <p className="text-xs text-[var(--text)]  leading-relaxed">
-                {highlight.description}
-              </p>
+              <div className="p-3 space-y-1">
+                <h3 className="font-bold text-[var(--text)]  text-sm tracking-wider ">
+                  {highlight.title}
+                </h3>
+                <p className="text-xs text-[var(--text)]  leading-relaxed tracking-wider">
+                  {highlight.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>

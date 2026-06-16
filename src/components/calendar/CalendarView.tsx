@@ -17,6 +17,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
+  // Get "today" with time stripped out for accurate day-by-day comparison
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
@@ -36,6 +40,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   ];
   const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
+  // The Date Grid Math
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const blanks = Array(firstDayOfMonth).fill(null);
@@ -48,6 +53,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   // Range Logic handler
   const handleDayClick = (day: number) => {
     const clickedDate = new Date(year, month, day);
+    clickedDate.setHours(0, 0, 0, 0);
+
+    // Guard rail: Do nothing if the user clicks a past date
+    if (clickedDate < today) return;
 
     if (!startDate || (startDate && endDate)) {
       // First click, or resetting a full range
@@ -67,7 +76,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   };
 
   return (
-    <div className="w-80 border border-slate-200 bg-white shadow-xl rounded-2xl p-4 font-sans mt-4 ">
+    <div className="w-100 border border-slate-200 bg-white shadow-xl rounded-2xl p-4 font-sans">
       {/* Calendar Header */}
       <div className="flex items-center justify-between mb-4 px-1">
         <h3 className="font-bold text-cyan-950 text-base">
@@ -90,10 +99,9 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           </div>
         )}
       </div>
-
       {/* VIEW 1: MONTH PICKER */}
       {mode === "month" && (
-        <div className="grid grid-cols-3 gap-2 z-50">
+        <div className="grid grid-cols-6 gap-2 z-50 w-100">
           {months.map((m, index) => {
             const isCurrentMonth = index === month;
             return (
@@ -103,7 +111,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   if (onSelectMonth) onSelectMonth(index, year);
                   setCurrentDate(new Date(year, index, 1));
                 }}
-                className={`py-3 text-sm font-medium rounded-xl transition-all ${
+                className={`py-3 px-2 text-sm font-medium rounded-xl transition-all ${
                   isCurrentMonth
                     ? "bg-[#002228] text-white font-bold shadow-md"
                     : "text-slate-700 hover:bg-[#e9eff4]"
@@ -115,7 +123,6 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           })}
         </div>
       )}
-
       {/* VIEW 2: EXACT DATE RANGE PICKER */}
       {mode === "exact" && (
         <div>
@@ -130,11 +137,12 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
               if (day === null) return <div key={`empty-${idx}`} />;
 
               const thisDate = new Date(year, month, day);
+              thisDate.setHours(0, 0, 0, 0);
 
-              // Direct match checks using timestamps
-              const isStart =
-                startDate?.toDateString() === thisDate.toDateString();
-              const isEnd = endDate?.toDateString() === thisDate.toDateString();
+              // Condition checks
+              const isPast = thisDate < today;
+              const isStart = startDate?.getTime() === thisDate.getTime();
+              const isEnd = endDate?.getTime() === thisDate.getTime();
               const isInRange =
                 startDate &&
                 endDate &&
@@ -145,18 +153,21 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                 <div
                   key={`day-${day}`}
                   className={`py-0.5 flex justify-center items-center ${
-                    isInRange ? "bg-[#e9eff4]/70" : ""
+                    isInRange ? "bg-[#0967b4]" : ""
                   } ${isStart && endDate ? "rounded-l-full bg-[#e9eff4]/70" : ""} ${
                     isEnd ? "rounded-r-full bg-[#e9eff4]/70" : ""
                   }`}
                 >
                   <button
                     type="button"
+                    disabled={isPast}
                     onClick={() => handleDayClick(day)}
                     className={`h-9 w-9 flex items-center justify-center rounded-full transition-all ${
-                      isStart || isEnd
-                        ? "bg-[#002228] text-white font-bold shadow-md"
-                        : "text-slate-700 hover:bg-[#e9eff4]"
+                      isPast
+                        ? "text-slate-300 cursor-not-allowed line-through"
+                        : isStart || isEnd
+                          ? "bg-[#002228] text-white font-bold shadow-md"
+                          : "text-slate-700 hover:bg-[#e9eff4]"
                     }`}
                   >
                     {day}

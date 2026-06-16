@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { BiArea, BiBath, BiBed, BiStar } from "react-icons/bi";
-import { FaUserCircle } from "react-icons/fa";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { RiShieldStarFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 
 import {
@@ -8,7 +9,7 @@ import {
   PickerRawData,
 } from "../calendar/CalendarInputPicker";
 import { HouseContext } from "../HouseContext";
-import SlidingToggle from "../toggle/SlidingToggle";
+import { SlidingToggle } from "../toggle/SlidingToggle";
 import { PropertySlider } from "./PropertySlider";
 import ResidenceDetails from "./ResidenceDetails";
 
@@ -218,7 +219,7 @@ export default function PropertyDetails() {
         {/* RIGHT COLUMN: Sticky Agent Contact Panel */}
         <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-lg shadow-[var(--bg-shadow)] border-2 border-[var(--border)] rounded-xl  p-0 space-y-6 min-w-[60%] max-w-[80%] ">
           <div className="space-y-2">
-            <div className="flex justify-start items-center  p-5 border-b-2 border-[var(--border)] ">
+            <div className="flex justify-start items-center p-5 border-b-2 border-[var(--border)] ">
               <div className="border-2 border-[var(--boorder)] w-16 h-14 rounded-full overflow-hidden flex justify-center items-center shadow-lg shadow-[var(--bg-shadow)]">
                 <img
                   src={houseData.agent.image}
@@ -226,7 +227,7 @@ export default function PropertyDetails() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex justify-start items-start flex-col space-y-3 p-2 w-full ">
+              <div className="flex justify-start items-start flex-col space-y-2 p-2 w-full ">
                 <div className="flex items-start justify-between gap-3">
                   <h4 className="font-bold text-[var(--text)] text-sm capitalize text-start">
                     {houseData.agent.name}
@@ -245,17 +246,20 @@ export default function PropertyDetails() {
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-start items-center space-x-2  w-full">
+                <div className="flex justify-start items-center space-x-2  w-full px-1">
                   <p className="flex flex-row items-center space-x-1">
-                    <FaUserCircle size={24} className="text-green-700" />
+                    <IoShieldCheckmarkOutline
+                      size={20}
+                      className="text-green-900"
+                    />
 
-                    <span className="text-xs text-gray-500 font-semibold text-[var(--muted)] tracking-wide">
+                    <span className="text-xs text-gray-500 font-semibold tracking-wider text-[var(--muted)] ">
                       Varified
                     </span>
                   </p>
                   <p className="flex flex-row items-center space-x-1">
-                    <FaUserCircle size={24} className="text-green-700" />
-                    <span className="text-xs text-gray-500 font-semibold text-[var(--muted)] tracking-wide whitespace-nowrap">
+                    <RiShieldStarFill size={20} className="text-green-700" />
+                    <span className="text-xs text-gray-500 font-semibold text-[var(--muted)]  whitespace-nowrap tracking-wider">
                       Excellent Landlord
                     </span>
                   </p>
@@ -263,7 +267,7 @@ export default function PropertyDetails() {
               </div>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-5 flex flex-col justify-start items-start space-y-2">
+            <div className="w-full h-auto border-b-2 border-[var(--border)] py-3 px-5 flex flex-col justify-start items-start space-y-2">
               <p className="text-sm font-medium tracking-wider text-[var(--muted)]">
                 From
               </p>

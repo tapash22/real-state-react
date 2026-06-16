@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { CiCalendar } from "react-icons/ci";
 import { CalendarView } from "./CalendarView";
 
 type DateMode = "month" | "exact";
@@ -75,7 +76,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
   };
 
   return (
-    <div ref={containerRef} className="relative w-full font-sans">
+    <div ref={containerRef} className="relative w-full font-sans z-50">
       <div className="relative ">
         <input
           type="text"
@@ -85,13 +86,14 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="w-full h-auto p-4 bg-transparent border-2 border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-medium shadow-sm cursor-pointer outline-none transition-all focus:border-[var(--border)] focus:ring-1 focus:ring-[#002228]"
         />
-        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-sm">
-          📅
-        </span>
+        <CiCalendar
+          size={30}
+          className="text-[var(--text)] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+        />
       </div>
 
       {isOpen && (
-        <div className="absolute z-50 left-0 top-full mt-2 origin-top-left animate-in fade-in slide-in-from-top-2 duration-150 ">
+        <div className="absolute z-[9999] left-0 top-full origin-top-left animate-in fade-in slide-in-from-top-2 duration-150 ">
           <CalendarView
             mode={mode}
             onSelectRange={handleSelectRange}

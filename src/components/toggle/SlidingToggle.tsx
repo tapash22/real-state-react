@@ -13,7 +13,7 @@ interface SlidingToggleProps<T extends string> {
   onChange: (value: T) => void; // Callback to update parent state
 }
 
-const SlidingToggle = <T extends string>({
+export const SlidingToggle = <T extends string>({
   options,
   selectedValue,
   defaultValue,
@@ -38,10 +38,10 @@ const SlidingToggle = <T extends string>({
   const isFirstActive = activeValue === options[0].value;
 
   return (
-    <div className="relative flex items-center bg-[#a7a8a8]/50 h-auto w-full rounded-full p-1 select-none">
+    <div className="relative flex items-center bg-[#087474a9]/10 h-auto w-full rounded-full p-1 select-none">
       {/* Sliding Background Pill */}
       <div
-        className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-[#035766e7] rounded-full transition-transform duration-200 ease-out ${
+        className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-[#087474a9] rounded-full transition-transform duration-200 ease-out ${
           isFirstActive ? "translate-x-0" : "translate-x-full"
         }`}
       />
@@ -54,7 +54,7 @@ const SlidingToggle = <T extends string>({
             key={option.value}
             type="button"
             onClick={() => handleSelect(option.value)}
-            className={`relative z-10 flex-1 text-center text-sm font-bold tracking-widest text-[var(--muted)] h-full rounded-full transition-colors p-4 duration-200 outline-none ${
+            className={`relative z-10 flex-1 text-center text-sm font-bold tracking-widest text-[var(--muted)] h-full rounded-full transition-colors p-3 duration-200 outline-none ${
               isActive ? "text-[var(--muted)] font-bold" : "text-[var(--text)] "
             }`}
           >
@@ -65,5 +65,3 @@ const SlidingToggle = <T extends string>({
     </div>
   );
 };
-
-export default SlidingToggle;

@@ -39,12 +39,12 @@ export function Dropdown({
             : "border-l-2 h-auto border-[var(--border)] rounded-tl-sm rounded-bl-sm py-2 px-5 flex items-center justify-between gap-5 hover:bg-black/5 dark:hover:bg-white/5"
         }`}
       >
-        <div className="flex justify-start items-center ">
+        <div className="flex justify-center items-center space-x-2 ">
           {Icon && (
             <Icon
               style={{ color: "var(--button-bg)" }}
               className=" shrink-0"
-              size={30}
+              size={24}
             />
           )}
           <div className="text-left space-y-1">
