@@ -4,12 +4,13 @@ import { useEffect } from "react";
 
 // using component are import and use
 import { About } from "../components/about/About";
-import { Agents } from "../components/agent/Agents";
+// import { Agents } from "../components/agent/Agents";
 import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { Partners } from "../components/partner/Partners";
 // import { PlaceList } from "../components/place/PlaceList";
+import { FAQAccordion } from "../components/accordion/FAQAccordion";
 import { MapPage } from "../components/map-search/MapPage";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -77,7 +78,8 @@ export function Home() {
         </div>
 
         <div data-scroll-fade>
-          <Agents />
+          {/* <Agents /> */}
+          <FAQAccordion />
         </div>
       </div>
     </div>
