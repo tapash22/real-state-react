@@ -77,19 +77,18 @@ export const MapPage = () => {
           Your next base could be here
         </h3>
       </div>
-      <div className="flex justify-center items-center p-2 lg:p-4 ">
-        <div className="space-y-2 grid grid-cols-7 gap-4 w-1/2 ">
+      <div className="flex justify-center items-center p-0 lg:p-4 w-full">
+        <div className="grid grid-cols-3 lg:grid-cols-7 gap-1 lg:gap-4 w-full lg:w-3/4 xl:w-1/2">
           {properties.map((item) => (
             <p
               key={item.id}
               onMouseEnter={() => setHoveredId(item.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className={` flex justify-center items-center p-3 rounded-xs cursor-pointer transition  font-semibold text-[var(--text)]
-                  ${
-                    hoveredId === item.id
-                      ? "border-b-2 leading-4 border-violet-500 border-opacity-100"
-                      : "border-b-2 leading-4 border-violet-500 border-opacity-0"
-                  }`}
+              className={`flex justify-center items-center  rounded-xs cursor-pointer transition font-semibold text-[var(--text)] text-sm md:text-base text-center whitespace-nowrap w-full ${
+                hoveredId === item.id
+                  ? "border-b-2 leading-2 border-violet-500 opacity-100"
+                  : "border-b-2 leading-2 border-transparent"
+              }`}
             >
               {item.name}
             </p>

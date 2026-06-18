@@ -21,16 +21,19 @@ export function FAQAccordion() {
           Your questions, answered
         </h3>
       </div>
-      <div className="w-full divide-y-2 divide-[var(--border)] p-5 space-y-2">
+      <div className="w-full divide-y-2 divide-[var(--border)] p-0 lg:p-5 space-y-2">
         {faqData.map((item) => {
           const isOpen = openId === item.id;
 
           return (
-            <div key={item.id} className="py-5 transition-colors duration-200">
+            <div
+              key={item.id}
+              className="py-3 lg:py-5 transition-colors duration-200"
+            >
               {/* Header Trigger */}
               <button
                 onClick={() => toggleItem(item.id)}
-                className="w-full flex justify-between items-center text-left gap-4 font-bold text-lg md:text-xl tracking-tight text-[var(--text)] cursor-pointer group"
+                className="w-full flex justify-between items-center text-left gap-4 font-bold text-md md:text-xl tracking-wide text-[var(--text)] cursor-pointer group"
                 aria-expanded={isOpen}
               >
                 <span className="group-hover:opacity-80 transition-opacity">
