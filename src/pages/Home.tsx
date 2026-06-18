@@ -9,7 +9,8 @@ import { ClientsReview } from "../components/client/ClientsReview";
 import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { Partners } from "../components/partner/Partners";
-import { PlaceList } from "../components/place/PlaceList";
+// import { PlaceList } from "../components/place/PlaceList";
+import { MapPage } from "../components/map-search/MapPage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,7 +64,8 @@ export function Home() {
         </div>
 
         <div data-scroll-fade>
-          <PlaceList />
+          {/* <PlaceList /> */}
+          <MapPage />
         </div>
 
         <div data-scroll-fade>

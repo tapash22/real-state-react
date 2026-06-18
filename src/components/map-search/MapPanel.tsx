@@ -1,7 +1,7 @@
 import L from "leaflet";
 import React, { useEffect, useMemo, useState } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { MapBounds, Property } from "../../types/types";
+import { MapBounds, MapItem } from "../../types/types";
 
 import { MapMarker } from "./MapMarker";
 import { styles } from "./styles";
@@ -31,7 +31,7 @@ const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
   );
 
   const map = useMapEvents({
-    drag: () => debouncedChange(map.getBounds()),
+    // drag: () => debouncedChange(map.getBounds()),
     zoomend: () => debouncedChange(map.getBounds()),
     dragend: () => debouncedChange(map.getBounds()),
   });
@@ -41,7 +41,7 @@ const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
 
 // 2. Add 'center' prop right here into your component interface contract
 interface MapPanelProps {
-  properties: Property[];
+  properties: MapItem[];
   center: [number, number]; //  Added this line
   initialCenter: [number, number];
   hoveredId: number | null;
@@ -63,17 +63,17 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   useEffect(() => {
     if (!map) return;
 
-    // Force Leaflet to recalculate its CSS container dimensions
     map.invalidateSize();
 
     const bounds = map.getBounds();
+
     onBoundsChange({
       north: bounds.getNorthEast().lat,
       east: bounds.getNorthEast().lng,
       south: bounds.getSouthWest().lat,
       west: bounds.getSouthWest().lng,
     });
-  }, [map, onBoundsChange]);
+  }, [map]);
 
   return (
     <div style={styles.rightPanel}>

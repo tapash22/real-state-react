@@ -1,10 +1,10 @@
 import React from "react";
-import { Property } from "../../types/types";
+import { MapItem } from "../../types/types";
 import { PropertyCard } from "./PropertyCard";
 import { styles } from "./styles";
 
 interface ListPanelProps {
-  properties: Property[];
+  properties: MapItem[];
   isLoading: boolean;
   hoveredId: number | null;
   setHoveredId: (id: number | null) => void;

@@ -1,14 +1,36 @@
-export interface Property {
+// export interface Property {
+//   id: number;
+//   title: string;
+//   price: number;
+//   lat: number;
+//   lng: number;
+//   rating: number;
+//   type: string;
+//   image: string;
+//   country?: string;
+// }
+
+// export interface LocationType {
+//   id: number;
+//   name: string;
+//   lat: number;
+//   lng: number;
+// }
+
+export type MapItem = {
   id: number;
-  title: string;
-  price: number;
+  name: string;
   lat: number;
   lng: number;
-  rating: number;
-  type: string;
-  image: string;
+
+  // optional (for property-like data)
+  title?: string;
+  price?: number;
+  image?: string;
+  rating?: number;
+  type?: string;
   country?: string;
-}
+};
 
 export interface MapBounds {
   north: number;

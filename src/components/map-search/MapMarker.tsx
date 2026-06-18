@@ -1,10 +1,10 @@
 import L from "leaflet";
 import React, { useMemo } from "react";
 import { Marker, Popup } from "react-leaflet";
-import { Property } from "../../types/types";
+import { MapItem } from "../../types/types";
 
 interface MapMarkerProps {
-  property: Property;
+  property: MapItem;
   isHighlighted: boolean;
   onHover: (id: number | null) => void;
 }
@@ -16,25 +16,34 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         className: "custom-price-marker",
         html: `
         <div style="
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+
           background-color: ${isHighlighted ? "#ff5a5f" : "white"}; 
           color: ${isHighlighted ? "white" : "#222"}; 
           border: 1px solid ${isHighlighted ? "#ff5a5f" : "#dddddd"}; 
-          padding: 5px 10px; 
-          border-radius: 20px; 
-          font-weight: bold; 
-          font-size: 13px;
+          
+          padding: 6px 12px;
+          border-radius: 999px;
+
+          font-weight: 600;
+          font-size: 12px;
+
           box-shadow: 0 2px 6px rgba(0,0,0,0.15);
           white-space: nowrap;
-          transition: transform 0.1s ease;
+
           transform: ${isHighlighted ? "scale(1.08)" : "scale(1)"};
+          transition: transform 0.15s ease;
         ">
-          €${property.price}
+          ${property.price ? `€${property.price}` : property.name}
         </div>
       `,
-        iconSize: [75, 28],
-        iconAnchor: [37, 14],
+        // ✅ IMPORTANT: let it auto size
+        iconSize: undefined,
+        iconAnchor: undefined,
       });
-    }, [property.price, isHighlighted]);
+    }, [property, isHighlighted]);
 
     return (
       <Marker
@@ -46,20 +55,55 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         }}
       >
         <Popup closeButton={false}>
-          <div style={{ width: "130px", fontFamily: "sans-serif" }}>
-            <img
-              src={property.image}
-              alt=""
+          <div
+            style={{
+              fontFamily: "sans-serif",
+              textAlign: "center",
+              padding: "6px 2px",
+            }}
+          >
+            {/* IMAGE */}
+            {property.image && (
+              <img
+                src={property.image}
+                alt={property.title || property.name}
+                style={{
+                  width: "100%",
+                  height: "90px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  display: "block",
+                }}
+              />
+            )}
+
+            {/* TITLE */}
+            <div
               style={{
-                width: "100%",
-                height: "75px",
-                objectFit: "cover",
-                borderRadius: "4px",
+                marginTop: "8px",
+                fontWeight: 600,
+                fontSize: "14px",
+                color: "#222",
+                textAlign: "center",
               }}
-            />
-            <strong style={{ display: "block", marginTop: "4px" }}>
-              €{property.price}/mo
-            </strong>
+            >
+              {property.title || property.name}
+            </div>
+
+            {/* PRICE */}
+            {property.price && (
+              <div
+                style={{
+                  marginTop: "4px",
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#ff5a5f",
+                  textAlign: "center",
+                }}
+              >
+                €{property.price}/mo
+              </div>
+            )}
           </div>
         </Popup>
       </Marker>
