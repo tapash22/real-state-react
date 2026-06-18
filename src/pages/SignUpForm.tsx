@@ -71,15 +71,18 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
     };
 
     console.log("User Created:", userObj);
+    resetForm();
 
+    // redirect to signin page
+    navigate("/auth/signin");
+  };
+
+  const resetForm = () => {
     // reset form
     setEmail("");
     setPassword("");
     setConfirmPassword("");
     setErrors({});
-
-    // redirect to signin page
-    navigate("/auth/signin");
   };
 
   return (

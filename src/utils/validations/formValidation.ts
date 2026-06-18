@@ -1,4 +1,7 @@
+// Returns:
 export type ValidatorFn<T> = (value: any, values: T) => string | null;
+// null → validation passed
+// string → validation failed (error message)
 
 export type ValidationSchema<T> = {
   [K in keyof T]?: ValidatorFn<T>[];

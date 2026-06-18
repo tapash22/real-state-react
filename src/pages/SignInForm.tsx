@@ -29,6 +29,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
       password: string;
     }>
   >({});
+
   // PRO VALIDATION
   const runValidation = () => {
     const newErrors = validate(
@@ -61,12 +62,17 @@ const SignInForm: React.FC<SignInFormProps> = () => {
     console.log("Authenticated User Info:", userObj);
 
     // reset form
-    setEmail("");
-    setPassword("");
-    setErrors({});
+    resetForm();
 
     // redirect to signin page
     navigate("/");
+  };
+
+  const resetForm = () => {
+    // reset form
+    setEmail("");
+    setPassword("");
+    setErrors({});
   };
 
   return (
