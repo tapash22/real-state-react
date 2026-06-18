@@ -43,6 +43,7 @@ export function FilterBar({
               label="Price Range"
               DropdrownIcon={FaChevronDown}
               smallSize={true}
+              showValue={true}
             />
           </div>
 
@@ -54,6 +55,7 @@ export function FilterBar({
               label="Property Type"
               DropdrownIcon={FaChevronDown}
               smallSize={true}
+              showValue={true}
             />
           </div>
 

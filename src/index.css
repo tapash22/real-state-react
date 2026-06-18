@@ -183,6 +183,20 @@
         background-repeat: no-repeat;
         border-radius: 12px;
     }
+
+    .input-label {
+        @apply px-2 font-medium text-sm tracking-wide whitespace-nowrap text-[var(--muted)];
+    }
+
+    .input-field {
+        @apply w-full h-auto p-3 bg-transparent border-2 border-[var(--border)] text-[var(--text)] rounded-lg text-sm font-medium shadow-sm outline-none transition-all;
+    }
+
+    .input-field:focus {
+        @apply ring-1;
+        border-color: var(--border);
+        box-shadow: 0 0 0 1px #eaecec;
+    }
 }
 
 /* =========================

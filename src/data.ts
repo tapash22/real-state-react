@@ -194,39 +194,80 @@ export interface FAQItem {
 export const faqData: FAQItem[] = [
   {
     id: 1,
-    question: "Are you a real estate agency?",
+    question: "Is this platform a traditional real estate brokerage agency?",
     answer:
-      "No, we're not a real estate agency. HousingAnywhere is an online platform connecting people looking for their next home with landlords looking for tenants.",
+      "No, we are not a traditional real estate agency or media (dalal) service. We are an online rental marketplace connecting property owners directly with bachelors, families, and students looking for flats or sublets across Bangladesh.",
+    link: null,
   },
-
   {
     id: 2,
-    question: "How does the renting process work?",
+    question:
+      "How does the rental process work in Bangladesh through this portal?",
     answer:
-      "You can find and rent your next home safely and entirely online. Listings include detailed descriptions, photos, videos, and floor plans. You can message landlords directly, exchange documents, and securely book your stay through the platform.",
+      "You can browse verified listings by city, area (e.g., Gulshan, Mirpur, Dhanmondi), and budget. Once you find a flat or room, you can contact the landlord directly or view our guide for smoothly managing the deal.",
+    link: "https://example.com.bd/rental-guide-bangladesh",
   },
-
   {
     id: 3,
-    question: "When do I pay for the booking?",
+    question:
+      "My rental request was accepted. What are the next steps regarding the advance payment?",
     answer:
-      "You'll pay the first month's rent and, depending on the region, a Tenant Protection fee. Once the payment is received, your booking is confirmed and you'll receive the landlord's contact details. Remaining rental costs are paid directly to the landlord.",
+      "After acceptance, you will arrange to sign a standard tenancy agreement (Basha Bhara Chuktipatro). Following Bangladeshi rental norms, you will typically provide a 1 to 2-month security advance directly to the landlord to secure your booking.",
+    link: null,
   },
-
   {
     id: 4,
-    question: "Can I cancel my booking?",
+    question: "What if I need to cancel my booking before moving in?",
     answer:
-      "Yes, you can cancel your stay at any time before moving in. Depending on the cancellation policy and timing, you may receive a full or partial refund. The Tenant Protection fee is non-refundable.",
+      "You can cancel your booking at any time before signing the rental contract. Refund policies regarding any token money or processing fees depend heavily on the landlord's specific policy and how early you cancel.",
+    link: null,
   },
-
   {
     id: 5,
-    question: "Do I need to visit the property before booking?",
+    question:
+      "Can I physically visit the apartment before committing to the rent?",
     answer:
-      "No, visiting is not required. Listings provide detailed descriptions, photos, videos, and floor plans to help you understand the property. You can also communicate with landlords directly before booking.",
+      "Yes! We highly encourage scheduling a physical visit to verify utility setups (WASA water supply, DESCO/DPDC prepaid electricity meters, and Titas Gas line status) and to check the neighborhood environment before finalizing your advance.",
+    link: null,
   },
 ];
+
+// export const faqData: FAQItem[] = [
+//   {
+//     id: 1,
+//     question: "Are you a real estate agency?",
+//     answer:
+//       "No, we're not a real estate agency. HousingAnywhere is an online platform connecting people looking for their next home with landlords looking for tenants.",
+//   },
+
+//   {
+//     id: 2,
+//     question: "How does the renting process work?",
+//     answer:
+//       "You can find and rent your next home safely and entirely online. Listings include detailed descriptions, photos, videos, and floor plans. You can message landlords directly, exchange documents, and securely book your stay through the platform.",
+//   },
+
+//   {
+//     id: 3,
+//     question: "When do I pay for the booking?",
+//     answer:
+//       "You'll pay the first month's rent and, depending on the region, a Tenant Protection fee. Once the payment is received, your booking is confirmed and you'll receive the landlord's contact details. Remaining rental costs are paid directly to the landlord.",
+//   },
+
+//   {
+//     id: 4,
+//     question: "Can I cancel my booking?",
+//     answer:
+//       "Yes, you can cancel your stay at any time before moving in. Depending on the cancellation policy and timing, you may receive a full or partial refund. The Tenant Protection fee is non-refundable.",
+//   },
+
+//   {
+//     id: 5,
+//     question: "Do I need to visit the property before booking?",
+//     answer:
+//       "No, visiting is not required. Listings provide detailed descriptions, photos, videos, and floor plans to help you understand the property. You can also communicate with landlords directly before booking.",
+//   },
+// ];
 
 // Q & A End
 

@@ -84,7 +84,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
           value={inputValue}
           placeholder={placeholder}
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full h-auto p-4 bg-transparent border-2 border-[var(--border)] text-[var(--text)] rounded-xl text-sm font-medium shadow-sm cursor-pointer outline-none transition-all focus:border-[var(--border)] focus:ring-1 focus:ring-[#002228]"
+          className="input-field"
         />
         <CiCalendar
           size={30}

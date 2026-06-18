@@ -3,6 +3,7 @@ import type { RouteObject } from "react-router-dom";
 
 // Layout Shell
 import { AppLayout } from "../layout/AppLayout";
+import { AuthLayout } from "../layout/AuthLayout";
 
 // Pages
 import AgentsDetails from "../pages/AgentsDetails";
@@ -61,6 +62,20 @@ export const routesConfig: RouteObject[] = [
       //   path: "property/:id",
       //   element: createElement(PropertyDetails),
       // },
+    ],
+  },
+  {
+    path: "/auth",
+    element: createElement(AuthLayout),
+    children: [
+      {
+        path: "signin",
+        element: createElement(SignInForm),
+      },
+      {
+        path: "signup",
+        element: createElement(SignUpForm),
+      },
     ],
   },
 ];
