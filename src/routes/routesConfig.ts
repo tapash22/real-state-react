@@ -10,6 +10,7 @@ import AgentsDetails from "../pages/AgentsDetails";
 import { Home } from "../pages/Home";
 
 import PropertyDetails from "../components/map-search/PropertyDetails";
+import LandLord from "../pages/LandLord";
 import RealEstateSearchModule from "../pages/RealEstateSearchModule";
 import SignInForm from "../pages/SignInForm";
 import SignUpForm from "../pages/SignUpForm";
@@ -34,6 +35,10 @@ export const routesConfig: RouteObject[] = [
       {
         path: "search",
         element: createElement(RealEstateSearchModule),
+      },
+      {
+        path: "list-property",
+        element: createElement(LandLord),
       },
       // Updated Property Details Page
       {

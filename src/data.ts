@@ -1,5 +1,8 @@
+import { CiGlobe } from "react-icons/ci";
+import { FiUserCheck } from "react-icons/fi";
+import { IoShieldCheckmarkOutline } from "react-icons/io5";
+import { LuCalendarDays } from "react-icons/lu";
 import assets from "./assets/assets";
-
 /* -----------------------------
   Types
 ------------------------------ */
@@ -332,6 +335,37 @@ export const priceOptions = [
   "1000000-20000000",
   "3000000-40000000",
   "5000000-60000000",
+];
+
+export const featuresData = [
+  {
+    id: 1,
+    Icon: IoShieldCheckmarkOutline,
+    title: "Protection from last-minute cancellations",
+    description:
+      "To reserve accommodation, the tenant pays one month's rent in advance. Has the tenant cancelled after confirmation? HousingAnywhere guarantees the first month's rent.",
+  },
+  {
+    id: 2,
+    Icon: FiUserCheck,
+    title: "Find your perfect tenant with ease",
+    description:
+      "Save time by only talking to those that you're interested in. Set the preferences for your ideal tenant, and receive messages from verified users who meet your criteria.",
+  },
+  {
+    id: 3,
+    Icon: CiGlobe,
+    title: "Access to local and international tenants",
+    description:
+      "70% of the tenants from HousingAnywhere come from abroad and stay for 4-12 months. No more worrying about squatters or getting stuck with long-term low rents.",
+  },
+  {
+    id: 4,
+    Icon: LuCalendarDays,
+    title: "Get bookings months in advance",
+    description:
+      "Publish once and reuse whenever you need. Set custom prices, adjust availability, and block-off time for maintenance. Enjoy complete control over your listings.",
+  },
 ];
 
 /* -----------------------------

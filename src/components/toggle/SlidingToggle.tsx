@@ -38,7 +38,7 @@ export const SlidingToggle = <T extends string>({
   const isFirstActive = activeValue === options[0].value;
 
   return (
-    <div className="relative flex items-center bg-[#087474a9]/10 h-auto w-full rounded-full p-1 select-none">
+    <div className="relative flex items-center bg-[#087474a9]/10 h-auto w-full rounded-full p-1 border-2 border-[var(--card)] select-none">
       {/* Sliding Background Pill */}
       <div
         className={`absolute top-1 bottom-1 w-[calc(50%-4px)] bg-[#087474a9] rounded-full transition-transform duration-200 ease-out ${
