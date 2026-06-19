@@ -34,11 +34,11 @@ const SignInForm: React.FC<SignInFormProps> = () => {
   const runValidation = () => {
     const newErrors = validate(
       {
-        emailValue: email,
+        email,
         password,
       },
       {
-        emailValue: [required("Email"), emailValue()],
+        email: [required("Email"), emailValue()],
         password: [required("Password"), minLength(6, "Password")],
       },
     );
@@ -161,7 +161,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
 
               <Link
                 to="/auth/signup"
-                className="text-sm font-medium text-[var(--muted)] tracking-wide py-3 text-center lg:text-start "
+                className="text-sm font-medium text-[var(--muted)] tracking-wide py-3 text-center lg:text-start whitespace-nowrap "
               >
                 Don't Have any Account?
                 <span className="px-1 text-[var(--primary)] text-md font-semibold underline tracking-wider">

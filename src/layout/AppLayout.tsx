@@ -62,7 +62,7 @@ export function AppLayout() {
       }}
       /* Added your custom scrollbar utilities 'overflow-y-auto h-screen scrollbar-thin' 
          so it manages the window frame layout seamlessly */
-      className="h-screen w-full flex flex-col overflow-y-auto scrollbar-thin transition-colors duration-300"
+      className="h-screen w-screen flex flex-col overflow-y-auto scrollbar-thin transition-colors duration-300"
     >
       {/* STICKY HEADER WRAPPER */}
       <header

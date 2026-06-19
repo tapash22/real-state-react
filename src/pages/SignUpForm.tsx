@@ -40,12 +40,12 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
   const runValidation = () => {
     const newErrors = validate(
       {
-        emailValue: email,
+        email,
         password,
         confirmPassword,
       },
       {
-        emailValue: [required("Email"), emailValue()],
+        email: [required("emailValue"), emailValue()],
         password: [required("Password"), minLength(6, "Password")],
         confirmPassword: [
           required("Confirm Password"),
@@ -68,6 +68,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
     const userObj = {
       email: email,
       password: password,
+      confirmPassword: confirmPassword,
     };
 
     console.log("User Created:", userObj);
@@ -205,7 +206,7 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
 
               <Link
                 to="/auth/signin"
-                className="text-sm font-medium text-[var(--muted)] tracking-wide py-3 text-center lg:text-start "
+                className="text-sm font-medium text-[var(--muted)] tracking-wide py-3 text-center lg:text-start whitespace-nowrap "
               >
                 Already Have Account?
                 <span className="px-1 text-[var(--primary)] text-md font-semibold underline tracking-wider">

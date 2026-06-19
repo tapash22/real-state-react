@@ -110,15 +110,15 @@ export function Banner() {
         className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-10 space-y-10 px-4 relative"
       >
         {/* Soft atmospheric background glow nodes */}
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-teal-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-400/40 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="w-full max-w-4xl flex flex-col items-center space-y-6 text-center z-10">
+        <div className="w-full max-w-4xl flex flex-col items-center space-y-5 text-center z-10">
           {/* TITLE */}
           <h1
             ref={titleRef}
             style={{ color: "var(--text-heading)" }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight opacity-0 leading-none"
+            className="text-2xl sm:text-2xl lg:text-6xl font-extrabold tracking-tight opacity-0 leading-none"
           >
             Your Home Anywhere.
           </h1>
@@ -128,11 +128,11 @@ export function Banner() {
             <span style={{ color: "var(--text-heading)" }}>Stay for</span>
 
             {/* Structural vertical mask bounding window box */}
-            <span className="inline-block overflow-hidden h-[36px] min-w-[110px] sm:min-w-[150px] text-left relative">
+            <span className="inline-block overflow-hidden h-[36px] min-w-[110px] sm:min-w-[100px] relative">
               <span
                 ref={subtitleTextRef}
                 style={{ color: "var(--button-bg)" }}
-                className="opacity-0 inline-block absolute left-0 top-0 will-change-transform"
+                className="opacity-0 inline-block absolute left-0 -top-2 p-3 will-change-transform text-center bg-violet-900 rounded-sm"
               />
             </span>
           </h3>
