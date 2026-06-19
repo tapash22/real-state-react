@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaPhoneAlt, FaUserPlus } from "react-icons/fa";
-import { FiDollarSign, FiMessageSquare, FiMoon, FiSun } from "react-icons/fi";
+import { FiDollarSign, FiMessageSquare } from "react-icons/fi";
 import { LuLayers, LuLogIn } from "react-icons/lu";
 
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { RiGlobalLine } from "react-icons/ri";
 import { Dropdown } from "./dropdown/Dropdown";
+import { ThemeToggle } from "./toggle/ThemeToggle";
 
 type HeaderProps = {
   // add props later if needed
@@ -160,35 +161,14 @@ export default function Header(_props: HeaderProps) {
           </div>
 
           {/* Theme Toggle Switch inside Desktop Menu */}
-          <button
-            onClick={toggleTheme}
-            style={{ color: "var(--text)" }}
-            className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors duration-200 cursor-pointer flex items-center justify-center"
-            aria-label="Toggle Theme"
-          >
-            {theme === "light" ? (
-              <FiMoon className="w-[18px] h-[18px]" />
-            ) : (
-              <FiSun className="w-[18px] h-[18px]" />
-            )}
-          </button>
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
         {/* Mobile Hamburger Trigger (Hidden on Desktop) */}
         <div className="flex items-center gap-4 lg:hidden">
           {/* Mobile Theme Toggle Trigger */}
-          <button
-            onClick={toggleTheme}
-            style={{ color: "var(--text)" }}
-            className="p-2.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors duration-200 cursor-pointer flex items-center justify-center"
-            aria-label="Toggle Theme"
-          >
-            {theme === "light" ? (
-              <FiMoon className="w-5 h-5" />
-            ) : (
-              <FiSun className="w-5 h-5" />
-            )}
-          </button>
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+
           <button
             onClick={() => setIsOpen(true)}
             style={{ color: "var(--text)" }}

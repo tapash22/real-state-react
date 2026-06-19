@@ -5,8 +5,6 @@
 /* =========================
    THEME VARIABLES
 ========================= */
-
-
 :root {
     /* ==========================================
        LIGHT THEME (Your Original + Palette)
@@ -53,6 +51,12 @@
     /* Palette Slate */
     --text-heading: #112240;
     /* Palette Navy */
+
+    /* LIGHT THEME GRADIENT STOPS */
+    --bg-top: #ffffff;
+    /* Clean white at the top */
+    --bg-bottom: #f0f2f5;
+    /* Your original background at the bottom */
 }
 
 .dark {
@@ -118,18 +122,45 @@
     --scrollbar-thumb: #3558b3c7;
     /* blue-950 */
     --scrollbar-thumb-hover: #0d1735e1;
+
+    /* DARK THEME GRADIENT STOPS */
+    --bg-top: #111a36;
+    /* Slightly lighter navy at the top */
+    --bg-bottom: #0B132B;
+    /* Deep navy background at the bottom */
 }
 
 /* =========================
    BASE STYLES
 ========================= */
-
 @layer base {
+
+    body,
+    div,
+    header,
+    nav,
+    footer,
+    section,
+    main,
+    p, h1, h2, h3, h4, span,
+    label,
+    input,
+    button,
+    a,
+    svg {
+        /* Add the custom variables directly to the transition property list */
+        transition-property: background-color, color, border-color, box-shadow, fill, stroke, --bg-top, --bg-bottom;
+        transition-duration: 450ms;
+        transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
     body {
         @apply font-primary;
-        background: var(--bg);
+        /* Create the top-to-bottom linear gradient */
+        background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+        background-attachment: fixed;
+        /* Keeps the gradient pinned smoothly as you scroll */
         color: var(--text);
-        transition: all 0.3s ease;
     }
 }
 
@@ -189,13 +220,38 @@
     }
 
     .input-field {
-        @apply w-full h-auto p-3 bg-transparent border-2 border-[var(--border)] text-[var(--text)] rounded-lg text-sm font-medium shadow-sm outline-none transition-all;
+        @apply w-full h-auto p-3 bg-transparent border-2 border-[var(--border)] text-[var(--text)] rounded-lg text-sm font-medium shadow-sm outline-none;
+        transition: border-color 450ms cubic-bezier(0.25, 1, 0.5, 1),
+            box-shadow 450ms cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .input-field:focus {
         @apply ring-1;
         border-color: var(--border);
         box-shadow: 0 0 0 1px #eaecec;
+    }
+
+    .premium-modern-wave {
+        width: 100%;
+        height: 480px;
+        object-fit: cover;
+
+        /* A luxury, smooth fluid slope from left to right */
+        clip-path: path("M0,0 C300,60 900,0 1440,40 L1440,480 L0,480 Z");
+    }
+
+    /* Premium Depth Effect: Foregrounds transition slightly staggered */
+    button,
+    .dropdown-btn,
+    .dropdown-menu,
+    .dropdown-icon-primary,
+    .dropdown-icon-secondary,
+    svg {
+        /* Duration: Just a fraction longer than the background (450ms) */
+        transition-duration: 520ms;
+
+        /* Delay: A tight 30ms window gives the brain time to register the layer depth */
+        transition-delay: 30ms;
     }
 }
 
@@ -227,12 +283,9 @@
         background-color: #64748b;
     }
 
-
-
     /* =========================
         Dynamic custom layered box-shadow utility class
     ========================= */
-
     .custom-neo-shadow {
         box-shadow:
             6px 6px 0px var(--bg-shadow),
@@ -240,9 +293,11 @@
             18px 18px 0px rgba(0, 0, 0, 0.05),
             0px 20px 40px rgba(0, 0, 0, 0.2);
 
-        /* Applies your updated dark/light border automatically */
         border: 2px solid var(--border-color);
-        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+        /* Match the premium timing profile precisely */
+        transition: box-shadow 450ms cubic-bezier(0.25, 1, 0.5, 1),
+            border-color 450ms cubic-bezier(0.25, 1, 0.5, 1);
     }
 }
 

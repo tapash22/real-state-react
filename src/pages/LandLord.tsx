@@ -20,11 +20,12 @@ export default function LandLord() {
           >
             International tenants. No viewings. Online bookings.
           </h3>
-          <button className="uppercase text-sm font-semibold tracking-wide p-2 rounded-lg border-2 border-violet-400 bg-white">
+          <button className="uppercase text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]">
             Get Start
           </button>
         </div>
-        <div className="w-full lg:w-1/2 h-auto py-5 grid grid-cols-3 gap-3">
+
+        <div className="w-full lg:w-1/2 h-auto py-5 grid grid-cols-1 lg:grid-cols-3 gap-3">
           <StatCard
             targetNumber={50000}
             suffix="+"
@@ -46,23 +47,57 @@ export default function LandLord() {
             subtitle="find homes every month"
           />
         </div>
+
+        {/* feature secction */}
+
         <div
+          className="flex flex-col justify-center items-center px-5 py-10 space-y-5 "
           style={{
-            padding: "100px 0",
-            maxWidth: "900px",
-            margin: "0 auto",
+            background: `
+      linear-gradient(
+        to right,
+        color-mix(in srgb, var(--bg) 20%, transparent),
+        var(--border),
+        color-mix(in srgb, var(--bg) 20%, transparent)
+      )
+    `,
           }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
-          {featuresData.map((feature) => (
-            <FeatureCard
-              key={feature.id}
-              Icon={feature.Icon}
-              title={feature.title}
-              description={feature.description}
-            />
-          ))}
+          <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
+            <h2
+              style={{ color: "var(--button-bg)" }}
+              className="text-sm font-semibold lg:font-extrabold  tracking-wider lg:tracking-widest uppercase"
+            >
+              Not your user Real estate
+            </h2>
+
+            <h3
+              style={{ color: "var(--text-heading)" }}
+              className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
+            >
+              Everything you need to maximise your earnings
+            </h3>
+            <p
+              style={{ color: "var(--text-paragraph)" }}
+              className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
+            >
+              High ad visibility. Qualified tenants. Stress-free renting.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-2/3">
+            {featuresData.map((feature) => (
+              <FeatureCard
+                key={feature.id}
+                Icon={feature.Icon}
+                title={feature.title}
+                description={feature.description}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* feature secction */}
       </div>
     </section>
   );

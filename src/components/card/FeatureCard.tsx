@@ -13,60 +13,19 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   description,
 }) => {
   return (
-    <div
-      style={{
-        gap: "24px",
-        fontFamily: "system-ui, -apple-system, sans-serif",
-      }}
-      className="flex flex-col items-center border-2 border-[var(--border)] rounded-lg p-4"
-    >
+    <div className="flex justify-between items-center border-2 border-[var(--border)] rounded-lg p-5 gap-5">
       {/* Icon Wrapper Circle */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minWidth: "40px",
-          maxWidth: "40px",
-          minHeight: "40px",
-          maxHeight: "40px",
-          borderRadius: "50%",
-          backgroundColor: "#F4F7F9",
-          color: "#032535",
-        }}
-      >
-        {Icon && <Icon size={28} />}
+      <div className="flex justify-center items-center w-auto h-auto p-3 rounded-full border border-[var(--border)] shadow-sm shadow-[var(--primary)] bg-[var(--card)]">
+        {Icon && <Icon size={30} className="text-[var(--muted)] font-bold" />}
       </div>
 
       {/* Content Wrapper */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
-        <h3
-          style={{
-            fontSize: "1.25rem",
-            fontWeight: 600,
-            color: "#032535",
-            margin: 0,
-            lineHeight: 1.4,
-          }}
-        >
+      <div className="flex flex-col justify-start items-start space-y-2">
+        <h3 className="text-lg font-bold tracking-wider text-[var(--text)] ">
           {title}
         </h3>
 
-        <p
-          style={{
-            fontSize: "0.975rem",
-            color: "#768796",
-            margin: 0,
-            lineHeight: 1.6,
-            fontWeight: 400,
-          }}
-        >
+        <p className="text-sm font-medium tracking-wider text-[var(--muted)] leading-5 text-start">
           {description}
         </p>
       </div>
