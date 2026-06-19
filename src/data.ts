@@ -7,6 +7,21 @@ import assets from "./assets/assets";
   Types
 ------------------------------ */
 
+export interface PremiumFeaturesListType {
+  id: number;
+  key: string;
+  label: string;
+  description: string;
+}
+
+export interface WorkingStepsDataType {
+  id: number;
+  badge: string;
+  title: string;
+  description: string;
+  imageView?: string;
+}
+
 export interface Agent {
   image: string;
   name: string;
@@ -368,6 +383,82 @@ export const featuresData = [
   },
 ];
 
+// pricing details
+export const premiumFeaturesList: PremiumFeaturesListType[] = [
+  {
+    id: 1,
+    key: "multi_unit_listings",
+    label: "Multi-unit listings",
+    description:
+      "Manage and group multiple properties or inventory units under a single parent listing hierarchy.",
+  },
+  {
+    id: 2,
+    key: "availability_overview",
+    label: "Availability overview",
+    description:
+      "A centralized dashboard to track booking states, calendar blockouts, and live occupancy schedules.",
+  },
+  {
+    id: 3,
+    key: "unlimited_api_integrations",
+    label: "Unlimited API integrations",
+    description:
+      "Connect seamlessly with external software platforms, CRMs, and internal custom endpoints without data caps.",
+  },
+  {
+    id: 4,
+    key: "multiple_ibans_payout_routing",
+    label: "Multiple IBANs, Payout routing",
+    description:
+      "Direct revenue shares into separate regional bank accounts using dynamic financial routing matrix logic.",
+  },
+  {
+    id: 5,
+    key: "combined_invoices_per_month",
+    label: "Combined invoices per month",
+    description:
+      "Consolidate all transactional billing events, fees, and line items into a single monthly billing statement.",
+  },
+  {
+    id: 6,
+    key: "dedicated_account_manager",
+    label: "Dedicated Account Manager",
+    description:
+      "Direct priority access to a designated platform specialist for optimization, support, and scale engineering.",
+  },
+];
+
+export const workingStepsData: WorkingStepsDataType[] = [
+  {
+    id: 1,
+    badge: "1",
+    title: "List your place",
+    description:
+      "Publish once and reuse whenever you need. Set custom prices, adjust availability, and block-off time for maintenance. Enjoy complete control over your listings.",
+  },
+  {
+    id: 2,
+    badge: "2",
+    title: "Set prices and availability",
+    description:
+      "Choose when and for how long your property is available, set custom monthly rents to match demand.",
+  },
+  {
+    id: 3,
+    badge: "3",
+    title: "Get rental applications",
+    description:
+      "Chat directly with tenants, manage messages from your inbox, exchange documents, find your perfect renter.",
+  },
+  {
+    id: 4,
+    badge: "4",
+    title: "Get paid",
+    description:
+      "Receive rent, deposit, utilities, and more, conveniently through HousingAnywhere's secure payment system.",
+  },
+];
 /* -----------------------------
   Houses Data
   houseData new format update to use
