@@ -1,6 +1,7 @@
 import React from "react";
+import land_lord from "../../assets/landlord_page.jpg";
 
-export default function ShowcaseSection(): React.JSX.Element {
+export function ShowcaseSection(): React.JSX.Element {
   return (
     <section className="relative w-full overflow-hidden bg-[#070D1F] py-20 px-4 md:px-12">
       {/* 1. Global Inline SVG Clip Path Definition (Hidden from view) */}
@@ -82,7 +83,7 @@ export default function ShowcaseSection(): React.JSX.Element {
               style={{ clipPath: "url(#premiumShape)" }}
             >
               <img
-                src="land_lord"
+                src={land_lord}
                 alt="Thikana Luxury Interior Showcase"
                 className="w-full h-full object-cover transform scale-105 hover:scale-110 transition-transform duration-700 ease-out"
               />
