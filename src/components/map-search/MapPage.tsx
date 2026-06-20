@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { MapBounds, MapItem } from "../../types/types";
 import { MapPanel } from "./MapPanel";
 
@@ -54,10 +54,9 @@ export const MapPage = () => {
     },
   ];
 
-  const handleBoundsChange = (b: MapBounds) => {
+  const handleBoundsChange = useCallback((b: MapBounds) => {
     setBounds(b);
-    console.log("Map bounds:", b);
-  };
+  }, []);
 
   return (
     <section className="my-5 lg:my-16 w-full px-8 lg:px-16  transition-colors duration-300">
@@ -104,6 +103,7 @@ export const MapPage = () => {
           hoveredId={hoveredId}
           setHoveredId={setHoveredId}
           onBoundsChange={handleBoundsChange}
+          interactive={false}
         />
       </div>
     </section>

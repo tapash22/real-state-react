@@ -9,17 +9,31 @@ import { debounce } from "./utils";
 
 import { ViewportRecenterController } from "./ViewportRecenterController";
 
+interface MapPanelProps {
+  properties: MapItem[];
+  center: [number, number];
+  initialCenter: [number, number];
+  hoveredId: number | null;
+  setHoveredId: (id: number | null) => void;
+  onBoundsChange: (bounds: MapBounds) => void;
+
+  interactive?: boolean;
+}
+
 interface MapBoundsHandlerProps {
   onBoundsChange: (bounds: MapBounds) => void;
+  interactive?: boolean;
 }
 
 const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
   onBoundsChange,
+  interactive = true,
 }) => {
   const debouncedChange = useMemo(
     () =>
       debounce((bounds: L.LatLngBounds | null) => {
         if (!bounds) return;
+
         onBoundsChange({
           north: bounds.getNorthEast().lat,
           east: bounds.getNorthEast().lng,
@@ -30,11 +44,14 @@ const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
     [onBoundsChange],
   );
 
-  const map = useMapEvents({
-    // drag: () => debouncedChange(map.getBounds()),
-    zoomend: () => debouncedChange(map.getBounds()),
-    dragend: () => debouncedChange(map.getBounds()),
-  });
+  const map = useMapEvents(
+    interactive
+      ? {
+          zoomend: () => debouncedChange(map.getBounds()),
+          dragend: () => debouncedChange(map.getBounds()),
+        }
+      : {},
+  );
 
   return null;
 };
@@ -56,6 +73,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   hoveredId,
   setHoveredId,
   onBoundsChange,
+  interactive = true,
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
@@ -73,7 +91,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       south: bounds.getSouthWest().lat,
       west: bounds.getSouthWest().lng,
     });
-  }, [map]);
+  }, [map, onBoundsChange]);
 
   return (
     <div style={styles.rightPanel}>
@@ -81,7 +99,14 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         center={initialCenter}
         zoom={12}
         style={styles.mapElement}
-        ref={setMap} // <-- React Leaflet automatically hooks your state setter here safely
+        ref={setMap}
+        dragging={interactive}
+        scrollWheelZoom={interactive}
+        doubleClickZoom={interactive}
+        touchZoom={interactive}
+        boxZoom={interactive}
+        keyboard={interactive}
+        zoomControl={interactive}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
