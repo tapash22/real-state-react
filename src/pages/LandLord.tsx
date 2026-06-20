@@ -3,11 +3,14 @@ import StatCard from "../components/card/StatCard";
 import { ClippedBottomCurveImage } from "../components/show-case/ClippedBottomCurveImage";
 // import { ShowcaseSection } from "../components/show-case/ShowcaseSection";
 import { FaUserCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { RentalStepsCards } from "../components/card/RentalStepsCards";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
 
 export default function LandLord() {
+  const navigate = useNavigate();
+
   return (
     <section className="my-0 w-full  transition-colors duration-300">
       <div className="w-full h-full ">
@@ -30,7 +33,10 @@ export default function LandLord() {
           >
             International tenants. No viewings. Online bookings.
           </h3>
-          <button className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]">
+          <button
+            className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
+            onClick={() => navigate("/auth/signup")}
+          >
             Get started
           </button>
         </div>
@@ -38,7 +44,7 @@ export default function LandLord() {
         {/* header end*/}
 
         {/* StatCard */}
-        <div className="w-full lg:w-1/2 h-auto py-5 grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="w-full lg:w-1/2 h-auto py-3 lg:py-5 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-3">
           <StatCard
             targetNumber={50000}
             suffix="+"
@@ -66,7 +72,7 @@ export default function LandLord() {
         {/* feature secction */}
 
         <div
-          className="flex flex-col justify-center items-center px-5 py-10 space-y-5 "
+          className="flex flex-col justify-center items-center px-5 py-10 space-y-3 lg:space-y-5 "
           style={{
             background: `
               linear-gradient(
@@ -100,7 +106,7 @@ export default function LandLord() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full lg:w-2/3 h-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-5 w-full lg:w-2/3 h-auto">
             {featuresData.map((feature) => (
               <FeatureCard
                 key={feature.id}
@@ -123,7 +129,7 @@ export default function LandLord() {
       </div>
 
       {/* image view end*/}
-      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 py-10 lg:px-16 ">
+      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 py-5 lg:py-8 lg:px-16 ">
         {/* bottom end */}
 
         {/* pricing */}
@@ -151,11 +157,11 @@ export default function LandLord() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-5 w-full  h-auto p-3  ">
-            <div className="w-full h-auto p-2 space-y-3 lg:w-2/3">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-5 w-full  h-auto p-0 lg:p-3  ">
+            <div className="w-full h-auto py-3 px-0 lg:p-2 space-y-3 lg:w-2/3">
               <h3
                 style={{ color: "var(--text-heading)" }}
-                className="text-xl font-semibold lg:text-2xl lg:font-bold  tracking-wide lg:tracking-wider lg:whitespace-nowrap text-[var(--text)]"
+                className="text-xl font-semibold lg:text-2xl lg:font-bold  tracking-wide lg:tracking-wider lg:whitespace-nowrap text-[var(--text)] border-b-2  lg:border-b-0 border-[var(--border)] leading-10"
               >
                 What’s included
               </h3>
@@ -196,8 +202,8 @@ export default function LandLord() {
 
             {/* card section */}
 
-            <div className=" w-full lg:w-1/3 h-auto flex justify-center items-center p-2 ">
-              <div className="w-full h-auto px-8 py-10  border border[var(--border)] flex flex-col justify-center items-center space-y-3 rounded-xl ">
+            <div className=" w-full lg:w-1/3 h-auto flex justify-center items-center p-0 lg:p-2 ">
+              <div className="w-full h-auto px-5 py-5 lg:px-8 lg:pt-10 border border[var(--border)] shadow-sm shadow-[var(--primary)] flex flex-col justify-center items-center space-y-3 rounded-xl ">
                 <h2
                   style={{ color: "var(--text)" }}
                   className="text-2xl font-bold lg:font-semibold tracking-wider"
@@ -218,7 +224,7 @@ export default function LandLord() {
                   Our commission fee varies depending on the location of your
                   property.
                 </p>
-                <div className="py-2 w-full">
+                <div className="py-0 lg:py-2 w-full">
                   <button className=" text-sm font-medium tracking-wider w-full rounded-full border-2 border-[var(--border)] bg-[var(--card)] py-3">
                     Get started
                   </button>
@@ -242,7 +248,7 @@ export default function LandLord() {
         {/* working flow */}
 
         <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center space-y-5">
-          <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
+          <div className="w-full flex flex-col justify-center items-center text-center space-y-1 lg:spacey-3 lg:max-w-6xl lg:mx-auto ">
             <h2
               style={{ color: "var(--button-bg)" }}
               className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
@@ -264,7 +270,7 @@ export default function LandLord() {
         {/* working flow end*/}
 
         {/* bottom section */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-5 lg:max-w-6xl lg:mx-auto my-5 ">
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:space-y-5 lg:max-w-6xl lg:mx-auto my-5 ">
           <h2
             style={{ color: "var(--button-bg)" }}
             className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
@@ -285,7 +291,10 @@ export default function LandLord() {
             Create your first listing in minutes and enjoy safe, hassle-free
             renting from the comfort of your home.
           </p>
-          <button className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]">
+          <button
+            className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
+            onClick={() => navigate("/auth/signup")}
+          >
             Get started
           </button>
         </div>

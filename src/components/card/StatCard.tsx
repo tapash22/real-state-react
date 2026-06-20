@@ -56,18 +56,18 @@ const StatCard: React.FC<StatCardProps> = ({
   return (
     <div
       ref={containerRef}
-      className="flex flex-col justify-center items-center space-y-3 "
+      className="flex flex-col justify-center items-center space-y-2 lg:space-y-3 "
     >
-      <h2 className="text-2xl lg:text-4xl font-bold tracking-wider text-[var(--text)]">
+      <h2 className="text-xl lg:text-4xl font-bold tracking-wider text-[var(--text)]">
         {formattedCount}
         {suffix}
       </h2>
 
-      <span className="text-xl lg:text-2xl font-semibold tracking-wider text-[var(--meted)]">
+      <span className="text-lg lg:text-2xl font-bold tracking-wider text-[var(--meted)]">
         {title}
       </span>
 
-      <span className="text-sm font-medium tracking-wider text-[var(--text)]">
+      <span className="text-sm font-light tracking-wider text-[var(--text)]">
         {subtitle}
       </span>
     </div>
