@@ -49,13 +49,9 @@ export function Search(_props: SearchProps) {
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className="p-5 transition-all duration-300 z-20">
-      <div
-        style={{
-          backgroundColor: "color-mix(in srgb, var(--bg) 30%, transparent)",
-        }}
-        className="px-[30px] py-5 w-full  md:grid md:grid-cols-4 gap-0 items-center relative rounded-xl transition-colors duration-300 shadow-sm shadow-(--footer-bg) backdrop-blur-lg "
-      >
+    <div className="p-0 lg:p-6 transition-all duration-300 z-20  rounded-lg ">
+      <div className="px-5 lg:px-[30px] py-2 lg:py-6 w-full  md:grid md:grid-cols-4 gap-3 lg:gap-0 items-center relative rounded-xl transition-colors duration-300 backdrop-blur-lg border-none lg:border lg:border-[var(--border)] shadow-none lg:shadow-sm lg:shadow-[var(--primary)] space-y-1 lg:space-y-0 ">
+        {/* <div></div> */}
         <Dropdown
           selectedValue={country}
           onSelect={setCountry}

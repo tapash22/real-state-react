@@ -42,7 +42,7 @@ export function Dropdown({
         className={`dropdown-btn w-full text-left transition-colors duration-200 cursor-pointer ${
           smallSize
             ? "rounded-full h-fit border-none py-2 px-5 flex items-center justify-center gap-2 bg-transparent"
-            : "border-l-2 h-auto border-[var(--border)] py-2 px-5 flex items-center justify-between gap-5 hover:bg-black/5 dark:hover:bg-white/5"
+            : "border-l-2 h-auto border-[var(--border)] rounded-md lg:rounded-none py-2 px-5 flex items-center justify-between gap-0 hover:bg-black/5 dark:hover:bg-white/5"
         }`}
       >
         <div className="flex items-center space-x-2">

@@ -107,11 +107,11 @@ export function Banner() {
     >
       <div
         ref={containerRef}
-        className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-10 space-y-10 px-4 relative"
+        className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-10 space-y-5 px-4 relative"
       >
         {/* Soft atmospheric background glow nodes */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-400/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-900/40 lg:bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-4xl flex flex-col items-center space-y-5 text-center z-10">
           {/* TITLE */}
@@ -152,7 +152,7 @@ export function Banner() {
         {/* FLOATING SEARCH CONTAINER BAR */}
         <div
           ref={searchRef}
-          className="m-5 shadow-md shadow-violet-100/10 dark:shadow-gray-200 backdrop-blur-xl rounded-2xl "
+          className="shadow-sm shadow-[var(--border)] rounded-xl  backdrop-blur-sm  items-center h-full p-0 lg:p-1 "
         >
           <Search />
         </div>
