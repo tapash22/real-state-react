@@ -1,14 +1,14 @@
-// export interface Property {
-//   id: number;
-//   title: string;
-//   price: number;
-//   lat: number;
-//   lng: number;
-//   rating: number;
-//   type: string;
-//   image: string;
-//   country?: string;
-// }
+export interface Property {
+  id: number;
+  title: string;
+  price: number;
+  lat: number;
+  lng: number;
+  rating: number;
+  type: string;
+  image: string;
+  country?: string;
+}
 
 // export interface LocationType {
 //   id: number;

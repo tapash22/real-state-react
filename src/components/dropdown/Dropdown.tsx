@@ -45,7 +45,7 @@ export function Dropdown({
             : "border-l-2 h-auto border-[var(--border)] rounded-md lg:rounded-none py-2 px-5 flex items-center justify-between gap-0 hover:bg-black/5 dark:hover:bg-white/5"
         }`}
       >
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 ">
           {Icon && (
             <Icon
               style={{ color: "var(--button-bg)" }}

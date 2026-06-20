@@ -87,8 +87,7 @@ export function FilterBar({
       </div>
 
       {/* Lower Demographic Sub-Tabs */}
-      <div className="flex items-center gap-6 text-sm font-medium border-t border-gray-100 pt-2.5">
-        {activeTab}
+      <div className="flex items-center gap-3 text-sm font-medium border-t border-gray-100 pt-2.5">
         {tabs.map((tab) => {
           const isActive = activeTab === tab;
           return (

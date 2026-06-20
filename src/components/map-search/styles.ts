@@ -17,7 +17,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column" as const, // Stacked layout flow
     width: "100%",
-    height: "auto", // Crucial: allows content to grow and push footer down
+    height: "100%", // Crucial: allows content to grow and push footer down
     backgroundColor: "#0a1128",
     color: "#ffffff",
     fontFamily: "system-ui, -apple-system, sans-serif",
@@ -27,19 +27,17 @@ export const styles = {
   // WRAPPER TRACKS (Listings vs Map Areas)
   // ==========================================
   desktopListWrapper: {
-    width: "40%",
+    width: "45%",
     minWidth: "400px",
     height: "100%",
-    overflowY: "auto" as const,
     backgroundColor: "#0f172a",
     borderRight: "1px solid #1e293b",
-    scrollbarWidth: "thin" as const,
     order: 1, // Enforces list stays on the left half
   },
 
   mobileListWrapper: {
     width: "100%",
-    height: "auto",
+    height: "400px",
     padding: "16px",
     boxSizing: "border-box" as const,
     backgroundColor: "#0f172a",
@@ -55,7 +53,7 @@ export const styles = {
 
   mobileMapWrapper: {
     width: "100%",
-    height: "45vh", // Fixed visual window for map at top of mobile devices
+    height: "auto", // Fixed visual window for map at top of mobile devices
     position: "relative" as const,
     order: 1,
   },
