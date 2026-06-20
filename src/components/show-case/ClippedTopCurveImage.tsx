@@ -4,58 +4,65 @@ import land_lord from "../../assets/landlord_page.jpg";
 export function ClippedTopCurveImage(): React.JSX.Element {
   return (
     <section className="relative w-full overflow-hidden bg-transparent px-0">
-      {/* 1. Dual Inward Curve Definition (Same asymmetric style top and bottom) */}
+      {/* 1. Fluid Responsive SVG ClipPath */}
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>
-          <clipPath id="dualInnerCurves" clipPathUnits="objectBoundingBox">
-            {/* - Top path starts at (0, 0.18) and curves up to (1, 0.06) 
-              - Bottom path starts at (1, 0.94) and curves up to (0, 0.82)
-              This replicates the same fluid, asymmetric inner slope on both headers.
-            */}
+          <clipPath id="premiumDualWaveSmall" clipPathUnits="objectBoundingBox">
             <path
-              d="M 0,0.18 
-                 C 0.25,0.04 0.65,0.16 1,0.06
-                 L 1,0.94 
-                 C 0.65,0.84 0.25,0.96 0,0.82 
+              d="M 0,0.05 
+                 C 0.35,0.01 0.65,0.01 1,0.05 
+                 L 1,0.95 
+                 C 0.65,0.99 0.35,0.99 0,0.95 
                  Z"
             />
           </clipPath>
         </defs>
       </svg>
 
-      {/* 2. Full-Width Main Frame Container */}
-      <div className="relative w-full h-[420px] sm:h-[500px] md:h-[650px]">
-        {/* The Clipped Image Container */}
+      {/* 
+        2. Dynamic Aspect-Ratio Wrapper:
+        Forces the banner container to dynamically scale its height relative to its width 
+        on mobile, tablet, and desktop screens so the image has room to cover.
+      */}
+      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[20/9] min-h-[400px]">
+        {/* The Clipped Image Layer Container */}
         <div
           className="absolute inset-0 w-full h-full overflow-hidden"
-          style={{ clipPath: "url(#dualInnerCurves)" }}
+          style={{ clipPath: "url(#premiumDualWaveSmall)" }}
         >
-          {/* Dark Overlay Tint for Typography Contrast */}
-          <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
+          {/* Subtle Contrast Tint Overlay */}
+          <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
 
+          {/* Enforced Edge-to-Edge Fluid Cover Asset */}
           <img
             src={land_lord}
-            alt="Thikana Luxury Portfolio Banner"
-            className="w-full h-full object-cover transform scale-100 transition-transform duration-1000 ease-out"
+            alt="Rent out quickly and with confidence"
+            className="absolute inset-0 w-full h-full object-cover object-center block transform scale-105"
           />
         </div>
 
-        {/* 3. Text Overlay Layer */}
-        <div className="absolute inset-0 z-20 flex items-center">
-          <div className="w-full max-w-7xl mx-auto px-6 sm:px-12 md:px-16 lg:px-20 pb-4">
-            <div className="max-w-xl space-y-4 text-white">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight drop-shadow-sm">
-                Rent out quickly and <br className="hidden sm:inline" /> with
-                confidence
-              </h1>
-              <p className="text-sm sm:text-base text-slate-100 font-medium leading-relaxed drop-shadow-sm opacity-90">
-                Easily attract your perfect tenant while enjoying a safe rental
-                journey. HousingAnywhere is the award-winning online platform
-                for mid-to-long-term rentals.
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* 3. Responsive Blur & Fade Glass Overlays */}
+        {/* Top Frosted Blur Wave */}
+        <div
+          className="absolute top-0 inset-x-0 h-[10%] min-h-[30px] max-h-[60px] pointer-events-none z-20 backdrop-blur-[2px]"
+          style={{
+            clipPath: "url(#premiumDualWaveSmall)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, transparent 100%)",
+            maskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
+          }}
+        />
+        {/* Bottom Frosted Blur Wave */}
+        <div
+          className="absolute bottom-0 inset-x-0 h-[10%] min-h-[30px] max-h-[60px] pointer-events-none z-20 backdrop-blur-[2px]"
+          style={{
+            clipPath: "url(#premiumDualWaveSmall)",
+            WebkitMaskImage:
+              "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 100%)",
+          }}
+        />
       </div>
     </section>
   );

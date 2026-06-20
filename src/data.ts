@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { CiGlobe } from "react-icons/ci";
 import { FiUserCheck } from "react-icons/fi";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
@@ -6,6 +7,14 @@ import assets from "./assets/assets";
 /* -----------------------------
   Types
 ------------------------------ */
+
+export interface RentalStep {
+  id: number;
+  title: string;
+  description: string;
+  // This allows us to pass custom preview UI components directly into our data array
+  previewComponent?: ReactNode;
+}
 
 export interface PremiumFeaturesListType {
   id: number;
@@ -93,6 +102,37 @@ export interface House {
   price: string; // Typed as string because your data uses "2000000"
   agent: Agent;
 }
+
+export const rentalSteps: RentalStep[] = [
+  {
+    id: 1,
+    title: "List your place",
+    description:
+      "Publish once and reuse whenever you need. Set custom prices, adjust availability, and block-off time for maintenance. Enjoy complete control over your listings.",
+    // previewComponent: <ListingPreview /> (Defined below)
+  },
+  {
+    id: 2,
+    title: "Set prices and availability",
+    description:
+      "Choose when and for how long your property is available, set custom monthly rents to match demand.",
+    // previewComponent: <CalendarPreview />
+  },
+  {
+    id: 3,
+    title: "Get rental applications",
+    description:
+      "Chat directly with tenants, manage messages from your inbox, exchange documents, find your perfect renter.",
+    // previewComponent: <ApplicationPreview />
+  },
+  {
+    id: 4,
+    title: "Get paid",
+    description:
+      "Receive rent, deposit, utilities, and more, conveniently through HousingAnywhere's secure payment system.",
+    // previewComponent: <PaymentPreview />
+  },
+];
 
 export const houseData: House[] = [
   {

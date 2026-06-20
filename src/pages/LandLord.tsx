@@ -3,6 +3,7 @@ import StatCard from "../components/card/StatCard";
 import { ClippedBottomCurveImage } from "../components/show-case/ClippedBottomCurveImage";
 // import { ShowcaseSection } from "../components/show-case/ShowcaseSection";
 import { FaUserCircle } from "react-icons/fa";
+import { RentalStepsCards } from "../components/card/RentalStepsCards";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
 
@@ -122,7 +123,7 @@ export default function LandLord() {
       </div>
 
       {/* image view end*/}
-      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 lg:px-16 py-5 ">
+      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 py-10 lg:px-16 ">
         {/* bottom end */}
 
         {/* pricing */}
@@ -150,7 +151,7 @@ export default function LandLord() {
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-5 w-full  h-auto p-5  ">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-5 w-full  h-auto p-3  ">
             <div className="w-full h-auto p-2 space-y-3 lg:w-2/3">
               <h3
                 style={{ color: "var(--text-heading)" }}
@@ -194,6 +195,7 @@ export default function LandLord() {
             </div>
 
             {/* card section */}
+
             <div className=" w-full lg:w-1/3 h-auto flex justify-center items-center p-2 ">
               <div className="w-full h-auto px-8 py-10  border border[var(--border)] flex flex-col justify-center items-center space-y-3 rounded-xl ">
                 <h2
@@ -230,6 +232,8 @@ export default function LandLord() {
                 </p>
               </div>
             </div>
+
+            {/* card section end*/}
           </div>
         </div>
 
@@ -237,7 +241,7 @@ export default function LandLord() {
 
         {/* working flow */}
 
-        <div className="w-full lg:w-1/2 h-auto flex flex-col justify-center items-center">
+        <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center space-y-5">
           <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
             <h2
               style={{ color: "var(--button-bg)" }}
@@ -254,12 +258,13 @@ export default function LandLord() {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full lg:w-2/3 p-5"></div>
+          <RentalStepsCards />
         </div>
 
         {/* working flow end*/}
 
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-5 lg:max-w-6xl lg:mx-auto ">
+        {/* bottom section */}
+        <div className="w-full flex flex-col justify-center items-center text-center space-y-5 lg:max-w-6xl lg:mx-auto my-5 ">
           <h2
             style={{ color: "var(--button-bg)" }}
             className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
@@ -285,7 +290,7 @@ export default function LandLord() {
           </button>
         </div>
 
-        {/* bottom end */}
+        {/* bottom section end*/}
       </div>
     </section>
   );
