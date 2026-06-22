@@ -8,6 +8,45 @@ import assets from "./assets/assets";
   Types
 ------------------------------ */
 
+import { IconType } from "react-icons";
+import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+
+export interface SocialMediaItem {
+  id: number | null;
+  title: string;
+  link: string;
+  icon: IconType;
+}
+
+export type SocialMediaItems = SocialMediaItem[];
+
+export const socialMediaLinkList: SocialMediaItems = [
+  {
+    id: 1,
+    title: "Facebook",
+    link: "https://web.facebook.com/tapas.paul.54738/",
+    icon: FaFacebook,
+  },
+  {
+    id: 2,
+    title: "Twitter",
+    link: "https://x.com/tapasp263",
+    icon: FaTwitter,
+  },
+  {
+    id: 3,
+    title: "GitHub",
+    link: "https://github.com/tapash22",
+    icon: FaGithub,
+  },
+  {
+    id: 4,
+    title: "LinkedIn",
+    link: "https://www.linkedin.com/in/tapash-paul-267896151/",
+    icon: FaLinkedin,
+  },
+];
+
 export interface RentalStep {
   id: number;
   title: string;
