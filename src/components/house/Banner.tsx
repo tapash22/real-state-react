@@ -103,7 +103,9 @@ export function Banner() {
       backgroundColor="var(--card)"
       showTopCurve={false}
       showBottomCurve={true}
-      curveHeight={150}
+      curveHeight={750}
+      // imageUrl={land_lord}
+      // imageAlt="land_lord and with confidence"
     >
       <div
         ref={containerRef}

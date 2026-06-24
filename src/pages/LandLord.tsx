@@ -1,10 +1,11 @@
 import FeatureCard from "../components/card/FeatureCard";
 import StatCard from "../components/card/StatCard";
-import { ClippedBottomCurveImage } from "../components/show-case/ClippedBottomCurveImage";
 // import { ShowcaseSection } from "../components/show-case/ShowcaseSection";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import landlord_header from "../assets/landlord_header.jpg";
 import { RentalStepsCards } from "../components/card/RentalStepsCards";
+import { CurveSection } from "../components/house/CurveSection";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
 
@@ -15,7 +16,22 @@ export default function LandLord() {
     <section className="my-0 w-full  transition-colors duration-300">
       <div className="w-full h-full ">
         {/* <ShowcaseSection /> */}
-        <ClippedBottomCurveImage />
+        {/* <ClippedBottomCurveImage /> */}
+        <CurveSection
+          backgroundColor="var(--bg)"
+          showTopCurve={false}
+          showBottomCurve={false}
+          curveHeight={650}
+          imageUrl={landlord_header}
+          imageAlt="Rent out quickly and with confidence"
+        >
+          {/* Simple responsive child wrapper layout inside the section */}
+          <div className="relative w-full h-[380px] sm:h-[420px] md:h-[650px] flex items-center justify-center max-w-6xl mx-auto px-4 text-center">
+            <h1 className="text-white text-3xl md:text-5xl font-bold drop-shadow-lg">
+              Rent out quickly and with confidence
+            </h1>
+          </div>
+        </CurveSection>
       </div>
       <div className="flex flex-col justify-center items-center gap-5 w-full px-8 lg:px-16 ">
         {/* header */}
