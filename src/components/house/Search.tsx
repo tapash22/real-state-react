@@ -159,15 +159,15 @@ export function Search(_props: SearchProps) {
           "
         style={{
           background: `
-    linear-gradient(
-      90deg,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,.05) 20%,
-      rgba(255,255,255,.78) 50%,
-      rgba(255,255,255,.05) 80%,
-      rgba(255,255,255,0) 100%
-    )
-  `,
+            linear-gradient(
+              90deg,
+              rgba(255,255,255,0) 0%,
+              rgba(255,255,255,.05) 20%,
+              rgba(255,255,255,.78) 50%,
+              rgba(255,255,255,.05) 80%,
+              rgba(255,255,255,0) 100%
+            )
+          `,
         }}
       >
         <div className="flex items-center justify-center py-3 px-4">

@@ -6,6 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import landlord_header from "../assets/landlord_header.jpg";
 import { RentalStepsCards } from "../components/card/RentalStepsCards";
+import { EventList } from "../components/event/EventList";
 import { CurveSection } from "../components/house/CurveSection";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
@@ -317,6 +318,10 @@ export default function LandLord() {
         </div>
 
         {/* bottom section end*/}
+
+        <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center space-y-5">
+          <EventList />
+        </div>
       </div>
     </section>
   );
