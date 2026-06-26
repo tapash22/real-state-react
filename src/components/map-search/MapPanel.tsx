@@ -94,9 +94,9 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   }, [map, onBoundsChange]);
 
   return (
-    <div style={styles.rightPanel}>
+    <div style={styles.rightPanel} className="rounded-lg">
       <MapContainer
-        className="z-0"
+        className="z-0 rounded-lg"
         center={initialCenter}
         zoom={12}
         style={styles.mapElement}

@@ -8,7 +8,7 @@ export const styles = {
     width: "100%", // Spans full browser width
     height: "calc(100vh - 80px)", // Adjusts perfectly if you have a top navbar
     overflow: "hidden",
-    backgroundColor: "#0a1128", // Deep dark theme
+    // backgroundColor: "#0a1128", // Deep dark theme
     color: "#ffffff",
     fontFamily: "system-ui, -apple-system, sans-serif",
   },
@@ -30,8 +30,8 @@ export const styles = {
     width: "45%",
     minWidth: "400px",
     height: "100%",
-    backgroundColor: "#0f172a",
-    borderRight: "1px solid #1e293b",
+    // backgroundColor: "#0f172a",
+    // borderRight: "1px solid #1e293b",
     order: 1, // Enforces list stays on the left half
   },
 

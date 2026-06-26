@@ -332,7 +332,7 @@ export default function RealEstateSearchModule() {
   return (
     <div className="flex flex-col w-full h-screen bg-[var(--bg)] overflow-hidden relative px-8 py-0 space-y-0">
       {/* ─── MOBILE FILTER TOOLBAR HEADER ─── */}
-      <div className="h-auto p-2 w-full flex justify-between items-center bg-[var(--bg)] leading-10 border-b-2 border-[var(--border)] ">
+      <div className="h-auto p-5 w-full flex justify-between items-center bg-[var(--bg)] leading-10 border-b-2 border-[var(--border)] ">
         <div className="flex items-center gap-4 text-sm font-medium bg-[var(--bg)]  overflow-x-auto scrollbar-none">
           {tabs.map((tab) => {
             const isActive = activeTab === tab;
@@ -372,7 +372,6 @@ export default function RealEstateSearchModule() {
           </span>
         </button>
       </div>
-
       {/* ─── DESKTOP FILTER DIALOG (SLIDES FROM RIGHT SIDE) ─── */}
       {!isMobile && isFilterDialogOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs animate-fade-in">
@@ -383,7 +382,7 @@ export default function RealEstateSearchModule() {
 
           <div className="relative bg-white dark:bg-zinc-900 w-full max-w-md h-full p-6 shadow-2xl z-10 flex flex-col justify-between transform transition-transform animate-slide-in-right">
             <div>
-              <div className="flex justify-between items-center mb-6 border-b pb-4 border-zinc-100 dark:border-zinc-800">
+              <div className="flex justify-between items-center mb-6 border-b border-zinc-100 dark:border-zinc-800">
                 <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
                   Filter Parameters
                 </h3>
@@ -409,7 +408,7 @@ export default function RealEstateSearchModule() {
               </div>
 
               {/* Form Content Body: Uses vertical drawer layout */}
-              <div className="py-2 overflow-y-auto max-h-[calc(100vh-180px)]">
+              <div className="py-3 overflow-y-auto max-h-[calc(100vh-180px)]">
                 <FilterBar {...filterBarProps} variant="drawer" />
               </div>
             </div>
@@ -437,16 +436,15 @@ export default function RealEstateSearchModule() {
           </div>
         </div>
       )}
-
       {/* ─── MOBILE FILTER DIALOG (BOTTOM SIDE SHEET MODAL) ─── */}
       {isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[var(--bg)] backdrop-blur-sm animate-fade-in">
           <div
             className="absolute inset-0"
             onClick={() => setIsFilterDialogOpen(false)}
           />
 
-          <div className="relative bg-white dark:bg-zinc-900 w-full rounded-t-2xl p-6 shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
+          <div className="relative bg-[var(--bg)] w-full rounded-t-2xl p-6 shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
             <div className="flex justify-between items-center mb-4 border-b pb-2 border-zinc-100 dark:border-zinc-800">
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
                 Filter Search
@@ -486,7 +484,6 @@ export default function RealEstateSearchModule() {
           </div>
         </div>
       )}
-
       {/* Main View Area Split Matrix */}
       <div
         style={isMobile ? styles.mobileContainer : styles.desktopContainer}
@@ -495,7 +492,7 @@ export default function RealEstateSearchModule() {
         {/* Map Section Wrapper */}
         <div
           style={isMobile ? styles.mobileMapWrapper : styles.desktopMapWrapper}
-          className="border-none lg:border-4 border-(--border) rounded-lg shadow-lg relative flex-shrink-0"
+          className=" p-3 border-b-2 border-[var(--border)] rounded-2xl shadow-lg relative flex-shrink-0"
         >
           <MapPanel
             properties={filteredProperties as unknown as Property[]}
@@ -513,7 +510,7 @@ export default function RealEstateSearchModule() {
             style={
               isMobile ? styles.mobileListWrapper : styles.desktopListWrapper
             }
-            className={`w-full bg-white dark:bg-zinc-950 ${isMobile ? "h-auto overflow-visible" : "h-full overflow-y-scroll overflow-x-hidden scrollbar-thin"}`}
+            className={`w-full bg-[var(--bg)] ${isMobile ? "h-auto overflow-visible border-b-2 border-[var(--border)]" : "h-full overflow-y-scroll overflow-x-hidden scrollbar-thin border-r-2 border-[var(--border)]"}`}
           >
             <div className="px-2 py-4 lg:px-4 lg:py-6">
               {isLoading ? (

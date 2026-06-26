@@ -15,15 +15,15 @@ export function HouseCard({ house }: HouseProps) {
       <div
         style={{
           backgroundColor: "var(--card)",
-          borderColor: "var(--border)",
+          // borderColor: "var(--border)",
         }}
         className="
           relative z-10 overflow-hidden rounded-[24px] border w-full flex flex-col justify-between
           transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
-          group-hover:-translate-y-2 group-hover:scale-[1.01]
+          group-hover:-translate-y-0 group-hover:scale-[1.01]
           
           /* Shadow adjustments for active themes on hover scale */
-          shadow-lg hover:shadow-xl 
+          shadow-lg hover:shadow-sm 
           dark:shadow-black/20 dark:hover:shadow-black/50
           cursor-pointer
           custom-neo-shadow
