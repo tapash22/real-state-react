@@ -1,7 +1,10 @@
-import { useContext, useState } from "react";
+import gsap from "gsap";
+import { useContext, useEffect, useRef, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { priceOptions } from "../../data";
+import { useHideMessageOnOutsideClick } from "../../hooks/useHideMessageOnOutsideClick";
+import { hideMessage, showMessage } from "../../utils/messageAnimation";
 import { Dropdown } from "../dropdown/Dropdown";
 import { HouseContext } from "../HouseContext";
 
@@ -23,7 +26,34 @@ type HouseContextType = {
 
 export function Search(_props: SearchProps) {
   const context = useContext(HouseContext);
+
   const [show, setShow] = useState(false);
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const messageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!messageRef.current) return;
+
+    gsap.set(messageRef.current, {
+      height: 0,
+      opacity: 0,
+      y: -20,
+      marginTop: 0,
+      overflow: "hidden",
+      pointerEvents: "none",
+    });
+  }, []);
+
+  useHideMessageOnOutsideClick({
+    wrapperRef,
+    isVisible: show,
+    onHide: () =>
+      hideMessage({
+        messageRef,
+        setShow,
+      }),
+  });
 
   // Initialize navigate hook
   const navigate = useNavigate();
@@ -46,20 +76,44 @@ export function Search(_props: SearchProps) {
   const handleSearchSubmit = () => {
     const hasSearchValue =
       !!country.trim() || !!property.trim() || !!price.trim();
-    console.log(hasSearchValue);
+
     if (!hasSearchValue) {
-      setShow(true);
+      if (!show) {
+        showMessage({
+          messageRef,
+          setShow,
+        });
+      }
+
       return;
     }
 
-    setShow(false);
+    if (show) {
+      hideMessage({
+        messageRef,
+        setShow,
+      });
+    }
+
     navigate("/search");
   };
 
   return (
-    /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className="p-0 lg:p-5 transition-all duration-300 z-20  rounded-lg  ">
-      <div className="p-2 lg:p-5 w-full grid grid-cols-1 lg:grid-cols-4 rounded-xl transition-colors duration-300 backdrop-blur-lg border-none lg:border lg:border-[var(--border)] shadow-none lg:shadow-md lg:shadow-[var(--primary)] space-y-1 lg:-space-y-0 ">
+    <div
+      ref={wrapperRef}
+      className="p-0 lg:p-5 transition-all duration-300 rounded-lg w-full"
+    >
+      <div
+        className="
+            p-2 lg:p-5
+            grid
+            grid-cols-1
+            lg:grid-cols-4
+            gap-1
+            lg:gap-0
+            rounded-xl transition-colors duration-300 backdrop-blur-sm border-none lg:border lg:border-[var(--border)] shadow-none lg:shadow-md lg:shadow-[var(--primary)] lg:-space-y-0
+        "
+      >
         {/* <div></div> */}
         <Dropdown
           selectedValue={country}
@@ -85,24 +139,43 @@ export function Search(_props: SearchProps) {
         />
 
         {/* Search Submission CTA */}
-        <div className="w-full h-auto flex justify-center mr-5 bg-white">
+        <div className="w-full">
           <button
             onClick={handleSearchSubmit}
             style={{ backgroundColor: "var(--bg)" }}
-            className="w-full lg:h-full py-3 lg:py-0 rounded-sm lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm shadow-[var(--primary)]"
+            className="w-full lg:h-full py-3 px-20 lg:py-0 rounded-sm lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm shadow-[var(--primary)]"
             type="button"
           >
             Search
           </button>
         </div>
       </div>
-      {show && (
-        <div className="w-full h-auto flex justify-center items-center p-2 ">
-          <p className="flex py-1 text-xs lg:text-sm font-light lg:font-semibold tracking-wider text-red-600 text-center">
-            At least one search field must be filled in to perform a search.
+      <div
+        ref={messageRef}
+        className="
+          w-full
+          rounded-xl
+          overflow-hidden
+          "
+        style={{
+          background: `
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,.05) 20%,
+      rgba(255,255,255,.78) 50%,
+      rgba(255,255,255,.05) 80%,
+      rgba(255,255,255,0) 100%
+    )
+  `,
+        }}
+      >
+        <div className="flex items-center justify-center py-3 px-4">
+          <p className="text-center text-sm font-medium tracking-wide text-[var(--text)]">
+            Please select at least one search option before clicking Search.
           </p>
         </div>
-      )}
+      </div>
     </div>
   );
 }

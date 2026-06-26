@@ -448,7 +448,7 @@ export default function RealEstateSearchModule() {
 
           <div className="relative bg-[var(--bg)] w-full rounded-t-xl shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
             <div className="flex justify-between items-center p-4 border-b-2 pb-2 border-[var(--border)]">
-              <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+              <h3 className="text-lg font-bold text-[var(--text)]">
                 Filter Search
               </h3>
               <button

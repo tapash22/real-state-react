@@ -172,11 +172,11 @@
 
     /* Dropdown */
     .dropdown {
-        @apply w-full max-w-[296px] cursor-pointer;
+        @apply w-auto cursor-pointer;
     }
 
     .dropdown-btn {
-        @apply flex h-[64px] items-center px-[18px] border-t border-b;
+        @apply flex h-[64px] items-center;
         background: var(--card);
         border-color: var(--border);
     }

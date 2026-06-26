@@ -30,11 +30,7 @@ export function FilterBar({
       {/* Upper Section: Actions & Filters */}
       <div className="flex flex-col lg:flex-row  lg:items-start justify-between gap-4 ">
         {/* Filter Interactive Elements Area */}
-        <div className="flex flex-col md:items-center justify-start space-y-3 text-sm text-[var(--text)] w-full ">
-          {/* Date Picker Button */}
-          {/* <button className="w-full md:w-auto text-left md:text-center flex items-center justify-between md:justify-center rounded-full border border-sky-100 bg-sky-50 px-4 py-2.5 md:py-2 font-medium text-sky-900 transition-colors hover:bg-sky-100/80">
-            <span>7 Jul – 20 Aug 2026 (± 2 weeks)</span>
-          </button> */}
+        <div className="flex flex-col md:items-center justify-start space-y-5 text-sm text-[var(--text)] w-full ">
           <div className="hidden md:flex justify-between items-center gap-4 w-full">
             <p className="text-sm font-semibold tracking-wider text-[var(--text)]">
               <span>Selected :</span>{" "}
@@ -75,7 +71,7 @@ export function FilterBar({
           </div>
 
           {/* Neighborhoods Display */}
-          <button className="w-full md:w-auto flex items-center justify-between md:justify-center rounded-full border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-2.5 md:py-2 transition-colors hover:border-gray-400">
+          <button className="w-full md:w-auto flex items-center justify-between md:justify-center rounded-full border border-gray-300 dark:border-zinc-700 bg-transparent dark:bg-zinc-800 px-4 py-2.5 md:py-2 transition-colors hover:border-gray-400">
             <span>Neighborhoods</span>
             <FaChevronDown className="ms-1.5 h-3 w-3 text-gray-400" />
           </button>
