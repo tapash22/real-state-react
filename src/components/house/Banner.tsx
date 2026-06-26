@@ -107,10 +107,10 @@ export function Banner() {
       curveHeight={"85vh"}
       imageUrl={land_lord}
       imageAlt="land_lord and with confidence"
-      imageScale={100}
-      imageBlur={3}
-      imageBrightness={70}
-      imageContrast={100}
+      imageScale={10}
+      imageBlur={8}
+      imageBrightness={80}
+      imageContrast={200}
     >
       <div
         ref={containerRef}
@@ -136,11 +136,11 @@ export function Banner() {
             <span style={{ color: "var(--text-heading)" }}>Stay for</span>
 
             {/* MASK WINDOW */}
-            <span className="relative overflow-hidden h-[40px] w-[150px] flex items-center">
+            <span className="relative overflow-hidden h-[50px] w-[150px] flex items-center">
               <span
                 ref={subtitleTextRef}
-                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/80 px- "
-                style={{ color: "var(--button-bg)" }}
+                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/50 p-5 "
+                style={{ color: "var(--text)" }}
               />
             </span>
           </h3>
