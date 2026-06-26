@@ -114,13 +114,13 @@ export function Banner() {
     >
       <div
         ref={containerRef}
-        className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-10 space-y-10 lg:space-y-16 px-4 relative"
+        className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-5 lf:py-10 space-y-5 lg:space-y-16 px-4 relative"
       >
         {/* Soft atmospheric background glow nodes */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-900/40 lg:bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="w-full max-w-4xl flex flex-col items-center space-y-5 text-center z-10">
+        <div className="w-full max-w-4xl flex flex-col items-center space-y-3 lg:space-y-5 text-center z-10">
           {/* TITLE */}
           <h1
             ref={titleRef}
@@ -136,10 +136,10 @@ export function Banner() {
             <span style={{ color: "var(--text-heading)" }}>Stay for</span>
 
             {/* MASK WINDOW */}
-            <span className="relative overflow-hidden h-[50px] w-[150px] flex items-center">
+            <span className="relative overflow-hidden h-[40px] lg:h-[50px] w-[120px] lg:w-[150px] flex items-center">
               <span
                 ref={subtitleTextRef}
-                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/50 p-5 "
+                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/50 p-3 lg:p-5 "
                 style={{ color: "var(--text)" }}
               />
             </span>
@@ -149,7 +149,7 @@ export function Banner() {
           <p
             ref={paraRef}
             style={{ color: "var(--text-muted)" }}
-            className="text-base sm:text-lg max-w-xl font-medium opacity-0 leading-relaxed"
+            className="hidden lg:block text-base lg:text-lg max-w-xl font-normal lg:font-medium tracking-wide  leading-relaxed"
           >
             Connect directly with local homeowners across the globe. Secure your
             space, negotiate your terms, and live like a local.
@@ -159,7 +159,7 @@ export function Banner() {
         {/* FLOATING SEARCH CONTAINER BAR */}
         <div
           ref={searchRef}
-          className="shadow-sm shadow-[var(--border)] rounded-xl  backdrop-blur-sm  items-center h-full "
+          className="shadow-sm p-2 lg:p-5 lg:w-fit w-full shadow-[var(--primary)] rounded-xl backdrop-blur-sm items-center h-full "
         >
           <Search />
         </div>

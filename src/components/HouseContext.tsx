@@ -26,13 +26,13 @@ export const HouseContext = createContext<HouseContextType | undefined>(
 export function HouseContextProvider({ children }: { children: ReactNode }) {
   const [houses, setHouses] = useState<House[]>(houseData);
 
-  const [country, setCountry] = useState("location any country");
+  const [country, setCountry] = useState("");
   const [countries, setCountries] = useState<string[]>([]);
 
-  const [property, setProperty] = useState("property any type");
+  const [property, setProperty] = useState("");
   const [properties, setProperties] = useState<string[]>([]);
 
-  const [price, setPrice] = useState("All Prices");
+  const [price, setPrice] = useState("");
   const [prices, setPrices] = useState<string[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);

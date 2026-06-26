@@ -330,20 +330,20 @@ export default function RealEstateSearchModule() {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen bg-[var(--bg)] overflow-hidden relative px-8 py-0 space-y-0">
+    <div className="flex flex-col w-full h-screen bg-[var(--bg)] overflow-hidden relative px-2 lg:px-8 py-0 space-y-0">
       {/* ─── MOBILE FILTER TOOLBAR HEADER ─── */}
-      <div className="h-auto p-5 w-full flex justify-between items-center bg-[var(--bg)] leading-10 border-b-2 border-[var(--border)] ">
-        <div className="flex items-center gap-4 text-sm font-medium bg-[var(--bg)]  overflow-x-auto scrollbar-none">
+      <div className="h-auto p-0 py-3 lg:p-3 w-full flex flex-col lg:flex-row justify-between items-center bg-[var(--bg)] leading-10 border-b-2 border-[var(--border)] space-y-0  ">
+        <div className="flex items-center gap-4 text-sm font-medium bg-[var(--bg)]  overflow-x-auto scrollbar-none p-2 ">
           {tabs.map((tab) => {
             const isActive = activeTab === tab;
             return (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`relative whitespace-nowrap transition-colors rounded-none ${
+                className={`relative whitespace-nowrap transition-colors tracking-wide   ${
                   isActive
-                    ? "font-bold text-[var(--text)] p-3 bg-[var(--card)] rounded-lg"
-                    : "text-[var(--muted)] hover:text-[var(--text)] "
+                    ? "font-bold text-[var(--text)] text-sm  p-3 lg:p-4 bg-[var(--card)] rounded-lg shadow-md lg:shadow-sm"
+                    : "text-[var(--muted)] text-sm font-normal hover:text-[var(--text)] "
                 }`}
               >
                 {tab}
@@ -354,41 +354,43 @@ export default function RealEstateSearchModule() {
             );
           })}
         </div>
-        <button
-          onClick={() => setIsFilterDialogOpen(true)}
-          className="flex items-center space-x-3 rounded-full border border-[var(--border)] bg-[var(--card)] shadow-sm shadow-[var(--primary)] p-3 text-sm font-medium text-[var(--text)] transition-colors "
-        >
-          <LuSlidersHorizontal
-            size={16}
-            className="text-[var(--text)] font-extrabold"
-          />
-          <span className="text-[var(--text)] font-semibold text-sm tracking-wider">
-            Filters
-          </span>
-          <span className=" flex h-6 w-6 items-center justify-center rounded-full bg-slate-900/8 text-xs font-medium text-[var(--text)] shadow-sm shadow-[var(--primary)]">
-            {(activeTab !== "Anyone" ? 1 : 0) +
-              (localPrice !== "All Prices" ? 1 : 0) +
-              (localProperty !== "All Types" ? 1 : 0)}
-          </span>
-        </button>
+        <div className="flex justify-end items-center w-full lg:w-auto ">
+          <button
+            onClick={() => setIsFilterDialogOpen(true)}
+            className="flex items-center space-x-3 rounded-full border border-[var(--border)] bg-[var(--card)] shadow-sm shadow-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--text)] transition-colors "
+          >
+            <LuSlidersHorizontal
+              size={16}
+              className="text-[var(--text)] font-extrabold"
+            />
+            <span className="text-[var(--text)] font-semibold text-sm tracking-wider">
+              Filters
+            </span>
+            <span className=" flex h-auto w-auto items-center justify-center rounded-full px-2 py-1 bg-[var(--bg)] text-sm font-semibold text-[var(--text)] border-2 border-[var(--border)]">
+              {(activeTab !== "Anyone" ? 1 : 0) +
+                (localPrice !== "All Prices" ? 1 : 0) +
+                (localProperty !== "All Types" ? 1 : 0)}
+            </span>
+          </button>
+        </div>
       </div>
       {/* ─── DESKTOP FILTER DIALOG (SLIDES FROM RIGHT SIDE) ─── */}
       {!isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 top-20 flex justify-end bg-transparent backdrop-blur-xs animate-fade-in">
           <div
             className="absolute inset-0"
             onClick={() => setIsFilterDialogOpen(false)}
           />
 
-          <div className="relative bg-white dark:bg-zinc-900 w-full max-w-md h-full p-6 shadow-2xl z-10 flex flex-col justify-between transform transition-transform animate-slide-in-right">
+          <div className="relative bg-[var(--bg)] w-full max-w-md h-full shadow-2xl z-10 flex flex-col justify-between transform transition-transform animate-slide-in-right">
             <div>
-              <div className="flex justify-between items-center mb-6 border-b border-zinc-100 dark:border-zinc-800">
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
+              <div className="flex justify-between items-center border-b-2 border-[var(--border)] p-5 ">
+                <h3 className="text-xl font-bold text-[var(--text)] ">
                   Filter Parameters
                 </h3>
                 <button
                   onClick={() => setIsFilterDialogOpen(false)}
-                  className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-1"
+                  className="text-[var(--text)] dark:hover:text-[var(--muted)] p-1"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -414,7 +416,7 @@ export default function RealEstateSearchModule() {
             </div>
 
             {/* Action Controls Footer */}
-            <div className="border-t pt-4 border-zinc-100 dark:border-zinc-800 flex gap-3">
+            <div className="border-t-2 border-[var(--border)] p-5 flex gap-3">
               <button
                 onClick={() => {
                   setLocalPrice("All Prices");
@@ -438,14 +440,14 @@ export default function RealEstateSearchModule() {
       )}
       {/* ─── MOBILE FILTER DIALOG (BOTTOM SIDE SHEET MODAL) ─── */}
       {isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[var(--bg)] backdrop-blur-sm animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-transparent backdrop-blur-sm animate-fade-in">
           <div
             className="absolute inset-0"
             onClick={() => setIsFilterDialogOpen(false)}
           />
 
-          <div className="relative bg-[var(--bg)] w-full rounded-t-2xl p-6 shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
-            <div className="flex justify-between items-center mb-4 border-b pb-2 border-zinc-100 dark:border-zinc-800">
+          <div className="relative bg-[var(--bg)] w-full rounded-t-xl shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
+            <div className="flex justify-between items-center p-4 border-b-2 pb-2 border-[var(--border)]">
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
                 Filter Search
               </h3>
@@ -471,16 +473,18 @@ export default function RealEstateSearchModule() {
             </div>
 
             {/* Form Content Body: Uses vertical drawer layout */}
-            <div className="py-2">
+            <div className="p-2">
               <FilterBar {...filterBarProps} variant="drawer" />
             </div>
 
-            <button
-              onClick={() => setIsFilterDialogOpen(false)}
-              className="mt-6 w-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium py-3 rounded-xl hover:opacity-90 transition-opacity"
-            >
-              Apply Filters
-            </button>
+            <div className="p-3 flex justify-center items-center w-full">
+              <button
+                onClick={() => setIsFilterDialogOpen(false)}
+                className="w-full bg-[var(--card)] text-sm font-semibold tracking-wider text-[var(--text)]  py-3 rounded-lg shadow-sm shadow-[var(--primary)] hover:opacity-90 transition-opacity"
+              >
+                Apply Filters
+              </button>
+            </div>
           </div>
         </div>
       )}

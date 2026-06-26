@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { priceOptions } from "../../data";
@@ -18,11 +18,12 @@ type HouseContextType = {
   properties: string[];
   price: string;
   setPrice: (value: string) => void;
-  handleClick: () => void;
+  // handleClick: () => void;
 };
 
 export function Search(_props: SearchProps) {
   const context = useContext(HouseContext);
+  const [show, setShow] = useState(false);
 
   // Initialize navigate hook
   const navigate = useNavigate();
@@ -38,22 +39,31 @@ export function Search(_props: SearchProps) {
     properties,
     price,
     setPrice,
-    handleClick,
+    // handleClick,
   } = context as HouseContextType;
 
   //  Wrap handler to combine context filter updates and path redirecting
   const handleSearchSubmit = () => {
-    handleClick(); // Process the states inside HouseContext
-    navigate("/search"); // Force move user straight to the Map page view
+    const hasSearchValue =
+      !!country.trim() || !!property.trim() || !!price.trim();
+    console.log(hasSearchValue);
+    if (!hasSearchValue) {
+      setShow(true);
+      return;
+    }
+
+    setShow(false);
+    navigate("/search");
   };
 
   return (
     /* Outer accent container ring (adapts via a subtle opacity mask of your main teal) */
-    <div className="p-0 lg:p-6 transition-all duration-300 z-20  rounded-lg ">
-      <div className="px-5 lg:px-[30px] py-2 lg:py-6 w-full  md:grid md:grid-cols-4 gap-3 lg:gap-0 items-center relative rounded-xl transition-colors duration-300 backdrop-blur-lg border-none lg:border lg:border-[var(--border)] shadow-none lg:shadow-sm lg:shadow-[var(--primary)] space-y-1 lg:space-y-0 ">
+    <div className="p-0 lg:p-5 transition-all duration-300 z-20  rounded-lg  ">
+      <div className="p-2 lg:p-5 w-full grid grid-cols-1 lg:grid-cols-4 rounded-xl transition-colors duration-300 backdrop-blur-lg border-none lg:border lg:border-[var(--border)] shadow-none lg:shadow-md lg:shadow-[var(--primary)] space-y-1 lg:-space-y-0 ">
         {/* <div></div> */}
         <Dropdown
           selectedValue={country}
+          // showValue={true}
           onSelect={setCountry}
           options={countries}
           label="Select your place"
@@ -75,15 +85,24 @@ export function Search(_props: SearchProps) {
         />
 
         {/* Search Submission CTA */}
-        <button
-          onClick={handleSearchSubmit}
-          style={{ backgroundColor: "var(--button-bg)" }}
-          className="w-full md:h-full py-3 md:py-0 rounded-r-lg px-5 text-(--text) font-semibold transition-opacity hover:opacity-100 shadow-sm tracking-widest cursor-pointer"
-          type="button"
-        >
-          Search
-        </button>
+        <div className="w-full h-auto flex justify-center mr-5 bg-white">
+          <button
+            onClick={handleSearchSubmit}
+            style={{ backgroundColor: "var(--bg)" }}
+            className="w-full lg:h-full py-3 lg:py-0 rounded-sm lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm shadow-[var(--primary)]"
+            type="button"
+          >
+            Search
+          </button>
+        </div>
       </div>
+      {show && (
+        <div className="w-full h-auto flex justify-center items-center p-2 ">
+          <p className="flex py-1 text-xs lg:text-sm font-light lg:font-semibold tracking-wider text-red-600 text-center">
+            At least one search field must be filled in to perform a search.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

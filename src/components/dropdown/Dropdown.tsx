@@ -29,9 +29,9 @@ export function Dropdown({
   return (
     <Menu
       as="div"
-      className={`dropdown relative ${
+      className={`dropdown relative  ${
         smallSize
-          ? "w-fit border border-[var(--border)] rounded-full"
+          ? "w-fit border border-[var(--primary)] rounded-full"
           : "w-full"
       }`}
     >
@@ -41,14 +41,18 @@ export function Dropdown({
         style={{ color: "var(--text-heading)" }}
         className={`dropdown-btn w-full text-left transition-colors duration-200 cursor-pointer ${
           smallSize
-            ? "rounded-full h-fit border-none py-2 px-5 flex items-center justify-center gap-2 bg-transparent"
-            : "border-l-2 h-auto border-[var(--border)] rounded-md lg:rounded-none py-2 px-5 flex items-center justify-between gap-0 hover:bg-black/5 dark:hover:bg-white/5"
+            ? "rounded-full h-fit border-none py-2 px-3 flex items-center justify-center gap-2 bg-transparent"
+            : "border-l-2  h-auto border-[var(--primary)] rounded-md lg:rounded-none py-2 px-3 flex items-center justify-between "
         }`}
       >
-        <div className="flex items-center space-x-2 ">
+        <div
+          className={`flex items-center space-x-2  ${
+            smallSize ? "lg:space-x-2" : "lg:space-x-10"
+          }  `}
+        >
           {Icon && (
             <Icon
-              style={{ color: "var(--button-bg)" }}
+              style={{ color: "var(--muted)" }}
               className="shrink-0"
               size={24}
             />
@@ -73,7 +77,7 @@ export function Dropdown({
         >
           <DropdrownIcon
             size={smallSize ? 12 : 22}
-            className={`transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`}
+            className={`transition-transform duration-300 text-[var(--text)] ${isOpen ? "rotate-180" : "rotate-0"}`}
           />
         </div>
       </Menu.Button>
