@@ -3,18 +3,12 @@ import land_lord from "../../assets/landlord_page.jpg";
 
 export function ClippedTopCurveImage(): React.JSX.Element {
   return (
-    <section className="relative w-full overflow-hidden bg-transparent px-0">
+    <section className="relative w-full overflow-hidden bg-[var(--bg)] px-0">
       {/* 1. Fluid Responsive SVG ClipPath */}
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>
           <clipPath id="premiumDualWaveSmall" clipPathUnits="objectBoundingBox">
-            <path
-              d="M 0,0.05 
-                 C 0.35,0.01 0.65,0.01 1,0.05 
-                 L 1,0.95 
-                 C 0.65,0.99 0.35,0.99 0,0.95 
-                 Z"
-            />
+            <path d="M0,0.25 C0.25,0 0.75,0 1,0.25 L1,1 L0,1 Z" />
           </clipPath>
         </defs>
       </svg>
@@ -37,7 +31,7 @@ export function ClippedTopCurveImage(): React.JSX.Element {
           <img
             src={land_lord}
             alt="Rent out quickly and with confidence"
-            className="absolute inset-0 w-full h-full object-cover object-center block transform scale-105"
+            className="absolute inset-0 w-full h-full object-fill block transform scale-105"
           />
         </div>
 

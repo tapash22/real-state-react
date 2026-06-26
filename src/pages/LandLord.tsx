@@ -1,6 +1,7 @@
 import FeatureCard from "../components/card/FeatureCard";
 import StatCard from "../components/card/StatCard";
 // import { ShowcaseSection } from "../components/show-case/ShowcaseSection";
+
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import landlord_header from "../assets/landlord_header.jpg";
@@ -21,9 +22,13 @@ export default function LandLord() {
           backgroundColor="var(--bg)"
           showTopCurve={false}
           showBottomCurve={false}
-          curveHeight={650}
+          curveHeight={"80vh"}
           imageUrl={landlord_header}
           imageAlt="Rent out quickly and with confidence"
+          imageScale={70}
+          imageBlur={3}
+          imageBrightness={70}
+          imageContrast={70}
         >
           {/* Simple responsive child wrapper layout inside the section */}
           <div className="relative w-full h-[380px] sm:h-[420px] md:h-[650px] flex items-center justify-center max-w-6xl mx-auto px-4 text-center">
@@ -133,11 +138,8 @@ export default function LandLord() {
             ))}
           </div>
         </div>
-
         {/* feature secction */}
       </div>
-
-      {/* image view */}
 
       <div className="w-full h-full ">
         {/* <ShowcaseSection /> */}
@@ -199,19 +201,17 @@ export default function LandLord() {
 
               <div className="w-full h-auto flex items-center p-2">
                 <ul className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {
-                    premiumFeaturesList &&
-                      premiumFeaturesList.map((feature) => {
-                        return (
-                          <li
-                            key={feature.id}
-                            className="list-disc list-inside text-sm font-normal tracking-wider whitespace-nowrap text-[var(--muted)] pl-1"
-                          >
-                            <span>{feature.label}</span>
-                          </li>
-                        );
-                      }) // Fixed: Removed the breaking () execution brackets from here
-                  }
+                  {premiumFeaturesList &&
+                    premiumFeaturesList.map((feature) => {
+                      return (
+                        <li
+                          key={feature.id}
+                          className="list-disc list-inside text-sm font-normal tracking-wider whitespace-nowrap text-[var(--muted)] pl-1"
+                        >
+                          <span>{feature.label}</span>
+                        </li>
+                      );
+                    })}
                 </ul>
               </div>
             </div>
@@ -286,6 +286,7 @@ export default function LandLord() {
         {/* working flow end*/}
 
         {/* bottom section */}
+
         <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:space-y-5 lg:max-w-6xl lg:mx-auto my-5 ">
           <h2
             style={{ color: "var(--button-bg)" }}

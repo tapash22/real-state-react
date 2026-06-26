@@ -1,5 +1,6 @@
 import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
+import land_lord from "../../assets/landlord_page.jpg";
 import { CurveSection } from "./CurveSection";
 import { Search } from "./Search";
 
@@ -100,12 +101,16 @@ export function Banner() {
 
   return (
     <CurveSection
-      backgroundColor="var(--card)"
+      backgroundColor="var(--bg)"
       showTopCurve={false}
       showBottomCurve={true}
-      curveHeight={750}
-      // imageUrl={land_lord}
-      // imageAlt="land_lord and with confidence"
+      curveHeight={"85vh"}
+      imageUrl={land_lord}
+      imageAlt="land_lord and with confidence"
+      imageScale={100}
+      imageBlur={3}
+      imageBrightness={70}
+      imageContrast={100}
     >
       <div
         ref={containerRef}
@@ -131,10 +136,10 @@ export function Banner() {
             <span style={{ color: "var(--text-heading)" }}>Stay for</span>
 
             {/* MASK WINDOW */}
-            <span className="relative overflow-hidden h-[36px] w-[120px] flex items-center">
+            <span className="relative overflow-hidden h-[40px] w-[150px] flex items-center">
               <span
                 ref={subtitleTextRef}
-                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/80 px-2 py-3 rounded-lg "
+                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/80 px- "
                 style={{ color: "var(--button-bg)" }}
               />
             </span>
@@ -143,7 +148,7 @@ export function Banner() {
           {/* PARAGRAPH */}
           <p
             ref={paraRef}
-            style={{ color: "var(--text-paragraph)" }}
+            style={{ color: "var(--text-muted)" }}
             className="text-base sm:text-lg max-w-xl font-medium opacity-0 leading-relaxed"
           >
             Connect directly with local homeowners across the globe. Secure your

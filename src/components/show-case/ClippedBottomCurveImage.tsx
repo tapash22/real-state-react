@@ -12,13 +12,7 @@ export function ClippedBottomCurveImage(): React.JSX.Element {
               drops down the right edge to Y=0.94, curves gracefully inward 
               up to Y=0.82 on the left, and closes out.
             */}
-            <path
-              d="M 0,0 
-                 L 1,0 
-                 L 1,0.94 
-                 C 0.65,0.84 0.25,0.96 0,0.82 
-                 Z"
-            />
+            <path d="M0,0 L1,0 L1,0.78 C0.75,1 0.25,1 0,0.78 Z" />
           </clipPath>
         </defs>
       </svg>
