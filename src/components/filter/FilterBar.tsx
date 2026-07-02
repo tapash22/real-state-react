@@ -33,7 +33,7 @@ export function FilterBar({
         <div className="flex flex-col md:items-center justify-start space-y-5 text-sm text-[var(--text)] w-full h-full">
           <div className="hidden md:flex justify-between items-center gap-4 w-full">
             <p className="text-sm font-semibold tracking-wider text-[var(--text)]">
-              <span>Selected :</span>{" "}
+              <span>Selected Tabs :</span>{" "}
               <span className="text-[var(--muted)]">{activeTab}</span>
             </p>
 

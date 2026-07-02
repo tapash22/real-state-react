@@ -12,7 +12,7 @@ import {
   type HouseContextType,
 } from "../components/HouseContext";
 import { NoProperties } from "../components/empty/NoProperties";
-import { FilterBar } from "../components/filter/FilterBar";
+import { FilterDrawer } from "../components/filter/FilterDrawer";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
 import { House, houseData } from "../data";
@@ -375,119 +375,21 @@ export default function RealEstateSearchModule() {
         </div>
       </div>
       {/* ─── DESKTOP FILTER DIALOG (SLIDES FROM RIGHT SIDE) ─── */}
-      {!isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 top-20 right-2 flex justify-end bg-transparent backdrop-blur-xs animate-fade-in">
-          <div
-            className="absolute inset-0 -5"
-            onClick={() => setIsFilterDialogOpen(false)}
-          />
 
-          <div className="relative bg-[var(--bg)] w-full max-w-md h-full shadow-2xl z-10 flex flex-col   transform transition-transform animate-slide-in-right">
-            {/* <div >
-            </div> */}
-            <div className="flex justify-between items-start border-b-2 border-[var(--border)] p-4 w-full">
-              <h3 className="text-xl font-bold text-[var(--text)] ">
-                Filter Parameters
-              </h3>
-              <button
-                onClick={() => setIsFilterDialogOpen(false)}
-                className="text-[var(--text)] dark:hover:text-[var(--muted)] p-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+      <FilterDrawer
+        isOpen={isFilterDialogOpen}
+        onClose={() => setIsFilterDialogOpen(false)}
+        isMobile={isMobile}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        localPrice={localPrice}
+        setLocalPrice={setLocalPrice}
+        localProperty={localProperty}
+        setLocalProperty={setLocalProperty}
+        priceList={prices}
+        propertyList={properties}
+      />
 
-            {/* Form Content Body: Uses vertical drawer layout */}
-            <div className="py-0 overflow-y-auto h-[calc(100vh-220px)] scrollbar-thin">
-              <FilterBar {...filterBarProps} variant="drawer" />
-            </div>
-
-            {/* Action Controls Footer */}
-            <div className="absolute bottom-0 border-t-2 border-[var(--border)] p-3 flex gap-3 w-full">
-              <button
-                onClick={() => {
-                  setLocalPrice("All Prices");
-                  setLocalProperty("All Types");
-                  setActiveTab("Anyone");
-                  setIsFilterDialogOpen(false);
-                }}
-                className="flex-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-medium py-3 rounded-xl hover:opacity-90 transition-opacity"
-              >
-                Clear
-              </button>
-              <button
-                onClick={() => setIsFilterDialogOpen(false)}
-                className="flex-1 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium py-3 rounded-xl hover:opacity-90 transition-opacity"
-              >
-                Apply Filters
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* ─── MOBILE FILTER DIALOG (BOTTOM SIDE SHEET MODAL) ─── */}
-      {isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-transparent backdrop-blur-sm animate-fade-in">
-          <div
-            className="absolute inset-0"
-            onClick={() => setIsFilterDialogOpen(false)}
-          />
-
-          <div className="relative bg-[var(--bg)] w-full rounded-t-xl shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
-            <div className="flex justify-between items-center p-4 border-b-2  border-[var(--border)]">
-              <h3 className="text-lg font-bold text-[var(--text)]">
-                Filter Search
-              </h3>
-              <button
-                onClick={() => setIsFilterDialogOpen(false)}
-                className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* Form Content Body: Uses vertical drawer layout */}
-            <div className="p-2 h-[40vh] overflow-y-scroll scrollbar-thin">
-              <FilterBar {...filterBarProps} variant="drawer" />
-            </div>
-
-            <div className="p-3 flex justify-center items-center w-full">
-              <button
-                onClick={() => setIsFilterDialogOpen(false)}
-                className="w-full bg-[var(--card)] text-sm font-semibold tracking-wider text-[var(--text)]  py-3 rounded-lg shadow-sm shadow-[var(--primary)] hover:opacity-90 transition-opacity"
-              >
-                Apply Filters
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       {/* Main View Area Split Matrix */}
       <div
         style={isMobile ? styles.mobileContainer : styles.desktopContainer}
