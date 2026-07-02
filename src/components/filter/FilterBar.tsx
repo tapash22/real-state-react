@@ -26,11 +26,11 @@ export function FilterBar({
   // const tabs = ["Anyone", "Students", "Professionals", "Families"];
 
   return (
-    <div className="w-full bg-[var(--bg)] p-2 md:p-5 font-sans select-none md:shadow-sm">
+    <div className="w-full h-full lg:h-full  bg-[var(--bg)] p-2 md:p-5 font-sans select-none md:shadow-sm ">
       {/* Upper Section: Actions & Filters */}
       <div className="flex flex-col lg:flex-row  lg:items-start justify-between gap-4 ">
         {/* Filter Interactive Elements Area */}
-        <div className="flex flex-col md:items-center justify-start space-y-5 text-sm text-[var(--text)] w-full ">
+        <div className="flex flex-col md:items-center justify-start space-y-5 text-sm text-[var(--text)] w-full h-full">
           <div className="hidden md:flex justify-between items-center gap-4 w-full">
             <p className="text-sm font-semibold tracking-wider text-[var(--text)]">
               <span>Selected :</span>{" "}
@@ -38,14 +38,16 @@ export function FilterBar({
             </p>
 
             {/* <div className="h-6 w-px bg- dark:bg-zinc-800" /> */}
-            <button className="flex items-center gap-2 rounded-full bg-[#022329] dark:bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#05353e] dark:hover:bg-emerald-700">
-              <FaRegBell className="h-4 w-4" />
-              Get alerts
+            <button className="transition-colors duration-200 cursor-pointer border border-[var(--border)] shadow-sm shadow-[var(--primary)] rounded-lg py-2 px-3 flex items-center justify-between w-auto gap-2">
+              <FaRegBell size={16} className="text-[var(--primary)]" />
+              <span className="text-sm font-normal tracking-wide text-[var(--text)]">
+                Get alerts
+              </span>
             </button>
           </div>
 
-          {/* Price Range Dropdown Wrapper */}
-          <div className="w-full ">
+          <div className="w-full flex flex-col justify-start space-y-5 ">
+            {/* Price Range Dropdown Wrapper */}
             <Dropdown
               selectedValue={localPrice}
               onSelect={setLocalPrice}
@@ -55,10 +57,10 @@ export function FilterBar({
               smallSize={true}
               showValue={true}
             />
-          </div>
+            {/* Price Range Dropdown Wrapper end*/}
 
-          {/* Property Type Dropdown Wrapper */}
-          <div className="w-full md:w-auto">
+            {/* Property Type Dropdown Wrapper */}
+
             <Dropdown
               selectedValue={localProperty}
               onSelect={setLocalProperty}
@@ -68,13 +70,8 @@ export function FilterBar({
               smallSize={true}
               showValue={true}
             />
+            {/* Property Type Dropdown Wrapper end */}
           </div>
-
-          {/* Neighborhoods Display */}
-          <button className="w-full md:w-auto flex items-center justify-between md:justify-center rounded-full border border-gray-300 dark:border-zinc-700 bg-transparent dark:bg-zinc-800 px-4 py-2.5 md:py-2 transition-colors hover:border-gray-400">
-            <span>Neighborhoods</span>
-            <FaChevronDown className="ms-1.5 h-3 w-3 text-gray-400" />
-          </button>
         </div>
 
         {/* Right Side Alerts: Hidden inside drawer/dialog view, visible on desktop navbar rows */}

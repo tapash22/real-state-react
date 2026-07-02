@@ -376,47 +376,47 @@ export default function RealEstateSearchModule() {
       </div>
       {/* ─── DESKTOP FILTER DIALOG (SLIDES FROM RIGHT SIDE) ─── */}
       {!isMobile && isFilterDialogOpen && (
-        <div className="fixed inset-0 z-50 top-20 flex justify-end bg-transparent backdrop-blur-xs animate-fade-in">
+        <div className="fixed inset-0 z-50 top-20 right-2 flex justify-end bg-transparent backdrop-blur-xs animate-fade-in">
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 -5"
             onClick={() => setIsFilterDialogOpen(false)}
           />
 
-          <div className="relative bg-[var(--bg)] w-full max-w-md h-full shadow-2xl z-10 flex flex-col justify-between transform transition-transform animate-slide-in-right">
-            <div>
-              <div className="flex justify-between items-center border-b-2 border-[var(--border)] p-5 ">
-                <h3 className="text-xl font-bold text-[var(--text)] ">
-                  Filter Parameters
-                </h3>
-                <button
-                  onClick={() => setIsFilterDialogOpen(false)}
-                  className="text-[var(--text)] dark:hover:text-[var(--muted)] p-1"
+          <div className="relative bg-[var(--bg)] w-full max-w-md h-full shadow-2xl z-10 flex flex-col   transform transition-transform animate-slide-in-right">
+            {/* <div >
+            </div> */}
+            <div className="flex justify-between items-start border-b-2 border-[var(--border)] p-4 w-full">
+              <h3 className="text-xl font-bold text-[var(--text)] ">
+                Filter Parameters
+              </h3>
+              <button
+                onClick={() => setIsFilterDialogOpen(false)}
+                className="text-[var(--text)] dark:hover:text-[var(--muted)] p-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
 
-              {/* Form Content Body: Uses vertical drawer layout */}
-              <div className="py-3 overflow-y-auto max-h-[calc(100vh-180px)]">
-                <FilterBar {...filterBarProps} variant="drawer" />
-              </div>
+            {/* Form Content Body: Uses vertical drawer layout */}
+            <div className="py-0 overflow-y-auto h-[calc(100vh-220px)] scrollbar-thin">
+              <FilterBar {...filterBarProps} variant="drawer" />
             </div>
 
             {/* Action Controls Footer */}
-            <div className="border-t-2 border-[var(--border)] p-5 flex gap-3">
+            <div className="absolute bottom-0 border-t-2 border-[var(--border)] p-3 flex gap-3 w-full">
               <button
                 onClick={() => {
                   setLocalPrice("All Prices");
@@ -447,7 +447,7 @@ export default function RealEstateSearchModule() {
           />
 
           <div className="relative bg-[var(--bg)] w-full rounded-t-xl shadow-xl z-10 max-h-[85vh] overflow-y-auto transform transition-transform animate-slide-up">
-            <div className="flex justify-between items-center p-4 border-b-2 pb-2 border-[var(--border)]">
+            <div className="flex justify-between items-center p-4 border-b-2  border-[var(--border)]">
               <h3 className="text-lg font-bold text-[var(--text)]">
                 Filter Search
               </h3>
@@ -473,7 +473,7 @@ export default function RealEstateSearchModule() {
             </div>
 
             {/* Form Content Body: Uses vertical drawer layout */}
-            <div className="p-2">
+            <div className="p-2 h-[40vh] overflow-y-scroll scrollbar-thin">
               <FilterBar {...filterBarProps} variant="drawer" />
             </div>
 
