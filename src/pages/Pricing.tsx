@@ -9,65 +9,60 @@ type DateMode = "tenant" | "landlord";
 export default function Pricing() {
   const [dateMode, setDateMode] = useState<DateMode>("tenant");
   const containerRef = useRef<HTMLDivElement>(null);
+  const isAnimating = useRef(false);
 
-  // handle toggle effeect with gsap animation
   const handleToggleChange = (val: DateMode) => {
-    if (val === dateMode) return;
+    if (val === dateMode || isAnimating.current) return;
 
-    // 1. Fetch the elements
     const tenantEl = containerRef.current?.querySelector(".tenant-wrapper");
     const landlordEl = containerRef.current?.querySelector(".landlord-wrapper");
-
-    // 2. Add a Type Guard check!
-    // This satisfies TypeScript by guaranteeing both items exist past this point.
     if (!tenantEl || !landlordEl) return;
 
-    // 3. Now you can safely pass them to GSAP without errors
+    isAnimating.current = true;
+
+    // A unified fast timeline matching the 200ms (0.2s) toggle transition speed
     const tl = gsap.timeline({
-      onComplete: () => setDateMode(val),
+      onComplete: () => {
+        isAnimating.current = false;
+      },
     });
 
     if (dateMode === "tenant") {
-      tl.to(tenantEl, {
-        opacity: 0,
-        x: -20,
-        duration: 0.2,
-        ease: "power2.inOut",
-      })
+      tl.to(tenantEl, { opacity: 0, x: -15, duration: 0.15, ease: "power1.in" })
+        .set({}, { onComplete: () => setDateMode(val) }) // State flips right as the pill moves
         .set(tenantEl, { display: "none" })
-        .set(landlordEl, { display: "block", opacity: 0, x: 20 })
+        .set(landlordEl, { display: "block", x: 15, opacity: 0 })
         .to(landlordEl, {
           opacity: 1,
           x: 0,
-          duration: 0.35,
-          ease: "power2.out",
+          duration: 0.2,
+          ease: "power1.out",
         });
-    } else if (dateMode === "landlord") {
+    } else {
       tl.to(landlordEl, {
         opacity: 0,
-        x: 20,
-        duration: 0.2,
-        ease: "power2.inOut",
+        x: 15,
+        duration: 0.15,
+        ease: "power1.in",
       })
+        .set({}, { onComplete: () => setDateMode(val) })
         .set(landlordEl, { display: "none" })
-        .set(tenantEl, { display: "block", opacity: 0, x: -20 })
-        .to(tenantEl, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out" });
+        .set(tenantEl, { display: "block", x: -15, opacity: 0 })
+        .to(tenantEl, { opacity: 1, x: 0, duration: 0.2, ease: "power1.out" });
     }
   };
 
-  // Ensure elements are set to their correct initial states on first load
   useLayoutEffect(() => {
     const tenantEl = containerRef.current?.querySelector(".tenant-wrapper");
     const landlordEl = containerRef.current?.querySelector(".landlord-wrapper");
-
     if (!tenantEl || !landlordEl) return;
 
     if (dateMode === "tenant") {
       gsap.set(tenantEl, { display: "block", opacity: 1, x: 0 });
-      gsap.set(landlordEl, { display: "none", opacity: 0, x: 20 });
+      gsap.set(landlordEl, { display: "none", opacity: 0, x: 15 });
     } else {
       gsap.set(landlordEl, { display: "block", opacity: 1, x: 0 });
-      gsap.set(tenantEl, { display: "none", opacity: 0, x: -20 });
+      gsap.set(tenantEl, { display: "none", opacity: 0, x: -15 });
     }
   }, [dateMode]);
 
@@ -104,10 +99,10 @@ export default function Pricing() {
         ref={containerRef}
         className="w-full flex justify-center items-center p-5 min-h-[400px] overflow-hidden relative"
       >
-        <div className="tenant-wrapper w-full">
+        <div className="tenant-wrapper w-full  flex justify-center items-center ">
           <TenantBookingProcess />
         </div>
-        <div className="landlord-wrapper w-full">
+        <div className="landlord-wrapper w-full flex justify-center items-center ">
           <LandlordRentProcess />
         </div>
       </div>

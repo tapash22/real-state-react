@@ -101,7 +101,7 @@ export default function Header(_props: HeaderProps) {
         </div>
 
         {/* Right Side: Desktop Navigation Links (Hidden on Mobile) */}
-        <div className="hidden lg:flex items-center gap-6 font-medium text-[15px]">
+        <div className="hidden lg:flex items-center gap-5 font-semibold text-sm tracking-wider whitespace-nowrap ">
           <Link
             to="/how-it-works"
             style={{ color: "var(--text)" }}
@@ -148,7 +148,7 @@ export default function Header(_props: HeaderProps) {
           </Link>
 
           {/* Desktop Language Selector dropdown integration */}
-          <div className="w-32">
+          <div className="w-auto">
             <Dropdown
               smallSize={true}
               showValue={true}
@@ -181,6 +181,7 @@ export default function Header(_props: HeaderProps) {
       </header>
 
       {/* Mobile Slide-out Drawer Overlay */}
+
       {isOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs lg:hidden">
           {/* Main Panel Container: Controlled strictly to be full screen viewport depth */}

@@ -217,9 +217,9 @@ export default function PropertyDetails() {
         </div>
 
         {/* RIGHT COLUMN: Sticky Agent Contact Panel */}
-        <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-lg shadow-[var(--bg-shadow)] border-2 border-[var(--border)] rounded-xl  p-0 space-y-6 min-w-[60%] max-w-[80%] ">
+        <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-lg shadow-[var(--bg-shadow)] border-2 border-[var(--border)] rounded-xl  p-2 space-y-6 min-w-[60%] max-w-[80%] ">
           <div className="space-y-2">
-            <div className="flex justify-start items-center p-5 border-b-2 border-[var(--border)] ">
+            <div className="flex justify-start items-center p-3 border-b-2 border-[var(--border)] ">
               <div className="border-2 border-[var(--boorder)] w-16 h-14 rounded-full overflow-hidden flex justify-center items-center shadow-lg shadow-[var(--bg-shadow)]">
                 <img
                   src={houseData.agent.image}
@@ -267,7 +267,7 @@ export default function PropertyDetails() {
               </div>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] py-3 px-5 flex flex-col justify-start items-start space-y-2">
+            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col justify-start items-start space-y-2">
               <p className="text-sm font-medium tracking-wider text-[var(--muted)]">
                 From
               </p>
@@ -279,7 +279,7 @@ export default function PropertyDetails() {
               </h1>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-5 flex flex-col items-center">
+            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col items-center">
               <p className="text-sm font-light tracking-wider leading-relaxed text-[var(--text)] text-start">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi
                 enim nesciunt laborum ab cupiditate nobis, ad ipsum ducimus fuga
@@ -288,8 +288,8 @@ export default function PropertyDetails() {
               </p>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-5 flex flex-col items-start space-y-2">
-              <h2 className="text-xl font-font-semibold tracking-wider whitespace-nowrap">
+            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col items-start space-y-2">
+              <h2 className="text-lg font-semibold tracking-wider whitespace-nowrap">
                 Available places
               </h2>
               <ul className="flex flex-col w-full h-auto space-y-2 ">
@@ -312,19 +312,21 @@ export default function PropertyDetails() {
               </ul>
             </div>
 
-            <div className="w-full h-auto p-5 flex flex-col justify-start space-y-2 ">
-              <h2 className="text-xl font-semibold tracking-wider whitespace-nowrap text-start">
+            <div className="w-full h-auto p-3 flex flex-col justify-start space-y-2 ">
+              <h2 className="text-lg font-semibold tracking-wider whitespace-nowrap text-start">
                 Plan your move
               </h2>
-              <div className="flex flex-col items-center gap-2 space-y-3">
-                <SlidingToggle<DateMode>
-                  selectedValue={dateMode}
-                  onChange={handleToggleChange}
-                  options={[
-                    { value: "month", label: "By month" },
-                    { value: "exact", label: "Exact dates" },
-                  ]}
-                />
+              <div className="flex flex-col items-center space-y-3 ">
+                <div className="px-5 w-full">
+                  <SlidingToggle<DateMode>
+                    selectedValue={dateMode}
+                    onChange={handleToggleChange}
+                    options={[
+                      { value: "month", label: "By month" },
+                      { value: "exact", label: "Exact dates" },
+                    ]}
+                  />
+                </div>
                 <CalendarInputPicker
                   mode={dateMode}
                   placeholder={
@@ -350,7 +352,7 @@ export default function PropertyDetails() {
                   </div>
                 )}
 
-                <button className="w-full bg-white hover:bg-gray-50 text-gray-800 border border-gray-300 font-semibold py-4 rounded-lg transition text-sm">
+                <button className="w-full h-full p-3 border border-[var(--card)] shadow-sm shadow-[var(--primary)] rounded-md  text-sm">
                   Show Available Places
                 </button>
               </div>
