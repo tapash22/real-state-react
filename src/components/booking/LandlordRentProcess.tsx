@@ -39,7 +39,7 @@ export function LandlordRentProcess() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-start  lg:max-w-7xl lg:mx-auto h-auto w-full">
+      <div className="flex flex-col justify-center items-start lg:max-w-7xl lg:mx-auto h-auto w-full">
         <FaqAccordion
           heading="Frequently Asked Questions"
           items={landlordFaqs}

@@ -20,7 +20,7 @@ export default function TenantBookingProcess() {
           What you’ll pay to book depends on where you’re moving to
         </h3>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col lg:max-w-7xl lg:mx-auto h-auto">
         {BOOKING_PROCESS_STEPS.map((step, index) => (
           <ProcessCard
             key={step.id}

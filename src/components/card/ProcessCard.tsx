@@ -71,7 +71,7 @@ export const ProcessCard: React.FC<{ step: ProcessStep; isLast: boolean }> = ({
 
           {/* Vertical Timeline String Line Connector */}
           {!isLast && (
-            <div className="w-1 bg-[var(--card)] flex-grow mt-3 -mb-20 min-h-[100px]" />
+            <div className="w-0 lg:w-1 bg-[var(--card)] flex-grow mt-3 -mb-20 min-h-[100px]" />
           )}
         </div>
 
@@ -102,7 +102,7 @@ export const ProcessCard: React.FC<{ step: ProcessStep; isLast: boolean }> = ({
       </div>
 
       {/* Right Column / Pricing Sidebar Split */}
-      <div className="w-full md:w-[32%] border-l-2 border-dashed border-[var(--border)] pl-0 md:pl-8 pt-4 md:pt-0.5 flex items-start">
+      <div className="w-full md:w-[32%] border-l-2 border-dashed border-[var(--border)] pl-14 md:pl-8 pt-4 md:pt-0.5 flex items-start">
         <div className="space-y-3">
           <h3 className="text-base font-bold text-[var(--text)] tracking-wide leading-relaxed whitespace-pre-line">
             {step.sidebar.title}

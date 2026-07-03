@@ -316,7 +316,6 @@ export const houseData: House[] = [
 ];
 
 // Q & A
-
 export const faqData: FaqItem[] = [
   {
     id: 1,
@@ -566,6 +565,7 @@ export const workingStepsData: WorkingStepsDataType[] = [
       "Receive rent, deposit, utilities, and more, conveniently through HousingAnywhere's secure payment system.",
   },
 ];
+
 /* -----------------------------
   Houses Data
   houseData new format update to use

@@ -1,5 +1,4 @@
 import React from "react";
-import landlord_header from "../../assets/landlord_header.jpg";
 
 export function ClippedBottomCurveImage(): React.JSX.Element {
   return (
@@ -18,7 +17,7 @@ export function ClippedBottomCurveImage(): React.JSX.Element {
       </svg>
 
       {/* 2. Full-Width Main Frame Container */}
-      <div className="relative w-full h-[380px] sm:h-[4200px] md:h-[650px]">
+      <div className="relative w-full h-[220px] md:h-[200px] lg:h-[250px]">
         {/* The Clipped Image Container */}
         <div
           className="absolute inset-0 w-full h-full overflow-hidden"
@@ -27,11 +26,11 @@ export function ClippedBottomCurveImage(): React.JSX.Element {
           {/* Dark Overlay Tint for Typography Contrast */}
           <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
-          <img
+          {/* <img
             src={landlord_header}
             alt="Rent out quickly and with confidence"
             className="w-full h-full object-cover transform scale-100 transition-transform duration-1000 ease-out"
-          />
+          /> */}
         </div>
       </div>
     </section>
