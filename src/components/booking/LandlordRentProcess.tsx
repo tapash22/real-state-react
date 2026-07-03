@@ -30,14 +30,16 @@ export function LandlordRentProcess() {
           generating revenue now!
         </p>
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-14">
+
+      <div className="flex flex-col justify-center items-center lg:max-w-7xl lg:mx-auto h-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 ">
           {RENTAL_STEPS_DATA.map((step) => (
             <RentStepCard key={step.id} step={step} />
           ))}
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center">
+
+      <div className="flex flex-col justify-center items-start  lg:max-w-7xl lg:mx-auto h-auto w-full">
         <FaqAccordion
           heading="Frequently Asked Questions"
           items={landlordFaqs}

@@ -78,7 +78,7 @@ export function Home() {
           <Partners />
         </div>
 
-        <div data-scroll-fade>
+        <div data-scroll-fade className="px-8 lg:px-0 flex justify-center">
           {/* <Agents /> */}
           <FaqAccordion heading="Your questions, answered" items={faqData} />
         </div>

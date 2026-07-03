@@ -6,32 +6,34 @@ interface RentStepCardProps {
 
 export function RentStepCard({ step }: RentStepCardProps) {
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="flex flex-col items-start w-full space-y-2 lg:space-y-5 rounded-lg">
       {/* Step Image Container */}
-      <div className="w-full aspect-video flex items-center justify-center mb-6 overflow-hidden  rounded-lg">
-        {step.rentStepImage && (
-          <img
-            src={step.rentStepImage}
-            alt={step.imageAlt}
-            className="w-full h-full object-contain"
-          />
-        )}
+      <div
+        style={{ borderColor: "var(--border)" }}
+        className="w-full  aspect-[3/2] lg:aspect-square overflow-hidden rounded-lg border bg-white/30"
+      >
+        <img
+          src={step.rentStepImage}
+          alt={step.imageAlt}
+          className="w-full h-full object-fill lg:object-contain"
+        />
       </div>
 
       {/* Title block with bold number prefix */}
-      <div className="flex items-baseline spece-x-2">
+      <div className="flex items-start h-auto lg:h-auto gap-2">
         <span className="text-2xl font-bold text-[var(--muted)] leading-none">
           {step.id}.
         </span>
-        <h3 className="text-sm font-bold text-[var(--text)] tracking-wide">
-          {step.title}
-        </h3>
+        <div className="flex flex-col justify-start items-start space-y-1">
+          <h3 className="text-lg font-semibold text-[var(--text)] tracking-wide">
+            {step.title}
+          </h3>
+          {/* Description Copy */}
+          <p className="text-sm leading-relaxed text-[var(--muted)] font-light text-wrap tracking-wide">
+            {step.description}
+          </p>
+        </div>
       </div>
-
-      {/* Description Copy */}
-      <p className="text-xs leading-relaxed text-[var(--muted)] font-light">
-        {step.description}
-      </p>
     </div>
   );
 }

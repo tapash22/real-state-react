@@ -24,7 +24,7 @@ export function FaqAccordion({
   };
 
   return (
-    <section className="my-5 lg:my-16 w-full px-8 lg:px-16 max-w-7xl mx-auto  transition-colors duration-300">
+    <section className="my-0 lg:my-5  px-0 lg:px-16 w-full lg:max-w-7xl   transition-colors duration-300">
       {/* HEADER */}
       <div className="py-3 text-center space-y-1">
         <h3
@@ -42,19 +42,20 @@ export function FaqAccordion({
           return (
             <div
               key={item.id}
-              className="py-3 lg:py-5 transition-colors duration-200"
+              className="py-2 lg:py-5 transition-colors duration-200"
             >
               {/* Header Trigger */}
               <button
                 onClick={() => toggleItem(item.id)}
-                className="w-full flex justify-between items-center text-left gap-4 font-bold text-md md:text-xl tracking-wide text-[var(--text)] cursor-pointer group"
+                className="w-full flex justify-between items-center text-left gap-2 lg:gap-4 font-medium lg:font-bold text-md lg:text-xl tracking-wide text-[var(--text)] cursor-pointer group"
                 aria-expanded={isOpen}
               >
                 <span className="group-hover:opacity-80 transition-opacity">
                   {item.question}
                 </span>
                 <FiChevronDown
-                  className={`w-6 h-6 shrink-0 transition-transform duration-300 ease-out text-[var(--text)] opacity-80 ${
+                  size={24}
+                  className={`shrink-0 transition-transform duration-300 ease-out text-[var(--text)] opacity-80 ${
                     isOpen ? "rotate-180" : "rotate-0"
                   }`}
                 />
@@ -72,7 +73,7 @@ export function FaqAccordion({
                 {/* Inner wrapper to contain the overflow */}
                 <div className="overflow-hidden">
                   <p
-                    className="pt-4 pb-1 text-base leading-relaxed"
+                    className="py-3 text-base leading-relaxed"
                     style={{ color: "var(--text-paragraph, var(--text))" }}
                   >
                     {item.answer}

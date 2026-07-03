@@ -67,8 +67,8 @@ export default function Pricing() {
   }, [dateMode]);
 
   return (
-    <section className="my-8 lg:my-16 w-full px-8 lg:px-16 transition-colors duration-300 flex flex-col justify-center items-center ">
-      <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
+    <section className="my-5 lg:my-10 w-full px-5 lg:px-16 transition-colors duration-300 flex flex-col justify-center items-center ">
+      <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl">
         <h2
           style={{ color: "var(--button-bg)" }}
           className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
@@ -78,11 +78,11 @@ export default function Pricing() {
 
         <h3
           style={{ color: "var(--text-heading)" }}
-          className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
+          className="text-lg lg:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
         >
           Learn about the benefits of using HousingAnywhere
         </h3>
-        <div className="w-full lg:w-1/2 h-auto p-4">
+        <div className="w-full lg:w-1/2 h-auto p-2 lg:p-4">
           <SlidingToggle<DateMode>
             selectedValue={dateMode}
             onChange={handleToggleChange}
@@ -97,7 +97,7 @@ export default function Pricing() {
       {/* Persistent DOM Container to host both views safely during GSAP sequences */}
       <div
         ref={containerRef}
-        className="w-full flex justify-center items-center p-5 min-h-[400px] overflow-hidden relative"
+        className="w-full flex justify-center items-center p-4  min-h-[400px] overflow-hidden relative space-y-5"
       >
         <div className="tenant-wrapper w-full  flex justify-center items-center ">
           <TenantBookingProcess />
