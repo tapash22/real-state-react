@@ -4,6 +4,9 @@ import house1lg from "./house1lg.jpg";
 import house2 from "./house2.jpg";
 import house2lg from "./house2lg.jpg";
 
+import find_rent from "./book/find_rent.png";
+import rent from "./book/rent.png";
+import rent_payment from "./book/rent_payment.png";
 import brand from "./brand.png";
 import house3 from "./house3.jpg";
 import house3lg from "./house3lg.jpg";
@@ -20,6 +23,9 @@ const assets = {
   brand,
   land_lord,
   landlord_header,
+  find_rent,
+  rent,
+  rent_payment,
 };
 
 export default assets;

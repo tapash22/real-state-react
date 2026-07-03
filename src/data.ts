@@ -47,6 +47,34 @@ export const socialMediaLinkList: SocialMediaItems = [
   },
 ];
 
+export interface RentStepData {
+  id: number;
+  title: string;
+  description: string;
+  rentStepImage?: string;
+  imageAlt: string;
+}
+
+export interface SidebarLink {
+  text: string;
+  url: string; // Placeholder for navigation/routing
+}
+
+export interface StepSidebar {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  link?: SidebarLink;
+}
+
+export interface ProcessStep {
+  id: number;
+  title: string;
+  description: string[]; // Array to handle multiple paragraphs cleanly
+  footerLink?: SidebarLink;
+  sidebar: StepSidebar;
+}
+
 export interface RentalStep {
   id: number;
   title: string;
@@ -282,14 +310,14 @@ export const houseData: House[] = [
 
 // Q & A
 
-export interface FAQItem {
+export interface FaqItem {
   id: number;
   question: string;
   answer: string;
-  link: string | null;
+  link?: string | null;
 }
 
-export const faqData: FAQItem[] = [
+export const faqData: FaqItem[] = [
   {
     id: 1,
     question: "Is this platform a traditional real estate brokerage agency?",
@@ -895,3 +923,121 @@ export const houseData: any[] = [
 // houseData new format update to use
 
 ------------------------------ */
+
+export const RENTAL_STEPS_DATA: RentStepData[] = [
+  {
+    id: 1,
+    title: "List your place",
+    description:
+      "Create your listings within 5 minutes and make your properties visible to the world!",
+    rentStepImage: assets.find_rent,
+    imageAlt: "Illustration of a house with a magnifying glass",
+  },
+  {
+    id: 2,
+    title: "Rent it out",
+    description:
+      "Receive contact requests, select your favorite tenants and confirm the rental.",
+    rentStepImage: assets.rent,
+    imageAlt: "Illustration of chat bubbles and connection dots",
+  },
+  {
+    id: 3,
+    title: "Get paid",
+    description: "Get paid out after your tenant has successfully moved-in.",
+    rentStepImage: assets.rent_payment,
+    imageAlt: "Illustration of people holding up a large payment card",
+  },
+];
+
+export const BOOKING_PROCESS_STEPS: ProcessStep[] = [
+  {
+    id: 1,
+    title: "Search fast, search smart",
+    description: [
+      "Browse through hundreds of properties in 30+ countries. Save your favorites and create search alerts so you don't miss your dream place.",
+    ],
+    footerLink: { text: "Start your search now", url: "/search" },
+    sidebar: {
+      title: "Free",
+      description: "Access to all our properties, completely free.",
+      link: { text: "START YOUR SEARCH NOW >", url: "/search" },
+    },
+  },
+  {
+    id: 2,
+    title: "Chat in real-time with verified landlords",
+    description: [
+      "For properties in The Netherlands: You can buy a subscription and enjoy unlimited messaging with landlords. We offer various subscription plans, all at a low price. Pick the one that suits you best.",
+      "For properties in other countries: You can reach out to landlords for free. Ask all your burning questions, agree on the finer details, and if all goes well one of these verified landlords will become your new landlord.",
+    ],
+    footerLink: {
+      text: "How do I get in touch with landlords?",
+      url: "/faq/contact",
+    },
+    sidebar: {
+      title: "The Netherlands – Buy a plan\nOther countries – Free",
+      description: "Unlimited messaging with landlords",
+      link: {
+        text: "HOW DO I GET IN TOUCH WITH LANDLORDS? >",
+        url: "/faq/contact",
+      },
+    },
+  },
+  {
+    id: 3,
+    title: "Book and pay securely online",
+    description: [
+      "For properties in The Netherlands: Pay the first month's rent, and the place is yours. There are no other fees.",
+      "For properties in other countries: HousingAnywhere charges a one-time Tenant Protection fee of approximately 25%-40% of the first month's rent (minimum of €175).",
+      "Wherever you book the place, we protect your rent and transfer it to the landlord only 48 hours after you've moved in.",
+    ],
+    footerLink: { text: "Learn more", url: "/tenant-protection" },
+    sidebar: {
+      title:
+        "The Netherlands – No fees\nOther countries – Tenant Protection fee",
+      description: "Only applied to the first month's rent",
+      link: { text: "LEARN MORE >", url: "/tenant-protection" },
+    },
+  },
+  {
+    id: 4,
+    title: "Pay your deposit, monthly rent and any extras",
+    description: [
+      "You can pay any post-booking costs (like admin, furnishing, or cleaning fees) using our secure payment system — for total peace of mind. Multiple payment methods accepted, including all major credit cards. Track your payments in real time and get invoices for all your official paperwork.",
+    ],
+    footerLink: { text: "More about payment requests", url: "/payments" },
+    sidebar: {
+      title: "UK and US – No fees\nOther countries – 2.5% service fee",
+      description: "2.5% service fee applies",
+      link: { text: "MORE ABOUT PAYMENT REQUESTS >", url: "/payments" },
+    },
+  },
+];
+
+export const landlordFaqs: FaqItem[] = [
+  {
+    id: 1,
+    question: "Why do you charge a commission fee?",
+    answer:
+      "Our fees allow us to operate our platform and services, including a dedicated customer support team, secure payment processing, API integrations, and fraud detection. We only charge this small commission fee when a tenant successfully books your place. You can list an unlimited number of properties and chat with potential tenants for free.",
+  },
+  {
+    id: 2,
+    question: "What happens if a tenant cancels their booking?",
+    answer:
+      "If your tenant cancels within 24 hours of booking your place, they are entitled to a full refund. After that period, you are covered by our landlord guarantee, meaning you will still receive the first month's rent even if the tenant cancels. The payout is made 48 hours after the tenant has moved in, provided that your property matches the listing description.",
+  },
+  {
+    id: 3,
+    question: "Do you offer a rent guarantee?",
+    answer:
+      "We currently do not offer a rent guarantee. However, we provide a secure online rent collection system that allows you to request rent, deposits, and any other payments directly from your tenants.",
+  },
+  {
+    id: 4,
+    question: "Do you provide insurance against property damage?",
+    answer:
+      "We currently do not offer property damage insurance. We strongly recommend charging your tenants a security deposit to cover any potential damages. You can easily request the security deposit through our secure online rent collection system.",
+  },
+];

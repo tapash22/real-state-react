@@ -10,8 +10,9 @@ import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { Partners } from "../components/partner/Partners";
 // import { PlaceList } from "../components/place/PlaceList";
-import { FAQAccordion } from "../components/accordion/FAQAccordion";
+import { FaqAccordion } from "../components/accordion/FaqAccordion";
 import { MapPage } from "../components/map-search/MapPage";
+import { faqData } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -79,7 +80,7 @@ export function Home() {
 
         <div data-scroll-fade>
           {/* <Agents /> */}
-          <FAQAccordion />
+          <FaqAccordion heading="Your questions, answered" items={faqData} />
         </div>
       </div>
     </div>

@@ -1,8 +1,21 @@
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { faqData } from "../../data";
 
-export function FAQAccordion() {
+export interface FaqItem {
+  id: string | number;
+  question: string;
+  answer: string;
+}
+
+interface FaqAccordionProps {
+  heading?: string; // Optional custom heading
+  items: FaqItem[]; // Array of questions and answers passed from the parent
+}
+
+export function FaqAccordion({
+  heading = "Your questions, answered",
+  items,
+}: FaqAccordionProps) {
   // We only need state to track the active, open item panel
   const [openId, setOpenId] = useState<string | number | null>(null);
 
@@ -19,10 +32,11 @@ export function FAQAccordion() {
           className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
         >
           Your questions, answered
+          {heading}
         </h3>
       </div>
       <div className="w-full divide-y-2 divide-[var(--border)] p-0 lg:p-5 space-y-2">
-        {faqData.map((item) => {
+        {items.map((item) => {
           const isOpen = openId === item.id;
 
           return (

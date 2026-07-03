@@ -11,6 +11,7 @@ import { Home } from "../pages/Home";
 
 import PropertyDetails from "../components/map-search/PropertyDetails";
 import LandLord from "../pages/LandLord";
+import Pricing from "../pages/Pricing";
 import RealEstateSearchModule from "../pages/RealEstateSearchModule";
 import SignInForm from "../pages/SignInForm";
 import SignUpForm from "../pages/SignUpForm";
@@ -52,15 +53,15 @@ export const routesConfig: RouteObject[] = [
         element: createElement(AgentsDetails),
       },
 
+      {
+        path: "pricing",
+        element: createElement(Pricing),
+      },
       // Authentication Pages
-      {
-        path: "signin",
-        element: createElement(SignInForm),
-      },
-      {
-        path: "signup",
-        element: createElement(SignUpForm),
-      },
+      // {
+      //   path: "signup",
+      //   element: createElement(SignUpForm),
+      // },
 
       //last use page route details
       // {
