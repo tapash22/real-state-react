@@ -5,9 +5,9 @@ export default function TenantBookingProcess() {
   return (
     <div className="flex flex-col space-y-5 w-full h-full">
       {/* TOP HEADER TYPOGRAPHY */}
-      <div className="w-full flex flex-col justify-center items-center text-center space-y-3">
+      <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto">
         <h2
-          style={{ color: "var(--button-bg)" }}
+          style={{ color: "var(--text)" }}
           className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
         >
           For tenants
