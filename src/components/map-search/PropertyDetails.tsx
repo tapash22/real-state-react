@@ -217,7 +217,7 @@ export default function PropertyDetails() {
         </div>
 
         {/* RIGHT COLUMN: Sticky Agent Contact Panel */}
-        <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-lg shadow-[var(--bg-shadow)] border-2 border-[var(--border)] rounded-xl  p-2 space-y-6 min-w-[60%] max-w-[80%] ">
+        <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-md shadow-[var(--primary)] border border-[var(--border)] rounded-xl  p-2 space-y-6 min-w-[60%] max-w-[80%] ">
           <div className="space-y-2">
             <div className="flex justify-start items-center p-3 border-b-2 border-[var(--border)] ">
               <div className="border-2 border-[var(--boorder)] w-16 h-14 rounded-full overflow-hidden flex justify-center items-center shadow-lg shadow-[var(--bg-shadow)]">
