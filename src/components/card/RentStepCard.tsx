@@ -6,21 +6,21 @@ interface RentStepCardProps {
 
 export function RentStepCard({ step }: RentStepCardProps) {
   return (
-    <div className="flex flex-col items-start w-full space-y-2 lg:space-y-5 rounded-lg">
+    <div className="flex flex-col items-start w-full space-y-2 lg:space-y-0 rounded-xl border border-[var(--border)] shadow-md shadow-[var(--primary)]">
       {/* Step Image Container */}
       <div
         style={{ borderColor: "var(--border)" }}
-        className="w-full  aspect-[3/2] lg:aspect-square overflow-hidden rounded-lg border bg-white/30"
+        className="w-full  aspect-[3/2] lg:aspect-square overflow-hidden rounded-tl-xl rounded-tr-xl  border border-[var(--border)]"
       >
         <img
           src={step.rentStepImage}
           alt={step.imageAlt}
-          className="w-full h-full object-fill lg:object-contain"
+          className="w-full h-full object-fill lg:object-cover "
         />
       </div>
 
       {/* Title block with bold number prefix */}
-      <div className="flex items-start h-auto lg:h-auto gap-2">
+      <div className="flex items-start h-auto lg:h-auto gap-2 p-4 bg-gray-50 rounded-bl-xl rounded-br-xl">
         <span className="text-2xl font-bold text-[var(--muted)] leading-none">
           {step.id}.
         </span>

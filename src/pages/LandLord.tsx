@@ -6,7 +6,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import landlord_header from "../assets/landlord_header.jpg";
 import { RentalStepsCards } from "../components/card/RentalStepsCards";
-import { EventList } from "../components/event/EventList";
+import { SectionHeader } from "../components/header-section/SectionHeader";
 import { CurveSection } from "../components/house/CurveSection";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
@@ -41,32 +41,24 @@ export default function LandLord() {
       </div>
       <div className="flex flex-col justify-center items-center gap-5 w-full px-8 lg:px-16 ">
         {/* header */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
-          <h2
-            style={{ color: "var(--button-bg)" }}
-            className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-          >
-            List your property for free
-          </h2>
-
-          <h3
-            style={{ color: "var(--text-heading)" }}
-            className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-          >
-            International tenants. No viewings. Online bookings.
-          </h3>
-          <button
-            className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
-            onClick={() => navigate("/auth/signup")}
-          >
-            Get started
-          </button>
-        </div>
+        <SectionHeader
+          tagTitle="List your property for free"
+          headerTitle="International tenants. No viewings. Online bookings."
+        >
+          <div className="w-full flex justify-center items-center p-2">
+            <button
+              className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
+              onClick={() => navigate("/auth/signup")}
+            >
+              Get started
+            </button>
+          </div>
+        </SectionHeader>
 
         {/* header end*/}
 
         {/* StatCard */}
-        <div className="w-full lg:w-1/2 h-auto py-3 lg:py-5 grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-3">
+        <div className="w-full lg:w-1/2 h-full  grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-3">
           <StatCard
             targetNumber={50000}
             suffix="+"
@@ -94,7 +86,7 @@ export default function LandLord() {
         {/* feature secction */}
 
         <div
-          className="flex flex-col justify-center items-center px-5 py-10 space-y-3 lg:space-y-5 "
+          className="flex flex-col justify-center items-center px-5 py-3 "
           style={{
             background: `
               linear-gradient(
@@ -106,29 +98,13 @@ export default function LandLord() {
             `,
           }}
         >
-          <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
-            <h2
-              style={{ color: "var(--button-bg)" }}
-              className="text-sm font-semibold lg:font-extrabold  tracking-wider lg:tracking-widest uppercase"
-            >
-              Not your user Real estate
-            </h2>
+          <SectionHeader
+            tagTitle="Not your user Real estate"
+            headerTitle="Everything you need to maximise your earnings"
+            subTitle="High ad visibility. Qualified tenants. Stress-free renting."
+          />
 
-            <h3
-              style={{ color: "var(--text-heading)" }}
-              className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-            >
-              Everything you need to maximise your earnings
-            </h3>
-            <p
-              style={{ color: "var(--text-paragraph)" }}
-              className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
-            >
-              High ad visibility. Qualified tenants. Stress-free renting.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-5 w-full lg:w-2/3 h-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 lg:gap-5 w-full lg:w-2/3 h-full p-2">
             {featuresData.map((feature) => (
               <FeatureCard
                 key={feature.id}
@@ -142,39 +118,23 @@ export default function LandLord() {
         {/* feature secction */}
       </div>
 
-      <div className="w-full h-full ">
+      <div className="w-full h-full  ">
         {/* <ShowcaseSection /> */}
         <ClippedTopCurveImage />
       </div>
 
       {/* image view end*/}
-      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 py-5 lg:py-8 lg:px-16 ">
+      <div className="flex flex-col justify-center items-center gap-5 w-full px-8 lg:px-16 ">
         {/* bottom end */}
 
         {/* pricing */}
 
         <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center">
-          <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
-            <h2
-              style={{ color: "var(--button-bg)" }}
-              className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-            >
-              pricing
-            </h2>
-
-            <h3
-              style={{ color: "var(--text-heading)" }}
-              className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-            >
-              Simple pricing. No hidden costs.
-            </h3>
-            <p
-              style={{ color: "var(--text-paragraph)" }}
-              className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
-            >
-              Everything you need to grow your rental business.
-            </p>
-          </div>
+          <SectionHeader
+            tagTitle="pricing"
+            headerTitle="Simple pricing. No hidden costs."
+            subTitle="Everything you need to grow your rental business."
+          />
 
           <div className="flex flex-col lg:flex-row justify-center items-center gap-5 w-full  h-auto p-0 lg:p-3  ">
             <div className="w-full h-auto py-3 px-0 lg:p-2 space-y-3 lg:w-2/3">
@@ -264,22 +224,11 @@ export default function LandLord() {
 
         {/* working flow */}
 
-        <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center space-y-5">
-          <div className="w-full flex flex-col justify-center items-center text-center space-y-1 lg:spacey-3 lg:max-w-6xl lg:mx-auto ">
-            <h2
-              style={{ color: "var(--button-bg)" }}
-              className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-            >
-              how it work
-            </h2>
-
-            <h3
-              style={{ color: "var(--text-heading)" }}
-              className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-            >
-              All online. 100% secure.
-            </h3>
-          </div>
+        <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center ">
+          <SectionHeader
+            tagTitle="how it work"
+            headerTitle="All online. 100% secure."
+          />
 
           <RentalStepsCards />
         </div>
@@ -288,40 +237,23 @@ export default function LandLord() {
 
         {/* bottom section */}
 
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:space-y-5 lg:max-w-6xl lg:mx-auto my-5 ">
-          <h2
-            style={{ color: "var(--button-bg)" }}
-            className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-          >
-            Get start for free
-          </h2>
-
-          <h3
-            style={{ color: "var(--text-heading)" }}
-            className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-          >
-            Start earning with HousingAnywhere today
-          </h3>
-          <p
-            style={{ color: "var(--text-paragraph)" }}
-            className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
-          >
-            Create your first listing in minutes and enjoy safe, hassle-free
-            renting from the comfort of your home.
-          </p>
-          <button
-            className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
-            onClick={() => navigate("/auth/signup")}
-          >
-            Get started
-          </button>
-        </div>
+        <SectionHeader
+          tagTitle="Get start for free"
+          headerTitle="Start earning with HousingAnywhere today"
+          subTitle="Create your first listing in minutes and enjoy safe, hassle-free
+            renting from the comfort of your home."
+        >
+          <div className="flex justify-center items-center p-2">
+            <button
+              className=" text-sm font-medium tracking-wider px-10 py-3 rounded-full border-2 border-[var(--border)] bg-[var(--card)]"
+              onClick={() => navigate("/auth/signup")}
+            >
+              Get started
+            </button>
+          </div>
+        </SectionHeader>
 
         {/* bottom section end*/}
-
-        <div className="w-full lg:w-2/3 h-auto flex flex-col justify-center items-center space-y-5">
-          <EventList />
-        </div>
       </div>
     </section>
   );

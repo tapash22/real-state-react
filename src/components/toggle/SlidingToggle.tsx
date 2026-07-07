@@ -41,7 +41,7 @@ export const SlidingToggle = <T extends string>({
     <div className="relative flex items-center bg--[var(--card)] h-auto w-full rounded-full p-0.5 border border-[var(--border)] shadow-sm shadow-[var(--primary)] select-none">
       {/* Sliding Background Pill */}
       <div
-        className={`absolute top-0.5 bottom-1 w-[calc(50%-4px)] bg-[var(--card)] rounded-full transition-transform duration-200 ease-out ${
+        className={`absolute top-0.5 bottom-1 w-[calc(50%-2px)] bg-[var(--card)] rounded-full transition-transform duration-200 ease-out ${
           isFirstActive ? "translate-x-0" : "translate-x-full"
         }`}
       />

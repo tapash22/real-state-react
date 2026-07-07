@@ -1,66 +1,23 @@
 import house1 from "../../assets/house1.jpg";
+import { aboutDetailList } from "../../data";
+import { SectionHeader } from "../header-section/SectionHeader";
 import { AboutPart } from "./AboutPart";
 
-type AboutItem = {
-  id: number;
-  title: string;
-  des: string;
-};
-
-type AboutProps = {
-  // add later if needed
-};
-
-export function About(_props: AboutProps) {
-  const abouts: AboutItem[] = [
-    {
-      id: 1,
-      title: "Budget Friendly",
-      des: "We offer a wide range of affordable rooms and apartments designed to fit every budget. Whether you're a student or working professional, you can easily find a comfortable place to live without overspending, while still enjoying essential facilities and a quality lifestyle.",
-    },
-    {
-      id: 2,
-      title: "Prime Location",
-      des: "Our properties are located in highly convenient and prime areas close to universities, offices, transportation hubs, and daily essential services. This ensures you save time on travel and enjoy a smooth, stress-free living experience in the heart of the city.",
-    },
-    {
-      id: 3,
-      title: "Trusted By Thousands",
-      des: "Thousands of students, professionals, and families trust our platform to find safe, verified, and reliable homes. We prioritize transparency, security, and quality so you can book your next home with complete confidence and peace of mind.",
-    },
-  ];
-
+export function About() {
   return (
     <section className="my-8 lg:my-16 w-full px-8 lg:px-16 transition-colors duration-300">
-      <div className="flex flex-col gap-10 w-full">
+      <div className="flex flex-col justify-center items-center  w-full ">
         {/* TOP HEADER TYPOGRAPHY */}
-        <div className="w-full flex flex-col justify-center items-center text-center space-y-3 lg:max-w-6xl lg:mx-auto ">
-          <h2
-            style={{ color: "var(--button-bg)" }}
-            className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-          >
-            Why choose us
-          </h2>
-
-          <h3
-            style={{ color: "var(--text-heading)" }}
-            className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-          >
-            WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT
-          </h3>
-
-          <p
-            style={{ color: "var(--text-paragraph)" }}
-            className="text-sm font-light lg:font-medium tracking-wide lg:tracking-wider leading-normal lg:leading-relaxed"
-          >
-            This is a very beautiful house with a south-facing view. The
+        <SectionHeader
+          tagTitle="Why choose us"
+          headerTitle="WE PROVIDE LATEST PROPERTY FOR OUR VALUABLE CLIENT"
+          subTitle="  This is a very beautiful house with a south-facing view. The
             structural materials used are imported directly from Italy. It
             features 4 spacious rooms, 3 washrooms, and every room includes 2
-            windows with an attached balcony.
-          </p>
-        </div>
+            windows with an attached balcony."
+        />
 
-        {/* BOTTOM CONTENT GRID */}
+        {/* Body CONTENT GRID */}
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 w-full items-center">
           {/* IMAGE BLOCK */}
           <div
@@ -76,11 +33,13 @@ export function About(_props: AboutProps) {
 
           {/* DYNAMIC CARD ITEMS BLOCK */}
           <div className="flex flex-col gap-2 lg:gap-4 w-full lg:w-1/2">
-            {abouts.map((about) => (
+            {aboutDetailList.map((about) => (
               <AboutPart key={about.id} about={about} />
             ))}
           </div>
         </div>
+
+        {/* Body CONTENT GRID END*/}
       </div>
     </section>
   );

@@ -17,7 +17,7 @@ export function ClippedBottomCurveImage(): React.JSX.Element {
       </svg>
 
       {/* 2. Full-Width Main Frame Container */}
-      <div className="relative w-full h-[220px] md:h-[280px] lg:h-[350px]">
+      <div className="relative w-full h-[230px] md:h-[280px] lg:h-[350px]">
         {/* The Clipped Image Container */}
         <div
           className="absolute inset-0 w-full h-full overflow-hidden"

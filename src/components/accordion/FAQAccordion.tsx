@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { SectionHeader } from "../header-section/SectionHeader";
 
 export interface FaqItem {
   id: string | number;
@@ -24,17 +25,10 @@ export function FaqAccordion({
   };
 
   return (
-    <section className="my-0 lg:my-5  px-0 lg:px-16 w-full lg:max-w-7xl   transition-colors duration-300">
+    <section className="px-0 lg:px-16 w-full lg:max-w-7xl   transition-colors duration-300">
       {/* HEADER */}
-      <div className="py-3 text-center space-y-1">
-        <h3
-          style={{ color: "var(--text-heading)" }}
-          className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-        >
-          Your questions, answered
-          {heading}
-        </h3>
-      </div>
+      <SectionHeader headerTitle="Your questions, answered" />
+
       <div className="w-full divide-y-2 divide-[var(--border)] p-0 lg:p-5 space-y-2">
         {items.map((item) => {
           const isOpen = openId === item.id;

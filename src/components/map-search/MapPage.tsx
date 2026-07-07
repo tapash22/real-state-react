@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { MapBounds, MapItem } from "../../types/types";
+import { SectionHeader } from "../header-section/SectionHeader";
 import { MapPanel } from "./MapPanel";
 
 const bangladeshCenter: [number, number] = [23.685, 90.3563];
@@ -59,23 +60,14 @@ export const MapPage = () => {
   }, []);
 
   return (
-    <section className="my-5 lg:my-16 w-full px-8 lg:px-16  transition-colors duration-300">
+    <section className="w-full px-8 lg:px-16  transition-colors duration-300 flex flex-col justify-center items-center">
       {/* HEADER */}
-      <div className="py-3 text-center space-y-1">
-        <h2
-          style={{ color: "var(--button-bg)" }}
-          className="text-sm font-semibold lg:font-extrabold uppercase tracking-wider lg:tracking-widest"
-        >
-          Explore cities
-        </h2>
 
-        <h3
-          style={{ color: "var(--text-heading)" }}
-          className="text-lg md:text-3xl font-semibold lg:font-extrabold tracking-wide lg:tracking-wider lg:whitespace-nowrap"
-        >
-          Your next base could be here
-        </h3>
-      </div>
+      <SectionHeader
+        tagTitle="Explore cities"
+        headerTitle="Your next base could be here"
+      />
+
       <div className="flex justify-center items-center p-0 lg:p-4 w-full">
         <div className="grid grid-cols-3 lg:grid-cols-7 gap-1 lg:gap-4 w-full lg:w-3/4 xl:w-1/2">
           {properties.map((item) => (

@@ -177,6 +177,30 @@ export interface House {
   agent: Agent;
 }
 
+export interface AboutItem {
+  id: number;
+  title: string;
+  des: string;
+}
+
+export const aboutDetailList: AboutItem[] = [
+  {
+    id: 1,
+    title: "Budget Friendly",
+    des: "We offer a wide range of affordable rooms and apartments designed to fit every budget. Whether you're a student or working professional, you can easily find a comfortable place to live without overspending, while still enjoying essential facilities and a quality lifestyle.",
+  },
+  {
+    id: 2,
+    title: "Prime Location",
+    des: "Our properties are located in highly convenient and prime areas close to universities, offices, transportation hubs, and daily essential services. This ensures you save time on travel and enjoy a smooth, stress-free living experience in the heart of the city.",
+  },
+  {
+    id: 3,
+    title: "Trusted By Thousands",
+    des: "Thousands of students, professionals, and families trust our platform to find safe, verified, and reliable homes. We prioritize transparency, security, and quality so you can book your next home with complete confidence and peace of mind.",
+  },
+];
+
 export const rentalSteps: RentalStep[] = [
   {
     id: 1,
