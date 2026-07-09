@@ -1,12 +1,16 @@
 import React from "react";
 import { CurveSvgPath } from "./CurveSvgPath";
+import { EllipsCurveSvgPath } from "./EllipsCurveSvgPath";
 
 type CurveSectionProps = {
+  isEllipsCurveSvgPath?: boolean;
+  isCurveSvgPath?: boolean;
   backgroundColor?: string;
   showTopCurve?: boolean;
   showBottomCurve?: boolean;
+  showShadow?: boolean;
   curveHeight?: number | string;
-  imageUrl?: string; // Target background image asset pass-through
+  imageUrl?: string;
   imageAlt?: string;
   imageBlur?: number;
   imageBrightness?: number;
@@ -16,10 +20,13 @@ type CurveSectionProps = {
 };
 
 export function CurveSection({
+  isEllipsCurveSvgPath = false,
+  isCurveSvgPath = false,
   backgroundColor = "var(--bg)",
   showTopCurve = false,
   showBottomCurve = false,
-  curveHeight = "50vh",
+  showShadow = false,
+  curveHeight = "85vh", // Default to your landing requirement height
   imageUrl,
   imageAlt = "Section background layout",
   imageBlur = 1,
@@ -28,61 +35,63 @@ export function CurveSection({
   imageScale = 105,
   children,
 }: CurveSectionProps) {
+  const shadowFilter = showShadow
+    ? "drop-shadow(0px -10px 20px rgba(0, 0, 0, 0.35)) drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.35))"
+    : undefined;
+
   return (
     <section className="relative w-full overflow-hidden bg-[var(--bg)] px-0">
-      <CurveSvgPath
-        showTopCurve={showTopCurve}
-        showBottomCurve={showBottomCurve}
-      />
-      {/* 2. Core Structural Canvas Area */}
+      {/* Pass flags safely into the dynamic path drawer */}
+
+      {isEllipsCurveSvgPath && (
+        <EllipsCurveSvgPath
+          showTopCurve={showTopCurve}
+          showBottomCurve={showBottomCurve}
+        />
+      )}
+
+      {isCurveSvgPath && (
+        <CurveSvgPath
+          showTopCurve={showTopCurve}
+          showBottomCurve={showBottomCurve}
+        />
+      )}
+
       <div
-        className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[20/9] min-h-[400px]"
+        className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[20/9] min-h-[450px]"
         style={{
-          clipPath: !imageUrl ? "url(#dynamicCurveClip)" : undefined,
+          clipPath: "url(#dynamicCurveClip)",
           backgroundColor: backgroundColor,
           height: curveHeight,
+          filter: shadowFilter,
         }}
       >
         {imageUrl && (
-          /* Wrapped background image layer */
           <div
-            className="absolute w-full h-full overflow-hidden z-10 "
-            style={{
-              clipPath: "url(#dynamicCurveClip)",
-              top: showTopCurve ? `-${curveHeight}px` : "0px",
-              bottom: showBottomCurve ? `-${curveHeight}px` : "0px",
-              height: `calc(100% + ${showTopCurve ? curveHeight : 0}px + ${showBottomCurve ? curveHeight : 0}px)`,
-            }}
+            className="absolute inset-0 w-full h-full overflow-hidden z-10"
+            style={{ clipPath: "url(#dynamicCurveClip)" }}
           >
-            {/* Contrast tint layer */}
-            <div className="absolute inset-0  z-10 pointer-events-none" style={{
-              backgroundImage:linear-gradient(to bottom, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.8))
-            }} />
+            <div className="absolute inset-0 z-10 pointer-events-none bg-slate-950/45" />
             <img
               src={imageUrl}
               alt={imageAlt}
-              className={`
-              w-full
-              h-full
-              object-cover
-              transition-all
-              duration-700
-              ease-out
-            `}
+              className="w-full h-full object-cover transition-all duration-700 ease-out"
               style={{
-                transform: `scalc(${imageScale / 100})`,
+                transform: `scale(${imageScale / 100})`,
                 filter: `
-              blur(${imageBlur}px)
-              brightness(${imageBrightness}%)
-              contrast(${imageContrast}%)
-            `,
+                  blur(${imageBlur}px)
+                  brightness(${imageBrightness}%)
+                  contrast(${imageContrast}%)
+                `,
               }}
             />
           </div>
         )}
 
         {/* Foreground Content Interface */}
-        <div className="relative z-20 w-full h-full">{children}</div>
+        <div className="relative z-20 w-full h-full flex items-center justify-center">
+          {children}
+        </div>
       </div>
     </section>
   );

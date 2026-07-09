@@ -101,20 +101,22 @@ export function Banner() {
 
   return (
     <CurveSection
+      isEllipsCurveSvgPath={true}
       backgroundColor="var(--bg)"
-      showTopCurve={false}
-      showBottomCurve={true}
-      curveHeight={"85vh"}
+      showTopCurve={false} // <-- Turned to true to active the top half-circle curve
+      showBottomCurve={true} // Keeps the bottom curve active simultaneously
+      showShadow={true}
+      curveHeight="85vh"
       imageUrl={land_lord}
-      imageAlt="land_lord and with confidence"
-      imageScale={10}
-      imageBlur={8}
+      imageAlt="land_lord and with"
+      imageScale={110}
+      imageBlur={2}
       imageBrightness={80}
-      imageContrast={200}
+      imageContrast={100}
     >
       <div
         ref={containerRef}
-        className="z-10 w-full min-h-[70vh] flex flex-col justify-center items-center py-5 lf:py-10 space-y-5 lg:space-y-16 px-4 relative"
+        className="z-10 w-full h-full min-h-[70vh] flex flex-col justify-center items-center py-5 lg:py-10 space-y-5 lg:space-y-16 px-4 relative"
       >
         {/* Soft atmospheric background glow nodes */}
         <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
@@ -125,21 +127,20 @@ export function Banner() {
           <h1
             ref={titleRef}
             style={{ color: "var(--button)" }}
-            className="text-2xl sm:text-2xl lg:text-6xl font-extrabold tracking-tight opacity-0 leading-none"
+            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none drop-shadow-md"
           >
             Your Home Anywhere.
           </h1>
 
           {/* DYNAMIC COUNTING SUBTITLE */}
-
           <h3 className="text-xl sm:text-2xl font-bold tracking-wider flex items-center justify-center gap-2">
             <span style={{ color: "var(--text-heading)" }}>Stay for</span>
 
             {/* MASK WINDOW */}
-            <span className="relative overflow-hidden h-[40px] lg:h-[50px] w-[120px] lg:w-[150px] flex items-center">
+            <span className="relative overflow-hidden h-[40px] lg:h-[50px] w-[120px] lg:w-[150px] flex items-center rounded">
               <span
                 ref={subtitleTextRef}
-                className="opacity-0 w-full text-center whitespace-nowrap leading-none bg-violet-900/50 p-3 lg:p-5 "
+                className="w-full text-center whitespace-nowrap leading-none bg-indigo-600 text-white font-bold p-2 lg:p-3 rounded shadow-md"
                 style={{ color: "var(--text)" }}
               />
             </span>
@@ -149,7 +150,7 @@ export function Banner() {
           <p
             ref={paraRef}
             style={{ color: "var(--text-muted)" }}
-            className="hidden lg:block text-base lg:text-lg max-w-xl font-normal lg:font-medium tracking-wide  leading-relaxed"
+            className="hidden lg:block text-base lg:text-lg max-w-xl font-normal lg:font-medium tracking-wide leading-relaxed drop-shadow"
           >
             Connect directly with local homeowners across the globe. Secure your
             space, negotiate your terms, and live like a local.
@@ -159,7 +160,7 @@ export function Banner() {
         {/* FLOATING SEARCH CONTAINER BAR */}
         <div
           ref={searchRef}
-          className="shadow-sm p-2 lg:p-5 lg:w-fit w-full shadow-[var(--primary)] rounded-xl backdrop-blur-sm items-center h-full "
+          className="w-full max-w-4xl mx-auto p-2 bg-slate-900/40 border border-slate-800 rounded-2xl backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.8)] z-20"
         >
           <Search />
         </div>

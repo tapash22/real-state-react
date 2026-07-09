@@ -22,7 +22,15 @@ export function ClippedTopCurveImage(): React.JSX.Element {
         {/* The Clipped Image Layer Container */}
         <div
           className="absolute inset-0 w-full h-full overflow-hidden"
-          style={{ clipPath: "url(#premiumDualWaveSmall)" }}
+          style={{
+            clipPath: "url(#premiumDualWaveSmall)",
+            transform: `scale(100})`,
+            filter: `
+                  blur(1px)
+                  brightness(80%)
+                  contrast(200%)
+                `,
+          }}
         >
           {/* Subtle Contrast Tint Overlay */}
           <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />

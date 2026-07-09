@@ -1,32 +1,32 @@
-import { useMemo } from "react";
-
-interface CurveSvgPathProps {
-  showTopCurve?: boolean;
-  showBottomCurve?: boolean;
-}
+type CurveSvgPathProps = {
+  showTopCurve: boolean;
+  showBottomCurve: boolean;
+};
 
 export function CurveSvgPath({
-  showTopCurve = false,
-  showBottomCurve = true,
+  showTopCurve,
+  showBottomCurve,
 }: CurveSvgPathProps) {
-  const clipPathData = useMemo(() => {
-    if (showTopCurve && showBottomCurve) {
-      return "M0,0.22 C0.25,0 0.75,0 1,0.22 L1,0.78 C0.75,1 0.25,1 0,0.78 Z";
-    }
+  // 1. Calculate the dynamic path string based on parent props
 
-    if (showTopCurve && !showBottomCurve) {
-      return "M0,0.25 C0.25,0 0.75,0 1,0.25 L1,1 L0,1 Z";
-    }
+  // Top Curve: If true, loops OUTWARD up past the top boundary (-0.12)
+  const topPath = showTopCurve ? "M 0 0.12 Q 0.5 -0.12, 1 0.12" : "M 0 0 L 1 0";
 
-    return "M0,0 L1,0 L1,0.78 C0.75,1 0.25,1 0,0.78 Z";
-  }, [showTopCurve, showBottomCurve]);
+  // Bottom Curve: If true, loops OUTWARD down past the bottom floor boundary (1.12)
+  const bottomPath = showBottomCurve
+    ? "L 1 0.88 Q 0.5 1.12, 0 0.88 Z"
+    : "L 1 1 L 0 1 Z";
+
+  const dynamicPath = `${topPath} ${bottomPath}`;
 
   return (
-  <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] transform rotate-180">
-    <svg class="relative block w-[calc(100%+1.3px)] h-[80px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z" 
-            class="fill-[#030712]"></path> <!-- Matches tailwind bg-slate-950 -->
+    <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+      <defs>
+        {/* Uses a single dynamic clip path ID that changes with the props */}
+        <clipPath id="dynamicCurveClip" clipPathUnits="objectBoundingBox">
+          <path d={dynamicPath} />
+        </clipPath>
+      </defs>
     </svg>
-  </div>
   );
 }
