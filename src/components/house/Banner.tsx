@@ -124,7 +124,7 @@ export function Banner() {
           {/* TITLE */}
           <h1
             ref={titleRef}
-            style={{ color: "var(--text-heading)" }}
+            style={{ color: "var(--button)" }}
             className="text-2xl sm:text-2xl lg:text-6xl font-extrabold tracking-tight opacity-0 leading-none"
           >
             Your Home Anywhere.

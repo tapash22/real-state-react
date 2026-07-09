@@ -55,7 +55,9 @@ export function CurveSection({
             }}
           >
             {/* Contrast tint layer */}
-            <div className="absolute inset-0  z-10 pointer-events-none" />
+            <div className="absolute inset-0  z-10 pointer-events-none" style={{
+              backgroundImage:linear-gradient(to bottom, rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.8))
+            }} />
             <img
               src={imageUrl}
               alt={imageAlt}
