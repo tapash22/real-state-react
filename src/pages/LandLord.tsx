@@ -9,9 +9,15 @@ import { SectionHeader } from "../components/header-section/SectionHeader";
 import { PricingHeader } from "../components/house/PricingHeader";
 import { ClippedTopCurveImage } from "../components/show-case/ClippedTopCurveImage";
 import { featuresData, premiumFeaturesList } from "../data";
+import { StatsGrid } from "../features/analytics";
+import { MagazineLayout } from "../features/biography";
+import { FlexibleCard } from "../features/portfolio";
 
 export default function LandLord() {
   const navigate = useNavigate();
+
+  const MODEL_IMAGE_URL =
+    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&auto=format&fit=crop";
 
   return (
     <section className="my-0 w-full  transition-colors duration-300">
@@ -191,7 +197,8 @@ export default function LandLord() {
           </div>
         </div>
       </div>
-      <div className="w-full h-full  ">
+
+      <div className="w-full h-full">
         {/* <ShowcaseSection /> */}
         <ClippedTopCurveImage />
 
@@ -231,6 +238,25 @@ export default function LandLord() {
         </div>
       </div>
       {/* pricing end*/}
+
+      <div className="w-full h-full flex justify-center">
+        <StatsGrid shape="hexagonal" />
+      </div>
+
+      <div className="min-h-screen bg-gray-100 flex flex-col gap-12 items-center justify-center p-6">
+        {/* Instance Variant 1: Personnel Profile Context with Hexagonal clipping */}
+        <FlexibleCard layout="profile" shape="hexagonal" />
+
+        {/* Instance Variant 2: Analytics Stats Grid Layout with Circular alignment */}
+        <FlexibleCard layout="stats" shape="circle" />
+
+        {/* Instance Variant 3: Analytics Stats Grid Layout with Upward Triangles */}
+        <FlexibleCard layout="stats" shape="triangle" />
+      </div>
+
+      <div className="min-h-screen bg-zinc-100 py-12 flex items-center justify-center">
+        <MagazineLayout imageSrc={MODEL_IMAGE_URL} />
+      </div>
     </section>
   );
 }

@@ -17,6 +17,8 @@ export function About() {
             windows with an attached balcony."
         />
 
+        {/* from parent used */}
+
         {/* Body CONTENT GRID */}
         <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 w-full items-center">
           {/* IMAGE BLOCK */}

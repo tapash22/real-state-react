@@ -15,6 +15,7 @@ import Pricing from "../pages/Pricing";
 import RealEstateSearchModule from "../pages/RealEstateSearchModule";
 import SignInForm from "../pages/SignInForm";
 import SignUpForm from "../pages/SignUpForm";
+import WorkingProcess from "../pages/WorkingProcess";
 
 // need to update or replace this page  with new
 // import PropertyDetails from "../pages/PropertyDetails";
@@ -57,6 +58,11 @@ export const routesConfig: RouteObject[] = [
         path: "pricing",
         element: createElement(Pricing),
       },
+      {
+        path: "how-it-works",
+        element: createElement(WorkingProcess),
+      },
+
       // Authentication Pages
       // {
       //   path: "signup",
