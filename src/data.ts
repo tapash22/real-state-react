@@ -183,6 +183,7 @@ export interface AboutItem {
   des: string;
 }
 
+// about details
 export const aboutDetailList: AboutItem[] = [
   {
     id: 1,
@@ -232,6 +233,7 @@ export const rentalSteps: RentalStep[] = [
   },
 ];
 
+// property list
 export const houseData: House[] = [
   {
     id: 5,
@@ -423,7 +425,6 @@ export const faqData: FaqItem[] = [
 /* -----------------------------
   Place List
 ------------------------------ */
-
 export const placeList: Place[] = [
   {
     id: 1,
@@ -476,12 +477,14 @@ export const placeList: Place[] = [
   },
 ];
 
+// price list
 export const priceOptions = [
   "1000000-20000000",
   "3000000-40000000",
   "5000000-60000000",
 ];
 
+// feature list
 export const featuresData = [
   {
     id: 1,
@@ -559,6 +562,7 @@ export const premiumFeaturesList: PremiumFeaturesListType[] = [
   },
 ];
 
+// working flow
 export const workingStepsData: WorkingStepsDataType[] = [
   {
     id: 1,
@@ -947,7 +951,7 @@ export const houseData: any[] = [
 // houseData new format update to use
 
 ------------------------------ */
-
+// rent process
 export const RENTAL_STEPS_DATA: RentStepData[] = [
   {
     id: 1,
@@ -974,6 +978,7 @@ export const RENTAL_STEPS_DATA: RentStepData[] = [
   },
 ];
 
+// booking process
 export const BOOKING_PROCESS_STEPS: ProcessStep[] = [
   {
     id: 1,
@@ -1039,6 +1044,7 @@ export const BOOKING_PROCESS_STEPS: ProcessStep[] = [
   },
 ];
 
+// landlord Q/A
 export const landlordFaqs: FaqItem[] = [
   {
     id: 1,
