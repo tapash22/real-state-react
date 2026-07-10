@@ -26,14 +26,14 @@ export function ClippedTopCurveImage(): React.JSX.Element {
             clipPath: "url(#premiumDualWaveSmall)",
             transform: `scale(100})`,
             filter: `
-                  blur(1px)
-                  brightness(80%)
-                  contrast(200%)
+                  blur(4px)
+                  brightness(100%)
+                  contrast(120%)
                 `,
           }}
         >
           {/* Subtle Contrast Tint Overlay */}
-          <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
 
           {/* Enforced Edge-to-Edge Fluid Cover Asset */}
           <img
@@ -56,7 +56,7 @@ export function ClippedTopCurveImage(): React.JSX.Element {
         />
         {/* Bottom Frosted Blur Wave */}
         <div
-          className="absolute bottom-0 inset-x-0 h-[10%] min-h-[30px] max-h-[60px] pointer-events-none z-20 backdrop-blur-[2px]"
+          className="absolute bottom-0 inset-x-0 h-[10%] min-h-[30px] max-h-[60px] pointer-events-none z-20 backdrop-blur-[2px] shadow-lg shadow-green-950"
           style={{
             clipPath: "url(#premiumDualWaveSmall)",
             WebkitMaskImage:
