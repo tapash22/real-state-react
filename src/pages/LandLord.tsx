@@ -2,6 +2,7 @@
 
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import assets from "../assets/assets";
 import FeatureCard from "../components/card/FeatureCard";
 import { RentalStepsCards } from "../components/card/RentalStepsCards";
 import StatCard from "../components/card/StatCard";
@@ -16,8 +17,8 @@ import { FlexibleCard } from "../features/portfolio";
 export default function LandLord() {
   const navigate = useNavigate();
 
-  const MODEL_IMAGE_URL =
-    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&auto=format&fit=crop";
+  // const MODEL_IMAGE_URL =
+  //   "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=600&auto=format&fit=crop";
 
   return (
     <section className="my-0 w-full  transition-colors duration-300">
@@ -255,7 +256,7 @@ export default function LandLord() {
       </div>
 
       <div className="min-h-screen bg-zinc-100 py-12 flex items-center justify-center">
-        <MagazineLayout imageSrc={MODEL_IMAGE_URL} />
+        <MagazineLayout imageSrc={assets.model} />
       </div>
     </section>
   );

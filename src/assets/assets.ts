@@ -12,6 +12,7 @@ import house3 from "./house3.jpg";
 import house3lg from "./house3lg.jpg";
 import landlord_header from "./landlord_header.jpg";
 import land_lord from "./landlord_page.jpg";
+import model from "./model.png";
 
 const assets = {
   house1,
@@ -26,6 +27,7 @@ const assets = {
   find_rent,
   rent,
   rent_payment,
+  model,
 };
 
 export default assets;
