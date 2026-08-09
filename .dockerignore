@@ -1,6 +1,9 @@
 node_modules
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9192faa (update dev)
 build
 .git
 .gitignore

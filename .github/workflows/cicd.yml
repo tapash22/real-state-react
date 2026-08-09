@@ -7,6 +7,7 @@ on:
     branches: ["dev", "main"]
 
 jobs:
+  # Check 1: Enforce that PRs targeting 'main' ONLY come from 'dev'
   check-main-source-branch:
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
@@ -19,20 +20,6 @@ jobs:
             exit 1
           fi
           echo "✅ Passed: Merging from 'dev' into 'main'."
-
-  # Check 2: Enforce that PRs targeting 'dev' ONLY come from 'main' (Optional sync check)
-  check-dev-source-branch:
-    if: github.event_name == 'pull_request' && github.base_ref == 'dev'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify PR Source Branch for dev
-        run: |
-          if [ "${{ github.head_ref }}" != "main" ]; then
-            echo "❌ ERROR: Pull Requests into 'dev' are ONLY allowed from the 'main' branch!"
-            echo "Current source branch: ${{ github.head_ref }}"
-            exit 1
-          fi
-          echo "✅ Passed: Merging from 'main' into 'dev'."
 
   # Run Tests for all PRs and Pushes
   test-and-build:
@@ -53,7 +40,7 @@ jobs:
       - name: Run Tests
         run: npm test -- --watchAll=false
 
-  # Build & Push Docker Image (Runs when code is pushed/merged to 'main')
+  # Build & Push Docker Image (Runs only when code is pushed/merged into 'main')
   docker-build-push:
     needs: [test-and-build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
