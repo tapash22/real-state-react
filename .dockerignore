@@ -1,4 +1,5 @@
 node_modules
+<<<<<<< HEAD
 build
 dist
 .git
@@ -6,3 +7,12 @@ dist
 .gitignore
 npm-debug.log
 README.md
+=======
+
+build
+.git
+.gitignore
+Dockerfile
+.dockerignore
+npm-debug.log
+>>>>>>> 5847002 (update)
