@@ -7,6 +7,7 @@ on:
     branches: ["dev", "main"]
 
 jobs:
+  # Check 1: Enforce that PRs targeting 'main' ONLY come from 'dev'
   check-main-source-branch:
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
@@ -20,23 +21,6 @@ jobs:
           fi
           echo "✅ Passed: Merging from 'dev' into 'main'."
 
-<<<<<<< HEAD
-=======
-  # Check 2: Enforce that PRs targeting 'dev' ONLY come from 'main' (Optional sync check)
-  check-dev-source-branch:
-    if: github.event_name == 'pull_request' && github.base_ref == 'dev'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Verify PR Source Branch for dev
-        run: |
-          if [ "${{ github.head_ref }}" != "main" ]; then
-            echo "❌ ERROR: Pull Requests into 'dev' are ONLY allowed from the 'main' branch!"
-            echo "Current source branch: ${{ github.head_ref }}"
-            exit 1
-          fi
-          echo "✅ Passed: Merging from 'main' into 'dev'."
-
->>>>>>> 5847002 (update)
   # Run Tests for all PRs and Pushes
   test-and-build:
     runs-on: ubuntu-latest
@@ -56,28 +40,24 @@ jobs:
       - name: Run Tests
         run: npm test -- --watchAll=false
 
-<<<<<<< HEAD
-    # Auto-Merge 'dev' into 'main' when tests pass on 'dev' push
-    auto-merge-dev-to-main:
-      needs: [test-and-build]
-      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v4
+  # Auto-Merge 'dev' into 'main' when tests pass on 'dev' push
+  auto-merge-dev-to-main:
+    needs: [test-and-build]
+    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-        - name: Merge dev into main
-          uses: devmasx/merge-branch@v1.4.0
-          with:
-            type: now
-            from_branch: dev
-            target_branch: main
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Merge dev into main
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          from_branch: dev
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # Build & Push Docker Image (Runs only when code is pushed/merged into 'main')
-=======
-  # Build & Push Docker Image (Runs when code is pushed/merged to 'main')
->>>>>>> 5847002 (update)
   docker-build-push:
     needs: [test-and-build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
