@@ -6,7 +6,7 @@ import { MapPanel } from "./MapPanel";
 const bangladeshCenter: [number, number] = [23.685, 90.3563];
 
 export const MapPage = () => {
-  const [bounds, setBounds] = useState<MapBounds | null>(null);
+  const [, setBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   // 7 district sample data (Bangladesh landmarks)
