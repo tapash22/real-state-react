@@ -25,9 +25,9 @@ export function FaqAccordion({
   };
 
   return (
-    <section className="px-0 lg:px-16 w-full lg:max-w-7xl   transition-colors duration-300">
+    <section className="px-0 lg:px-16 w-full lg:max-w-7xl transition-colors duration-300">
       {/* HEADER */}
-      <SectionHeader headerTitle="Your questions, answered" />
+      <SectionHeader headerTitle={heading} />
 
       <div className="w-full divide-y-2 divide-[var(--border)] p-0 lg:p-5 space-y-2">
         {items.map((item) => {
@@ -81,3 +81,6 @@ export function FaqAccordion({
     </section>
   );
 }
+
+// Export default so default imports like `import FaqAccordion from '...'` work seamlessly
+export default FaqAccordion;
