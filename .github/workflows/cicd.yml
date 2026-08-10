@@ -59,12 +59,18 @@ jobs:
 
   # Build & Push Docker Image (Runs when code is pushed/merged into 'main')
   docker-build-push:
-    needs: [test-and-build]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [test-and-build, auto-merge-dev-to-main]
+    if: |
+      always() && 
+      needs.test-and-build.result == 'success' && 
+      (github.ref == 'refs/heads/main' || needs.auto-merge-dev-to-main.result == 'success') &&
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          ref: main # Ensure we are on the main branch for Docker build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
