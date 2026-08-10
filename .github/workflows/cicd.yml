@@ -40,6 +40,23 @@ jobs:
       - name: Run Tests
         run: npm test -- --watchAll=false
 
+    # Auto-Merge 'dev' into 'main' when tests pass on 'dev' push
+    auto-merge-dev-to-main:
+      needs: [test-and-build]
+      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v4
+
+        - name: Merge dev into main
+          uses: devmasx/merge-branch@v1.4.0
+          with:
+            type: now
+            from_branch: dev
+            target_branch: main
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+
   # Build & Push Docker Image (Runs only when code is pushed/merged into 'main')
   docker-build-push:
     needs: [test-and-build]
