@@ -1,5 +1,5 @@
 import { landlordFaqs, RENTAL_STEPS_DATA } from "../../data";
-import { FaqAccordion } from "../accordion/FaqAccordion";
+import FaqAccordion from "../accordion/FaqAccordion";
 import { RentStepCard } from "../card/RentStepCard";
 import { SectionHeader } from "../header-section/SectionHeader";
 

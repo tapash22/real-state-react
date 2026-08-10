@@ -10,7 +10,7 @@ import { Demo } from "../components/Demo";
 import { Banner } from "../components/house/Banner";
 import { Partners } from "../components/partner/Partners";
 // import { PlaceList } from "../components/place/PlaceList";
-import { FaqAccordion } from "../components/accordion/FaqAccordion";
+import FaqAccordion from "../components/accordion/FaqAccordion";
 import { MapPage } from "../components/map-search/MapPage";
 import { faqData } from "../data";
 

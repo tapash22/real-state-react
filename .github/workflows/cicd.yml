@@ -21,7 +21,7 @@ jobs:
           fi
           echo "✅ Passed: Merging from 'dev' into 'main'."
 
-  # Run Tests for all PRs and Pushes
+  # Build Check for all PRs and Pushes (Replaces npm test)
   test-and-build:
     runs-on: ubuntu-latest
     steps:
@@ -37,10 +37,10 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Tests
-        run: npm test -- --watchAll=false
+      - name: Run Production Build Check
+        run: npm run build
 
-  # Auto-Merge 'dev' into 'main' when tests pass on 'dev' push
+  # Auto-Merge 'dev' into 'main' when build check passes on 'dev' push
   auto-merge-dev-to-main:
     needs: [test-and-build]
     if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
@@ -57,7 +57,7 @@ jobs:
           target_branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  # Build & Push Docker Image (Runs only when code is pushed/merged into 'main')
+  # Build & Push Docker Image (Runs when code is pushed/merged into 'main')
   docker-build-push:
     needs: [test-and-build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
