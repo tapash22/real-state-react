@@ -3,12 +3,12 @@ import { FaBars, FaPhoneAlt, FaUserPlus } from "react-icons/fa";
 import { FiDollarSign, FiMessageSquare } from "react-icons/fi";
 import { LuLayers, LuLogIn } from "react-icons/lu";
 
-import { Link } from "react-router-dom";
-import { useTheme } from "../hooks/useTheme";
-
+import { useTranslation } from "react-i18next";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { RiGlobalLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import { useTheme } from "../hooks/useTheme";
 import { Dropdown } from "./dropdown/Dropdown";
 import { ThemeToggle } from "./toggle/ThemeToggle";
 
@@ -17,12 +17,20 @@ type HeaderProps = {
 };
 
 export default function Header(_props: HeaderProps) {
+  const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  // Language configuration state
-  const [lang, setLang] = useState("English");
+  // Language mapping configuration
+  const currentLangLabel = i18n.language?.startsWith("bn")
+    ? "বাংলা"
+    : "English";
   const langOptions = ["English", "বাংলা "];
+
+  const handleLanguageChange = (selectedLang: string) => {
+    const langCode = selectedLang === "বাংলা " ? "bn" : "en";
+    i18n.changeLanguage(langCode);
+  };
 
   return (
     <>
@@ -107,35 +115,35 @@ export default function Header(_props: HeaderProps) {
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity"
           >
-            How it works
+            {t("nav.howItWorks")}
           </Link>
           <Link
             to="/pricing"
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity"
           >
-            Pricing
+            {t("nav.pricing")}
           </Link>
           <Link
             to="/help"
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity"
           >
-            Help
+            {t("nav.help")}
           </Link>
           <Link
             to="/auth/signin"
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity ml-2"
           >
-            Log in
+            {t("nav.login")}
           </Link>
           <Link
             to="/auth/signup"
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity"
           >
-            Sign up
+            {t("nav.signup")}
           </Link>
 
           {/* Landlord CTA Button */}
@@ -144,7 +152,7 @@ export default function Header(_props: HeaderProps) {
             style={{ borderColor: "var(--border)", color: "var(--text)" }}
             className="border rounded-lg px-4 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
           >
-            I'm a landlord
+            {t("nav.landlordCta")}
           </Link>
 
           {/* Desktop Language Selector dropdown integration */}
@@ -152,10 +160,10 @@ export default function Header(_props: HeaderProps) {
             <Dropdown
               smallSize={true}
               showValue={true}
-              selectedValue={lang}
-              onSelect={setLang}
+              selectedValue={currentLangLabel}
+              onSelect={handleLanguageChange}
               options={langOptions}
-              label="Language"
+              label={t("nav.language")}
               Icon={RiGlobalLine}
             />
           </div>
@@ -261,7 +269,7 @@ export default function Header(_props: HeaderProps) {
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
               >
                 <LuLayers className="w-5 h-5 opacity-70" />
-                <span>How it works</span>
+                <span>{t("nav.howItWorks")}</span>
               </Link>
 
               <Link
@@ -271,7 +279,7 @@ export default function Header(_props: HeaderProps) {
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
               >
                 <FiDollarSign className="w-5 h-5 opacity-70" />
-                <span>Pricing</span>
+                <span>{t("nav.pricing")}</span>
               </Link>
 
               <Link
@@ -281,7 +289,7 @@ export default function Header(_props: HeaderProps) {
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
               >
                 <IoMdHelpCircleOutline className="w-5 h-5 opacity-70" />
-                <span>Help</span>
+                <span>{t("nav.help")}</span>
               </Link>
 
               <Link
@@ -291,7 +299,7 @@ export default function Header(_props: HeaderProps) {
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
               >
                 <FiMessageSquare className="w-5 h-5 opacity-70" />
-                <span>Live chat support</span>
+                <span>{t("nav.liveChat")}</span>
               </Link>
 
               <Link
@@ -301,16 +309,16 @@ export default function Header(_props: HeaderProps) {
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
               >
                 <FaPhoneAlt className="w-4 h-4 opacity-70" />
-                <span>Contact us</span>
+                <span>{t("nav.contactUs")}</span>
               </Link>
               <div className="p-5 border-t border-[var(--border)] bg-[var(--nav-bg)] shrink-0 flex justify-center items-center">
                 <Dropdown
                   smallSize={true}
                   showValue={true}
-                  selectedValue={lang}
-                  onSelect={setLang}
+                  selectedValue={currentLangLabel}
+                  onSelect={handleLanguageChange}
                   options={langOptions}
-                  label="Language"
+                  label={t("nav.language")}
                   Icon={RiGlobalLine}
                 />
               </div>

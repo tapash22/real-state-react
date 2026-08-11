@@ -1,10 +1,12 @@
 import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import land_lord from "../../assets/landlord_page.jpg";
 import { CurveSection } from "./CurveSection";
 import { Search } from "./Search";
 
 export function Banner() {
+  const { t, i18n } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleTextRef = useRef<HTMLSpanElement>(null); // Anchor element for the text loop
@@ -56,8 +58,9 @@ export function Banner() {
           "-=0.4",
         );
 
-      // 🔄 Infinite Text Loop Configuration Engine
-      const words = ["Days.", "Months.", "Lifetime."];
+      const words = t("banner.loopWords", {
+        returnObjects: true,
+      }) as string[];
       let currentIndex = 0;
 
       // Set initial word safely
@@ -80,7 +83,7 @@ export function Banner() {
             ease: "power3.in",
           })
           .call(() => {
-            currentIndex = (currentIndex + 1) % words.length;
+            currentIndex = (currentIndex + 2) % words.length;
             subtitleEl.textContent = words[currentIndex] ?? "";
           })
           .set(subtitleEl, { y: 28 })
@@ -97,7 +100,7 @@ export function Banner() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [t, i18n.language]);
 
   return (
     <CurveSection
@@ -129,18 +132,20 @@ export function Banner() {
             style={{ color: "var(--button)" }}
             className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none drop-shadow-md"
           >
-            Your Home Anywhere.
+            {t("banner.title")}
           </h1>
 
           {/* DYNAMIC COUNTING SUBTITLE */}
           <h3 className="text-xl sm:text-2xl font-bold tracking-wider flex items-center justify-center gap-2">
-            <span style={{ color: "var(--text-heading)" }}>Stay for</span>
+            <span style={{ color: "var(--text-heading)" }}>
+              {t("banner.stayFor")}
+            </span>
 
             {/* MASK WINDOW */}
             <span className="relative overflow-hidden h-[40px] lg:h-[50px] w-[120px] lg:w-[150px] flex items-center rounded">
               <span
                 ref={subtitleTextRef}
-                className="w-full text-center whitespace-nowrap leading-none bg-indigo-600 text-white font-bold p-2 lg:p-3 rounded shadow-md"
+                className="w-full text-center whitespace-nowrap leading-none bg-indigo-600 text-white font-bold p-2 lg:p-2 rounded shadow-md"
                 style={{ color: "var(--text)" }}
               />
             </span>
@@ -152,8 +157,7 @@ export function Banner() {
             style={{ color: "var(--text-muted)" }}
             className="hidden lg:block text-base lg:text-lg max-w-xl font-normal lg:font-medium tracking-wide leading-relaxed drop-shadow"
           >
-            Connect directly with local homeowners across the globe. Secure your
-            space, negotiate your terms, and live like a local.
+            {t("banner.description")}
           </p>
         </div>
 
