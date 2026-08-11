@@ -1,5 +1,23 @@
 {
-    "welcome": "Welcome to our application!",
-    "greeting": "Hello {{name}}, welcome back!",
-    "change_lang": "Change Language"
+    "nav": {
+        "howItWorks": "How it works",
+        "pricing": "Pricing",
+        "help": "Help",
+        "login": "Log in",
+        "signup": "Sign up",
+        "landlordCta": "I'm a landlord",
+        "liveChat": "Live chat support",
+        "contactUs": "Contact us",
+        "language": "Language"
+    },
+    "banner": {
+        "title": "Your Home Anywhere.",
+        "stayFor": "Stay for",
+        "loopWords": [
+            "Days.",
+            "Months.",
+            "Lifetime."
+        ],
+        "description": "Connect directly with local homeowners across the globe. Secure your space, negotiate your terms, and live like a local."
+    }
 }
