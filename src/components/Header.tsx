@@ -125,7 +125,7 @@ export default function Header(_props: HeaderProps) {
             {t("nav.pricing")}
           </Link>
           <Link
-            to="/help"
+            to="/helps"
             style={{ color: "var(--text)" }}
             className="hover:opacity-80 transition-opacity"
           >
@@ -283,7 +283,7 @@ export default function Header(_props: HeaderProps) {
               </Link>
 
               <Link
-                to="/help"
+                to="/helps"
                 onClick={() => setIsOpen(false)}
                 style={{ color: "var(--text)" }}
                 className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
