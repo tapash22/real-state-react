@@ -60,3 +60,16 @@ export const validate = <T extends Record<string, any>>(
 
   return errors;
 };
+
+// -----------------------------
+// Check Form Validity
+// -----------------------------
+
+export const hasValidationErrors = <T extends Record<string, any>>(
+  values: T,
+  schema: ValidationSchema<T>,
+): boolean => {
+  const errors = validate(values, schema);
+
+  return Object.keys(errors).length > 0;
+};

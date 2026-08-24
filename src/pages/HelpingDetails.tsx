@@ -1,6 +1,7 @@
 import { KanbanBoard } from "../components/ts-practice/KanbanBoard";
 import { ShoppingCart } from "../components/ts-practice/ShoppingCart";
 import { UserTable } from "../components/ts-practice/UserTable";
+import SignInForm from "../components/use-reducer/SignInForm";
 
 export default function HelpingDetails() {
   return (
@@ -10,6 +11,8 @@ export default function HelpingDetails() {
       <UserTable />
 
       <KanbanBoard />
+
+      <SignInForm />
     </div>
   );
 }
