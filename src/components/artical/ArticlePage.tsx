@@ -21,7 +21,7 @@ export const ArticlePage: React.FC = () => {
       const elementRect = element.getBoundingClientRect();
       const containerRect = container.getBoundingClientRect();
       const scrollTarget =
-        container.scrollTop + (elementRect.top - containerRect.top) - 20;
+        container.scrollTop + (elementRect.top - containerRect.top) - 0;
 
       container.scrollTo({
         top: scrollTarget,
@@ -176,11 +176,11 @@ export const ArticlePage: React.FC = () => {
           <div
             ref={sidebarRef}
             className="relative max-h-[calc(100vh-140px)] overflow-y-auto pl-4 space-y-3 scroll-smooth 
-                       scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+                       scrollbar-thin scrollbar-track-transparent"
           >
             {/* Sliding Active Indicator Bar (positioned exactly at container left edge) */}
             <div
-              className="absolute -left-[1px] w-[2px] bg-gray-900 transition-all duration-300 ease-in-out z-10"
+              className="absolute -left-[1px] w-1 bg-gray-900 transition-all duration-300 ease-in-out z-10 rounded-t-lg"
               style={{
                 top: `${indicatorStyle.top}px`,
                 height: `${indicatorStyle.height}px`,
