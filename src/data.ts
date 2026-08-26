@@ -1071,3 +1071,93 @@ export const landlordFaqs: FaqItem[] = [
       "We currently do not offer property damage insurance. We strongly recommend charging your tenants a security deposit to cover any potential damages. You can easily request the security deposit through our secure online rent collection system.",
   },
 ];
+
+// help page artical
+
+export interface SubSection {
+  id: string;
+  title: string;
+}
+
+export interface Section {
+  id: string;
+  title: string;
+  subsections?: SubSection[];
+  content?: string[];
+}
+
+export interface ArticleData {
+  title: string;
+  subtitle: string;
+  author: {
+    name: string;
+    avatar: string;
+    date: string;
+  };
+  introParagraph: string;
+  sections: Section[];
+}
+
+export const articleData: ArticleData = {
+  title: "What is HousingAnywhere? (for tenants)",
+  subtitle:
+    "You're considering using HousingAnywhere but would like more information before trusting our platform.",
+  author: {
+    name: "Paweł",
+    avatar: "https://api.dicebear.com/7.x/bottts/svg?seed=Pawel",
+    date: "August 20, 2025",
+  },
+  introParagraph:
+    "HousingAnywhere is an online rental platform that connects home seekers (like you) with landlords. We help both sides achieve their renting goals — quick, online, and 100% safe.",
+  sections: [
+    {
+      id: "overview",
+      title: "Overview",
+      subsections: [
+        {
+          id: "what-is-housinganywhere-exactly",
+          title: "What is HousingAnywhere?",
+        },
+        {
+          id: "how-it-works-in-a-nutshell",
+          title: "How it works in a nutshell",
+        },
+      ],
+    },
+    {
+      id: "what-is-housinganywhere-exactly",
+      title: "What is HousingAnywhere, exactly?",
+      content: [
+        "We sometimes get asked, are you a real estate agency? The answer to that is no. We don't own any of the properties advertised on HousingAnywhere.  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci iusto ea recusandae temporibus. Ipsum debitis nam deserunt. Placeat a consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.",
+      ],
+    },
+    {
+      id: "how-it-works-in-a-nutshell",
+      title: "How it works in a nutshell",
+      content: [
+        "Search through thousands of verified rooms, apartments, and studios worldwide and book your new home direct with trusted landlords.  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci iusto ea recusandae temporibus. Ipsum debitis nam deserunt. Placeat a consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.",
+      ],
+    },
+    {
+      id: "what-services-does-housinganywhere-provide",
+      title: "What services does HousingAnywhere provide?",
+      content: [
+        "Secure payments, tenant protection guarantee, identity verification, and direct messaging with verified advertisers. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci iusto ea recusandae temporibus. Ipsum debitis nam deserunt. Placeat a consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.",
+      ],
+    },
+    {
+      id: "what-services-does-housinganywhere-not-provide",
+      title: "What services does HousingAnywhere not provide?",
+      content: [
+        "In-person viewings, physical key handovers, or key holding services. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci iusto ea recusandae temporibus. Ipsum debitis nam deserunt. Placeat a consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.",
+      ],
+    },
+    {
+      id: "is-housinganywhere-free",
+      title: "Is HousingAnywhere free?",
+      content: [
+        "Creating an account and searching for listings is completely free for tenants. A small one-off service fee applies when a booking is confirmed.  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci iusto ea recusandae temporibus. Ipsum debitis nam deserunt. Placeat a consequuntur voluptas natus, ut enim facere iusto et inventore, eaque quibusdam. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui modi ex distinctio quod cumque, repellat ad aliquam odio, corrupti sint provident blanditiis. Odit minima veritatis aliquam deleniti a? Illum, blanditiis.",
+      ],
+    },
+  ],
+};
