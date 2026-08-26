@@ -10,6 +10,7 @@ import AgentsDetails from "../pages/AgentsDetails";
 import { Home } from "../pages/Home";
 
 import PropertyDetails from "../components/map-search/PropertyDetails";
+import HelpingDetails from "../pages/HelpingDetails";
 import LandLord from "../pages/LandLord";
 import Pricing from "../pages/Pricing";
 import RealEstateSearchModule from "../pages/RealEstateSearchModule";
@@ -61,6 +62,10 @@ export const routesConfig: RouteObject[] = [
       {
         path: "how-it-works",
         element: createElement(WorkingProcess),
+      },
+      {
+        path: "help",
+        element: createElement(HelpingDetails),
       },
 
       // Authentication Pages
