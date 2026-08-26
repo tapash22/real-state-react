@@ -182,7 +182,7 @@ export const ArticlePage: React.FC = () => {
             <div
               className="absolute left-[0px] w-[4px] bg-red-900  transition-all duration-300 ease-in-out z-10 rounded-lg"
               style={{
-                top: `${indicatorStyle.top}px`,
+                top: `${indicatorStyle.top}px `,
                 height: `${indicatorStyle.height}px`,
               }}
             />

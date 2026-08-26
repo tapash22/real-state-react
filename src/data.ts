@@ -183,6 +183,31 @@ export interface AboutItem {
   des: string;
 }
 
+//help page property interfacce
+export interface SubSection {
+  id: string;
+  title: string;
+}
+
+export interface Section {
+  id: string;
+  title: string;
+  subsections?: SubSection[];
+  content?: string[];
+}
+
+export interface ArticleData {
+  title: string;
+  subtitle: string;
+  author: {
+    name: string;
+    avatar: string;
+    date: string;
+  };
+  introParagraph: string;
+  sections: Section[];
+}
+
 // about details
 export const aboutDetailList: AboutItem[] = [
   {
@@ -1073,30 +1098,6 @@ export const landlordFaqs: FaqItem[] = [
 ];
 
 // help page artical
-
-export interface SubSection {
-  id: string;
-  title: string;
-}
-
-export interface Section {
-  id: string;
-  title: string;
-  subsections?: SubSection[];
-  content?: string[];
-}
-
-export interface ArticleData {
-  title: string;
-  subtitle: string;
-  author: {
-    name: string;
-    avatar: string;
-    date: string;
-  };
-  introParagraph: string;
-  sections: Section[];
-}
 
 export const articleData: ArticleData = {
   title: "What is HousingAnywhere? (for tenants)",
