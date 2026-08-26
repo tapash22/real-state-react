@@ -106,11 +106,11 @@ export const ArticlePage: React.FC = () => {
   }, [activeId]);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-6 font-sans text-(--text) flex flex-col md:flex-row gap-8">
+    <div className="max-w-auto font-sans text-(--text) flex flex-col md:flex-row gap-5">
       {/* Scrollable Child Content Area */}
       <div
         ref={contentScrollRef}
-        className="flex-1 max-w-2xl h-[calc(100vh-140px)] overflow-y-auto overscroll-contain pr-4 pb-32
+        className="flex-1 max-w-6xl h-[calc(100vh-140px)] overflow-y-auto overscroll-contain pb-32 pr-10
                    [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         <main>
@@ -175,12 +175,12 @@ export const ArticlePage: React.FC = () => {
         <div className="sticky top-6 border-l border-(--border)">
           <div
             ref={sidebarRef}
-            className="relative max-h-[calc(100vh-140px)] overflow-y-auto pl-4 space-y-3 scroll-smooth 
-                       scrollbar-thin scrollbar-track-transparent"
+            className="relative max-h-[calc(100vh-40px)] overflow-y-auto pl-4 space-y-3 scroll-smooth 
+                       scrollbar-thin "
           >
             {/* Sliding Active Indicator Bar (positioned exactly at container left edge) */}
             <div
-              className="absolute -left-[1px] w-1 bg-gray-900 transition-all duration-300 ease-in-out z-10 rounded-t-lg"
+              className="absolute left-[0px] w-[4px] bg-red-900  transition-all duration-300 ease-in-out z-10 rounded-lg"
               style={{
                 top: `${indicatorStyle.top}px`,
                 height: `${indicatorStyle.height}px`,
