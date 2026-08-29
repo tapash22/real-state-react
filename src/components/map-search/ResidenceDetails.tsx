@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { ResidenceData, RoomUnit } from "../../data";
 import { RoomUnitCard } from "../card/RoomUnitCard";
+import { RoomUnitDetailDrawer } from "../drawer/RoomUnitDetailDrawer";
 
 // Define strict types for the data structures
 export interface Promotion {
@@ -28,6 +29,21 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({
   data,
   onShowUnitDetails,
 }) => {
+  const [selectedUnit, setSelectedUnit] = useState<RoomUnit | null>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleOpenDetails = (unit: RoomUnit) => {
+    setSelectedUnit(unit);
+    setIsDrawerOpen(true);
+    if (onShowUnitDetails) {
+      onShowUnitDetails(unit);
+    }
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setSelectedUnit(null);
+  };
   if (!data) return null;
 
   return (
@@ -150,7 +166,7 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({
               <RoomUnitCard
                 key={unit.id}
                 unit={unit}
-                onShowDetails={onShowUnitDetails}
+                onShowDetails={handleOpenDetails}
               />
             ))
           ) : (
@@ -160,6 +176,13 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({
           )}
         </div>
       </section>
+
+      {/* Right Side Detail Drawer Dialog */}
+      <RoomUnitDetailDrawer
+        unit={selectedUnit}
+        isOpen={isDrawerOpen}
+        onClose={handleCloseDrawer}
+      />
     </div>
   );
 };

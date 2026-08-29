@@ -1201,7 +1201,7 @@ export interface Highlight {
 export interface Services {
   general: string[];
 }
-export type RoomUnit = {
+export interface RoomUnit {
   id: string | number;
   title: string;
   pricePerMonth: number;
@@ -1214,7 +1214,16 @@ export type RoomUnit = {
   hasPrivateBalcony?: boolean;
   maxCapacity: number;
   availableFrom: string;
-};
+  // Extended fields for the right-side detail drawer:
+  descriptionHeader?: string;
+  descriptionText?: string;
+  totalPhotosCount?: number;
+  whatsIncluded?: string[];
+  paymentDetails?: {
+    deposit?: number;
+    utilities?: string;
+  };
+}
 
 export interface ResidenceData {
   title: string;
@@ -1328,6 +1337,20 @@ export const residenceData: ResidenceData = {
       hasPrivateBalcony: true,
       maxCapacity: 2,
       availableFrom: "1 Oct 2026",
+      descriptionHeader: "Life at Mitte-Wedding",
+      descriptionText:
+        "553 apartments, 553+ students... be one of us & meet extraordinary people. Mitte-Wedding is a unique meeting point of the iconic neighborhoods of Prenzlauer Berg, Mitte and Wedding. From the historical sites and clever co-working spaces near Bernauer Straße to the unique parks and eclectic cafes near Mauerpark, there is plenty to explore.",
+      totalPhotosCount: 11,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Private kitchenette & modern appliances",
+        "Private balcony access with city view",
+      ],
+      paymentDetails: {
+        deposit: 1559,
+        utilities: "Included in base price",
+      },
     },
     {
       id: "unit-402",
@@ -1335,6 +1358,7 @@ export const residenceData: ResidenceData = {
       pricePerMonth: 1250,
       images: [
         "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
       ],
       stayDuration: "3–12 months",
       sizeSqm: 21,
@@ -1344,6 +1368,19 @@ export const residenceData: ResidenceData = {
       hasPrivateBalcony: false,
       maxCapacity: 1,
       availableFrom: "15 Sep 2026",
+      descriptionHeader: "Cozy & Efficient Living",
+      descriptionText:
+        "Designed for privacy and focus, this standard studio offers maximum efficiency with a built-in workspace, dedicated storage solutions, and access to all community amenities.",
+      totalPhotosCount: 8,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Private kitchenette",
+      ],
+      paymentDetails: {
+        deposit: 1250,
+        utilities: "Included in base price",
+      },
     },
   ],
 };
