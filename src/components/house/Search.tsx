@@ -2,26 +2,13 @@ import gsap from "gsap";
 import { useContext, useEffect, useRef, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { priceOptions } from "../../data";
 import { useHideMessageOnOutsideClick } from "../../hooks/useHideMessageOnOutsideClick";
 import { hideMessage, showMessage } from "../../utils/messageAnimation";
 import { Dropdown } from "../dropdown/Dropdown";
-import { HouseContext } from "../HouseContext";
+import { HouseContext, type HouseContextType } from "../HouseContext";
 
 type SearchProps = {
   // add later if needed
-};
-
-type HouseContextType = {
-  country: string;
-  setCountry: (value: string) => void;
-  countries: string[];
-  property: string;
-  setProperty: (value: string) => void;
-  properties: string[];
-  price: string;
-  setPrice: (value: string) => void;
-  // handleClick: () => void;
 };
 
 export function Search(_props: SearchProps) {
@@ -31,6 +18,9 @@ export function Search(_props: SearchProps) {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const messageRef = useRef<HTMLDivElement>(null);
+
+  // Initialize navigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!messageRef.current) return;
@@ -55,21 +45,20 @@ export function Search(_props: SearchProps) {
       }),
   });
 
-  // Initialize navigate hook
-  const navigate = useNavigate();
-
   if (!context) return null;
 
   const {
     country,
     setCountry,
     countries,
+
     property,
     setProperty,
     properties,
+
     price,
     setPrice,
-    // handleClick,
+    prices,
   } = context as HouseContextType;
 
   //  Wrap handler to combine context filter updates and path redirecting
@@ -133,7 +122,7 @@ export function Search(_props: SearchProps) {
         <Dropdown
           selectedValue={price}
           onSelect={setPrice}
-          options={priceOptions}
+          options={prices}
           label="Choose your price"
           Icon={RiWallet3Line}
         />

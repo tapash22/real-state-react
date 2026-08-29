@@ -4,6 +4,7 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiShieldStarFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 
+import { useAppData } from "../../hooks/useAppData";
 import {
   CalendarInputPicker,
   PickerRawData,
@@ -18,14 +19,11 @@ type RouteParams = {
   id: string;
 };
 
-type HouseContextType = {
-  houses: any[]; // Using your data signature structure
-  isLoading: boolean;
-};
-
 type DateMode = "month" | "exact";
 
 export default function PropertyDetails() {
+  const { data, isLoading: isResidenceDataLoading } = useAppData();
+
   const { id } = useParams<RouteParams>();
   const context = useContext(HouseContext);
 
@@ -43,64 +41,7 @@ export default function PropertyDetails() {
   };
 
   // Mocking all data retrieved from the image layout
-  const residenceData = {
-    title: "Micampus Wynwood Sancha",
-    tenantCount: 36,
-    cleaningInfo:
-      "Cleaning room, change of sheets and towel included in the price. It is fortnightly",
-    promotions: [
-      {
-        title: "PROMO FLASH SUMMER valid only for HousingAnywhere tenants",
-        bulletPoints: [
-          "NO ADMINISTRATION FEE and SPECIAL PRICE with maximum move out date August 2026.",
-          "For longer stays, contact us!",
-        ],
-      },
-      {
-        title:
-          "PROMO EARLY BOOKING COURSE 26/27 only for HousingAnywhere tenants",
-        description:
-          "50% DISCOUNT on the admin fee, applied to the second month of your rent.",
-        bulletPoints: [
-          "Example admin fee 250€:",
-          "1- You will pay the full administration fee of 250€.",
-          "2- When you pay the...",
-        ],
-      },
-    ],
-    highlights: [
-      {
-        title: "Entertainment room",
-        description:
-          "Relax and socialize in our communal lounge, featuring games and movie nights.",
-        image:
-          "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&auto=format&fit=crop&q=60", // Placeholder
-      },
-      {
-        title: "Gym",
-        description:
-          "Stay active with an on-site fitness center, equipped for all your workout needs.",
-        image:
-          "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=60", // Placeholder
-      },
-      {
-        title: "Dining area",
-        description: "Share meals and stories in a spacious dining hall.",
-        image:
-          "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&auto=format&fit=crop&q=60", // Placeholder
-      },
-      {
-        title: "Laundry room",
-        description:
-          "Do laundry quickly and conveniently with modern washers and dryers.",
-        image:
-          "https://images.unsplash.com/photo-1545173168-9f1947e8015e?w=400&auto=format&fit=crop&q=60", // Placeholder
-      },
-    ],
-    services: {
-      general: ["Cleaning in common areas", "Cleaning in private areas"],
-    },
-  };
+  const residenceData = data?.residenceData;
 
   // Matches child signature requirements perfectly (2 input arguments)
   const handlePickerChange = (
@@ -113,7 +54,7 @@ export default function PropertyDetails() {
 
   if (!context) return null;
 
-  const { houses, isLoading } = context as HouseContextType;
+  const { getHouseById, isLoading } = context;
 
   if (isLoading) {
     return (
@@ -123,7 +64,7 @@ export default function PropertyDetails() {
     );
   }
 
-  const houseData = houses.find((house) => house.id === Number(id));
+  const houseData = getHouseById(id ?? "");
 
   if (!houseData) {
     return (
@@ -137,16 +78,7 @@ export default function PropertyDetails() {
   // We collect your primary core images and fill out the rest using matching high-end interior URLs
   const baseImages = [houseData.imageLg, houseData.image].filter(Boolean); // Keeps only valid imported files
 
-  const premiumPlaceholders = [
-    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80", // Living room
-    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80", // Kitchen
-    "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80", // Modern Dining
-    "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80", // Bedroom view
-    "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=1200&q=80", // Lounge
-    "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80", // Clean Kitchen Area
-    "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80", // Luxury Bathroom
-    "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80", // Balcony/Light room
-  ];
+  const premiumPlaceholders = data?.premiumPropertyImages ?? [];
 
   // Combine them to make a rich array containing 10 pictures
   const propertyImages = [...baseImages, ...premiumPlaceholders].slice(0, 10);
@@ -212,7 +144,19 @@ export default function PropertyDetails() {
                 {houseData.description}
               </p>
             </div>
-            <ResidenceDetails data={residenceData} />
+            <div className="space-y-2">
+              {/* other content */}
+
+              {isResidenceDataLoading ? (
+                <p className="text-sm text-gray-500">Loading...</p>
+              ) : residenceData ? (
+                <ResidenceDetails data={residenceData} />
+              ) : (
+                <p className="text-sm text-red-500">
+                  Residence data not found.
+                </p>
+              )}
+            </div>
           </div>
         </div>
 

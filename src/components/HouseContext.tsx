@@ -1,21 +1,35 @@
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import type { House } from "../data";
-import { houseData } from "../data";
-
+import { useAppData } from "../hooks/useAppData";
+// import { houseData } from "../data";
 /* ----------------------------- */
 export type HouseContextType = {
   houses: House[];
+
   country: string;
   setCountry: React.Dispatch<React.SetStateAction<string>>;
   countries: string[];
+
   property: string;
   setProperty: React.Dispatch<React.SetStateAction<string>>;
+  properties: string[];
+
   price: string;
   prices: string[];
   setPrice: React.Dispatch<React.SetStateAction<string>>;
-  properties: string[];
+
   isLoading: boolean;
+
   handleClick: () => void;
+
+  // Get a single property by ID
+  getHouseById: (id: string | number) => House | undefined;
 };
 
 /* ----------------------------- */
@@ -24,86 +38,131 @@ export const HouseContext = createContext<HouseContextType | undefined>(
 );
 
 export function HouseContextProvider({ children }: { children: ReactNode }) {
-  const [houses, setHouses] = useState<House[]>(houseData);
+  const { data, isLoading: isDataLoading } = useAppData();
 
   const [country, setCountry] = useState("");
-  const [countries, setCountries] = useState<string[]>([]);
-
   const [property, setProperty] = useState("");
-  const [properties, setProperties] = useState<string[]>([]);
-
   const [price, setPrice] = useState("");
-  const [prices, setPrices] = useState<string[]>([]);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    country: "",
+    property: "",
+    price: "",
+  });
 
-  /* ----------------------------- */
-  useEffect(() => {
-    const allCountries = houseData.map((h) => h.country);
-    setCountries(["location any country", ...new Set(allCountries)]);
-  }, []);
+  const houseData = useMemo(() => data?.houseData ?? [], [data?.houseData]);
 
-  useEffect(() => {
-    const allProperties = houseData.map((h) => h.type);
-    setProperties(["property any type", ...new Set(allProperties)]);
-  }, []);
-
-  // Fixed: Dynamically generate clean, readable pricing tier buckets based on database range
-  useEffect(() => {
-    const staticPriceTiers = [
-      "All Prices",
-      "100-300",
-      "300-600",
-      "600-900",
-      "900-1500",
-      "1500-3000",
-      "3000+",
+  /* Filter Options */
+  const countries = useMemo(() => {
+    return [
+      "location any country",
+      ...new Set(houseData.map((house) => house.country)),
     ];
-    setPrices(staticPriceTiers);
+  }, [houseData]);
+
+  const properties = useMemo(() => {
+    return [
+      "property any type",
+      ...new Set(houseData.map((house) => house.type)),
+    ];
+  }, [houseData]);
+
+  const prices = data?.staticPriceTiers ?? [];
+
+  /* Helpers */
+  const isDefault = useCallback((value: string) => {
+    const normalizedValue = value.toLowerCase().trim();
+
+    return (
+      normalizedValue === "" ||
+      normalizedValue.includes("any") ||
+      normalizedValue === "all prices"
+    );
   }, []);
 
-  /* ----------------------------- */
-  const isDefault = (str: string) => str.toLowerCase().includes("any");
+  /* Filter Houses */
+  const houses = useMemo(() => {
+    const { country, property, price } = filters;
 
-  const handleClick = () => {
-    setIsLoading(true);
+    let min = 0;
+    let max = Infinity;
 
-    const [min = 0, max = Infinity] = price.split(" ").map(Number);
+    /* Price filter */
 
-    const filtered = houseData.filter((house) => {
-      const housePrice = Number(house.price);
+    if (!isDefault(price)) {
+      if (price.endsWith("+")) {
+        min = Number(price.replace("+", ""));
+      } else {
+        const [minPrice = 0, maxPrice = Infinity] = price
+          .split("-")
+          .map(Number);
+
+        min = minPrice;
+        max = maxPrice;
+      }
+    }
+
+    return houseData.filter((house) => {
+      /* Country */
 
       const matchCountry = isDefault(country) || house.country === country;
 
+      /* Property type */
+
       const matchProperty = isDefault(property) || house.type === property;
+
+      /* Price */
+
+      const housePrice = Number(house.price);
 
       const matchPrice =
         isDefault(price) || (housePrice >= min && housePrice <= max);
 
       return matchCountry && matchProperty && matchPrice;
     });
+  }, [houseData, filters, isDefault]);
 
-    setTimeout(() => {
-      setHouses(filtered);
-      setIsLoading(false);
-    }, 2000);
+  /* Apply Filters */
+  const handleClick = () => {
+    setFilters({
+      country,
+      property,
+      price,
+    });
   };
+
+  /* Get Property By ID */
+  const getHouseById = useCallback(
+    (id: string | number) => {
+      return houseData.find((house) => String(house.id) === String(id));
+    },
+    [houseData],
+  );
+
+  /* Loading */
+  const isLoading = isDataLoading;
 
   return (
     <HouseContext.Provider
       value={{
         houses,
+
         country,
         setCountry,
         countries,
+
         property,
         setProperty,
+        properties,
+
         price,
         setPrice,
         prices,
-        properties,
+
         isLoading,
+
         handleClick,
+        getHouseById,
       }}
     >
       {children}

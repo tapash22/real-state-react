@@ -1,4 +1,6 @@
 import React from "react";
+import { ResidenceData, RoomUnit } from "../../data";
+import { RoomUnitCard } from "../card/RoomUnitCard";
 
 // Define strict types for the data structures
 export interface Promotion {
@@ -17,20 +19,15 @@ export interface ServicesConfig {
   general: string[];
 }
 
-export interface ResidenceData {
-  title: string;
-  tenantCount: number;
-  cleaningInfo: string;
-  promotions: Promotion[];
-  highlights: HighlightItem[];
-  services: ServicesConfig;
-}
-
 interface ResidenceDetailsProps {
   data: ResidenceData;
+  onShowUnitDetails?: (unit: RoomUnit) => void;
 }
 
-const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({ data }) => {
+const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({
+  data,
+  onShowUnitDetails,
+}) => {
   if (!data) return null;
 
   return (
@@ -135,14 +132,33 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({ data }) => {
         </div>
       </section>
 
-      {/* Available Places Header Bar */}
-      <section className="flex items-center justify-between py-3 space-y-3 ">
-        <h2 className="text-lg font-bold text-[var(--text)] ">
-          Available places
-        </h2>
-        <button className="flex items-center gap-2 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-medium text-[var(--text)]  hover:bg-slate-50">
-          <span>↕️</span> Recommended
-        </button>
+      {/* Available Places Header & Unit Cards Section */}
+      <section className="py-3 space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-[var(--text)]">
+            Available places
+          </h2>
+          <button className="flex items-center gap-2 border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-medium text-[var(--text)] hover:bg-slate-50">
+            <span>↕️</span> Recommended
+          </button>
+        </div>
+
+        {/* Render Room Units */}
+        <div className="space-y-4">
+          {data.roomUnits && data.roomUnits.length > 0 ? (
+            data.roomUnits.map((unit) => (
+              <RoomUnitCard
+                key={unit.id}
+                unit={unit}
+                onShowDetails={onShowUnitDetails}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 italic">
+              No available rooms found for this residence.
+            </p>
+          )}
+        </div>
       </section>
     </div>
   );

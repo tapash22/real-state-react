@@ -32,6 +32,16 @@ export const demoUser: User = {
 
 export type SocialMediaItems = SocialMediaItem[];
 
+export const staticPriceTiers = [
+  "All Prices",
+  "100-300",
+  "300-600",
+  "600-900",
+  "900-1500",
+  "1500-3000",
+  "3000+",
+];
+
 export interface RentStepData {
   id: number;
   title: string;
@@ -1173,3 +1183,185 @@ export const articleData: ArticleData = {
     },
   ],
 };
+
+// propertyDetailsData
+
+export interface Promotion {
+  title: string;
+  description?: string;
+  bulletPoints: string[];
+}
+
+export interface Highlight {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Services {
+  general: string[];
+}
+export type RoomUnit = {
+  id: string | number;
+  title: string;
+  pricePerMonth: number;
+  images: string[];
+  stayDuration?: string;
+  sizeSqm: number;
+  hasPrivateToilet?: boolean;
+  hasPrivateBathroom?: boolean;
+  hasPrivateKitchen?: boolean;
+  hasPrivateBalcony?: boolean;
+  maxCapacity: number;
+  availableFrom: string;
+};
+
+export interface ResidenceData {
+  title: string;
+  tenantCount: number;
+  cleaningInfo: string;
+  promotions: Promotion[];
+  highlights: Highlight[];
+  services: Services;
+  roomUnits?: RoomUnit[];
+}
+
+export const residenceData: ResidenceData = {
+  title: "Micampus Wynwood Sancha",
+
+  tenantCount: 36,
+
+  cleaningInfo:
+    "Cleaning room, change of sheets and towel included in the price. It is fortnightly",
+
+  promotions: [
+    {
+      title: "PROMO FLASH SUMMER valid only for HousingAnywhere tenants",
+
+      bulletPoints: [
+        "NO ADMINISTRATION FEE and SPECIAL PRICE with maximum move out date August 2026.",
+        "For longer stays, contact us!",
+      ],
+    },
+
+    {
+      title:
+        "PROMO EARLY BOOKING COURSE 26/27 only for HousingAnywhere tenants",
+
+      description:
+        "50% DISCOUNT on the admin fee, applied to the second month of your rent.",
+
+      bulletPoints: [
+        "Example admin fee 250€:",
+        "1- You will pay the full administration fee of 250€.",
+        "2- When you pay the...",
+      ],
+    },
+  ],
+
+  highlights: [
+    {
+      title: "Entertainment room",
+
+      description:
+        "Relax and socialize in our communal lounge, featuring games and movie nights.",
+
+      image:
+        "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Gym",
+
+      description:
+        "Stay active with an on-site fitness center, equipped for all your workout needs.",
+
+      image:
+        "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Dining area",
+
+      description: "Share meals and stories in a spacious dining hall.",
+
+      image:
+        "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Laundry room",
+
+      description:
+        "Do laundry quickly and conveniently with modern washers and dryers.",
+
+      image:
+        "https://images.unsplash.com/photo-1545173168-9f1947e8015e?w=400&auto=format&fit=crop&q=60",
+    },
+  ],
+
+  services: {
+    general: [
+      "24/7 On-site Security & Keycard Access",
+      "High-speed Fiber Optic Internet",
+      "Laundry Room with Washers & Dryers",
+      "Co-working & Quiet Study Lounges",
+      "Bicycle Storage Area",
+    ],
+  },
+  // Data matching the exact values visible in your image
+  roomUnits: [
+    {
+      id: "unit-601",
+      title: "Studio Neon Gold with Balcony - Floor 6",
+      pricePerMonth: 1559,
+      images: [
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–6 months",
+      sizeSqm: 27,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: true,
+      maxCapacity: 2,
+      availableFrom: "1 Oct 2026",
+    },
+    {
+      id: "unit-402",
+      title: "Standard Studio - Floor 4",
+      pricePerMonth: 1250,
+      images: [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "3–12 months",
+      sizeSqm: 21,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 1,
+      availableFrom: "15 Sep 2026",
+    },
+  ],
+};
+
+export const premiumPropertyImages: string[] = [
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+];
