@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import {
   emailValue,
   Errors,
@@ -9,14 +8,25 @@ import {
   validate,
 } from "../utils/validations/formValidation";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { loginUser } from "../api/auth";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { currentUserQueryKey } from "../hooks/useCurrentUser";
+
 interface SignInFormProps {
   // add props later if needed
 }
 
 const SignInForm: React.FC<SignInFormProps> = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryClient = useQueryClient();
 
-  const [email, setEmail] = useState<string>("");
+  // ==============================
+  // FORM STATE
+  // ==============================
+  const [email, setEmail] = useState<string | undefined>("");
   const [password, setPassword] = useState<string>("");
 
   // show and hide password handle condition
@@ -29,6 +39,33 @@ const SignInForm: React.FC<SignInFormProps> = () => {
       password: string;
     }>
   >({});
+
+  // ==============================
+  // LOGIN MUTATION
+  // ==============================
+
+  const loginMutation = useMutation({
+    mutationFn: loginUser,
+
+    onSuccess: async () => {
+      // Refresh current authenticated user
+      await queryClient.invalidateQueries({
+        queryKey: currentUserQueryKey,
+      });
+
+      // If user was redirected to login
+      // from a protected page, go back there.
+      const from = location.state?.from || "/";
+
+      // Reset form
+      resetForm();
+
+      // Navigate after successful login
+      navigate(from, {
+        replace: true,
+      });
+    },
+  });
 
   // PRO VALIDATION
   const runValidation = () => {
@@ -54,18 +91,8 @@ const SignInForm: React.FC<SignInFormProps> = () => {
     // validate first
     if (!runValidation()) return;
 
-    const userObj = {
-      email: email,
-      password: password,
-    };
-
-    console.log("Authenticated User Info:", userObj);
-
-    // reset form
-    resetForm();
-
-    // redirect to signin page
-    navigate("/");
+    // Send login request
+    loginMutation.mutate();
   };
 
   const resetForm = () => {
@@ -98,9 +125,19 @@ const SignInForm: React.FC<SignInFormProps> = () => {
                 type="text"
                 value={email}
                 placeholder="Enter email"
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setEmail(e.target.value);
+
+                  // Optional:
+                  // remove email error when user starts typing
+                  if (errors.email) {
+                    setErrors((prev) => {
+                      const { email, ...rest } = prev;
+
+                      return rest;
+                    });
+                  }
+                }}
                 className="input-field"
               />
               {errors.email && (
@@ -115,9 +152,17 @@ const SignInForm: React.FC<SignInFormProps> = () => {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    setPassword(e.target.value)
-                  }
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setPassword(e.target.value);
+
+                    if (errors.password) {
+                      setErrors((prev) => {
+                        const { password, ...rest } = prev;
+
+                        return rest;
+                      });
+                    }
+                  }}
                   className="input-field pr-10"
                   placeholder="Enter password"
                 />
@@ -125,6 +170,7 @@ const SignInForm: React.FC<SignInFormProps> = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}
+                  disabled={loginMutation.isPending || password.length === 0}
                   className={`absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted)] transition ${
                     password.length === 0
                       ? "opacity-0 pointer-events-none"
@@ -141,27 +187,90 @@ const SignInForm: React.FC<SignInFormProps> = () => {
             </div>
 
             <div className="py-2 flex flex-col gap-4">
-              <button className="bg-violet-700 hover:bg-violet-800 text-[var(--text)] rounded-md p-4 text-sm font-semibold tracking-wider w-full transition">
-                Sign In
+              {/* LOGIN BUTTON */}
+
+              <button
+                type="submit"
+                disabled={loginMutation.isPending}
+                className="bg-violet-700 hover:bg-violet-800
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  text-[var(--text)]
+                  rounded-md
+                  p-4
+                  text-sm
+                  font-semibold
+                  tracking-wider
+                  w-full
+                  transition"
+              >
+                {loginMutation.isPending ? "Signing in..." : "Sign In"}
               </button>
 
-              {/* OR Divider */}
+              {/* ==============================
+                  LOGIN ERROR
+              ============================== */}
+
+              {loginMutation.isError && (
+                <p className="text-red-500 text-xs text-center">
+                  Unable to sign in. Please check your email and password.
+                </p>
+              )}
+
+              {/* ==============================
+                  DIVIDER
+              ============================== */}
+
               <div className="flex items-center w-full">
-                <div className="flex-1 h-px bg-[var(--border)]"></div>
+                <div className="flex-1 h-px bg-[var(--border)]" />
+
                 <span className="px-3 text-xs text-[var(--text-secondary)]">
                   OR
                 </span>
-                <div className="flex-1 h-px bg-[var(--border)]"></div>
+
+                <div className="flex-1 h-px bg-[var(--border)]" />
               </div>
 
-              <button className="flex items-center justify-center gap-2 border-2 border-[var(--border)] rounded-md p-4 w-full hover:bg-[var(--card-hover)] text-[var(--muted)] transition bg-white text-sm font-medium tracking-wider">
+              {/* ==============================
+                  GOOGLE
+              ============================== */}
+
+              <button
+                type="button"
+                disabled={loginMutation.isPending}
+                className="flex items-center justify-center gap-2
+                  border-2
+                  border-[var(--border)]
+                  rounded-md
+                  p-4
+                  w-full
+                  hover:bg-[var(--card-hover)]
+                  disabled:opacity-50
+                  disabled:cursor-not-allowed
+                  text-[var(--muted)]
+                  transition
+                  bg-white
+                  text-sm
+                  font-medium
+                  tracking-wider"
+              >
                 <FaGoogle size={20} className="text-[var(--primary)]" />
                 Continue with Google
               </button>
 
+              {/* ==============================
+                  SIGN UP
+              ============================== */}
+
               <Link
                 to="/auth/signup"
-                className="text-sm font-medium text-[var(--muted)] tracking-wide py-3 text-center lg:text-start whitespace-nowrap "
+                className="text-sm font-medium
+                  text-[var(--muted)]
+                  tracking-wide
+                  py-3
+                  text-center
+                  lg:text-start
+                  whitespace-nowrap"
               >
                 Don't Have any Account?
                 <span className="px-1 text-[var(--primary)] text-md font-semibold underline tracking-wider">

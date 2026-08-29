@@ -17,6 +17,8 @@ import RealEstateSearchModule from "../pages/RealEstateSearchModule";
 import SignInForm from "../pages/SignInForm";
 import SignUpForm from "../pages/SignUpForm";
 import WorkingProcess from "../pages/WorkingProcess";
+import { GuestRoute } from "./GuestRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 // need to update or replace this page  with new
 // import PropertyDetails from "../pages/PropertyDetails";
@@ -39,10 +41,10 @@ export const routesConfig: RouteObject[] = [
         path: "search",
         element: createElement(RealEstateSearchModule),
       },
-      {
-        path: "list-property",
-        element: createElement(LandLord),
-      },
+      // {
+      //   path: "list-property",
+      //   element: createElement(LandLord),
+      // },
       // Updated Property Details Page
       {
         path: "property/:id",
@@ -68,30 +70,42 @@ export const routesConfig: RouteObject[] = [
         element: createElement(HelpingDetails),
       },
 
-      // Authentication Pages
-      // {
-      //   path: "signup",
-      //   element: createElement(SignUpForm),
-      // },
+      // ----------------------------------------------
+      // Protected
+      // ----------------------------------------------
 
-      //last use page route details
-      // {
-      //   path: "property/:id",
-      //   element: createElement(PropertyDetails),
-      // },
+      {
+        element: createElement(ProtectedRoute),
+
+        children: [
+          {
+            path: "list-property",
+            element: createElement(LandLord),
+          },
+        ],
+      },
     ],
   },
+
+  // ==================================================
+  // AUTH / GUEST ROUTES
+  // ==================================================
   {
     path: "/auth",
-    element: createElement(AuthLayout),
+    element: createElement(GuestRoute),
     children: [
       {
-        path: "signin",
-        element: createElement(SignInForm),
-      },
-      {
-        path: "signup",
-        element: createElement(SignUpForm),
+        element: createElement(AuthLayout),
+        children: [
+          {
+            path: "signin",
+            element: createElement(SignInForm),
+          },
+          {
+            path: "signup",
+            element: createElement(SignUpForm),
+          },
+        ],
       },
     ],
   },

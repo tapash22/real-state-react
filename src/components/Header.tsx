@@ -7,10 +7,14 @@ import { useTranslation } from "react-i18next";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { RiGlobalLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../hooks/useTheme";
 import { Dropdown } from "./dropdown/Dropdown";
 import { ThemeToggle } from "./toggle/ThemeToggle";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { logoutUser } from "../api/auth";
+import { currentUserQueryKey } from "../hooks/useCurrentUser";
 
 type HeaderProps = {
   // add props later if needed
@@ -20,6 +24,9 @@ export default function Header(_props: HeaderProps) {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
 
   // Language mapping configuration
   const currentLangLabel = i18n.language?.startsWith("bn")
@@ -31,6 +38,20 @@ export default function Header(_props: HeaderProps) {
     const langCode = selectedLang === "বাংলা " ? "bn" : "en";
     i18n.changeLanguage(langCode);
   };
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutUser,
+
+    onSuccess: () => {
+      queryClient.removeQueries({
+        queryKey: currentUserQueryKey,
+      });
+
+      navigate("/auth/signin", {
+        replace: true,
+      });
+    },
+  });
 
   return (
     <>
@@ -146,6 +167,20 @@ export default function Header(_props: HeaderProps) {
             {t("nav.signup")}
           </Link>
 
+          <button
+            type="button"
+            onClick={() => logoutMutation.mutate()}
+            disabled={logoutMutation.isPending}
+            className="px-4 py-2 rounded-md
+            bg-red-600
+            hover:bg-red-700
+            text-white
+            disabled:opacity-50
+            disabled:cursor-not-allowed"
+          >
+            {logoutMutation.isPending ? "Logging out..." : "Logout"}
+          </button>
+
           {/* Landlord CTA Button */}
           <Link
             to="/list-property"
@@ -258,6 +293,21 @@ export default function Header(_props: HeaderProps) {
               >
                 <LuLogIn className="w-4 h-4" /> Sign in
               </Link>
+            </div>
+            <div className="w-full h-auto p-2 flex justify-center items-center">
+              <button
+                type="button"
+                onClick={() => logoutMutation.mutate()}
+                disabled={logoutMutation.isPending}
+                className="px-4 py-2 rounded-md
+                bg-red-600
+                hover:bg-red-700
+                text-white
+                disabled:opacity-50
+                disabled:cursor-not-allowed"
+              >
+                {logoutMutation.isPending ? "Logging out..." : "Logout"}
+              </button>
             </div>
 
             {/* Navigation Drawer Menu List */}

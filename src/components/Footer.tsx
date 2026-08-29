@@ -1,10 +1,21 @@
 import { IconType } from "react-icons";
 import ep from "../assets/ep.jpg";
 import { socialMediaLinkList } from "../data";
+import { useAppData } from "../hooks/useAppData";
 import { useTheme } from "../hooks/useTheme";
 
 export function Footer() {
   const { theme } = useTheme();
+
+  const { data, isPending, isError } = useAppData();
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Something went wrong.</div>;
+  }
 
   return (
     <footer
@@ -33,7 +44,7 @@ export function Footer() {
             <div className="mt-6 flex gap-4 text-white/60">
               {socialMediaLinkList && socialMediaLinkList?.length > 0 && (
                 <ul className={`flex w-auto h-full p-0 md:p-2 space-x-1`}>
-                  {socialMediaLinkList.map((item, index) => {
+                  {data?.socialMediaLinkList.map((item, index) => {
                     //declear icon type
                     const Icon: IconType = item.icon;
                     return (

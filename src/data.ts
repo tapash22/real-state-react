@@ -18,6 +18,18 @@ export interface SocialMediaItem {
   icon: IconType;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export const demoUser: User = {
+  id: 1,
+  name: "Demo User",
+  email: "demo@example.com",
+};
+
 export type SocialMediaItems = SocialMediaItem[];
 
 export interface RentStepData {
