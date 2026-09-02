@@ -4,6 +4,7 @@ import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiShieldStarFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 
+import { FiDollarSign } from "react-icons/fi";
 import { useAppData } from "../../hooks/useAppData";
 import {
   CalendarInputPicker,
@@ -105,7 +106,8 @@ export default function PropertyDetails() {
             </p>
 
             <div className="text-2xl font-bold text-[var(--text)] ">
-              $ {Number(houseData.price).toLocaleString()}
+              <FiDollarSign className="inline " />
+              {Number(houseData.price).toLocaleString()}
             </div>
 
             <div
@@ -215,8 +217,9 @@ export default function PropertyDetails() {
               <p className="text-sm font-medium tracking-wider text-[var(--muted)]">
                 From
               </p>
-              <h1 className=" text-3xl font-semibold tracking-wider text-[var(--text)] space-x-1">
-                $78
+              <h1 className=" text-3xl font-semibold tracking-wider text-[var(--text)] space-x-1 flex items-center gap-1">
+                <FiDollarSign size={16} />
+                78
                 <span className="text-sm font-light tracking-wider text-[var(--muted)]">
                   /month
                 </span>

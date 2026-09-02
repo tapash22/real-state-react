@@ -8,6 +8,8 @@ import {
   TbX,
 } from "react-icons/tb";
 import { RoomUnit } from "../../data";
+import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
+import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
 
 interface RoomUnitDetailDrawerProps {
   unit: RoomUnit | null;
@@ -55,7 +57,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
       />
 
       {/* Right-side Modal Container */}
-      <aside className="relative z-10 w-full max-w-xl bg-white shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out">
+      <aside className="relative z-10 w-full max-w-xl bg-white shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out scrollbar-thin">
         {/* Fixed Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-200 shrink-0">
           <h2 className="text-xl font-bold text-[#0c2340] tracking-tight truncate pr-4">
@@ -200,6 +202,24 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                 Our student community offers stylishly designed apartments for
                 those who thrive on the energy of the city.
               </p>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Doloribus iste reiciendis quos dignissimos architecto maxime,
+                perspiciatis numquam reprehenderit ipsum voluptatibus rem autem
+                neque tempora at vel officia? Labore, facere ullam? lorem ipsum
+                dolor sit amet consectetur adipisicing elit. Doloribus iste
+                reiciendis quos dignissimos architecto maxime, perspiciatis
+                numquam reprehenderit ipsum voluptatibus rem autem neque tempora
+                at vel officia? Labore, facere ullam? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Doloribus iste reiciendis quos
+                dignissimos architecto maxime, perspiciatis numquam
+                reprehenderit ipsum voluptatibus rem autem neque tempora at vel
+                officia? Labore, facere ullam? Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Doloribus iste reiciendis quos
+                dignissimos architecto maxime, perspiciatis numquam
+                reprehenderit ipsum voluptatibus rem autem neque tempora at vel
+                officia? Labore, facere ullam?
+              </p>
             </div>
           )}
 
@@ -216,6 +236,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                   </>
                 )}
               </ul>
+              <PropertyFeaturesCard />
             </div>
           )}
 
@@ -229,6 +250,14 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                 <strong>Utilities:</strong>{" "}
                 {unit.paymentDetails?.utilities || "Included in base price"}
               </p>
+              <PaymentBreakdownCard
+                platformName="HousingAnywhere"
+                tenantProtectionFee="Select dates"
+                landlordName="Ivetta"
+                landlordAvatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
+                securityDeposit={900}
+                onSelectDates={() => alert("Open date picker modal")}
+              />
             </div>
           )}
         </div>

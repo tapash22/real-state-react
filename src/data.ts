@@ -1235,6 +1235,13 @@ export interface ResidenceData {
   roomUnits?: RoomUnit[];
 }
 
+export const SORT_OPTIONS = [
+  "Recommended",
+  "Lowest price",
+  "Highest price",
+  "Availability",
+];
+
 export const residenceData: ResidenceData = {
   title: "Micampus Wynwood Sancha",
 
@@ -1305,7 +1312,7 @@ export const residenceData: ResidenceData = {
         "Do laundry quickly and conveniently with modern washers and dryers.",
 
       image:
-        "https://images.unsplash.com/photo-1545173168-9f1947e8015e?w=400&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=60",
     },
   ],
 
@@ -1352,6 +1359,7 @@ export const residenceData: ResidenceData = {
         utilities: "Included in base price",
       },
     },
+
     {
       id: "unit-402",
       title: "Standard Studio - Floor 4",
@@ -1379,6 +1387,108 @@ export const residenceData: ResidenceData = {
       ],
       paymentDetails: {
         deposit: 1250,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-305",
+      title: "Premium Studio with City View - Floor 3",
+      pricePerMonth: 1395,
+      images: [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–12 months",
+      sizeSqm: 24,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 2,
+      availableFrom: "20 Sep 2026",
+      descriptionHeader: "Modern City Living",
+      descriptionText:
+        "A bright premium studio designed for comfortable long-term living. The apartment combines modern furniture, smart storage, and a functional private kitchen in a compact layout.",
+      totalPhotosCount: 10,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "Heating, water & electricity",
+        "Fully equipped private kitchen",
+        "Modern workspace",
+        "Access to shared community areas",
+      ],
+      paymentDetails: {
+        deposit: 1395,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-208",
+      title: "Compact Studio - Floor 2",
+      pricePerMonth: 1099,
+      images: [
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "3–6 months",
+      sizeSqm: 18,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 1,
+      availableFrom: "5 Oct 2026",
+      descriptionHeader: "Smart Compact Living",
+      descriptionText:
+        "An affordable and efficient studio for students and young professionals. The space includes everything needed for comfortable everyday living while keeping monthly costs low.",
+      totalPhotosCount: 7,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "Heating and water",
+        "Private kitchenette",
+        "Furnished living and sleeping area",
+      ],
+      paymentDetails: {
+        deposit: 1099,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-715",
+      title: "Deluxe Studio with Balcony - Floor 7",
+      pricePerMonth: 1699,
+      images: [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–12 months",
+      sizeSqm: 31,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: true,
+      maxCapacity: 2,
+      availableFrom: "1 Nov 2026",
+      descriptionHeader: "Premium Comfort & City Views",
+      descriptionText:
+        "Our deluxe studio provides additional living space, premium furnishings, and a private balcony overlooking the city. Perfect for residents looking for extra comfort and a more spacious home.",
+      totalPhotosCount: 14,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Fully equipped private kitchen",
+        "Private balcony",
+        "Premium furniture",
+        "Dedicated workspace",
+        "Access to community amenities",
+      ],
+      paymentDetails: {
+        deposit: 1699,
         utilities: "Included in base price",
       },
     },
