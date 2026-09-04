@@ -3,8 +3,8 @@ import L from "leaflet";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { FaLocationDot } from "react-icons/fa6";
+import { FiDollarSign } from "react-icons/fi";
 import { Marker, Popup } from "react-leaflet";
-
 import type { MapItem } from "../../data";
 
 interface MapMarkerProps {
@@ -27,11 +27,31 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
     const icon = useMemo(() => {
       const html = renderToStaticMarkup(
         <div
-          className={`property-marker ${
-            isHighlighted ? "property-marker--active" : ""
-          }`}
+          className={`
+            property-marker
+            flex
+            h-[42px]
+            w-[42px]
+            items-center
+            justify-center
+            cursor-pointer
+            transition-transform
+            duration-200
+            ease-out
+            ${isHighlighted ? "scale-[1.15]" : "scale-100"}
+        `}
         >
-          <FaLocationDot size={30} />
+          <FaLocationDot
+            size={30}
+            className={`
+              transition-all duration-200 ease-out
+              ${
+                isHighlighted
+                  ? "scale-[1.2] text-[var(--primary)] drop-shadow-md"
+                  : "text-[var(--muted)]"
+              }
+            `}
+          />
         </div>,
       );
 
@@ -202,7 +222,15 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
                 />
 
                 <div className="property-card-price">
-                  {property.currency}
+                  {property.currency === "$" ? (
+                    <FiDollarSign
+                      size={20}
+                      className="text-[var(--muted)] font-bold"
+                    />
+                  ) : (
+                    "€"
+                  )}
+                  <p></p>
                   {property.price}
                 </div>
               </div>
