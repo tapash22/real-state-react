@@ -52,7 +52,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
 
   /*  Render  */
   return (
-    <div style={styles.rightPanel} className="rounded-lg ">
+    <div style={styles.rightPanel} className="rounded-lg space-y-5 ">
       <MapContainer
         ref={setMap}
         className="z-0 rounded-lg"
