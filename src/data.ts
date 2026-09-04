@@ -1184,6 +1184,186 @@ export const articleData: ArticleData = {
   ],
 };
 
+// map properties type declared and  the new format data with array of objects added
+
+export interface MapBounds {
+  north: number;
+  east: number;
+  south: number;
+  west: number;
+}
+
+export type MapItem = {
+  id: number;
+  name: string;
+  title: string;
+  location: string;
+
+  lat: number;
+  lng: number;
+
+  price: number;
+  currency: string;
+
+  image: string;
+
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  areaUnit: string;
+
+  propertyType: string;
+};
+
+export const cityExploreProperties: MapItem[] = [
+  {
+    id: 1,
+    name: "Dhaka",
+    title: "Modern Apartment in Gulshan",
+    location: "Gulshan 2, Dhaka",
+    lat: 23.8103,
+    lng: 90.4125,
+
+    price: 1550,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1200,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 2,
+    name: "Chattogram",
+    title: "Luxury Sea View Residence",
+    location: "Panchlaish, Chattogram",
+    lat: 22.3569,
+    lng: 91.7832,
+
+    price: 1250,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1450,
+    areaUnit: "sq ft",
+
+    propertyType: "Condo",
+  },
+
+  {
+    id: 3,
+    name: "Sylhet",
+    title: "Peaceful Family Home",
+    location: "Zindabazar, Sylhet",
+    lat: 24.8949,
+    lng: 91.8687,
+
+    price: 980,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 1800,
+    areaUnit: "sq ft",
+
+    propertyType: "House",
+  },
+
+  {
+    id: 4,
+    name: "Khulna",
+    title: "Contemporary City Apartment",
+    location: "Sonadanga, Khulna",
+    lat: 22.8456,
+    lng: 89.5403,
+
+    price: 850,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1050,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 5,
+    name: "Rajshahi",
+    title: "Spacious Garden Apartment",
+    location: "Boalia, Rajshahi",
+    lat: 24.3745,
+    lng: 88.6042,
+
+    price: 720,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 980,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 6,
+    name: "Barishal",
+    title: "Elegant Riverside Residence",
+    location: "Nathullabad, Barishal",
+    lat: 22.701,
+    lng: 90.3535,
+
+    price: 690,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1350,
+    areaUnit: "sq ft",
+
+    propertyType: "House",
+  },
+
+  {
+    id: 7,
+    name: "Rangpur",
+    title: "Modern Minimalist Home",
+    location: "Jahaj Company Mor, Rangpur",
+    lat: 25.7439,
+    lng: 89.2752,
+
+    price: 620,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1100,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+];
+
 // propertyDetailsData
 
 export interface Promotion {

@@ -1,7 +1,11 @@
+import gsap from "gsap";
 import L from "leaflet";
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { FaLocationDot } from "react-icons/fa6";
 import { Marker, Popup } from "react-leaflet";
-import { MapItem } from "../../types/types";
+
+import type { MapItem } from "../../data";
 
 interface MapMarkerProps {
   property: MapItem;
@@ -11,99 +15,216 @@ interface MapMarkerProps {
 
 export const MapMarker: React.FC<MapMarkerProps> = React.memo(
   ({ property, isHighlighted, onHover }) => {
-    const customIcon = useMemo(() => {
+    const markerRef = useRef<L.Marker | null>(null);
+
+    const animationRef = useRef<gsap.core.Timeline | null>(null);
+
+    const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    /*
+     * Marker icon
+     */
+    const icon = useMemo(() => {
+      const html = renderToStaticMarkup(
+        <div
+          className={`property-marker ${
+            isHighlighted ? "property-marker--active" : ""
+          }`}
+        >
+          <FaLocationDot size={30} />
+        </div>,
+      );
+
       return L.divIcon({
-        className: "custom-price-marker",
-        html: `
-        <div style="
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-
-          background-color: ${isHighlighted ? "#ff5a5f" : "white"}; 
-          color: ${isHighlighted ? "white" : "#222"}; 
-          border: 1px solid ${isHighlighted ? "#ff5a5f" : "#dddddd"}; 
-          
-          padding: 6px 12px;
-          border-radius: 999px;
-
-          font-weight: 600;
-          font-size: 12px;
-
-          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-          white-space: nowrap;
-
-          transform: ${isHighlighted ? "scale(1.08)" : "scale(1)"};
-          transition: transform 0.15s ease;
-        ">
-          ${property.price ? `€${property.price}` : property.name}
-        </div>
-      `,
-        // ✅ IMPORTANT: let it auto size
-        iconSize: undefined,
-        iconAnchor: undefined,
+        html,
+        className: "property-marker-wrapper",
+        iconSize: [42, 42],
+        iconAnchor: [21, 42],
       });
-    }, [property, isHighlighted]);
+    }, [isHighlighted]);
+
+    /*
+     * Clear pending hover timeout.
+     */
+    const clearHoverTimeout = useCallback(() => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    }, []);
+
+    /*
+     * Mouse enters marker.
+     *
+     * Activate immediately.
+     */
+    const handleMouseOver = useCallback(() => {
+      clearHoverTimeout();
+
+      onHover(property.id);
+    }, [clearHoverTimeout, onHover, property.id]);
+
+    /*
+     * Mouse leaves marker.
+     *
+     * Don't immediately close the popup.
+     *
+     * Leaflet can fire mouseout for tiny internal movements,
+     * which causes the popup to bounce.
+     */
+    const handleMouseOut = useCallback(
+      (event: L.LeafletMouseEvent) => {
+        clearHoverTimeout();
+
+        const markerElement = markerRef.current?.getElement();
+
+        if (!markerElement) return;
+
+        const relatedTarget = event.originalEvent.relatedTarget;
+
+        /*
+         * If the mouse is still somewhere inside the marker,
+         * don't remove hover.
+         */
+        if (
+          relatedTarget instanceof Node &&
+          markerElement.contains(relatedTarget)
+        ) {
+          return;
+        }
+
+        /*
+         * Small delay prevents:
+         *
+         * marker
+         * ↓
+         * tiny gap
+         * ↓
+         * marker
+         *
+         * from causing:
+         *
+         * open → close → open
+         */
+        hoverTimeoutRef.current = setTimeout(() => {
+          onHover(null);
+          hoverTimeoutRef.current = null;
+        }, 120);
+      },
+      [clearHoverTimeout, onHover],
+    );
+
+    /*
+     * Open / close popup from React hover state.
+     */
+    useEffect(() => {
+      const marker = markerRef.current;
+
+      if (!marker) return;
+
+      if (isHighlighted) {
+        marker.openPopup();
+      } else {
+        marker.closePopup();
+      }
+    }, [isHighlighted]);
+
+    /*
+     * Popup animation.
+     */
+    const animatePopup = useCallback(() => {
+      requestAnimationFrame(() => {
+        const popup = document.querySelector(
+          `.property-popup [data-property-id="${property.id}"]`,
+        );
+
+        if (!(popup instanceof HTMLElement)) return;
+
+        const card = popup.querySelector(".property-card");
+
+        if (!(card instanceof HTMLDivElement)) return;
+
+        animationRef.current?.kill();
+
+        gsap.set(card, {
+          autoAlpha: 0,
+          scale: 0.9,
+          y: 10,
+          transformOrigin: "bottom center",
+        });
+
+        animationRef.current = gsap.timeline().to(card, {
+          autoAlpha: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.25,
+          ease: "back.out(1.4)",
+        });
+      });
+    }, [property.id]);
+
+    /*
+     * Cleanup.
+     */
+    useEffect(() => {
+      return () => {
+        clearHoverTimeout();
+        animationRef.current?.kill();
+      };
+    }, [clearHoverTimeout]);
 
     return (
       <Marker
+        ref={markerRef}
         position={[property.lat, property.lng]}
-        icon={customIcon}
+        icon={icon}
         eventHandlers={{
-          mouseover: () => onHover(property.id),
-          mouseout: () => onHover(null),
+          mouseover: handleMouseOver,
+          mouseout: handleMouseOut,
         }}
       >
-        <Popup closeButton={false}>
-          <div
-            style={{
-              fontFamily: "sans-serif",
-              textAlign: "center",
-              padding: "6px 2px",
-            }}
-          >
-            {/* IMAGE */}
-            {property.image && (
-              <img
-                src={property.image}
-                alt={property.title || property.name}
-                style={{
-                  width: "100%",
-                  height: "90px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                  display: "block",
-                }}
-              />
-            )}
+        <Popup
+          className="property-popup"
+          closeButton={false}
+          closeOnClick={false}
+          autoClose={false}
+          eventHandlers={{
+            add: animatePopup,
+          }}
+        >
+          <div className="property-popup-inner" data-property-id={property.id}>
+            <div className="property-card">
+              <div className="property-card-image-wrapper">
+                <img
+                  src={property.image}
+                  alt={property.title}
+                  className="property-card-image"
+                />
 
-            {/* TITLE */}
-            <div
-              style={{
-                marginTop: "8px",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: "#222",
-                textAlign: "center",
-              }}
-            >
-              {property.title || property.name}
-            </div>
-
-            {/* PRICE */}
-            {property.price && (
-              <div
-                style={{
-                  marginTop: "4px",
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  color: "#ff5a5f",
-                  textAlign: "center",
-                }}
-              >
-                €{property.price}/mo
+                <div className="property-card-price">
+                  {property.currency}
+                  {property.price}
+                </div>
               </div>
-            )}
+
+              <div className="property-card-content">
+                <h3 className="property-card-title">{property.title}</h3>
+
+                <div className="property-card-location">
+                  {property.location}
+                </div>
+
+                <div className="property-card-details">
+                  <span>{property.bedrooms} Beds</span>
+
+                  <span>{property.bathrooms} Baths</span>
+
+                  <span>
+                    {property.area} {property.areaUnit}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </Popup>
       </Marker>
