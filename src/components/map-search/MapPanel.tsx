@@ -1,106 +1,64 @@
 import L from "leaflet";
-import React, { useEffect, useMemo, useState } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import { MapBounds, MapItem } from "../../types/types";
-
+import React, { useEffect, useState } from "react";
+import { MapContainer, TileLayer } from "react-leaflet";
+import { MapBounds, MapItem } from "../../data";
+import { MapBoundsHandler } from "./MapBoundsHandler";
 import { MapMarker } from "./MapMarker";
 import { styles } from "./styles";
-import { debounce } from "./utils";
-
 import { ViewportRecenterController } from "./ViewportRecenterController";
+
+/*  Component Props  */
 
 interface MapPanelProps {
   properties: MapItem[];
   center: [number, number];
   initialCenter: [number, number];
   hoveredId: number | null;
-  setHoveredId: (id: number | null) => void;
-  onBoundsChange: (bounds: MapBounds) => void;
-
-  interactive?: boolean;
-}
-
-interface MapBoundsHandlerProps {
+  onHover: (id: number | null) => void;
   onBoundsChange: (bounds: MapBounds) => void;
   interactive?: boolean;
-}
-
-const MapBoundsHandler: React.FC<MapBoundsHandlerProps> = ({
-  onBoundsChange,
-  interactive = true,
-}) => {
-  const debouncedChange = useMemo(
-    () =>
-      debounce((bounds: L.LatLngBounds | null) => {
-        if (!bounds) return;
-
-        onBoundsChange({
-          north: bounds.getNorthEast().lat,
-          east: bounds.getNorthEast().lng,
-          south: bounds.getSouthWest().lat,
-          west: bounds.getSouthWest().lng,
-        });
-      }, 200),
-    [onBoundsChange],
-  );
-
-  const map = useMapEvents(
-    interactive
-      ? {
-          zoomend: () => debouncedChange(map.getBounds()),
-          dragend: () => debouncedChange(map.getBounds()),
-        }
-      : {},
-  );
-
-  return null;
-};
-
-// 2. Add 'center' prop right here into your component interface contract
-interface MapPanelProps {
-  properties: MapItem[];
-  center: [number, number]; //  Added this line
-  initialCenter: [number, number];
-  hoveredId: number | null;
-  setHoveredId: (id: number | null) => void;
-  onBoundsChange: (bounds: MapBounds) => void;
 }
 
 export const MapPanel: React.FC<MapPanelProps> = ({
   properties,
-  center, //  3. Destructure the center property value here
+  center,
   initialCenter,
   hoveredId,
-  setHoveredId,
+  onHover,
   onBoundsChange,
   interactive = true,
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
-  // Safely trigger initial boundaries calculation once the map instance attaches to state
+  /*  Initial Bounds     */
+
   useEffect(() => {
     if (!map) return;
-
+    /**
+     * Leaflet can calculate incorrect dimensions if the
+     * container was initially hidden or its size changed.
+     */
     map.invalidateSize();
 
     const bounds = map.getBounds();
 
     onBoundsChange({
-      north: bounds.getNorthEast().lat,
-      east: bounds.getNorthEast().lng,
-      south: bounds.getSouthWest().lat,
-      west: bounds.getSouthWest().lng,
+      north: bounds.getNorth(),
+      east: bounds.getEast(),
+      south: bounds.getSouth(),
+      west: bounds.getWest(),
     });
   }, [map, onBoundsChange]);
 
+  /*  Render  */
   return (
-    <div style={styles.rightPanel} className="rounded-lg">
+    <div style={styles.rightPanel} className="rounded-lg ">
       <MapContainer
+        ref={setMap}
         className="z-0 rounded-lg"
         center={initialCenter}
         zoom={12}
         style={styles.mapElement}
-        ref={setMap}
         dragging={interactive}
         scrollWheelZoom={interactive}
         doubleClickZoom={interactive}
@@ -109,22 +67,29 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         keyboard={interactive}
         zoomControl={interactive}
       >
+        {/*  Base Map  */}
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/* 🗺️ 4. Injected your brand-new external recenter helper file component */}
+        {/*  Programmatic Recenter  */}
+
         <ViewportRecenterController center={center} />
+
+        {/*  Bounds Handler  */}
 
         <MapBoundsHandler onBoundsChange={onBoundsChange} />
 
-        {properties.map((prop) => (
+        {/*  Property Markers  */}
+
+        {properties.map((property) => (
           <MapMarker
-            key={prop.id}
-            property={prop}
-            isHighlighted={hoveredId === prop.id}
-            onHover={setHoveredId}
+            key={property.id}
+            property={property}
+            isHighlighted={hoveredId === property.id}
+            onHover={onHover}
           />
         ))}
       </MapContainer>

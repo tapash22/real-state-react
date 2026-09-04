@@ -258,6 +258,34 @@
 ========================= */
 
 @layer utilities {
+    .property-popup {
+        pointer-events: none;
+    }
+
+    .property-marker-wrapper {
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .property-marker {
+        width: 42px;
+        height: 42px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            color 0.2s ease,
+            filter 0.2s ease;
+    }
+
+    .property-marker--active {
+        transform: scale(1.15);
+    }
 
     .scrollbar-thin {
         overflow: auto;
