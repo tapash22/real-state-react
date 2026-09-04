@@ -1,99 +1,176 @@
-import { useCallback, useState } from "react";
-import { MapBounds, MapItem } from "../../types/types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { MapBounds, MapItem, cityExploreProperties } from "../../data";
 import { SectionHeader } from "../header-section/SectionHeader";
 import { MapPanel } from "./MapPanel";
 
 const bangladeshCenter: [number, number] = [23.685, 90.3563];
 
 export const MapPage = () => {
+  /*  State  */
+
   const [, setBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
-  // 7 district sample data (Bangladesh landmarks)
-  const properties: MapItem[] = [
-    {
-      id: 1,
-      name: "Dhaka",
-      lat: 23.8103,
-      lng: 90.4125,
-    },
-    {
-      id: 2,
-      name: "Chattogram",
-      lat: 22.3569,
-      lng: 91.7832,
-    },
-    {
-      id: 3,
-      name: "Sylhet",
-      lat: 24.8949,
-      lng: 91.8687,
-    },
-    {
-      id: 4,
-      name: "Khulna",
-      lat: 22.8456,
-      lng: 89.5403,
-    },
-    {
-      id: 5,
-      name: "Rajshahi",
-      lat: 24.3745,
-      lng: 88.6042,
-    },
-    {
-      id: 6,
-      name: "Barishal",
-      lat: 22.701,
-      lng: 90.3535,
-    },
-    {
-      id: 7,
-      name: "Rangpur",
-      lat: 25.7439,
-      lng: 89.2752,
-    },
-  ];
+  /**
+   * Keeps the hover-clear timeout in the parent.
+   *
+   * This prevents:
+   *
+   * Marker A → null → Marker B
+   *
+   * when moving quickly between markers.
+   */
+
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /*  Properties  */
+
+  const properties: MapItem[] = cityExploreProperties.slice(0, 7);
+
+  /*  Bounds Handler */
 
   const handleBoundsChange = useCallback((b: MapBounds) => {
     setBounds(b);
   }, []);
 
+  /*  Hover Handler */
+
+  const handleHover = useCallback((id: number | null) => {
+    /**
+     * Always cancel the previous pending clear.
+     */
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+
+    /**
+     * When entering a marker, activate it immediately.
+     */
+    if (id !== null) {
+      setHoveredId(id);
+      return;
+    }
+
+    /**
+     * When leaving a marker, wait a tiny amount of time.
+     *
+     * If another marker is entered within this period,
+     * the timeout is cancelled and the new marker becomes
+     * active immediately.
+     */
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredId(null);
+      hoverTimeoutRef.current = null;
+    }, 100);
+  }, []);
+
+  /*  Cleanup  */
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="w-full px-8 lg:px-16  transition-colors duration-300 flex flex-col justify-center items-center">
-      {/* HEADER */}
+    <section
+      className="
+        flex
+        w-full
+        flex-col
+        items-center
+        justify-center
+        px-8
+        transition-colors
+        duration-300
+        lg:px-16
+      "
+    >
+      {/*  HEADER  */}
 
       <SectionHeader
         tagTitle="Explore cities"
         headerTitle="Your next base could be here"
       />
 
-      <div className="flex justify-center items-center p-0 lg:p-4 w-full">
-        <div className="grid grid-cols-3 lg:grid-cols-7 gap-1 lg:gap-4 w-full lg:w-3/4 xl:w-1/2">
-          {properties.map((item) => (
-            <p
-              key={item.id}
-              onMouseEnter={() => setHoveredId(item.id)}
-              onMouseLeave={() => setHoveredId(null)}
-              className={`flex justify-center items-center  rounded-xs cursor-pointer transition font-semibold text-[var(--text)] text-sm md:text-base text-center whitespace-nowrap w-full ${
-                hoveredId === item.id
-                  ? "border-b-2 leading-2 border-violet-500 opacity-100"
-                  : "border-b-2 leading-2 border-transparent"
-              }`}
-            >
-              {item.name}
-            </p>
-          ))}
+      {/*  CITY NAVIGATION  */}
+
+      <div className="flex w-full items-center justify-center p-0 lg:p-4">
+        <div
+          className="
+            grid
+            w-full
+            grid-cols-3
+            gap-1
+            lg:w-3/4
+            lg:grid-cols-7
+            lg:gap-4
+            xl:w-1/2
+          "
+        >
+          {properties.map((item) => {
+            const isActive = hoveredId === item.id;
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onMouseEnter={() => handleHover(item.id)}
+                onMouseLeave={() => handleHover(null)}
+                className={`
+                  flex
+                  w-full
+                  cursor-pointer
+                  items-center
+                  justify-center
+                  whitespace-nowrap
+                  rounded-xs
+                  border-b-2
+                  text-center
+                  text-sm
+                  font-semibold
+                  text-[var(--text)]
+                  transition-all
+                  duration-200
+                  md:text-base
+                  ${
+                    isActive
+                      ? "border-violet-500 opacity-100"
+                      : "border-transparent"
+                  }
+                `}
+              >
+                {item.name}
+              </button>
+            );
+          })}
         </div>
       </div>
-      {/* 🗺️ MAP CONTAINER (70vh) */}
-      <div className="w-full h-[70vh] border-2 rounded-xl">
+
+      {/*  MAP  */}
+
+      <div
+        className="
+          mt-4
+          h-[70vh]
+          w-full
+          overflow-hidden
+          rounded-xl
+          border
+          border-[var(--border)]
+          bg-[var(--card)]
+          shadow-[var(--card-shadow)]
+        "
+      >
         <MapPanel
           properties={properties}
           center={bangladeshCenter}
           initialCenter={bangladeshCenter}
           hoveredId={hoveredId}
-          setHoveredId={setHoveredId}
+          onHover={handleHover}
           onBoundsChange={handleBoundsChange}
           interactive={false}
         />

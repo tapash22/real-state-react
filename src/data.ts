@@ -18,7 +18,29 @@ export interface SocialMediaItem {
   icon: IconType;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export const demoUser: User = {
+  id: 1,
+  name: "Demo User",
+  email: "demo@example.com",
+};
+
 export type SocialMediaItems = SocialMediaItem[];
+
+export const staticPriceTiers = [
+  "All Prices",
+  "100-300",
+  "300-600",
+  "600-900",
+  "900-1500",
+  "1500-3000",
+  "3000+",
+];
 
 export interface RentStepData {
   id: number;
@@ -1161,3 +1183,512 @@ export const articleData: ArticleData = {
     },
   ],
 };
+
+// map properties type declared and  the new format data with array of objects added
+
+export interface MapBounds {
+  north: number;
+  east: number;
+  south: number;
+  west: number;
+}
+
+export type MapItem = {
+  id: number;
+  name: string;
+  title: string;
+  location: string;
+
+  lat: number;
+  lng: number;
+
+  price: number;
+  currency: string;
+
+  image: string;
+
+  bedrooms: number;
+  bathrooms: number;
+  area: number;
+  areaUnit: string;
+
+  propertyType: string;
+};
+
+export const cityExploreProperties: MapItem[] = [
+  {
+    id: 1,
+    name: "Dhaka",
+    title: "Modern Apartment in Gulshan",
+    location: "Gulshan 2, Dhaka",
+    lat: 23.8103,
+    lng: 90.4125,
+
+    price: 1550,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1200,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 2,
+    name: "Chattogram",
+    title: "Luxury Sea View Residence",
+    location: "Panchlaish, Chattogram",
+    lat: 22.3569,
+    lng: 91.7832,
+
+    price: 1250,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1450,
+    areaUnit: "sq ft",
+
+    propertyType: "Condo",
+  },
+
+  {
+    id: 3,
+    name: "Sylhet",
+    title: "Peaceful Family Home",
+    location: "Zindabazar, Sylhet",
+    lat: 24.8949,
+    lng: 91.8687,
+
+    price: 980,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 3,
+    area: 1800,
+    areaUnit: "sq ft",
+
+    propertyType: "House",
+  },
+
+  {
+    id: 4,
+    name: "Khulna",
+    title: "Contemporary City Apartment",
+    location: "Sonadanga, Khulna",
+    lat: 22.8456,
+    lng: 89.5403,
+
+    price: 850,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1050,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 5,
+    name: "Rajshahi",
+    title: "Spacious Garden Apartment",
+    location: "Boalia, Rajshahi",
+    lat: 24.3745,
+    lng: 88.6042,
+
+    price: 720,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 1,
+    area: 980,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+
+  {
+    id: 6,
+    name: "Barishal",
+    title: "Elegant Riverside Residence",
+    location: "Nathullabad, Barishal",
+    lat: 22.701,
+    lng: 90.3535,
+
+    price: 690,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 3,
+    bathrooms: 2,
+    area: 1350,
+    areaUnit: "sq ft",
+
+    propertyType: "House",
+  },
+
+  {
+    id: 7,
+    name: "Rangpur",
+    title: "Modern Minimalist Home",
+    location: "Jahaj Company Mor, Rangpur",
+    lat: 25.7439,
+    lng: 89.2752,
+
+    price: 620,
+    currency: "€",
+    image:
+      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80",
+
+    bedrooms: 2,
+    bathrooms: 2,
+    area: 1100,
+    areaUnit: "sq ft",
+
+    propertyType: "Apartment",
+  },
+];
+
+// propertyDetailsData
+
+export interface Promotion {
+  title: string;
+  description?: string;
+  bulletPoints: string[];
+}
+
+export interface Highlight {
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface Services {
+  general: string[];
+}
+export interface RoomUnit {
+  id: string | number;
+  title: string;
+  pricePerMonth: number;
+  images: string[];
+  stayDuration?: string;
+  sizeSqm: number;
+  hasPrivateToilet?: boolean;
+  hasPrivateBathroom?: boolean;
+  hasPrivateKitchen?: boolean;
+  hasPrivateBalcony?: boolean;
+  maxCapacity: number;
+  availableFrom: string;
+  // Extended fields for the right-side detail drawer:
+  descriptionHeader?: string;
+  descriptionText?: string;
+  totalPhotosCount?: number;
+  whatsIncluded?: string[];
+  paymentDetails?: {
+    deposit?: number;
+    utilities?: string;
+  };
+}
+
+export interface ResidenceData {
+  title: string;
+  tenantCount: number;
+  cleaningInfo: string;
+  promotions: Promotion[];
+  highlights: Highlight[];
+  services: Services;
+  roomUnits?: RoomUnit[];
+}
+
+export const SORT_OPTIONS = [
+  "Recommended",
+  "Lowest price",
+  "Highest price",
+  "Availability",
+];
+
+export const residenceData: ResidenceData = {
+  title: "Micampus Wynwood Sancha",
+
+  tenantCount: 36,
+
+  cleaningInfo:
+    "Cleaning room, change of sheets and towel included in the price. It is fortnightly",
+
+  promotions: [
+    {
+      title: "PROMO FLASH SUMMER valid only for HousingAnywhere tenants",
+
+      bulletPoints: [
+        "NO ADMINISTRATION FEE and SPECIAL PRICE with maximum move out date August 2026.",
+        "For longer stays, contact us!",
+      ],
+    },
+
+    {
+      title:
+        "PROMO EARLY BOOKING COURSE 26/27 only for HousingAnywhere tenants",
+
+      description:
+        "50% DISCOUNT on the admin fee, applied to the second month of your rent.",
+
+      bulletPoints: [
+        "Example admin fee 250€:",
+        "1- You will pay the full administration fee of 250€.",
+        "2- When you pay the...",
+      ],
+    },
+  ],
+
+  highlights: [
+    {
+      title: "Entertainment room",
+
+      description:
+        "Relax and socialize in our communal lounge, featuring games and movie nights.",
+
+      image:
+        "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Gym",
+
+      description:
+        "Stay active with an on-site fitness center, equipped for all your workout needs.",
+
+      image:
+        "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Dining area",
+
+      description: "Share meals and stories in a spacious dining hall.",
+
+      image:
+        "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&auto=format&fit=crop&q=60",
+    },
+
+    {
+      title: "Laundry room",
+
+      description:
+        "Do laundry quickly and conveniently with modern washers and dryers.",
+
+      image:
+        "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&auto=format&fit=crop&q=60",
+    },
+  ],
+
+  services: {
+    general: [
+      "24/7 On-site Security & Keycard Access",
+      "High-speed Fiber Optic Internet",
+      "Laundry Room with Washers & Dryers",
+      "Co-working & Quiet Study Lounges",
+      "Bicycle Storage Area",
+    ],
+  },
+  // Data matching the exact values visible in your image
+  roomUnits: [
+    {
+      id: "unit-601",
+      title: "Studio Neon Gold with Balcony - Floor 6",
+      pricePerMonth: 1559,
+      images: [
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–6 months",
+      sizeSqm: 27,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: true,
+      maxCapacity: 2,
+      availableFrom: "1 Oct 2026",
+      descriptionHeader: "Life at Mitte-Wedding",
+      descriptionText:
+        "553 apartments, 553+ students... be one of us & meet extraordinary people. Mitte-Wedding is a unique meeting point of the iconic neighborhoods of Prenzlauer Berg, Mitte and Wedding. From the historical sites and clever co-working spaces near Bernauer Straße to the unique parks and eclectic cafes near Mauerpark, there is plenty to explore.",
+      totalPhotosCount: 11,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Private kitchenette & modern appliances",
+        "Private balcony access with city view",
+      ],
+      paymentDetails: {
+        deposit: 1559,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-402",
+      title: "Standard Studio - Floor 4",
+      pricePerMonth: 1250,
+      images: [
+        "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "3–12 months",
+      sizeSqm: 21,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 1,
+      availableFrom: "15 Sep 2026",
+      descriptionHeader: "Cozy & Efficient Living",
+      descriptionText:
+        "Designed for privacy and focus, this standard studio offers maximum efficiency with a built-in workspace, dedicated storage solutions, and access to all community amenities.",
+      totalPhotosCount: 8,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Private kitchenette",
+      ],
+      paymentDetails: {
+        deposit: 1250,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-305",
+      title: "Premium Studio with City View - Floor 3",
+      pricePerMonth: 1395,
+      images: [
+        "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–12 months",
+      sizeSqm: 24,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 2,
+      availableFrom: "20 Sep 2026",
+      descriptionHeader: "Modern City Living",
+      descriptionText:
+        "A bright premium studio designed for comfortable long-term living. The apartment combines modern furniture, smart storage, and a functional private kitchen in a compact layout.",
+      totalPhotosCount: 10,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "Heating, water & electricity",
+        "Fully equipped private kitchen",
+        "Modern workspace",
+        "Access to shared community areas",
+      ],
+      paymentDetails: {
+        deposit: 1395,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-208",
+      title: "Compact Studio - Floor 2",
+      pricePerMonth: 1099,
+      images: [
+        "https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "3–6 months",
+      sizeSqm: 18,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: false,
+      maxCapacity: 1,
+      availableFrom: "5 Oct 2026",
+      descriptionHeader: "Smart Compact Living",
+      descriptionText:
+        "An affordable and efficient studio for students and young professionals. The space includes everything needed for comfortable everyday living while keeping monthly costs low.",
+      totalPhotosCount: 7,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "Heating and water",
+        "Private kitchenette",
+        "Furnished living and sleeping area",
+      ],
+      paymentDetails: {
+        deposit: 1099,
+        utilities: "Included in base price",
+      },
+    },
+
+    {
+      id: "unit-715",
+      title: "Deluxe Studio with Balcony - Floor 7",
+      pricePerMonth: 1699,
+      images: [
+        "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80",
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      ],
+      stayDuration: "6–12 months",
+      sizeSqm: 31,
+      hasPrivateToilet: true,
+      hasPrivateBathroom: true,
+      hasPrivateKitchen: true,
+      hasPrivateBalcony: true,
+      maxCapacity: 2,
+      availableFrom: "1 Nov 2026",
+      descriptionHeader: "Premium Comfort & City Views",
+      descriptionText:
+        "Our deluxe studio provides additional living space, premium furnishings, and a private balcony overlooking the city. Perfect for residents looking for extra comfort and a more spacious home.",
+      totalPhotosCount: 14,
+      whatsIncluded: [
+        "High-speed Fiber Optic WiFi",
+        "All heating, water & electricity bills",
+        "Fully equipped private kitchen",
+        "Private balcony",
+        "Premium furniture",
+        "Dedicated workspace",
+        "Access to community amenities",
+      ],
+      paymentDetails: {
+        deposit: 1699,
+        utilities: "Included in base price",
+      },
+    },
+  ],
+};
+
+export const premiumPropertyImages: string[] = [
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1502005229762-fc1b2b812ca5?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80",
+
+  "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
+];
