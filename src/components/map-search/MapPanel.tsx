@@ -90,11 +90,12 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       border-2
       border-[color-mix(in_srgb,var(--border)_70%,transparent)]
       bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
-        drop-shadow-[0_10px_20px_var(--primary)]
+        drop-shadow-[5px_25px_50px_var(--primary)]
 
       shadow-[
         0_0_25px_var(--map-glow-soft),
-        0_10px_20px_var(--bg-bottom)
+        0_10px_10px_var(--bg-top-glow),
+        0_10px_10px_color-mix(in_srgb,var(--map-glow)_35%,transparent)
       ]
         "
       >
