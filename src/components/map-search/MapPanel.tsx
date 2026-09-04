@@ -52,10 +52,25 @@ export const MapPanel: React.FC<MapPanelProps> = ({
 
   /*  Render  */
   return (
-    <div style={styles.rightPanel} className="rounded-lg space-y-5 ">
+    <div
+      style={styles.rightPanel}
+      className="
+          pointer-events-none
+          absolute
+          p-5
+          z-[400]
+          rounded-lg
+
+          shadow-[
+            inset_0_0_5px_3px_var(--map-inner-glow),
+            inset_0_0_10px_8px_var(--map-glow-soft)
+          ]
+      drop-shadow-[0_10px_70px_var(--map-glow)]
+
+        "
+    >
       <MapContainer
         ref={setMap}
-        className="z-0 rounded-lg"
         center={initialCenter}
         zoom={12}
         style={styles.mapElement}
@@ -66,23 +81,39 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         boxZoom={interactive}
         keyboard={interactive}
         zoomControl={interactive}
+        className="
+      relative
+      h-full
+      w-full
+      overflow-hidden
+      rounded-xl
+      border-2
+      border-[color-mix(in_srgb,var(--border)_70%,transparent)]
+      bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
+        drop-shadow-[0_10px_20px_var(--primary)]
+
+      shadow-[
+        0_0_25px_var(--map-glow-soft),
+        0_10px_20px_var(--bg-bottom)
+      ]
+        "
       >
-        {/*  Base Map  */}
+        {/* Base Map */}
 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {/*  Programmatic Recenter  */}
+        {/* Programmatic Recenter */}
 
         <ViewportRecenterController center={center} />
 
-        {/*  Bounds Handler  */}
+        {/* Bounds Handler */}
 
         <MapBoundsHandler onBoundsChange={onBoundsChange} />
 
-        {/*  Property Markers  */}
+        {/* Property Markers */}
 
         {properties.map((property) => (
           <MapMarker
@@ -93,6 +124,21 @@ export const MapPanel: React.FC<MapPanelProps> = ({
           />
         ))}
       </MapContainer>
+
+      {/* Soft glass/cloud edge */}
+      <div
+        className="
+      pointer-events-none
+      absolute
+      inset-5
+      z-[400]
+      rounded-lg
+
+      shadow-[
+        inset_0_0_35px_10px_var(--map-inner-glow)
+      ]
+    "
+      />
     </div>
   );
 };

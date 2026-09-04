@@ -154,16 +154,25 @@ export const MapPage = () => {
 
       <div
         className="
-          mt-4
-          h-[70vh]
-          w-full
-          overflow-hidden
-          rounded-xl
-          border
-          border-[var(--border)]
-          bg-[var(--card)]
-          shadow-[var(--card-shadow)]
-        "
+            relative
+    h-[75vh]
+    w-full
+    overflow-hidden
+    rounded-xl
+
+    border
+    border-[color-mix(in_srgb,var(--border)_30%,transparent)]
+
+    bg-[color-mix(in_srgb,var(--muted)_50%,transparent)]
+
+
+    shadow-[
+      0_0_5px_var(--map-glow-soft),
+      0_20px_0px_var(--map-glow),
+      0_20px_0px_color-mix(in_srgb,var(--map-glow)_35%,transparent)
+    ]
+      drop-shadow-[0_20px_70px_var(--map-glow-soft)]
+          "
       >
         <MapPanel
           properties={properties}

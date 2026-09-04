@@ -17,10 +17,10 @@
     --border: #E5E7EB;
     --muted: #64748B;
 
-    /* map marker */
-    --map-marker: #4F46E5;
-    --map-marker-hover: #6366F1;
-
+    /* Map glass / glow */
+    --map-glow: rgba(51, 65, 85, 0.28);
+    --map-glow-soft: rgba(51, 65, 85, 0.14);
+    --map-inner-glow: rgba(51, 65, 85, 0.12);
     --card-shadow:
         6px 6px 0px color-mix(in srgb, var(--bg) 92%, transparent),
         12px 12px 0px color-mix(in srgb, var(--bg) 82%, transparent),
@@ -87,9 +87,10 @@
     /* Lightened gray for secondary notes */
     --muted: #94A3B8;
 
-    /* map marker */
-    --map-marker: #818CF8;
-    --map-marker-hover: #A5B4FC;
+    /* Red glow for dark theme */
+    --map-glow: rgba(239, 68, 68, 0.32);
+    --map-glow-soft: rgba(239, 68, 68, 0.16);
+    --map-inner-glow: rgba(239, 68, 68, 0.14);
 
     --card-shadow:
         6px 6px 0px color-mix(in srgb, black 18%, var(--bg)),
