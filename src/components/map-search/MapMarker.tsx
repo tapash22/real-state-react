@@ -47,7 +47,7 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
               transition-all duration-200 ease-out
               ${
                 isHighlighted
-                  ? "scale-[1.2] text-[var(--primary)] drop-shadow-md"
+                  ? "scale-[1.2] text-[var(--primary)] drop-shadow-md z-50"
                   : "text-[var(--muted)]"
               }
             `}
@@ -57,7 +57,7 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
 
       return L.divIcon({
         html,
-        className: "property-marker-wrapper",
+        className: "property-marker",
         iconSize: [42, 42],
         iconAnchor: [21, 42],
       });
@@ -72,67 +72,6 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         hoverTimeoutRef.current = null;
       }
     }, []);
-
-    /*
-     * Mouse enters marker.
-     *
-     * Activate immediately.
-     */
-    const handleMouseOver = useCallback(() => {
-      clearHoverTimeout();
-
-      onHover(property.id);
-    }, [clearHoverTimeout, onHover, property.id]);
-
-    /*
-     * Mouse leaves marker.
-     *
-     * Don't immediately close the popup.
-     *
-     * Leaflet can fire mouseout for tiny internal movements,
-     * which causes the popup to bounce.
-     */
-    const handleMouseOut = useCallback(
-      (event: L.LeafletMouseEvent) => {
-        clearHoverTimeout();
-
-        const markerElement = markerRef.current?.getElement();
-
-        if (!markerElement) return;
-
-        const relatedTarget = event.originalEvent.relatedTarget;
-
-        /*
-         * If the mouse is still somewhere inside the marker,
-         * don't remove hover.
-         */
-        if (
-          relatedTarget instanceof Node &&
-          markerElement.contains(relatedTarget)
-        ) {
-          return;
-        }
-
-        /*
-         * Small delay prevents:
-         *
-         * marker
-         * ↓
-         * tiny gap
-         * ↓
-         * marker
-         *
-         * from causing:
-         *
-         * open → close → open
-         */
-        hoverTimeoutRef.current = setTimeout(() => {
-          onHover(null);
-          hoverTimeoutRef.current = null;
-        }, 120);
-      },
-      [clearHoverTimeout, onHover],
-    );
 
     /*
      * Open / close popup from React hover state.
@@ -169,7 +108,7 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         gsap.set(card, {
           autoAlpha: 0,
           scale: 0.9,
-          y: 10,
+          y: 0,
           transformOrigin: "bottom center",
         });
 
@@ -199,8 +138,13 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         position={[property.lat, property.lng]}
         icon={icon}
         eventHandlers={{
-          mouseover: handleMouseOver,
-          mouseout: handleMouseOut,
+          mouseover: () => {
+            onHover(property.id);
+          },
+
+          mouseout: () => {
+            onHover(null);
+          },
         }}
       >
         <Popup
