@@ -37,30 +37,34 @@ export const MapPage = () => {
 
   const handleHover = useCallback((id: number | null) => {
     /**
-     * Always cancel the previous pending clear.
+     * Always clear previous timeout.
      */
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
+
       hoverTimeoutRef.current = null;
     }
 
     /**
-     * When entering a marker, activate it immediately.
+     * ENTER
      */
+
     if (id !== null) {
       setHoveredId(id);
+
       return;
     }
-
     /**
-     * When leaving a marker, wait a tiny amount of time.
-     *
-     * If another marker is entered within this period,
-     * the timeout is cancelled and the new marker becomes
-     * active immediately.
+     * LEAVE
+     * ----------------------------------------------
+     * Don't immediately clear.
+     * This prevents flickering when moving
+     * between connected hover areas.
      */
+
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredId(null);
+
       hoverTimeoutRef.current = null;
     }, 100);
   }, []);
@@ -83,9 +87,11 @@ export const MapPage = () => {
         flex-col
         items-center
         justify-center
+
         px-8
         transition-colors
         duration-300
+        
         lg:px-16
       "
     >

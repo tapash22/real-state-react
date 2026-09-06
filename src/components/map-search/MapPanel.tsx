@@ -1,6 +1,6 @@
 import L from "leaflet";
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, Pane, TileLayer } from "react-leaflet";
 import { MapBounds, MapItem } from "../../data";
 import { MapBoundsHandler } from "./MapBoundsHandler";
 import { MapMarker } from "./MapMarker";
@@ -55,7 +55,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
     <div
       style={styles.rightPanel}
       className="
-          pointer-events-none
+          pointer-events-auto
           absolute
           p-5
           z-[400]
@@ -98,6 +98,32 @@ export const MapPanel: React.FC<MapPanelProps> = ({
           ]
         "
       >
+        <Pane name="normalMarkers" style={{ zIndex: 400 }}>
+          {properties
+            .filter((property) => property.id !== hoveredId)
+            .map((property) => (
+              <MapMarker
+                key={property.id}
+                property={property}
+                isHighlighted={false}
+                onHover={onHover}
+              />
+            ))}
+        </Pane>
+
+        <Pane name="activeMarker" style={{ zIndex: 700 }}>
+          {properties
+            .filter((property) => property.id === hoveredId)
+            .map((property) => (
+              <MapMarker
+                key={property.id}
+                property={property}
+                isHighlighted={true}
+                onHover={onHover}
+              />
+            ))}
+        </Pane>
+
         {/* Base Map */}
 
         <TileLayer
@@ -112,33 +138,22 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         {/* Bounds Handler */}
 
         <MapBoundsHandler onBoundsChange={onBoundsChange} />
-
-        {/* Property Markers */}
-
-        {properties.map((property) => (
-          <MapMarker
-            key={property.id}
-            property={property}
-            isHighlighted={hoveredId === property.id}
-            onHover={onHover}
-          />
-        ))}
       </MapContainer>
 
       {/* Soft glass/cloud edge */}
-      {/* <div
+      <div
         className="
-      pointer-events-none
-      absolute
-      inset-5
-      z-[400]
-      rounded-lg
+          pointer-events-none
+          absolute
+          inset-5
+          z-[400]
+          rounded-lg
 
-      shadow-[
-        inset_0_0_35px_10px_var(--map-inner-glow)
-      ]
-    "
-      /> */}
+          shadow-[
+            inset_0_0_35px_10px_var(--map-inner-glow)
+          ]
+        "
+      />
     </div>
   );
 };
