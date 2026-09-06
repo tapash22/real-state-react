@@ -19,7 +19,40 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
 
     const animationRef = useRef<gsap.core.Timeline | null>(null);
 
+    /**
+     * Used to delay closing the popup.
+     *
+     * This gives the user enough time to move:
+     *
+     * marker → popup
+     *
+     * without the popup disappearing.
+     */
     const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    /*
+     * Clear pending hover timeout.
+     */
+    const clearHoverTimeout = useCallback(() => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
+      }
+    }, []);
+
+    /*
+     * -----------------------------------------
+     * Schedule popup close
+     * -----------------------------------------
+     */
+    const scheduleClose = useCallback(() => {
+      clearHoverTimeout();
+
+      hoverTimeoutRef.current = setTimeout(() => {
+        onHover(null);
+        hoverTimeoutRef.current = null;
+      }, 180);
+    }, [clearHoverTimeout, onHover]);
 
     /*
      * Marker icon
@@ -45,11 +78,17 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
             size={30}
             className={`
               transition-all duration-200 ease-out
-              ${
-                isHighlighted
-                  ? "scale-[1.2] text-[var(--primary)] drop-shadow-md z-50"
-                  : "text-[var(--muted)]"
-              }
+                  ${
+                    isHighlighted
+                      ? `
+                        scale-[1.2]
+                        text-[var(--primary)]
+                        drop-shadow-[0_0_8px_var(--primary)]
+                      `
+                      : `
+                        text-[var(--muted)]
+                      `
+                  }
             `}
           />
         </div>,
@@ -57,21 +96,11 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
 
       return L.divIcon({
         html,
-        className: "property-marker",
+        className: "property-marker-wrapper",
         iconSize: [42, 42],
         iconAnchor: [21, 42],
       });
     }, [isHighlighted]);
-
-    /*
-     * Clear pending hover timeout.
-     */
-    const clearHoverTimeout = useCallback(() => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-        hoverTimeoutRef.current = null;
-      }
-    }, []);
 
     /*
      * Open / close popup from React hover state.
@@ -139,11 +168,12 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         icon={icon}
         eventHandlers={{
           mouseover: () => {
+            clearHoverTimeout();
             onHover(property.id);
           },
 
           mouseout: () => {
-            onHover(null);
+            scheduleClose();
           },
         }}
       >
@@ -152,11 +182,35 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
           closeButton={false}
           closeOnClick={false}
           autoClose={false}
+          /*
+           * Move popup DOWN from the geographic point.
+           *
+           * This allows the marker to visually sit
+           * above the card.
+           */
+          offset={[0, -10]}
           eventHandlers={{
             add: animatePopup,
           }}
         >
-          <div className="property-popup-inner" data-property-id={property.id}>
+          <div
+            className="property-popup-inner"
+            data-property-id={property.id}
+            onMouseEnter={() => {
+              /*
+               * User reached the card.
+               * Cancel the pending close.
+               */
+              clearHoverTimeout();
+              onHover(property.id);
+            }}
+            onMouseLeave={() => {
+              /*
+               * User left the card.
+               */
+              scheduleClose();
+            }}
+          >
             <div className="property-card">
               <div className="flex flex-col w-full space-y-2">
                 <img
@@ -164,7 +218,7 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
                   alt={property.title}
                   className="property-card-image rounded-md"
                 />
-                <div className="flex justify-center items-center whitespace-nowrap text-lg font-semibold tracking-wide border-t border-b border-[var-(--border)]">
+                <div className="flex justify-center items-center whitespace-nowrap text-lg font-semibold tracking-wide border-t border-b border-[var(--border)] p-0">
                   {property.currency === "$" ? (
                     <FiDollarSign
                       size={20}
@@ -178,10 +232,10 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-2 justify-start text-sm">
+              <div className="flex flex-col space-y-2 justify-start text-sm py-1">
                 <h3 className="font-semibold">{property.title}</h3>
                 <div className="font-normal">{property.location}</div>
-                <div className="flex py-2 gap-1 font-medium border-t border-b border-[var-(--border)]">
+                <div className="flex py-2 gap-1 font-medium border-t border-b-2 border-[var(--border)]">
                   <span className="tracking-wide">
                     {property.bedrooms} Beds
                   </span>

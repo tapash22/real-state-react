@@ -268,14 +268,36 @@
 
 @layer utilities {
     .property-popup {
-        pointer-events: none;
-        margin-top: 100px;
+        pointer-events: auto !important;
+        margin-top: 0;
+    }
+
+    .property-popup .leaflet-popup-content-wrapper {
+        pointer-events: auto;
+    }
+
+    .property-popup .leaflet-popup-content {
+        margin: 0;
+    }
+
+    .property-popup-inner {
+        pointer-events: auto;
+        padding: 10px;
     }
 
     .property-marker-wrapper {
         background: transparent !important;
         border: none !important;
     }
+
+    /* .leaflet-marker-pane {
+        z-index: 600 !important;
+    }
+
+    .leaflet-popup-pane {
+        z-index: 500 !important;
+    } */
+
 
 
     .scrollbar-thin {
