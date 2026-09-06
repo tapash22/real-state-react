@@ -214,14 +214,13 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
         >
           <div className="property-popup-inner" data-property-id={property.id}>
             <div className="property-card">
-              <div className="property-card-image-wrapper">
+              <div className="flex flex-col w-full space-y-2">
                 <img
                   src={property.image}
                   alt={property.title}
-                  className="property-card-image"
+                  className="property-card-image rounded-md"
                 />
-
-                <div className="property-card-price">
+                <div className="flex justify-center items-center whitespace-nowrap text-lg font-semibold tracking-wide border-t border-b border-[var-(--border)]">
                   {property.currency === "$" ? (
                     <FiDollarSign
                       size={20}
@@ -235,19 +234,19 @@ export const MapMarker: React.FC<MapMarkerProps> = React.memo(
                 </div>
               </div>
 
-              <div className="property-card-content">
-                <h3 className="property-card-title">{property.title}</h3>
+              <div className="flex flex-col space-y-2 justify-start text-sm">
+                <h3 className="font-semibold">{property.title}</h3>
+                <div className="font-normal">{property.location}</div>
+                <div className="flex py-2 gap-1 font-medium border-t border-b border-[var-(--border)]">
+                  <span className="tracking-wide">
+                    {property.bedrooms} Beds
+                  </span>
 
-                <div className="property-card-location">
-                  {property.location}
-                </div>
+                  <span className="tracking-wide">
+                    {property.bathrooms} Baths
+                  </span>
 
-                <div className="property-card-details">
-                  <span>{property.bedrooms} Beds</span>
-
-                  <span>{property.bathrooms} Baths</span>
-
-                  <span>
+                  <span className="tracking-wide">
                     {property.area} {property.areaUnit}
                   </span>
                 </div>

@@ -87,7 +87,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       w-full
       overflow-hidden
       rounded-xl
-      border-2
+      border-4
       border-[color-mix(in_srgb,var(--border)_70%,transparent)]
       bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
         drop-shadow-[5px_25px_50px_var(--primary)]
