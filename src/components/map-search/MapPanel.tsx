@@ -65,8 +65,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
             inset_0_0_5px_3px_var(--map-inner-glow),
             inset_0_0_10px_8px_var(--map-glow-soft)
           ]
-      drop-shadow-[0_10px_70px_var(--map-glow)]
-
+          drop-shadow-[0_10px_70px_var(--map-glow)]
         "
     >
       <MapContainer
@@ -82,21 +81,21 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         keyboard={interactive}
         zoomControl={interactive}
         className="
-      relative
-      h-full
-      w-full
-      overflow-hidden
-      rounded-xl
-      border-4
-      border-[color-mix(in_srgb,var(--border)_70%,transparent)]
-      bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
-        drop-shadow-[5px_25px_50px_var(--primary)]
+          relative
+          h-full
+          w-full
+          overflow-hidden
+          rounded-xl
+          border-4
+          border-[color-mix(in_srgb,var(--border)_70%,transparent)]
+          bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
+            drop-shadow-[5px_25px_50px_var(--primary)]
 
-      shadow-[
-        0_0_25px_var(--map-glow-soft),
-        0_10px_10px_var(--bg-top-glow),
-        0_10px_10px_color-mix(in_srgb,var(--map-glow)_35%,transparent)
-      ]
+          shadow-[
+            0_0_25px_var(--map-glow-soft),
+            0_10px_10px_var(--bg-top-glow),
+            0_10px_10px_color-mix(in_srgb,var(--map-glow)_35%,transparent)
+          ]
         "
       >
         {/* Base Map */}
@@ -127,7 +126,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       </MapContainer>
 
       {/* Soft glass/cloud edge */}
-      <div
+      {/* <div
         className="
       pointer-events-none
       absolute
@@ -139,7 +138,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         inset_0_0_35px_10px_var(--map-inner-glow)
       ]
     "
-      />
+      /> */}
     </div>
   );
 };
