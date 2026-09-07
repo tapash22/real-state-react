@@ -4,6 +4,7 @@ import { MapContainer, Pane, TileLayer } from "react-leaflet";
 import { MapBounds, MapItem } from "../../data";
 import { MapBoundsHandler } from "./MapBoundsHandler";
 import { MapMarker } from "./MapMarker";
+import { getMarkerLayers } from "./markerLayers";
 import { styles } from "./styles";
 import { ViewportRecenterController } from "./ViewportRecenterController";
 
@@ -29,6 +30,8 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   interactive = true,
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
+
+  const markerLayers = getMarkerLayers(hoveredId);
 
   /*  Initial Bounds     */
 
@@ -57,15 +60,10 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       className="
           pointer-events-auto
           absolute
-          p-5
+          p-8
           z-[400]
           rounded-lg
-
-          shadow-[
-            inset_0_0_5px_3px_var(--map-inner-glow),
-            inset_0_0_10px_8px_var(--map-glow-soft)
-          ]
-          drop-shadow-[0_10px_70px_var(--map-glow)]
+          backdrop-blur-lg
         "
     >
       <MapContainer
@@ -81,48 +79,40 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         keyboard={interactive}
         zoomControl={interactive}
         className="
-          relative
-          h-full
-          w-full
-          overflow-hidden
-          rounded-xl
-          border-4
-          border-[color-mix(in_srgb,var(--border)_70%,transparent)]
-          bg-[color-mix(in_srgb,var(--nav-link)_15%,transparent)]
-            drop-shadow-[5px_25px_50px_var(--primary)]
+  relative
+  h-full
+  w-full
+  overflow-hidden
+  rounded-2xl
 
-          shadow-[
-            0_0_25px_var(--map-glow-soft),
-            0_10px_10px_var(--bg-top-glow),
-            0_10px_10px_color-mix(in_srgb,var(--map-glow)_35%,transparent)
-          ]
-        "
+  border-4
+  border-[color-mix(in_srgb,var(--border)_45%,transparent)]
+
+
+  drop-shadow-[5px_5px_25px_var(--primary)]
+  
+  shadow-sm
+
+
+"
       >
-        <Pane name="normalMarkers" style={{ zIndex: 400 }}>
-          {properties
-            .filter((property) => property.id !== hoveredId)
-            .map((property) => (
+        {markerLayers.map((layer) => (
+          <Pane
+            key={layer.name}
+            name={layer.name}
+            style={{ zIndex: layer.zIndex }}
+          >
+            {properties.filter(layer.filter).map((property) => (
               <MapMarker
                 key={property.id}
                 property={property}
-                isHighlighted={false}
+                isHighlighted={layer.isHighlighted}
                 onHover={onHover}
+                pane={layer.name}
               />
             ))}
-        </Pane>
-
-        <Pane name="activeMarker" style={{ zIndex: 700 }}>
-          {properties
-            .filter((property) => property.id === hoveredId)
-            .map((property) => (
-              <MapMarker
-                key={property.id}
-                property={property}
-                isHighlighted={true}
-                onHover={onHover}
-              />
-            ))}
-        </Pane>
+          </Pane>
+        ))}
 
         {/* Base Map */}
 
