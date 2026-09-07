@@ -32,6 +32,8 @@ export const demoUser: User = {
 
 export type SocialMediaItems = SocialMediaItem[];
 
+export const bangladeshCenter: [number, number] = [23.685, 90.3563];
+
 export const staticPriceTiers = [
   "All Prices",
   "100-300",

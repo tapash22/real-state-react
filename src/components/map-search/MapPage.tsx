@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MapBounds, MapItem, cityExploreProperties } from "../../data";
 import { SectionHeader } from "../header-section/SectionHeader";
+// into this reusable component handle Generic type
+import { useAppData } from "../../hooks/useAppData";
 import { Tabs } from "../property-tabs/Tabs";
 import { MapPanel } from "./MapPanel";
-
-const bangladeshCenter: [number, number] = [23.685, 90.3563];
 
 export const MapPage = () => {
   /*  State  */
 
   const [, setBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  const { data, isLoading } = useAppData();
 
   /**
    * Keeps the hover-clear timeout in the parent.
@@ -23,6 +25,10 @@ export const MapPage = () => {
    */
 
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const bangladeshCenter: [number, number] = data?.bangladeshCenter ?? [
+    23.685, 90.3563,
+  ];
 
   /*  Properties  */
 
@@ -123,15 +129,17 @@ export const MapPage = () => {
             shadow-lg shadow-[var(--shadow)]
           "
       >
-        <MapPanel
-          properties={properties}
-          center={bangladeshCenter}
-          initialCenter={bangladeshCenter}
-          hoveredId={hoveredId}
-          onHover={handleHover}
-          onBoundsChange={handleBoundsChange}
-          interactive={false}
-        />
+        {!isLoading && data && (
+          <MapPanel
+            properties={properties}
+            center={bangladeshCenter}
+            initialCenter={bangladeshCenter}
+            hoveredId={hoveredId}
+            onHover={handleHover}
+            onBoundsChange={handleBoundsChange}
+            interactive={false}
+          />
+        )}
       </div>
     </section>
   );

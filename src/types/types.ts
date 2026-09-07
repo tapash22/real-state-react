@@ -1,3 +1,9 @@
+// tabs GenericType handle
+export interface TabItem<T extends string | number> {
+  id: T;
+  label: string;
+}
+
 export interface Property {
   id: number;
   title: string;

@@ -66,35 +66,49 @@ export const MapMarker = React.memo(function MapMarker({
     const html = renderToStaticMarkup(
       <div
         className={`
-            property-marker
-            flex
-            h-[42px]
-            w-[42px]
-            items-center
-            justify-center
-            cursor-pointer
-            transition-transform
-            duration-200
-            ease-out
-            ${isHighlighted ? "scale-[1.15]" : "scale-100"}
-        `}
+    relative
+    flex
+    h-[42px]
+    w-[42px]
+    items-center
+    justify-center
+    cursor-pointer
+    transition-transform
+    duration-200
+    ease-out
+    ${isHighlighted ? "scale-[1.15]" : "scale-100"}
+  `}
       >
+        {/* Outline */}
+        {isHighlighted && (
+          <FaLocationDot
+            size={44}
+            className="
+        absolute
+        inset-0
+        text-[#8a88e0]
+      "
+          />
+        )}
+
+        {/* Main icon */}
         <FaLocationDot
           size={30}
           className={`
-              transition-all duration-200 ease-out
-                  ${
-                    isHighlighted
-                      ? `
-                        scale-[1.2]
-                        text-[var(--primary)]
-                        drop-shadow-[3px_3px_3px_var(--primary)]
-                      `
-                      : `
-                        text-[var(--muted)]
-                      `
-                  }
-            `}
+      relative
+      fill-current
+      transition-all
+      duration-200
+      ease-out
+      ${
+        isHighlighted
+          ? `
+            scale-[1.2]
+            text-[#7c3aed]
+          `
+          : "text-[#9ca3af]"
+      }
+    `}
         />
       </div>,
     );
@@ -102,8 +116,8 @@ export const MapMarker = React.memo(function MapMarker({
     return L.divIcon({
       html,
       className: "property-marker-wrapper",
-      iconSize: [42, 42],
-      iconAnchor: [21, 42],
+      iconSize: [40, 40],
+      iconAnchor: [21, 40],
     });
   }, [isHighlighted]);
 

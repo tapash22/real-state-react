@@ -1,7 +1,5 @@
-export interface TabItem<T extends string | number> {
-  id: T;
-  label: string;
-}
+import { TabItem } from "../../types/types";
+import { Button } from "../ui/Button";
 
 interface TabsProps<T extends string | number> {
   items: TabItem<T>[];
@@ -32,28 +30,19 @@ export function Tabs<T extends string | number>({
           const isActive = activeId === item.id;
 
           return (
-            <button
+            <Button
               key={item.id}
-              type="button"
+              variant="tab"
+              color="primary"
+              rounded="sm"
+              size="sm"
               onMouseEnter={() => onChange(item.id)}
               onMouseLeave={() => onChange(null)}
+              aria-pressed={isActive}
               className={`
-                flex
                 w-full
-                cursor-pointer
-                items-center
-                justify-center
-                whitespace-nowrap
-                rounded-xs
                 border-b-2
-                py-1
-                text-center
-                text-sm
-                font-semibold
                 text-[var(--text)]
-                transition-all
-                duration-200
-                md:text-base
                 ${
                   isActive
                     ? "border-violet-500 opacity-100"
@@ -62,7 +51,7 @@ export function Tabs<T extends string | number>({
               `}
             >
               {item.label}
-            </button>
+            </Button>
           );
         })}
       </div>
