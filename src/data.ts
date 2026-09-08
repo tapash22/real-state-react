@@ -1199,22 +1199,26 @@ export type MapItem = {
   id: number;
   name: string;
   title: string;
-  location: string;
+  location?: string;
 
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
 
-  price: number;
-  currency: string;
+  price?: number;
+  currency?: string;
 
   image: string;
 
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  areaUnit: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  area?: number;
+  areaUnit?: string;
 
   propertyType: string;
+
+  rating?: number;
+  type?: string;
+  country?: string;
 };
 
 export const cityExploreProperties: MapItem[] = [

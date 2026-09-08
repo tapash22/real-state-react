@@ -21,18 +21,7 @@ export const MapMarker = React.memo(function MapMarker({
   pane,
 }: MapMarkerProps) {
   const markerRef = useRef<L.Marker | null>(null);
-
   const animationRef = useRef<gsap.core.Timeline | null>(null);
-
-  /**
-   * Used to delay closing the popup.
-   *
-   * This gives the user enough time to move:
-   *
-   * marker → popup
-   *
-   * without the popup disappearing.
-   */
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /*
@@ -69,13 +58,13 @@ export const MapMarker = React.memo(function MapMarker({
         <FaLocationDot
           size={30}
           className={`
-      relative
-      fill-current
-      transition-all
-      duration-200
-      ease-out
-      ${isHighlighted ? "scale-75  text-[var(--border)]" : "text-[var(--map)]"}
-    `}
+          relative
+          fill-current
+          transition-all
+          duration-200
+          ease-out
+          ${isHighlighted ? "scale-75  text-[var(--border)]" : "text-[var(--map)]"}
+        `}
         />
       </div>,
     );
@@ -146,6 +135,11 @@ export const MapMarker = React.memo(function MapMarker({
       animationRef.current?.kill();
     };
   }, [clearHoverTimeout]);
+
+  // Place this at the top of your MapMarker component render logic
+  if (typeof property.lat !== "number" || typeof property.lng !== "number") {
+    return null;
+  }
 
   return (
     <Marker

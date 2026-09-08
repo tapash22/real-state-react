@@ -88,7 +88,6 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         border-4
         border-[color-mix(in_srgb,var(--border)_45%,transparent)]
 
-
         drop-shadow-[5px_5px_25px_var(--primary)]
         shadow-sm
 "
