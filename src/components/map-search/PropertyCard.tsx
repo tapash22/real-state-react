@@ -1,23 +1,6 @@
 import React from "react";
+import { PropertyLike } from "../../data";
 import { styles } from "./styles";
-
-// Flexible type supporting all variations of MapItem / Property across your app
-export type PropertyLike = {
-  id: number;
-  title?: string;
-  name?: string;
-  price?: number;
-  lat?: number;
-  lng?: number;
-  rating?: number;
-  type?: string;
-  propertyType?: string;
-  image?: string;
-  currency?: string;
-  location?: string;
-  country?: string;
-  [key: string]: any; // Allows optional extra fields without failing exact checks
-};
 
 interface PropertyCardProps {
   property: PropertyLike;
@@ -29,7 +12,6 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
   ({ property, isHovered, onMouseEnter, onMouseLeave, isMobile = false }) => {
-    // Safely extract properties with fallbacks
     const title = property.title || property.name || "Property";
     const propertyType = property.type || property.propertyType || "Rental";
     const rating = property.rating ?? undefined;

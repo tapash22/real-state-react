@@ -407,6 +407,7 @@ export default function RealEstateSearchModule() {
             hoveredId={hoveredId}
             setHoveredId={setHoveredId}
             onBoundsChange={handleBoundsChange}
+            interactive={true}
           />
         </div>
 

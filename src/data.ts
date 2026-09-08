@@ -10,6 +10,7 @@ import assets from "./assets/assets";
 
 import { IconType } from "react-icons";
 import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { Property } from "./types/types";
 
 export interface SocialMediaItem {
   id: number | null;
@@ -1194,6 +1195,21 @@ export interface MapBounds {
   south: number;
   west: number;
 }
+
+// Omit strict fields from MapItem/Property and make them optional/flexible
+
+export type PropertyLike = Partial<Omit<MapItem & Property, "id">> & {
+  id: number;
+  id_str?: string;
+  lat?: number;
+  lng?: number;
+  name?: string;
+  title?: string;
+  price?: number;
+  image?: string;
+  currency?: string;
+  location?: string;
+};
 
 export type MapItem = {
   id: number;

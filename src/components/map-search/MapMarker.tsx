@@ -5,12 +5,12 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { FaLocationDot } from "react-icons/fa6";
 import { FiDollarSign } from "react-icons/fi";
 import { Marker, Popup } from "react-leaflet";
-import type { MapItem } from "../../data";
+import { PropertyLike } from "../../data";
 
 interface MapMarkerProps {
-  property: MapItem;
+  property: PropertyLike;
   isHighlighted: boolean;
-  onHover: (id: number | null) => void;
+  onHover?: (id: number | null) => void;
   pane: string;
 }
 
@@ -23,6 +23,14 @@ export const MapMarker = React.memo(function MapMarker({
   const markerRef = useRef<L.Marker | null>(null);
   const animationRef = useRef<gsap.core.Timeline | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Fallback field extractors to prevent runtime undefined errors
+  const title = property.title || property.name || "Property";
+  const location =
+    property.location || property.country || "Location unavailable";
+  const currency = property.currency || "€";
+  const price = property.price ?? 0;
+  const image = property.image || "";
 
   /*
    * Clear pending hover timeout.
@@ -43,7 +51,7 @@ export const MapMarker = React.memo(function MapMarker({
     clearHoverTimeout();
 
     hoverTimeoutRef.current = setTimeout(() => {
-      onHover(null);
+      onHover?.(null);
       hoverTimeoutRef.current = null;
     }, 180);
   }, [clearHoverTimeout, onHover]);
@@ -136,7 +144,7 @@ export const MapMarker = React.memo(function MapMarker({
     };
   }, [clearHoverTimeout]);
 
-  // Place this at the top of your MapMarker component render logic
+  // Prevent Leaflet error if coordinates are missing
   if (typeof property.lat !== "number" || typeof property.lng !== "number") {
     return null;
   }
@@ -150,7 +158,7 @@ export const MapMarker = React.memo(function MapMarker({
       eventHandlers={{
         mouseover: () => {
           clearHoverTimeout();
-          onHover(property.id);
+          onHover?.(property.id);
         },
 
         mouseout: () => {
@@ -183,7 +191,7 @@ export const MapMarker = React.memo(function MapMarker({
              * Cancel the pending close.
              */
             clearHoverTimeout();
-            onHover(property.id);
+            onHover?.(property.id);
           }}
           onMouseLeave={() => {
             /*
@@ -195,38 +203,49 @@ export const MapMarker = React.memo(function MapMarker({
           <div className="property-card">
             <div className="flex flex-col w-full space-y-2">
               <img
-                src={property.image}
-                alt={property.title}
+                src={image}
+                alt={title}
                 className="property-card-image rounded-md"
               />
               <div className="flex justify-center items-center whitespace-nowrap text-lg font-semibold tracking-wide border-t border-b border-[var(--border)] p-0">
-                {property.currency === "$" ? (
+                {currency === "$" ? (
                   <FiDollarSign
                     size={20}
                     className="text-[var(--muted)] font-bold"
                   />
                 ) : (
-                  "€"
+                  currency
                 )}
-                <p></p>
-                {property.price}
+                <span>{price}</span>
               </div>
             </div>
 
             <div className="flex flex-col space-y-2 justify-start text-sm py-1">
-              <h3 className="font-semibold">{property.title}</h3>
-              <div className="font-normal">{property.location}</div>
-              <div className="flex py-2 gap-1 font-medium border-t border-b-2 border-[var(--border)]">
-                <span className="tracking-wide">{property.bedrooms} Beds</span>
+              <h3 className="font-semibold">{title}</h3>
+              <div className="font-normal">{location}</div>
+              {(property.bedrooms !== undefined ||
+                property.bathrooms !== undefined ||
+                property.area !== undefined) && (
+                <div className="flex py-2 gap-1 font-medium border-t border-b-2 border-[var(--border)]">
+                  {property.bedrooms !== undefined && (
+                    <span className="tracking-wide">
+                      {property.bedrooms} Beds
+                    </span>
+                  )}
 
-                <span className="tracking-wide">
-                  {property.bathrooms} Baths
-                </span>
+                  {property.bathrooms !== undefined && (
+                    <span className="tracking-wide">
+                      {property.bathrooms} Baths
+                    </span>
+                  )}
 
-                <span className="tracking-wide">
-                  {property.area} {property.areaUnit}
-                </span>
-              </div>
+                  {property.area !== undefined && (
+                    <span className="tracking-wide">
+                      {property.area} {property.areaUnit ?? "sqft"}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -95,7 +95,7 @@ export function FilterDrawer({
       className={`fixed inset-0 z-50 backdrop-blur-xs right-2 flex
       ${isMobile ? "items-end justify-end" : "justify-end items-end"}`}
     >
-      <div className="absolute inset-0" onClick={closeDrawer} />
+      <div className=" z-[]absolute inset-0" onClick={closeDrawer} />
 
       <div
         ref={panelRef}

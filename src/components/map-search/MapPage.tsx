@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { MapBounds, MapItem, cityExploreProperties } from "../../data";
+import { MapBounds, PropertyLike, cityExploreProperties } from "../../data";
 import { SectionHeader } from "../header-section/SectionHeader";
 // into this reusable component handle Generic type
 import { useAppData } from "../../hooks/useAppData";
@@ -25,13 +25,12 @@ export const MapPage = () => {
     23.685, 90.3563,
   ];
 
-  /*  Properties  */
-  const properties: MapItem[] = cityExploreProperties.slice(0, 7);
+  const properties: PropertyLike[] = cityExploreProperties.slice(0, 7);
 
-  /*  tabs  */
+  /* Tabs - Safe fallback guarantees string type for label */
   const tabs = properties.map((property) => ({
     id: property.id,
-    label: property.name,
+    label: property.name || property.title || `Property ${property.id}`,
   }));
 
   /*  Bounds Handler */

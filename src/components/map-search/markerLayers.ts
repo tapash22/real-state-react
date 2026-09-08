@@ -1,16 +1,25 @@
-import type { MapItem } from "../../data";
+// In markerLayers.ts
 
-export const getMarkerLayers = (hoveredId: number | null) => [
+import { PropertyLike } from "../../data";
+
+export interface MarkerLayer {
+  name: string;
+  zIndex: number;
+  isHighlighted: boolean;
+  filter: (property: PropertyLike) => boolean; // Updated from MapItem to PropertyLike
+}
+
+export const getMarkerLayers = (hoveredId: number | null): MarkerLayer[] => [
   {
-    name: "normalMarkers",
+    name: "unhighlighted",
     zIndex: 400,
     isHighlighted: false,
-    filter: (property: MapItem) => property.id !== hoveredId,
+    filter: (property: PropertyLike) => property.id !== hoveredId,
   },
   {
-    name: "activeMarker",
-    zIndex: 700,
+    name: "highlighted",
+    zIndex: 500,
     isHighlighted: true,
-    filter: (property: MapItem) => property.id === hoveredId,
+    filter: (property: PropertyLike) => property.id === hoveredId,
   },
 ];
