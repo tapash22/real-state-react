@@ -18,6 +18,8 @@
     --muted: #64748B;
 
     /* Map glass / glow */
+    --map: rgba(11, 68, 148, 0.7);
+
     --map-glow: rgba(51, 65, 85, 0.28);
     --map-glow-soft: rgba(51, 65, 85, 0.14);
     --map-inner-glow: rgba(51, 65, 85, 0.12);

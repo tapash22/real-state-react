@@ -59,39 +59,13 @@ export const MapMarker = React.memo(function MapMarker({
     }, 180);
   }, [clearHoverTimeout, onHover]);
 
-  /*
-   * Marker icon
-   */
   const icon = useMemo(() => {
     const html = renderToStaticMarkup(
-      <div
-        className={`
-    relative
-    flex
-    h-[42px]
-    w-[42px]
-    items-center
-    justify-center
-    cursor-pointer
-    transition-transform
-    duration-200
-    ease-out
-    ${isHighlighted ? "scale-[1.15]" : "scale-100"}
-  `}
-      >
-        {/* Outline */}
+      <div className="relative flex h-[42px] w-[42px] items-center justify-center">
         {isHighlighted && (
-          <FaLocationDot
-            size={44}
-            className="
-        absolute
-        inset-0
-        text-[#8a88e0]
-      "
-          />
+          <FaLocationDot size={36} className="absolute text-[var(--muted)]" />
         )}
 
-        {/* Main icon */}
         <FaLocationDot
           size={30}
           className={`
@@ -100,14 +74,7 @@ export const MapMarker = React.memo(function MapMarker({
       transition-all
       duration-200
       ease-out
-      ${
-        isHighlighted
-          ? `
-            scale-[1.2]
-            text-[#7c3aed]
-          `
-          : "text-[#9ca3af]"
-      }
+      ${isHighlighted ? "scale-75  text-[var(--border)]" : "text-[var(--map)]"}
     `}
         />
       </div>,
@@ -116,8 +83,8 @@ export const MapMarker = React.memo(function MapMarker({
     return L.divIcon({
       html,
       className: "property-marker-wrapper",
-      iconSize: [40, 40],
-      iconAnchor: [21, 40],
+      iconSize: [42, 42],
+      iconAnchor: [21, 42],
     });
   }, [isHighlighted]);
 

@@ -60,10 +60,10 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       className="
           pointer-events-auto
           absolute
-          p-8
+          p-2 lg:p-5
           z-[400]
           rounded-lg
-          backdrop-blur-lg
+          backdrop-blur-md
         "
     >
       <MapContainer
@@ -79,21 +79,18 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         keyboard={interactive}
         zoomControl={interactive}
         className="
-  relative
-  h-full
-  w-full
-  overflow-hidden
-  rounded-2xl
+        relative
+        h-full
+        w-full
+        overflow-hidden
+        rounded-2xl
 
-  border-4
-  border-[color-mix(in_srgb,var(--border)_45%,transparent)]
-
-
-  drop-shadow-[5px_5px_25px_var(--primary)]
-  
-  shadow-sm
+        border-4
+        border-[color-mix(in_srgb,var(--border)_45%,transparent)]
 
 
+        drop-shadow-[5px_5px_25px_var(--primary)]
+        shadow-sm
 "
       >
         {markerLayers.map((layer) => (
@@ -115,18 +112,15 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         ))}
 
         {/* Base Map */}
-
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         {/* Programmatic Recenter */}
-
         <ViewportRecenterController center={center} />
 
         {/* Bounds Handler */}
-
         <MapBoundsHandler onBoundsChange={onBoundsChange} />
       </MapContainer>
 

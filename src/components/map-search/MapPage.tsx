@@ -8,22 +8,17 @@ import { MapPanel } from "./MapPanel";
 
 export const MapPage = () => {
   /*  State  */
-
   const [, setBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
+  // react query use for local data
   const { data, isLoading } = useAppData();
 
   /**
    * Keeps the hover-clear timeout in the parent.
-   *
-   * This prevents:
-   *
    * Marker A → null → Marker B
-   *
    * when moving quickly between markers.
    */
-
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const bangladeshCenter: [number, number] = data?.bangladeshCenter ?? [
@@ -31,22 +26,20 @@ export const MapPage = () => {
   ];
 
   /*  Properties  */
-
   const properties: MapItem[] = cityExploreProperties.slice(0, 7);
 
+  /*  tabs  */
   const tabs = properties.map((property) => ({
     id: property.id,
     label: property.name,
   }));
 
   /*  Bounds Handler */
-
   const handleBoundsChange = useCallback((b: MapBounds) => {
     setBounds(b);
   }, []);
 
   /*  Hover Handler */
-
   const handleHover = useCallback((id: number | null) => {
     /**
      * Always clear previous timeout.
@@ -82,7 +75,6 @@ export const MapPage = () => {
   }, []);
 
   /*  Cleanup  */
-
   useEffect(() => {
     return () => {
       if (hoverTimeoutRef.current) {
@@ -108,6 +100,14 @@ export const MapPage = () => {
       "
     >
       {/*  HEADER  */}
+      <div className="w-full bg-white flex justify-center items-center p-5">
+        <div
+          className="card"
+          style={{ boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.3)" }}
+        >
+          this is
+        </div>
+      </div>
 
       <SectionHeader
         tagTitle="Explore cities"
@@ -118,7 +118,6 @@ export const MapPage = () => {
       <Tabs items={tabs} activeId={hoveredId} onChange={handleHover} />
 
       {/*  MAP  */}
-
       <div
         className="
             relative
