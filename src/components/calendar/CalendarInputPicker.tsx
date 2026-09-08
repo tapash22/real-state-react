@@ -109,7 +109,8 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-[9999] left-0 top-full mt-2 origin-top-left animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="absolute top-full left-0 mt-2 z-50 bg-white rounded-lg shadow-2xl border border-gray-200 p-4 min-w-[300px]">
+          {" "}
           <CalendarView
             mode={mode}
             savedStartDate={savedStartDate}

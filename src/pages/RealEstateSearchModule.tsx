@@ -1,10 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { LuSlidersHorizontal } from "react-icons/lu";
+import { useSearchParams } from "react-router-dom";
 import { MapPanel } from "../components/map-search/MapPanel";
 import { styles } from "../components/map-search/styles";
 import { mockDatabaseFetch } from "../components/map-search/utils";
 import { MapBounds, Property } from "../types/types";
-
 // Import your shared global House Context & Cards
 import { Link } from "react-router-dom";
 import {
@@ -15,26 +15,55 @@ import { NoProperties } from "../components/empty/NoProperties";
 import { FilterDrawer } from "../components/filter/FilterDrawer";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
-import { House, houseData } from "../data";
+import { House, houseData, staticPriceTiers } from "../data";
 
 export default function RealEstateSearchModule() {
   const context = useContext(HouseContext);
+  // Read search parameters from current URL
+  const [searchParams] = useSearchParams();
+
+  // Extract query parameters with fallbacks
+  const urlCountry = searchParams.get("country") || "";
+  const urlProperty = searchParams.get("property") || "";
+  const urlPrice = searchParams.get("price") || "";
 
   const {
-    country,
-    property: globalProperty,
-    price: globalPrice,
+    country: contextCountry,
+    property: contextProperty,
+    price: contextPrice,
     properties,
     prices,
+    setCountry,
+    setProperty,
+    setPrice,
   } = (context || {
     country: "Select your place",
     property: "Select type",
     price: "Choose your price",
     properties: ["All Types", "Apartment", "House", "Studio"],
-    prices: ["All Prices", "300-600", "600-900", "900+"],
+    prices: staticPriceTiers,
+    setCountry: () => {},
     setProperty: () => {},
     setPrice: () => {},
   }) as HouseContextType;
+
+  // 2. Synchronize URL parameters into Context state on mount / URL change
+  useEffect(() => {
+    if (urlCountry) setCountry(urlCountry);
+    if (urlProperty) setProperty(urlProperty);
+    if (urlPrice) setPrice(urlPrice);
+  }, [urlCountry, urlProperty, urlPrice, setCountry, setProperty, setPrice]);
+
+  // 3. Prioritize URL values over context default placeholders
+  const country =
+    urlCountry ||
+    (contextCountry !== "Select your place" ? contextCountry : "");
+
+  const globalProperty =
+    urlProperty || (contextProperty !== "Select type" ? contextProperty : "");
+
+  const globalPrice =
+    urlPrice || (contextPrice !== "Choose your price" ? contextPrice : "");
 
   // Local view-only filter states
   const [activeTab, setActiveTab] = useState("Anyone");

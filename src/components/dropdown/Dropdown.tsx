@@ -86,7 +86,7 @@ export function Dropdown({
         {/* DROPDOWN LIST */}
         <Menu.Items
           style={{ borderColor: "var(--border)" }}
-          className={`dropdown-menu absolute top-[105%] left-0 w-fit max-h-[250px] overflow-y-auto scrollbar-thin shadow-xl border p-1.5 z-50 list-none divide-y divide-[var(--border)] rounded-md ${
+          className={`dropdown-menu absolute top-full left-0 min-w-full w-max max-h-[250px] overflow-y-auto scrollbar-thin shadow-2xl border p-1.5 z-[9999] list-none divide-y divide-[var(--border)] rounded-md ${
             smallSize ? "bg-[var(--bg)]" : "bg-[var(--card)]"
           }`}
         >

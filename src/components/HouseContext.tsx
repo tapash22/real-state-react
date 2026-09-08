@@ -45,9 +45,9 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
   const [price, setPrice] = useState("");
 
   const [filters, setFilters] = useState({
-    country: "",
-    property: "",
-    price: "",
+    country: "Select your place",
+    property: "Select type",
+    price: "Choose your price",
   });
 
   const houseData = useMemo(() => data?.houseData ?? [], [data?.houseData]);
@@ -71,12 +71,16 @@ export function HouseContextProvider({ children }: { children: ReactNode }) {
 
   /* Helpers */
   const isDefault = useCallback((value: string) => {
+    if (!value) return true;
     const normalizedValue = value.toLowerCase().trim();
 
     return (
       normalizedValue === "" ||
       normalizedValue.includes("any") ||
-      normalizedValue === "all prices"
+      normalizedValue.includes("select") ||
+      normalizedValue.includes("choose") ||
+      normalizedValue === "all prices" ||
+      normalizedValue === "all types"
     );
   }, []);
 

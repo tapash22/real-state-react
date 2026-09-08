@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { useContext, useEffect, useRef, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useHideMessageOnOutsideClick } from "../../hooks/useHideMessageOnOutsideClick";
 import { hideMessage, showMessage } from "../../utils/messageAnimation";
 import { Dropdown } from "../dropdown/Dropdown";
@@ -84,7 +84,16 @@ export function Search(_props: SearchProps) {
       });
     }
 
-    navigate("/search");
+    // Build URL query parameters dynamically for non-empty values
+    const queryParams: Record<string, string> = {};
+    if (country.trim()) queryParams.country = country.trim();
+    if (property.trim()) queryParams.property = property.trim();
+    if (price.trim()) queryParams.price = price.trim();
+
+    navigate({
+      pathname: "search",
+      search: `?${createSearchParams(queryParams)}`,
+    });
   };
 
   return (
