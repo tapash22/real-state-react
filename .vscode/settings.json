@@ -14,7 +14,6 @@
   "workbench.editor.titleScrollbarVisibility": "visible",
   "workbench.editor.untitled.labelFormat": "content",
   "workbench.editor.useModal": "off",
-  "workbench.editor.dragToOpenInNewWindow": "off",
   "window.density.editorTabHeight": "default",
   "workbench.editor.showTabs": "multiple",
   "workbench.editor.openSideBySideDirection": "right",
