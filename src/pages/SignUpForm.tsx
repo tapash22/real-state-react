@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +16,8 @@ interface SignUpFormProps {
 }
 
 const SignUpForm: React.FC<SignUpFormProps> = () => {
+  const boxRef = useRef<HTMLDivElement>(null);
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>("");
@@ -86,9 +88,15 @@ const SignUpForm: React.FC<SignUpFormProps> = () => {
     setErrors({});
   };
 
+  useEffect(() => {
+    const rect = boxRef.current?.getBoundingClientRect();
+
+    console.log(rect);
+  }, []);
   return (
     <div className="my-8 lg:my-16 w-full px-8 lg:px-16 transition-colors duration-300">
       <div className="flex flex-col justify-center items-center w-full space-y-3">
+        <div ref={boxRef}>Hello World</div>
         {/* header of form */}
         <div className="p-2 flex flex-col justify-start space-y-2 w-full h-auto lg:w-1/3 ">
           <h1 className="text-xl font-bold text-[var(--text)] tracking-wider whitespace-nowrap">

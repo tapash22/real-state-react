@@ -346,18 +346,6 @@ export default function RealEstateSearchModule() {
 
   if (!context) return null;
 
-  // Shared filter bar props to avoid code duplication
-  // const filterBarProps = {
-  //   activeTab,
-  //   setActiveTab,
-  //   localPrice,
-  //   setLocalPrice,
-  //   localProperty,
-  //   setLocalProperty,
-  //   priceList: prices || ["All Prices", "300-600", "600-900", "900+"],
-  //   propertyList: properties || ["All Types", "Apartment", "House", "Studio"],
-  // };
-
   return (
     <div className="flex flex-col w-full h-screen bg-[var(--bg)] overflow-hidden relative px-2 lg:px-8 py-0 space-y-0">
       {/* ─── MOBILE FILTER TOOLBAR HEADER ─── */}
