@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { BiArea, BiBath, BiBed, BiStar } from "react-icons/bi";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiShieldStarFill } from "react-icons/ri";
@@ -6,11 +6,11 @@ import { useParams } from "react-router-dom";
 
 import { FiDollarSign } from "react-icons/fi";
 import { useAppData } from "../../hooks/useAppData";
+import { useHouseContext } from "../../hooks/useHouseContext";
 import {
   CalendarInputPicker,
-  PickerRawData,
+  type PickerRawData,
 } from "../calendar/CalendarInputPicker";
-import { HouseContext } from "../HouseContext";
 import { SlidingToggle } from "../toggle/SlidingToggle";
 import { PropertySlider } from "./PropertySlider";
 import ResidenceDetails from "./ResidenceDetails";
@@ -25,8 +25,9 @@ type DateMode = "month" | "exact";
 export default function PropertyDetails() {
   const { data, isLoading: isResidenceDataLoading } = useAppData();
 
+  const { getHouseById, isLoading: isHouseDataLoading } = useHouseContext();
+
   const { id } = useParams<RouteParams>();
-  const context = useContext(HouseContext);
 
   // 1. Manage current toggle mode state
   const [dateMode, setDateMode] = useState<DateMode>("exact");
@@ -41,23 +42,27 @@ export default function PropertyDetails() {
     setRawOutput("{}"); // Reset raw output string payload
   };
 
-  // Mocking all data retrieved from the image layout
-  const residenceData = data?.residenceData;
+  /* ------------------------------------------------------------------------ */
+  /* Calendar Handler                                                         */
+  /* ------------------------------------------------------------------------ */
 
-  // Matches child signature requirements perfectly (2 input arguments)
   const handlePickerChange = (
     formattedValue: string,
     rawData: PickerRawData,
   ) => {
     setDisplayString(formattedValue);
+
     setRawOutput(JSON.stringify(rawData, null, 2));
   };
 
-  if (!context) return null;
+  // Mocking all data retrieved from the image layout
+  const residenceData = data?.residenceData;
 
-  const { getHouseById, isLoading } = context;
+  /* ------------------------------------------------------------------------ */
+  /* Loading State                                                             */
+  /* ------------------------------------------------------------------------ */
 
-  if (isLoading) {
+  if (isHouseDataLoading) {
     return (
       <div className="p-16 text-center font-medium text-gray-500">
         Loading details...
@@ -85,70 +90,129 @@ export default function PropertyDetails() {
   const propertyImages = [...baseImages, ...premiumPlaceholders].slice(0, 10);
 
   return (
-    <div className=" w-full px-5 py-3 lg:px-24">
-      <nav className="text-xs font-medium tracking-wider text-[var(--muted)] py-4">
-        {houseData.country} &gt; {houseData.address}
+    <div className="w-full px-5 py-3 lg:px-24">
+      {/* ------------------------------------------------------------------ */}
+      {/* Breadcrumb                                                          */}
+      {/* ------------------------------------------------------------------ */}
+
+      <nav className="py-4 text-xs font-medium tracking-wider text-[var(--muted)]">
+        {houseData.country}
+        {" > "}
+        {houseData.address}
       </nav>
 
-      {/* 2-Column Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start relative z-30">
-        {/* LEFT COLUMN: Scrollable Info Area */}
-        <div className="md:col-span-2 space-y-6">
-          {/* Reusable GSAP slider receiving dynamic item images */}
+      {/* ------------------------------------------------------------------ */}
+      {/* Main Layout                                                         */}
+      {/* ------------------------------------------------------------------ */}
+
+      <div className="relative z-30 grid grid-cols-1 items-start gap-8 md:grid-cols-3">
+        {/* ================================================================ */}
+        {/* LEFT COLUMN                                                       */}
+        {/* ================================================================ */}
+
+        <div className="space-y-6 md:col-span-2">
+          {/* -------------------------------------------------------------- */}
+          {/* Property Gallery                                                */}
+          {/* -------------------------------------------------------------- */}
+
           <PropertySlider images={propertyImages} />
+
+          {/* -------------------------------------------------------------- */}
+          {/* Property Information                                            */}
+          {/* -------------------------------------------------------------- */}
 
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">
               {houseData.name}
             </h1>
-            <p className="text-sm text-gray-500 font-mono tracking-wide">
+
+            <p className="font-mono text-sm tracking-wide text-gray-500">
               {houseData.address}
             </p>
 
-            <div className="text-2xl font-bold text-[var(--text)] ">
-              <FiDollarSign className="inline " />
+            {/* ---------------------------------------------------------- */}
+            {/* Price                                                        */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="text-2xl font-bold text-[var(--text)]">
+              <FiDollarSign className="inline" />
+
               {Number(houseData.price).toLocaleString()}
             </div>
+
+            {/* ---------------------------------------------------------- */}
+            {/* Property Stats                                               */}
+            {/* ---------------------------------------------------------- */}
 
             <div
               style={{
                 color: "var(--text-paragraph)",
                 borderColor: "var(--border)",
               }}
-              className="p-5 border-t-2 border-b-2 border-[var(--border)] flex flex-row space-x-5 text-xs font-bold transition-all duration-300   "
+              className="
+                flex
+                flex-row
+                space-x-5
+                border-b-2
+                border-t-2
+                border-[var(--border)]
+                p-5
+                text-xs
+                font-bold
+                transition-all
+                duration-300
+              "
             >
+              {/* Beds */}
+
               <div className="flex items-center gap-1 lg:gap-2">
-                <BiBed className="text-sm lg:text-lg opacity-80" />
+                <BiBed className="text-sm opacity-80 lg:text-lg" />
+
                 <span className="text-xs font-semibold tracking-wide">
                   {houseData.bedroom} Beds
                 </span>
               </div>
+
+              {/* Baths */}
+
               <div className="flex items-center gap-2">
-                <BiBath className="text-sm lg:text-lg opacity-80 " />
+                <BiBath className="text-sm opacity-80 lg:text-lg" />
+
                 <span className="text-xs font-semibold tracking-wide">
                   {houseData.bathroom} Baths
                 </span>
               </div>
-              <div className="flex items-center gap-2 ">
-                <BiArea className="text-sm lg:text-lg opacity-80" />
+
+              {/* Area / Year */}
+
+              <div className="flex items-center gap-2">
+                <BiArea className="text-sm opacity-80 lg:text-lg" />
+
                 <span className="text-xs font-semibold tracking-wide">
-                  {/* {surface} */}
                   {houseData.year}
                 </span>
               </div>
             </div>
 
+            {/* ---------------------------------------------------------- */}
+            {/* Description                                                 */}
+            {/* ---------------------------------------------------------- */}
+
             <div className="py-2">
-              <h3 className="font-semibold text-lg text-[var(--text)]  space-y-2">
+              <h3 className="space-y-2 text-lg font-semibold text-[var(--text)]">
                 Description
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed capitalize">
+
+              <p className="text-sm leading-relaxed text-gray-600 capitalize">
                 {houseData.description}
               </p>
             </div>
-            <div className="space-y-2">
-              {/* other content */}
 
+            {/* ---------------------------------------------------------- */}
+            {/* Residence Details                                           */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="space-y-2">
               {isResidenceDataLoading ? (
                 <p className="text-sm text-gray-500">Loading...</p>
               ) : residenceData ? (
@@ -162,50 +226,93 @@ export default function PropertyDetails() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Sticky Agent Contact Panel */}
-        <div className="sticky top-6 bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] shadow-md shadow-[var(--primary)] border border-[var(--border)] rounded-xl  p-2 space-y-6 min-w-[60%] max-w-[80%] z-20 overflow-visible ">
+        {/* ================================================================ */}
+        {/* RIGHT COLUMN                                                      */}
+        {/* ================================================================ */}
+
+        <div
+          className="
+            sticky
+            top-6
+            z-20
+            min-w-[60%]
+            max-w-[80%]
+            space-y-6
+            overflow-visible
+            rounded-xl
+            border
+            border-[var(--border)]
+            bg-[color-mix(in_srgb,var(--bg)_60%,transparent)]
+            p-2
+            shadow-md
+            shadow-[var(--primary)]
+          "
+        >
+          {/* -------------------------------------------------------------- */}
+          {/* Agent Section                                                   */}
+          {/* -------------------------------------------------------------- */}
+
           <div className="space-y-2">
-            <div className="flex justify-start items-center p-3 border-b-2 border-[var(--border)] ">
-              <div className="border-2 border-[var(--boorder)] w-16 h-14 rounded-full overflow-hidden flex justify-center items-center shadow-lg shadow-[var(--bg-shadow)]">
+            <div className="flex items-center justify-start border-b-2 border-[var(--border)] p-3">
+              {/* Agent Image */}
+
+              <div className="flex h-14 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-[var(--border)] shadow-lg shadow-[var(--bg-shadow)]">
                 <img
                   src={houseData.agent.image}
                   alt={houseData.agent.name}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <div className="flex justify-start items-start flex-col space-y-2 p-2 w-full ">
-                <div className="flex items-start justify-between gap-3">
-                  <h4 className="font-bold text-[var(--text)] text-sm capitalize text-start">
+
+              {/* Agent Information */}
+
+              <div className="flex w-full flex-col items-start justify-start space-y-2 p-2">
+                <div className="flex w-full items-start justify-between gap-3">
+                  <h4 className="text-start text-sm font-bold capitalize text-[var(--text)]">
                     {houseData.agent.name}
                   </h4>
+
+                  {/* Rating */}
+
                   <div
-                    style={{ color: "var(--text-heading)" }}
-                    className="flex items-center justify-center gap-1 text-sm font-bold shrink-0"
+                    style={{
+                      color: "var(--text-heading)",
+                    }}
+                    className="flex shrink-0 items-center justify-center gap-1 text-sm font-bold"
                   >
-                    <BiStar className="text-amber-400 text-base" />
+                    <BiStar className="text-base text-amber-400" />
+
                     <span>4.8</span>
+
                     <span
-                      style={{ color: "var(--text-paragraph)" }}
-                      className="font-normal tracking-wider text-xs opacity-80"
+                      style={{
+                        color: "var(--text-paragraph)",
+                      }}
+                      className="text-xs font-normal tracking-wider opacity-80"
                     >
                       (62)
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-start items-center space-x-2  w-full px-1">
+
+                {/* Verification */}
+
+                <div className="flex w-full items-center justify-start space-x-2 px-1">
                   <p className="flex flex-row items-center space-x-1">
                     <IoShieldCheckmarkOutline
                       size={20}
                       className="text-green-900"
                     />
 
-                    <span className="text-xs text-gray-500 font-semibold tracking-wider text-[var(--muted)] ">
-                      Varified
+                    <span className="text-xs font-semibold tracking-wider text-[var(--muted)]">
+                      Verified
                     </span>
                   </p>
+
                   <p className="flex flex-row items-center space-x-1">
                     <RiShieldStarFill size={20} className="text-green-700" />
-                    <span className="text-xs text-gray-500 font-semibold text-[var(--muted)]  whitespace-nowrap tracking-wider">
+
+                    <span className="whitespace-nowrap text-xs font-semibold tracking-wider text-[var(--muted)]">
                       Excellent Landlord
                     </span>
                   </p>
@@ -213,11 +320,16 @@ export default function PropertyDetails() {
               </div>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col justify-start items-start space-y-2">
+            {/* ---------------------------------------------------------- */}
+            {/* Starting Price                                              */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="flex h-auto w-full flex-col items-start justify-start space-y-2 border-b-2 border-[var(--border)] p-3">
               <p className="text-sm font-medium tracking-wider text-[var(--muted)]">
                 From
               </p>
-              <h1 className=" text-3xl font-semibold tracking-wider text-[var(--text)] space-x-1 flex items-center gap-1">
+
+              <h1 className="flex items-center gap-1 text-3xl font-semibold tracking-wider text-[var(--text)]">
                 <FiDollarSign size={16} />
                 78
                 <span className="text-sm font-light tracking-wider text-[var(--muted)]">
@@ -226,8 +338,12 @@ export default function PropertyDetails() {
               </h1>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col items-center">
-              <p className="text-sm font-light tracking-wider leading-relaxed text-[var(--text)] text-start">
+            {/* ---------------------------------------------------------- */}
+            {/* Agent Description                                            */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="flex h-auto w-full flex-col items-center border-b-2 border-[var(--border)] p-3">
+              <p className="text-start text-sm font-light leading-relaxed tracking-wider text-[var(--text)]">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi
                 enim nesciunt laborum ab cupiditate nobis, ad ipsum ducimus fuga
                 fugit inventore consectetur esse quaerat autem officiis cum.
@@ -235,45 +351,69 @@ export default function PropertyDetails() {
               </p>
             </div>
 
-            <div className="w-full h-auto border-b-2 border-[var(--border)] p-3 flex flex-col items-start space-y-2">
-              <h2 className="text-lg font-semibold tracking-wider whitespace-nowrap">
+            {/* ---------------------------------------------------------- */}
+            {/* Available Places                                             */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="flex h-auto w-full flex-col items-start space-y-2 border-b-2 border-[var(--border)] p-3">
+              <h2 className="whitespace-nowrap text-lg font-semibold tracking-wider">
                 Available places
               </h2>
-              <ul className="flex flex-col w-full h-auto space-y-2 ">
-                <li className="flex justify-between items-center w-full">
-                  <span className="text-sm font-medium tracking-wider text-[var(--muted)] ">
+
+              <ul className="flex h-auto w-full flex-col space-y-2">
+                <li className="flex w-full items-center justify-between">
+                  <span className="text-sm font-medium tracking-wider text-[var(--muted)]">
                     Studio (3)
                   </span>
-                  <span className="text-sm font-semibold tracking-wider text-[var(--muted)] ">
+
+                  <span className="text-sm font-semibold tracking-wider text-[var(--muted)]">
                     18 m2+
                   </span>
                 </li>
-                <li className="flex justify-between items-center w-full">
-                  <span className="text-sm font-medium tracking-wider text-[var(--muted)] ">
+
+                <li className="flex w-full items-center justify-between">
+                  <span className="text-sm font-medium tracking-wider text-[var(--muted)]">
                     Studio (2)
                   </span>
-                  <span className="text-sm font-semibold tracking-wider text-[var(--muted)] ">
+
+                  <span className="text-sm font-semibold tracking-wider text-[var(--muted)]">
                     20 m2+
                   </span>
                 </li>
               </ul>
             </div>
 
-            <div className="w-full h-auto p-3 flex flex-col justify-start space-y-2 ">
-              <h2 className="text-lg font-semibold tracking-wider whitespace-nowrap text-start">
+            {/* ---------------------------------------------------------- */}
+            {/* Move Planner                                                 */}
+            {/* ---------------------------------------------------------- */}
+
+            <div className="flex h-auto w-full flex-col justify-start space-y-2 p-3">
+              <h2 className="whitespace-nowrap text-start text-lg font-semibold tracking-wider">
                 Plan your move
               </h2>
-              <div className="flex flex-col items-center space-y-3 ">
-                <div className="px-5 w-full">
+
+              <div className="flex flex-col items-center space-y-3">
+                {/* Date Mode */}
+
+                <div className="w-full px-5">
                   <SlidingToggle<DateMode>
                     selectedValue={dateMode}
                     onChange={handleToggleChange}
                     options={[
-                      { value: "month", label: "By month" },
-                      { value: "exact", label: "Exact dates" },
+                      {
+                        value: "month",
+                        label: "By month",
+                      },
+                      {
+                        value: "exact",
+                        label: "Exact dates",
+                      },
                     ]}
                   />
                 </div>
+
+                {/* Calendar */}
+
                 <CalendarInputPicker
                   mode={dateMode}
                   placeholder={
@@ -283,23 +423,43 @@ export default function PropertyDetails() {
                   }
                   onChange={handlePickerChange}
                 />
+
+                {/* Calendar Debug Output */}
+
                 {displayString.trim() !== "" && (
                   <div className="space-y-2">
                     <p className="text-xs text-slate-500">
                       <strong>Formatted String:</strong> {displayString}
                     </p>
+
                     <div>
-                      <p className="text-xs text-slate-500 mb-1">
+                      <p className="mb-1 text-xs text-slate-500">
                         <strong>Raw Database Payload Object:</strong>
                       </p>
-                      <pre className="text-[10px] font-mono bg-slate-50 p-2 text-slate-700 rounded-lg max-h-40 overflow-y-auto">
+
+                      <pre className="max-h-40 overflow-y-auto rounded-lg bg-slate-50 p-2 font-mono text-[10px] text-slate-700">
                         {rawOutput}
                       </pre>
                     </div>
                   </div>
                 )}
 
-                <button className="w-full h-full p-3 border border-[var(--card)] shadow-sm shadow-[var(--primary)] rounded-md  text-sm">
+                {/* Available Places Button */}
+
+                <button
+                  type="button"
+                  className="
+                    h-full
+                    w-full
+                    rounded-md
+                    border
+                    border-[var(--card)]
+                    p-3
+                    text-sm
+                    shadow-sm
+                    shadow-[var(--primary)]
+                  "
+                >
                   Show Available Places
                 </button>
               </div>

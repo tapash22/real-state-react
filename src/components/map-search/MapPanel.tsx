@@ -1,5 +1,5 @@
 import L from "leaflet";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MapContainer, Pane, TileLayer } from "react-leaflet";
 import { MapBounds, PropertyLike } from "../../data";
 import { MapBoundsHandler } from "./MapBoundsHandler";
@@ -32,27 +32,72 @@ export const MapPanel: React.FC<MapPanelProps> = ({
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
-  // Safe callback fallback handlers
-  const handleHover = onHover || setHoveredId || (() => {});
-  const handleBoundsChange = onBoundsChange || (() => {});
-  const markerLayers = getMarkerLayers(hoveredId);
+  /* ------------------------------------------------------------------------ */
+  /* Hover Handler                                                            */
+  /* ------------------------------------------------------------------------ */
+
+  const handleHover = useCallback(
+    (id: number | null) => {
+      if (onHover) {
+        onHover(id);
+        return;
+      }
+
+      if (setHoveredId) {
+        setHoveredId(id);
+      }
+    },
+    [onHover, setHoveredId],
+  );
+
+  /* ------------------------------------------------------------------------ */
+  /* Bounds Handler                                                           */
+  /* ------------------------------------------------------------------------ */
+
+  const handleBoundsChange = useCallback(
+    (bounds: MapBounds) => {
+      onBoundsChange?.(bounds);
+    },
+    [onBoundsChange],
+  );
+
+  /* ------------------------------------------------------------------------ */
+  /* Marker Layers                                                            */
+  /* ------------------------------------------------------------------------ */
+
+  const markerLayers = useMemo(() => getMarkerLayers(hoveredId), [hoveredId]);
+
+  /* ------------------------------------------------------------------------ */
+  /* Initial Map Setup                                                        */
+  /* ------------------------------------------------------------------------ */
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) {
+      return;
+    }
 
+    /*
+     * Leaflet sometimes calculates its size before
+     * the container has reached its final dimensions.
+     *
+     * invalidateSize() forces Leaflet to recalculate
+     * the map dimensions.
+     */
     map.invalidateSize();
 
-    if (!onBoundsChange) return;
+    if (!onBoundsChange) {
+      return;
+    }
 
     const bounds = map.getBounds();
 
-    onBoundsChange({
+    handleBoundsChange({
       north: bounds.getNorth(),
       east: bounds.getEast(),
       south: bounds.getSouth(),
       west: bounds.getWest(),
     });
-  }, [map, onBoundsChange]);
+  }, [map, onBoundsChange, handleBoundsChange]);
 
   return (
     <div

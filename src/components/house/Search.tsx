@@ -1,19 +1,23 @@
 import gsap from "gsap";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { useHideMessageOnOutsideClick } from "../../hooks/useHideMessageOnOutsideClick";
+import { useHouseContext } from "../../hooks/useHouseContext";
 import { hideMessage, showMessage } from "../../utils/messageAnimation";
 import { Dropdown } from "../dropdown/Dropdown";
-import { HouseContext, type HouseContextType } from "../HouseContext";
 
 type SearchProps = {
   // add later if needed
 };
 
 export function Search(_props: SearchProps) {
-  const context = useContext(HouseContext);
+  const { countries, properties, prices } = useHouseContext();
+  // const context = useContext(HouseContext);
 
+  const [country, setCountry] = useState("");
+  const [property, setProperty] = useState("");
+  const [price, setPrice] = useState("");
   const [show, setShow] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -44,29 +48,47 @@ export function Search(_props: SearchProps) {
         setShow,
       }),
   });
+  /*
+   * Check whether value is a placeholder.
+   */
+  const isDefaultValue = (value: string) => {
+    if (!value.trim()) return true;
 
-  if (!context) return null;
+    const normalized = value.toLowerCase().trim();
 
-  const {
-    country,
-    setCountry,
-    countries,
+    return (
+      normalized.includes("any") ||
+      normalized.includes("select") ||
+      normalized.includes("choose")
+    );
+  };
 
-    property,
-    setProperty,
-    properties,
+  // if (!context) return null;
 
-    price,
-    setPrice,
-    prices,
-  } = context as HouseContextType;
+  // const {
+  //   country,
+  //   setCountry,
+  //   countries,
+
+  //   property,
+  //   setProperty,
+  //   properties,
+
+  //   price,
+  //   setPrice,
+  //   prices,
+  // } = context as HouseContextType;
 
   //  Wrap handler to combine context filter updates and path redirecting
   const handleSearchSubmit = () => {
-    const hasSearchValue =
-      !!country.trim() || !!property.trim() || !!price.trim();
+    const validCountry = !isDefaultValue(country);
+    const validProperty = !isDefaultValue(property);
+    const validPrice = !isDefaultValue(price);
 
-    if (!hasSearchValue) {
+    /*
+     * At least one real search option
+     */
+    if (!validCountry && !validProperty && !validPrice) {
       if (!show) {
         showMessage({
           messageRef,
@@ -77,6 +99,9 @@ export function Search(_props: SearchProps) {
       return;
     }
 
+    /*
+     * Hide validation message
+     */
     if (show) {
       hideMessage({
         messageRef,
@@ -84,15 +109,33 @@ export function Search(_props: SearchProps) {
       });
     }
 
-    // Build URL query parameters dynamically for non-empty values
-    const queryParams: Record<string, string> = {};
-    if (country.trim()) queryParams.country = country.trim();
-    if (property.trim()) queryParams.property = property.trim();
-    if (price.trim()) queryParams.price = price.trim();
+    /*
+     * Build URL parameters.
+     */
+    const params: Record<string, string> = {};
 
+    if (validCountry) {
+      params.country = country.trim();
+    }
+
+    if (validProperty) {
+      params.property = property.trim();
+    }
+
+    if (validPrice) {
+      params.price = price.trim();
+    }
+
+    /*
+     * Navigate to List/Search page.
+     *
+     * Example:
+     *
+     * /search?country=Dhaka&property=Apartment&price=1000-3000
+     */
     navigate({
-      pathname: "search",
-      search: `?${createSearchParams(queryParams)}`,
+      pathname: "/search",
+      search: `?${createSearchParams(params)}`,
     });
   };
 
