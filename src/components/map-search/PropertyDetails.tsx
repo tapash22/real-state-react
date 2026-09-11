@@ -42,10 +42,7 @@ export default function PropertyDetails() {
     setRawOutput("{}"); // Reset raw output string payload
   };
 
-  /* ------------------------------------------------------------------------ */
   /* Calendar Handler                                                         */
-  /* ------------------------------------------------------------------------ */
-
   const handlePickerChange = (
     formattedValue: string,
     rawData: PickerRawData,
@@ -58,10 +55,7 @@ export default function PropertyDetails() {
   // Mocking all data retrieved from the image layout
   const residenceData = data?.residenceData;
 
-  /* ------------------------------------------------------------------------ */
   /* Loading State                                                             */
-  /* ------------------------------------------------------------------------ */
-
   if (isHouseDataLoading) {
     return (
       <div className="p-16 text-center font-medium text-gray-500">
@@ -91,36 +85,21 @@ export default function PropertyDetails() {
 
   return (
     <div className="w-full px-5 py-3 lg:px-24">
-      {/* ------------------------------------------------------------------ */}
       {/* Breadcrumb                                                          */}
-      {/* ------------------------------------------------------------------ */}
-
       <nav className="py-4 text-xs font-medium tracking-wider text-[var(--muted)]">
         {houseData.country}
         {" > "}
         {houseData.address}
       </nav>
 
-      {/* ------------------------------------------------------------------ */}
       {/* Main Layout                                                         */}
-      {/* ------------------------------------------------------------------ */}
-
       <div className="relative z-30 grid grid-cols-1 items-start gap-8 md:grid-cols-3">
-        {/* ================================================================ */}
         {/* LEFT COLUMN                                                       */}
-        {/* ================================================================ */}
-
         <div className="space-y-6 md:col-span-2">
-          {/* -------------------------------------------------------------- */}
           {/* Property Gallery                                                */}
-          {/* -------------------------------------------------------------- */}
-
           <PropertySlider images={propertyImages} />
 
-          {/* -------------------------------------------------------------- */}
           {/* Property Information                                            */}
-          {/* -------------------------------------------------------------- */}
-
           <div className="space-y-2">
             <h1 className="text-3xl font-bold tracking-tight">
               {houseData.name}
@@ -130,20 +109,13 @@ export default function PropertyDetails() {
               {houseData.address}
             </p>
 
-            {/* ---------------------------------------------------------- */}
             {/* Price                                                        */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="text-2xl font-bold text-[var(--text)]">
               <FiDollarSign className="inline" />
-
               {Number(houseData.price).toLocaleString()}
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Property Stats                                               */}
-            {/* ---------------------------------------------------------- */}
-
             <div
               style={{
                 color: "var(--text-paragraph)",
@@ -164,54 +136,41 @@ export default function PropertyDetails() {
               "
             >
               {/* Beds */}
-
               <div className="flex items-center gap-1 lg:gap-2">
                 <BiBed className="text-sm opacity-80 lg:text-lg" />
-
                 <span className="text-xs font-semibold tracking-wide">
                   {houseData.bedroom} Beds
                 </span>
               </div>
 
               {/* Baths */}
-
               <div className="flex items-center gap-2">
                 <BiBath className="text-sm opacity-80 lg:text-lg" />
-
                 <span className="text-xs font-semibold tracking-wide">
                   {houseData.bathroom} Baths
                 </span>
               </div>
 
               {/* Area / Year */}
-
               <div className="flex items-center gap-2">
                 <BiArea className="text-sm opacity-80 lg:text-lg" />
-
                 <span className="text-xs font-semibold tracking-wide">
                   {houseData.year}
                 </span>
               </div>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Description                                                 */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="py-2">
               <h3 className="space-y-2 text-lg font-semibold text-[var(--text)]">
                 Description
               </h3>
-
               <p className="text-sm leading-relaxed text-gray-600 capitalize">
                 {houseData.description}
               </p>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Residence Details                                           */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="space-y-2">
               {isResidenceDataLoading ? (
                 <p className="text-sm text-gray-500">Loading...</p>
@@ -226,10 +185,7 @@ export default function PropertyDetails() {
           </div>
         </div>
 
-        {/* ================================================================ */}
         {/* RIGHT COLUMN                                                      */}
-        {/* ================================================================ */}
-
         <div
           className="
             sticky
@@ -248,14 +204,10 @@ export default function PropertyDetails() {
             shadow-[var(--primary)]
           "
         >
-          {/* -------------------------------------------------------------- */}
           {/* Agent Section                                                   */}
-          {/* -------------------------------------------------------------- */}
-
           <div className="space-y-2">
             <div className="flex items-center justify-start border-b-2 border-[var(--border)] p-3">
               {/* Agent Image */}
-
               <div className="flex h-14 w-16 items-center justify-center overflow-hidden rounded-full border-2 border-[var(--border)] shadow-lg shadow-[var(--bg-shadow)]">
                 <img
                   src={houseData.agent.image}
@@ -265,7 +217,6 @@ export default function PropertyDetails() {
               </div>
 
               {/* Agent Information */}
-
               <div className="flex w-full flex-col items-start justify-start space-y-2 p-2">
                 <div className="flex w-full items-start justify-between gap-3">
                   <h4 className="text-start text-sm font-bold capitalize text-[var(--text)]">
@@ -273,7 +224,6 @@ export default function PropertyDetails() {
                   </h4>
 
                   {/* Rating */}
-
                   <div
                     style={{
                       color: "var(--text-heading)",
@@ -296,14 +246,12 @@ export default function PropertyDetails() {
                 </div>
 
                 {/* Verification */}
-
                 <div className="flex w-full items-center justify-start space-x-2 px-1">
                   <p className="flex flex-row items-center space-x-1">
                     <IoShieldCheckmarkOutline
                       size={20}
                       className="text-green-900"
                     />
-
                     <span className="text-xs font-semibold tracking-wider text-[var(--muted)]">
                       Verified
                     </span>
@@ -311,7 +259,6 @@ export default function PropertyDetails() {
 
                   <p className="flex flex-row items-center space-x-1">
                     <RiShieldStarFill size={20} className="text-green-700" />
-
                     <span className="whitespace-nowrap text-xs font-semibold tracking-wider text-[var(--muted)]">
                       Excellent Landlord
                     </span>
@@ -320,10 +267,7 @@ export default function PropertyDetails() {
               </div>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Starting Price                                              */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="flex h-auto w-full flex-col items-start justify-start space-y-2 border-b-2 border-[var(--border)] p-3">
               <p className="text-sm font-medium tracking-wider text-[var(--muted)]">
                 From
@@ -338,10 +282,7 @@ export default function PropertyDetails() {
               </h1>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Agent Description                                            */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="flex h-auto w-full flex-col items-center border-b-2 border-[var(--border)] p-3">
               <p className="text-start text-sm font-light leading-relaxed tracking-wider text-[var(--text)]">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi
@@ -351,10 +292,7 @@ export default function PropertyDetails() {
               </p>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Available Places                                             */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="flex h-auto w-full flex-col items-start space-y-2 border-b-2 border-[var(--border)] p-3">
               <h2 className="whitespace-nowrap text-lg font-semibold tracking-wider">
                 Available places
@@ -383,10 +321,7 @@ export default function PropertyDetails() {
               </ul>
             </div>
 
-            {/* ---------------------------------------------------------- */}
             {/* Move Planner                                                 */}
-            {/* ---------------------------------------------------------- */}
-
             <div className="flex h-auto w-full flex-col justify-start space-y-2 p-3">
               <h2 className="whitespace-nowrap text-start text-lg font-semibold tracking-wider">
                 Plan your move
@@ -394,7 +329,6 @@ export default function PropertyDetails() {
 
               <div className="flex flex-col items-center space-y-3">
                 {/* Date Mode */}
-
                 <div className="w-full px-5">
                   <SlidingToggle<DateMode>
                     selectedValue={dateMode}
@@ -413,7 +347,6 @@ export default function PropertyDetails() {
                 </div>
 
                 {/* Calendar */}
-
                 <CalendarInputPicker
                   mode={dateMode}
                   placeholder={
@@ -425,7 +358,6 @@ export default function PropertyDetails() {
                 />
 
                 {/* Calendar Debug Output */}
-
                 {displayString.trim() !== "" && (
                   <div className="space-y-2">
                     <p className="text-xs text-slate-500">
@@ -445,7 +377,6 @@ export default function PropertyDetails() {
                 )}
 
                 {/* Available Places Button */}
-
                 <button
                   type="button"
                   className="

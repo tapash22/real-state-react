@@ -63,31 +63,13 @@ export function Search(_props: SearchProps) {
     );
   };
 
-  // if (!context) return null;
-
-  // const {
-  //   country,
-  //   setCountry,
-  //   countries,
-
-  //   property,
-  //   setProperty,
-  //   properties,
-
-  //   price,
-  //   setPrice,
-  //   prices,
-  // } = context as HouseContextType;
-
   //  Wrap handler to combine context filter updates and path redirecting
   const handleSearchSubmit = () => {
     const validCountry = !isDefaultValue(country);
     const validProperty = !isDefaultValue(property);
     const validPrice = !isDefaultValue(price);
 
-    /*
-     * At least one real search option
-     */
+    /* At least one real search option */
     if (!validCountry && !validProperty && !validPrice) {
       if (!show) {
         showMessage({
@@ -95,13 +77,10 @@ export function Search(_props: SearchProps) {
           setShow,
         });
       }
-
       return;
     }
 
-    /*
-     * Hide validation message
-     */
+    /* Hide validation message */
     if (show) {
       hideMessage({
         messageRef,
@@ -109,30 +88,19 @@ export function Search(_props: SearchProps) {
       });
     }
 
-    /*
-     * Build URL parameters.
-     */
+    /*  Build URL parameters. */
     const params: Record<string, string> = {};
 
     if (validCountry) {
       params.country = country.trim();
     }
-
     if (validProperty) {
       params.property = property.trim();
     }
-
     if (validPrice) {
       params.price = price.trim();
     }
 
-    /*
-     * Navigate to List/Search page.
-     *
-     * Example:
-     *
-     * /search?country=Dhaka&property=Apartment&price=1000-3000
-     */
     navigate({
       pathname: "/search",
       search: `?${createSearchParams(params)}`,

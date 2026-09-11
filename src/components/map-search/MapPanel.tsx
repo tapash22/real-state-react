@@ -32,10 +32,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
-  /* ------------------------------------------------------------------------ */
   /* Hover Handler                                                            */
-  /* ------------------------------------------------------------------------ */
-
   const handleHover = useCallback(
     (id: number | null) => {
       if (onHover) {
@@ -50,10 +47,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
     [onHover, setHoveredId],
   );
 
-  /* ------------------------------------------------------------------------ */
   /* Bounds Handler                                                           */
-  /* ------------------------------------------------------------------------ */
-
   const handleBoundsChange = useCallback(
     (bounds: MapBounds) => {
       onBoundsChange?.(bounds);
@@ -61,16 +55,10 @@ export const MapPanel: React.FC<MapPanelProps> = ({
     [onBoundsChange],
   );
 
-  /* ------------------------------------------------------------------------ */
   /* Marker Layers                                                            */
-  /* ------------------------------------------------------------------------ */
-
   const markerLayers = useMemo(() => getMarkerLayers(hoveredId), [hoveredId]);
 
-  /* ------------------------------------------------------------------------ */
   /* Initial Map Setup                                                        */
-  /* ------------------------------------------------------------------------ */
-
   useEffect(() => {
     if (!map) {
       return;

@@ -94,10 +94,7 @@ export default function RealEstateSearchModule() {
     return [DEFAULT_PRICE, ...filteredPrices];
   }, [prices]);
 
-  /* ------------------------------------------------------------------------ */
   /* Sync URL -> Drawer Draft State */
-  /* ------------------------------------------------------------------------ */
-
   useEffect(() => {
     setLocalPrice(appliedPrice || DEFAULT_PRICE);
 
@@ -105,10 +102,8 @@ export default function RealEstateSearchModule() {
 
     setActiveTab(appliedTab || DEFAULT_TAB);
   }, [appliedPrice, appliedProperty, appliedTab]);
-  /* ------------------------------------------------------------------------ */
-  /* Responsive Screen Listener */
-  /* ------------------------------------------------------------------------ */
 
+  /* Responsive Screen Listener */
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -121,10 +116,7 @@ export default function RealEstateSearchModule() {
     };
   }, []);
 
-  /* ------------------------------------------------------------------------ */
   /* Dynamic Map Center */
-  /* ------------------------------------------------------------------------ */
-
   useEffect(() => {
     if (!appliedCountry) {
       return;
@@ -141,10 +133,7 @@ export default function RealEstateSearchModule() {
     }
   }, [appliedCountry, houses]);
 
-  /* ------------------------------------------------------------------------ */
   /* Recent Search Storage */
-  /* ------------------------------------------------------------------------ */
-
   useEffect(() => {
     if (!appliedCountry) {
       return;
@@ -186,17 +175,11 @@ export default function RealEstateSearchModule() {
     }
   }, [appliedCountry, appliedProperty, appliedPrice, appliedTab]);
 
-  /* ------------------------------------------------------------------------ */
   /* Filter Houses */
-  /* ------------------------------------------------------------------------ */
-
   const filteredProperties = useMemo(() => {
     let results = [...houses];
 
-    /* ---------------------------------------------------------------------- */
     /* 1. Country */
-    /* ---------------------------------------------------------------------- */
-
     if (appliedCountry) {
       const normalizedCountry = appliedCountry.toLowerCase().trim();
 
@@ -205,10 +188,7 @@ export default function RealEstateSearchModule() {
       );
     }
 
-    /* ---------------------------------------------------------------------- */
     /* 2. Property Type */
-    /* ---------------------------------------------------------------------- */
-
     if (!isDefaultProperty(appliedProperty)) {
       const normalizedProperty = appliedProperty.toLowerCase().trim();
 
@@ -217,10 +197,7 @@ export default function RealEstateSearchModule() {
       );
     }
 
-    /* ---------------------------------------------------------------------- */
     /* 3. Price */
-    /* ---------------------------------------------------------------------- */
-
     if (!isDefaultPrice(appliedPrice)) {
       const { min, max } = getPriceRange(appliedPrice);
 
@@ -231,10 +208,7 @@ export default function RealEstateSearchModule() {
       });
     }
 
-    /* ---------------------------------------------------------------------- */
     /* 4. Demographic */
-    /* ---------------------------------------------------------------------- */
-
     if (appliedTab !== DEFAULT_TAB) {
       const demographicKeyword = appliedTab.toLowerCase().replace(/s$/, "");
 
@@ -248,10 +222,7 @@ export default function RealEstateSearchModule() {
       });
     }
 
-    /* ---------------------------------------------------------------------- */
     /* 5. Map Bounds */
-    /* ---------------------------------------------------------------------- */
-
     if (mapBounds) {
       const mapProperties = results.map(prepareMapProperty);
 
@@ -316,17 +287,12 @@ export default function RealEstateSearchModule() {
 
   const isLoading = isHouseDataLoading || isFiltering;
 
-  /* ------------------------------------------------------------------------ */
   /* Map Bounds */
-  /* ------------------------------------------------------------------------ */
-
   const handleBoundsChange = useCallback((bounds: MapBounds) => {
     setMapBounds(bounds);
   }, []);
-  /* ------------------------------------------------------------------------ */
-  /* Apply Filter Drawer */
-  /* ------------------------------------------------------------------------ */
 
+  /* Apply Filter Drawer */
   const handleApplyFilters = useCallback(() => {
     const nextParams = new URLSearchParams(searchParams);
 
@@ -350,16 +316,11 @@ export default function RealEstateSearchModule() {
     } else {
       nextParams.delete("tab");
     }
-
     setSearchParams(nextParams);
-
     setIsFilterDialogOpen(false);
   }, [searchParams, localProperty, localPrice, activeTab, setSearchParams]);
 
-  /* ------------------------------------------------------------------------ */
   /* Clear Filters */
-  /* ------------------------------------------------------------------------ */
-
   const handleClearFilters = useCallback(() => {
     /**
      * Clear ALL search filters.
@@ -378,10 +339,7 @@ export default function RealEstateSearchModule() {
     setMapBounds(null);
   }, [setSearchParams]);
 
-  /* ------------------------------------------------------------------------ */
   /* Filter Count */
-  /* ------------------------------------------------------------------------ */
-
   const filterCount = useMemo(() => {
     return (
       (appliedProperty && !isDefaultProperty(appliedProperty) ? 1 : 0) +
@@ -411,10 +369,7 @@ export default function RealEstateSearchModule() {
         lg:px-8
       "
     >
-      {/* ------------------------------------------------------------------ */}
       {/* FILTER TOOLBAR */}
-      {/* ------------------------------------------------------------------ */}
-
       <div
         className="
           flex
@@ -431,10 +386,7 @@ export default function RealEstateSearchModule() {
           lg:p-3
         "
       >
-        {/* -------------------------------------------------------------- */}
         {/* DEMOGRAPHIC TABS */}
-        {/* -------------------------------------------------------------- */}
-
         <div
           className="
             flex
@@ -499,10 +451,7 @@ export default function RealEstateSearchModule() {
           })}
         </div>
 
-        {/* -------------------------------------------------------------- */}
         {/* FILTER BUTTON */}
-        {/* -------------------------------------------------------------- */}
-
         <div className="flex w-full items-center justify-end lg:w-auto">
           <button
             type="button"
@@ -565,10 +514,7 @@ export default function RealEstateSearchModule() {
         </div>
       </div>
 
-      {/* ------------------------------------------------------------------ */}
       {/* FILTER DRAWER */}
-      {/* ------------------------------------------------------------------ */}
-
       <FilterBar
         isOpen={isFilterDialogOpen}
         onClose={() => setIsFilterDialogOpen(false)}
@@ -585,10 +531,7 @@ export default function RealEstateSearchModule() {
         propertyList={propertyList}
       />
 
-      {/* ------------------------------------------------------------------ */}
       {/* MAIN CONTENT */}
-      {/* ------------------------------------------------------------------ */}
-
       <div
         style={isMobile ? styles.mobileContainer : styles.desktopContainer}
         className={`
@@ -596,10 +539,7 @@ export default function RealEstateSearchModule() {
           ${isMobile ? "overflow-y-auto" : "overflow-hidden"}
         `}
       >
-        {/* -------------------------------------------------------------- */}
         {/* MAP */}
-        {/* -------------------------------------------------------------- */}
-
         <div
           style={isMobile ? styles.mobileMapWrapper : styles.desktopMapWrapper}
           className="
@@ -623,10 +563,7 @@ export default function RealEstateSearchModule() {
           />
         </div>
 
-        {/* -------------------------------------------------------------- */}
         {/* PROPERTY LIST */}
-        {/* -------------------------------------------------------------- */}
-
         {(!isMobile || hasProperties) && (
           <div
             style={
@@ -655,25 +592,16 @@ export default function RealEstateSearchModule() {
             `}
           >
             <div className="px-2 py-4 lg:px-4 lg:py-6">
-              {/* -------------------------------------------------------- */}
               {/* LOADING */}
-              {/* -------------------------------------------------------- */}
-
               {isLoading ? (
                 <div className="flex h-48 items-center justify-center">
                   <GsapLoader searchType={appliedProperty || "Properties"} />
                 </div>
               ) : !hasProperties ? (
-                /* ------------------------------------------------------ */
                 /* EMPTY STATE */
-                /* ------------------------------------------------------ */
-
                 <NoProperties />
               ) : (
-                /* ------------------------------------------------------ */
                 /* PROPERTY CARDS */
-                /* ------------------------------------------------------ */
-
                 <div
                   className="
                     grid
