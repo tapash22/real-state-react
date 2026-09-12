@@ -1,8 +1,7 @@
 import { createContext, ReactNode, useCallback, useMemo } from "react";
 import type { House } from "../data";
 import { useAppData } from "../hooks/useAppData";
-// import { houseData } from "../data";
-/* ----------------------------- */
+
 export type HouseContextType = {
   houses: House[];
   countries: string[];
@@ -13,7 +12,6 @@ export type HouseContextType = {
   getHouseById: (id: string | number) => House | undefined;
 };
 
-/* ----------------------------- */
 export const HouseContext = createContext<HouseContextType | undefined>(
   undefined,
 );

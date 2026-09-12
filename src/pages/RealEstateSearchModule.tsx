@@ -3,8 +3,7 @@ import { LuSlidersHorizontal } from "react-icons/lu";
 import { useSearchParams } from "react-router-dom";
 import { MapPanel } from "../components/map-search/MapPanel";
 import { styles } from "../components/map-search/styles";
-import { mockDatabaseFetch } from "../components/map-search/utils";
-import { MapBounds, Property } from "../types/types";
+import { MapBounds } from "../types/types";
 // Import your shared global House Context & Cards
 import { Link } from "react-router-dom";
 import { NoProperties } from "../components/empty/NoProperties";
@@ -16,11 +15,11 @@ import {
   DEFAULT_PRICE,
   DEFAULT_PROPERTY,
   DEFAULT_TAB,
-  getPriceRange,
+  TABS,
+  filterHouses,
   isDefaultPrice,
   isDefaultProperty,
   prepareMapProperty,
-  TABS,
 } from "../utils/propertyFilters";
 
 export default function RealEstateSearchModule() {
@@ -30,53 +29,41 @@ export default function RealEstateSearchModule() {
     prices,
     isLoading: isHouseDataLoading,
   } = useHouseContext();
+
   // Read search parameters from current URL
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Extract query parameters with fallbacks
   const appliedCountry = searchParams.get("country") || "";
-
   const appliedProperty = searchParams.get("property") || "";
-
   const appliedPrice = searchParams.get("price") || "";
-
   const appliedTab = searchParams.get("tab") || DEFAULT_TAB;
 
+  /* Local Drawer State */
   const [localPrice, setLocalPrice] = useState(appliedPrice || DEFAULT_PRICE);
-
   const [localProperty, setLocalProperty] = useState(
     appliedProperty || DEFAULT_PROPERTY,
   );
-
   const [activeTab, setActiveTab] = useState(appliedTab || DEFAULT_TAB);
 
+  /* Map State */
   // 3. Prioritize URL values over context default placeholders
-
   const [mapBounds, setMapBounds] = useState<MapBounds | null>(null);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([
+    23.7925, 90.4078,
+  ]);
+
   // const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [isMobile, setIsMobile] = useState<boolean>(
     typeof window !== "undefined" && window.innerWidth < 768,
   );
 
+  /* Filter Dialog */
   // ─── NEW STATE FOR MOBILE DIALOG ───
   const [isFilterDialogOpen, setIsFilterDialogOpen] = useState<boolean>(false);
 
-  const [mapCenter, setMapCenter] = useState<[number, number]>([
-    23.7925, 90.4078,
-  ]);
-
-  /**
-   * Your new HouseContext provides:
-   *
-   * properties = ["property any type", "Apartment", ...]
-   *
-   * But the FilterDrawer UI currently uses:
-   *
-   * "All Types"
-   *
-   * So we normalize the UI list here.
-   */
+  /* Property List */
   const propertyList = useMemo(() => {
     const filteredProperties = properties.filter(
       (property) => !property.toLowerCase().includes("any type"),
@@ -85,9 +72,7 @@ export default function RealEstateSearchModule() {
     return [DEFAULT_PROPERTY, ...filteredProperties];
   }, [properties]);
 
-  /**
-   * Normalize price options for the FilterDrawer.
-   */
+  /* Price List */
   const priceList = useMemo(() => {
     const filteredPrices = prices.filter((price) => !isDefaultPrice(price));
 
@@ -97,9 +82,7 @@ export default function RealEstateSearchModule() {
   /* Sync URL -> Drawer Draft State */
   useEffect(() => {
     setLocalPrice(appliedPrice || DEFAULT_PRICE);
-
     setLocalProperty(appliedProperty || DEFAULT_PROPERTY);
-
     setActiveTab(appliedTab || DEFAULT_TAB);
   }, [appliedPrice, appliedProperty, appliedTab]);
 
@@ -108,9 +91,7 @@ export default function RealEstateSearchModule() {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
-
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -121,13 +102,10 @@ export default function RealEstateSearchModule() {
     if (!appliedCountry) {
       return;
     }
-
     const normalizedCountry = appliedCountry.toLowerCase().trim();
-
     const matchingHouse = houses.find(
       (house) => house.country?.toLowerCase().trim() === normalizedCountry,
     );
-
     if (matchingHouse) {
       setMapCenter([matchingHouse.lat, matchingHouse.lng]);
     }
@@ -138,7 +116,6 @@ export default function RealEstateSearchModule() {
     if (!appliedCountry) {
       return;
     }
-
     const currentSearchPayload = {
       timestamp: new Date().toISOString(),
       searchedCountry: appliedCountry,
@@ -151,7 +128,6 @@ export default function RealEstateSearchModule() {
       const existingHistory = JSON.parse(
         localStorage.getItem("recent_searches") || "[]",
       );
-
       const isSameSearch =
         existingHistory[0]?.searchedCountry ===
           currentSearchPayload.searchedCountry &&
@@ -161,13 +137,11 @@ export default function RealEstateSearchModule() {
           currentSearchPayload.searchedPriceRange &&
         existingHistory[0]?.targetDemographic ===
           currentSearchPayload.targetDemographic;
-
       if (!isSameSearch) {
         const updatedHistory = [currentSearchPayload, ...existingHistory].slice(
           0,
           10,
         );
-
         localStorage.setItem("recent_searches", JSON.stringify(updatedHistory));
       }
     } catch {
@@ -177,79 +151,13 @@ export default function RealEstateSearchModule() {
 
   /* Filter Houses */
   const filteredProperties = useMemo(() => {
-    let results = [...houses];
-
-    /* 1. Country */
-    if (appliedCountry) {
-      const normalizedCountry = appliedCountry.toLowerCase().trim();
-
-      results = results.filter(
-        (house) => house.country?.toLowerCase().trim() === normalizedCountry,
-      );
-    }
-
-    /* 2. Property Type */
-    if (!isDefaultProperty(appliedProperty)) {
-      const normalizedProperty = appliedProperty.toLowerCase().trim();
-
-      results = results.filter(
-        (house) => house.type?.toLowerCase().trim() === normalizedProperty,
-      );
-    }
-
-    /* 3. Price */
-    if (!isDefaultPrice(appliedPrice)) {
-      const { min, max } = getPriceRange(appliedPrice);
-
-      results = results.filter((house) => {
-        const housePrice = Number(house.price);
-
-        return housePrice >= min && housePrice <= max;
-      });
-    }
-
-    /* 4. Demographic */
-    if (appliedTab !== DEFAULT_TAB) {
-      const demographicKeyword = appliedTab.toLowerCase().replace(/s$/, "");
-
-      results = results.filter((house) => {
-        const targetString = `
-          ${house.type || ""}
-          ${house.description || ""}
-        `.toLowerCase();
-
-        return targetString.includes(demographicKeyword);
-      });
-    }
-
-    /* 5. Map Bounds */
-    if (mapBounds) {
-      const mapProperties = results.map(prepareMapProperty);
-
-      const boundedResults = mockDatabaseFetch(
-        mapBounds,
-        mapProperties,
-      ) as Property[];
-
-      /**
-       * Preserve your previous behavior:
-       *
-       * If the map returns properties,
-       * use those properties.
-       *
-       * If it returns zero,
-       * keep the normal filter results.
-       */
-      if (boundedResults.length > 0) {
-        const boundedIds = new Set(
-          boundedResults.map((property) => String(property.id)),
-        );
-
-        results = results.filter((house) => boundedIds.has(String(house.id)));
-      }
-    }
-
-    return results;
+    return filterHouses(houses, {
+      country: appliedCountry,
+      property: appliedProperty,
+      price: appliedPrice,
+      tab: appliedTab,
+      mapBounds,
+    });
   }, [
     houses,
     appliedCountry,
@@ -266,13 +174,10 @@ export default function RealEstateSearchModule() {
       setIsFiltering(false);
       return;
     }
-
     setIsFiltering(true);
-
     const timer = window.setTimeout(() => {
       setIsFiltering(false);
     }, 120);
-
     return () => {
       window.clearTimeout(timer);
     };
@@ -302,14 +207,12 @@ export default function RealEstateSearchModule() {
     } else {
       nextParams.delete("property");
     }
-
     /* Price */
     if (!isDefaultPrice(localPrice)) {
       nextParams.set("price", localPrice);
     } else {
       nextParams.delete("price");
     }
-
     /* Demographic */
     if (activeTab !== DEFAULT_TAB) {
       nextParams.set("tab", activeTab);
@@ -324,18 +227,13 @@ export default function RealEstateSearchModule() {
   const handleClearFilters = useCallback(() => {
     /**
      * Clear ALL search filters.
-     *
      * This removes country as well because the user selected
      * "Clear Filters".
      */
     setSearchParams({});
-
     setLocalPrice(DEFAULT_PRICE);
-
     setLocalProperty(DEFAULT_PROPERTY);
-
     setActiveTab(DEFAULT_TAB);
-
     setMapBounds(null);
   }, [setSearchParams]);
 
@@ -536,7 +434,7 @@ export default function RealEstateSearchModule() {
         style={isMobile ? styles.mobileContainer : styles.desktopContainer}
         className={`
           flex-1
-          ${isMobile ? "overflow-y-auto" : "overflow-hidden"}
+          ${isMobile ? "overflow-y-auto" : "overflow-auto"}
         `}
       >
         {/* MAP */}
@@ -575,6 +473,7 @@ export default function RealEstateSearchModule() {
               ${
                 isMobile
                   ? `
+                  min-h-[400px]
                     h-auto
                     overflow-visible
                     border-b-2
@@ -598,7 +497,6 @@ export default function RealEstateSearchModule() {
                   <GsapLoader searchType={appliedProperty || "Properties"} />
                 </div>
               ) : !hasProperties ? (
-                /* EMPTY STATE */
                 <NoProperties />
               ) : (
                 /* PROPERTY CARDS */

@@ -69,10 +69,7 @@ export function Dropdown({
     >
       {({ open }) => (
         <>
-          {/* =====================================================
-              TRIGGER BUTTON
-          ====================================================== */}
-
+          {/* TRIGGER BUTTON */}
           <Menu.Button
             type="button"
             style={{
@@ -117,10 +114,7 @@ export function Dropdown({
               }
             `}
           >
-            {/* =================================================
-                LEFT SIDE
-            ================================================== */}
-
+            {/* LEFT SIDE */}
             <div
               className={`
                 flex
@@ -129,7 +123,6 @@ export function Dropdown({
               `}
             >
               {/* MAIN ICON */}
-
               {Icon && (
                 <Icon
                   style={{
@@ -141,7 +134,6 @@ export function Dropdown({
               )}
 
               {/* TEXT */}
-
               <div className="space-y-0.5 text-left">
                 {/*
                  * Desktop selected value
@@ -190,10 +182,7 @@ export function Dropdown({
               </div>
             </div>
 
-            {/* =================================================
-                ARROW
-            ================================================== */}
-
+            {/* ARROW  */}
             <div
               style={{
                 color: "var(--text)",
@@ -218,10 +207,7 @@ export function Dropdown({
             </div>
           </Menu.Button>
 
-          {/* =====================================================
-              DROPDOWN LIST
-          ====================================================== */}
-
+          {/*  DROPDOWN LIST */}
           <Menu.Items
             style={{
               borderColor: "var(--border)",
