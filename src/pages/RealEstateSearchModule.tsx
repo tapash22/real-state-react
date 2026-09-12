@@ -11,15 +11,19 @@ import { FilterBar } from "../components/filter/FilterBar";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
 import { useHouseContext } from "../hooks/useHouseContext";
+import { useRecentSearches } from "../hooks/useRecentSearches";
 import {
+  applyFilterParams,
+  buildPriceList,
+  buildPropertyList,
   DEFAULT_PRICE,
   DEFAULT_PROPERTY,
   DEFAULT_TAB,
-  TABS,
   filterHouses,
   isDefaultPrice,
   isDefaultProperty,
   prepareMapProperty,
+  TABS,
 } from "../utils/propertyFilters";
 
 export default function RealEstateSearchModule() {
@@ -39,6 +43,13 @@ export default function RealEstateSearchModule() {
   const appliedPrice = searchParams.get("price") || "";
   const appliedTab = searchParams.get("tab") || DEFAULT_TAB;
 
+  /* Track recent searches via custom hook */
+  useRecentSearches({
+    appliedCountry,
+    appliedProperty,
+    appliedPrice,
+    appliedTab,
+  });
   /* Local Drawer State */
   const [localPrice, setLocalPrice] = useState(appliedPrice || DEFAULT_PRICE);
   const [localProperty, setLocalProperty] = useState(
@@ -54,7 +65,6 @@ export default function RealEstateSearchModule() {
     23.7925, 90.4078,
   ]);
 
-  // const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
   const [isMobile, setIsMobile] = useState<boolean>(
     typeof window !== "undefined" && window.innerWidth < 768,
   );
@@ -65,18 +75,12 @@ export default function RealEstateSearchModule() {
 
   /* Property List */
   const propertyList = useMemo(() => {
-    const filteredProperties = properties.filter(
-      (property) => !property.toLowerCase().includes("any type"),
-    );
-
-    return [DEFAULT_PROPERTY, ...filteredProperties];
+    return buildPropertyList(properties);
   }, [properties]);
 
   /* Price List */
   const priceList = useMemo(() => {
-    const filteredPrices = prices.filter((price) => !isDefaultPrice(price));
-
-    return [DEFAULT_PRICE, ...filteredPrices];
+    return buildPriceList(prices);
   }, [prices]);
 
   /* Sync URL -> Drawer Draft State */
@@ -110,44 +114,6 @@ export default function RealEstateSearchModule() {
       setMapCenter([matchingHouse.lat, matchingHouse.lng]);
     }
   }, [appliedCountry, houses]);
-
-  /* Recent Search Storage */
-  useEffect(() => {
-    if (!appliedCountry) {
-      return;
-    }
-    const currentSearchPayload = {
-      timestamp: new Date().toISOString(),
-      searchedCountry: appliedCountry,
-      searchedPropertyType: appliedProperty || DEFAULT_PROPERTY,
-      searchedPriceRange: appliedPrice || "Any Budget",
-      targetDemographic: appliedTab,
-    };
-
-    try {
-      const existingHistory = JSON.parse(
-        localStorage.getItem("recent_searches") || "[]",
-      );
-      const isSameSearch =
-        existingHistory[0]?.searchedCountry ===
-          currentSearchPayload.searchedCountry &&
-        existingHistory[0]?.searchedPropertyType ===
-          currentSearchPayload.searchedPropertyType &&
-        existingHistory[0]?.searchedPriceRange ===
-          currentSearchPayload.searchedPriceRange &&
-        existingHistory[0]?.targetDemographic ===
-          currentSearchPayload.targetDemographic;
-      if (!isSameSearch) {
-        const updatedHistory = [currentSearchPayload, ...existingHistory].slice(
-          0,
-          10,
-        );
-        localStorage.setItem("recent_searches", JSON.stringify(updatedHistory));
-      }
-    } catch {
-      localStorage.removeItem("recent_searches");
-    }
-  }, [appliedCountry, appliedProperty, appliedPrice, appliedTab]);
 
   /* Filter Houses */
   const filteredProperties = useMemo(() => {
@@ -199,26 +165,12 @@ export default function RealEstateSearchModule() {
 
   /* Apply Filter Drawer */
   const handleApplyFilters = useCallback(() => {
-    const nextParams = new URLSearchParams(searchParams);
+    const nextParams = applyFilterParams(searchParams, {
+      property: localProperty,
+      price: localPrice,
+      tab: activeTab,
+    });
 
-    /* Property */
-    if (!isDefaultProperty(localProperty)) {
-      nextParams.set("property", localProperty);
-    } else {
-      nextParams.delete("property");
-    }
-    /* Price */
-    if (!isDefaultPrice(localPrice)) {
-      nextParams.set("price", localPrice);
-    } else {
-      nextParams.delete("price");
-    }
-    /* Demographic */
-    if (activeTab !== DEFAULT_TAB) {
-      nextParams.set("tab", activeTab);
-    } else {
-      nextParams.delete("tab");
-    }
     setSearchParams(nextParams);
     setIsFilterDialogOpen(false);
   }, [searchParams, localProperty, localPrice, activeTab, setSearchParams]);
@@ -461,87 +413,88 @@ export default function RealEstateSearchModule() {
           />
         </div>
 
-        {/* PROPERTY LIST */}
-        {(!isMobile || hasProperties) && (
-          <div
-            style={
-              isMobile ? styles.mobileListWrapper : styles.desktopListWrapper
+        {/* PROPERTY LIST / EMPTY STATE */}
+        <div
+          style={
+            isMobile ? styles.mobileListWrapper : styles.desktopListWrapper
+          }
+          className={`
+            w-full
+            h-full
+            flex items-center
+            bg-[var(--bg)]
+            ${
+              isMobile
+                ? `
+                  min-h-[300px]
+                  h-auto
+                  overflow-visible
+                  border-b-2
+                  border-[var(--border)]
+                `
+                : `
+                  h-full
+                  overflow-x-hidden
+                  overflow-y-scroll
+                  border-r-2
+                  border-[var(--border)]
+                  scrollbar-thin
+                `
             }
-            className={`
-              w-full
-              bg-[var(--bg)]
-              ${
-                isMobile
-                  ? `
-                  min-h-[400px]
-                    h-auto
-                    overflow-visible
-                    border-b-2
-                    border-[var(--border)]
-                  `
-                  : `
-                    h-full
-                    overflow-x-hidden
-                    overflow-y-scroll
-                    border-r-2
-                    border-[var(--border)]
-                    scrollbar-thin
-                  `
-              }
-            `}
-          >
-            <div className="px-2 py-4 lg:px-4 lg:py-6">
-              {/* LOADING */}
-              {isLoading ? (
-                <div className="flex h-48 items-center justify-center">
-                  <GsapLoader searchType={appliedProperty || "Properties"} />
-                </div>
-              ) : !hasProperties ? (
-                <NoProperties />
-              ) : (
-                /* PROPERTY CARDS */
-                <div
-                  className="
-                    grid
-                    grid-cols-1
-                    items-stretch
-                    justify-center
-                    gap-5
-                    lg:grid-cols-2
-                    lg:gap-6
-                  "
-                >
-                  {filteredProperties.map((house) => (
-                    <Link
-                      to={`/property/${house.id}`}
-                      key={house.id}
-                      className={`
-                          block
-                          rounded-xl
-                          no-underline
-                          transition-all
-                          duration-200
-                          focus:outline-none
-                          ${
-                            hoveredId === house.id
-                              ? `
-                                scale-[1.01]
-                                shadow-md
-                              `
-                              : ""
-                          }
-                        `}
-                      onMouseEnter={() => setHoveredId(Number(house.id))}
-                      onMouseLeave={() => setHoveredId(null)}
-                    >
-                      <HouseCard house={house} />
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+          `}
+        >
+          <div className="px-2 py-4 lg:px-4 lg:py-6">
+            {/* LOADING STATE */}
+            {isLoading ? (
+              <div className="flex h-48 items-center justify-center">
+                <GsapLoader searchType={appliedProperty || "Properties"} />
+              </div>
+            ) : !hasProperties ? (
+              /* EMPTY STATE (Handles mobile & desktop when no properties match) */
+              <NoProperties />
+            ) : (
+              /* PROPERTY CARDS GRID */
+              <div
+                className="
+                  grid
+                  grid-cols-1
+                  items-stretch
+                  justify-center
+                  gap-5
+                  lg:grid-cols-2
+                  lg:gap-6
+                "
+              >
+                {filteredProperties.map((house) => (
+                  <Link
+                    to={`/property/${house.id}`}
+                    key={house.id}
+                    className={`
+                      block
+                      rounded-xl
+                      no-underline
+                      transition-all
+                      duration-200
+                      focus:outline-none
+                      ${
+                        hoveredId === house.id
+                          ? `
+                            scale-[1.01]
+                            shadow-md
+                          `
+                          : ""
+                      }
+                    `}
+                    onMouseEnter={() => setHoveredId(Number(house.id))}
+                    onMouseLeave={() => setHoveredId(null)}
+                  >
+                    <HouseCard house={house} />
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

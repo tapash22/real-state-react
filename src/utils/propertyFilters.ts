@@ -1,5 +1,5 @@
 import { mockDatabaseFetch } from "../components/map-search/utils";
-import type { House } from "../data";
+import type { House, MapBounds } from "../data";
 import type { Property } from "../types/types";
 
 /* Constants */
@@ -27,12 +27,13 @@ export type HouseFilterOptions = {
   property?: string;
   price?: string;
   tab?: PropertyFilterTab | string;
-  mapBounds?: {
-    north: number;
-    south: number;
-    east: number;
-    west: number;
-  } | null;
+  mapBounds?: MapBounds | null;
+};
+
+export type ApplyFilterParamsOptions = {
+  property: string;
+  price: string;
+  tab: PropertyFilterTab | string;
 };
 
 /* Property Helpers */
@@ -58,6 +59,49 @@ export function isDefaultPrice(value: string): boolean {
     normalized.includes("any budget") ||
     normalized.includes("choose your price")
   );
+}
+/** Builds the processed property list with DEFAULT_PROPERTY prepended */
+export function buildPropertyList(properties: string[] = []): string[] {
+  const filteredProperties = properties.filter(
+    (property) => !property.toLowerCase().includes("any type"),
+  );
+  return [DEFAULT_PROPERTY, ...filteredProperties];
+}
+
+/** Builds the processed price list with DEFAULT_PRICE prepended */
+export function buildPriceList(prices: string[] = []): string[] {
+  const filteredPrices = prices.filter((price) => !isDefaultPrice(price));
+  return [DEFAULT_PRICE, ...filteredPrices];
+}
+
+export function applyFilterParams(
+  searchParams: URLSearchParams,
+  { property, price, tab }: ApplyFilterParamsOptions,
+): URLSearchParams {
+  const nextParams = new URLSearchParams(searchParams);
+
+  /* Property */
+  if (!isDefaultProperty(property)) {
+    nextParams.set("property", property);
+  } else {
+    nextParams.delete("property");
+  }
+
+  /* Price */
+  if (!isDefaultPrice(price)) {
+    nextParams.set("price", price);
+  } else {
+    nextParams.delete("price");
+  }
+
+  /* Demographic */
+  if (tab !== DEFAULT_TAB) {
+    nextParams.set("tab", tab);
+  } else {
+    nextParams.delete("tab");
+  }
+
+  return nextParams;
 }
 
 /* Price Helpers */
@@ -101,10 +145,7 @@ export function getPriceRange(value: string): PriceRange {
     max,
   };
 }
-/* -------------------------------------------------------------------------- */
-/* House Filtering                                                            */
-/* -------------------------------------------------------------------------- */
-
+/* House Filtering */
 export function filterHouses(
   houses: House[],
   {
