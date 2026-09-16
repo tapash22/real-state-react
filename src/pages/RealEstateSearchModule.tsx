@@ -10,6 +10,7 @@ import { NoProperties } from "../components/empty/NoProperties";
 import { FilterBar } from "../components/filter/FilterBar";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
+import { TABS } from "../data";
 import { useHouseContext } from "../hooks/useHouseContext";
 import { useRecentSearches } from "../hooks/useRecentSearches";
 import {
@@ -23,7 +24,6 @@ import {
   isDefaultPrice,
   isDefaultProperty,
   prepareMapProperty,
-  TABS,
 } from "../utils/propertyFilters";
 
 export default function RealEstateSearchModule() {
@@ -207,48 +207,49 @@ export default function RealEstateSearchModule() {
   return (
     <div
       className="
-        relative
-        flex
-        h-screen
-        w-full
-        flex-col
-        overflow-hidden
-        bg-[var(--bg)]
-        px-2
-        py-0
-        lg:px-8
-      "
+      relative
+      flex
+      h-[100dvh]
+      w-full
+      flex-col
+      overflow-hidden
+      bg-[var(--bg)]
+      px-2
+      py-0
+      lg:px-8
+    "
     >
       {/* FILTER TOOLBAR */}
       <div
         className="
-          flex
-          w-full
-          flex-col
-          items-center
-          justify-between
-          space-y-0
-          border-b-2
-          border-[var(--border)]
-          bg-[var(--bg)]
-          py-3
-          lg:flex-row
-          lg:p-3
-        "
+        flex
+        w-full
+        shrink-0
+        flex-col
+        items-center
+        justify-between
+        space-y-0
+        border-b-2
+        border-[var(--border)]
+        bg-[var(--bg)]
+        py-3
+        lg:flex-row
+        lg:p-3
+      "
       >
         {/* DEMOGRAPHIC TABS */}
         <div
           className="
-            flex
-            items-center
-            gap-4
-            overflow-x-auto
-            scrollbar-none
-            bg-[var(--bg)]
-            p-2
-            text-sm
-            font-medium
-          "
+          flex
+          items-center
+          gap-4
+          overflow-x-auto
+          scrollbar-none
+          bg-[var(--bg)]
+          p-2
+          text-sm
+          font-medium
+        "
         >
           {TABS.map((tab) => {
             const isActive = appliedTab === tab;
@@ -269,31 +270,31 @@ export default function RealEstateSearchModule() {
                   setSearchParams(nextParams);
                 }}
                 className={`
-                  relative
-                  whitespace-nowrap
-                  tracking-wide
-                  transition-colors
-                  ${
-                    isActive
-                      ? `
-                        rounded-lg
-                        bg-[var(--card)]
-                        p-3
-                        text-sm
-                        font-bold
-                        text-[var(--text)]
-                        shadow-md
-                        lg:p-4
-                        lg:shadow-sm
-                      `
-                      : `
-                        text-sm
-                        font-normal
-                        text-[var(--muted)]
-                        hover:text-[var(--text)]
-                      `
-                  }
-                `}
+                relative
+                whitespace-nowrap
+                tracking-wide
+                transition-colors
+                ${
+                  isActive
+                    ? `
+                      rounded-lg
+                      bg-[var(--card)]
+                      p-3
+                      text-sm
+                      font-bold
+                      text-[var(--text)]
+                      shadow-md
+                      lg:p-4
+                      lg:shadow-sm
+                    `
+                    : `
+                      text-sm
+                      font-normal
+                      text-[var(--muted)]
+                      hover:text-[var(--text)]
+                    `
+                }
+              `}
               >
                 {tab}
               </button>
@@ -307,22 +308,22 @@ export default function RealEstateSearchModule() {
             type="button"
             onClick={() => setIsFilterDialogOpen(true)}
             className="
-              flex
-              items-center
-              space-x-3
-              rounded-full
-              border
-              border-[var(--border)]
-              bg-[var(--card)]
-              px-4
-              py-2
-              text-sm
-              font-medium
-              text-[var(--text)]
-              shadow-sm
-              shadow-[var(--primary)]
-              transition-colors
-            "
+            flex
+            items-center
+            space-x-3
+            rounded-full
+            border
+            border-[var(--border)]
+            bg-[var(--card)]
+            px-4
+            py-2
+            text-sm
+            font-medium
+            text-[var(--text)]
+            shadow-sm
+            shadow-[var(--primary)]
+            transition-colors
+          "
           >
             <LuSlidersHorizontal
               size={16}
@@ -331,32 +332,32 @@ export default function RealEstateSearchModule() {
 
             <span
               className="
-                text-sm
-                font-semibold
-                tracking-wider
-                text-[var(--text)]
-              "
+              text-sm
+              font-semibold
+              tracking-wider
+              text-[var(--text)]
+            "
             >
               Filters
             </span>
 
             <span
               className="
-                flex
-                h-auto
-                w-auto
-                items-center
-                justify-center
-                rounded-full
-                border-2
-                border-[var(--border)]
-                bg-[var(--bg)]
-                px-2
-                py-1
-                text-sm
-                font-semibold
-                text-[var(--text)]
-              "
+              flex
+              h-auto
+              w-auto
+              items-center
+              justify-center
+              rounded-full
+              border-2
+              border-[var(--border)]
+              bg-[var(--bg)]
+              px-2
+              py-1
+              text-sm
+              font-semibold
+              text-[var(--text)]
+            "
             >
               {filterCount}
             </span>
@@ -381,26 +382,29 @@ export default function RealEstateSearchModule() {
         propertyList={propertyList}
       />
 
-      {/* MAIN CONTENT */}
+      {/* MAIN CONTENT CONTAINER */}
       <div
         style={isMobile ? styles.mobileContainer : styles.desktopContainer}
-        className={`
-          flex-1
-          ${isMobile ? "overflow-y-auto" : "overflow-auto"}
-        `}
+        className="
+        flex
+        flex-1
+        min-h-0
+        w-full
+        overflow-hidden
+      "
       >
         {/* MAP */}
         <div
           style={isMobile ? styles.mobileMapWrapper : styles.desktopMapWrapper}
           className="
-            relative
-            flex-shrink-0
-            rounded-2xl
-            border-b-2
-            border-[var(--border)]
-            p-3
-            shadow-lg
-          "
+          relative
+          shrink-0
+          rounded-2xl
+          border-b-2
+          border-[var(--border)]
+          p-3
+          shadow-lg
+        "
         >
           <MapPanel
             properties={mapProperties}
@@ -419,72 +423,69 @@ export default function RealEstateSearchModule() {
             isMobile ? styles.mobileListWrapper : styles.desktopListWrapper
           }
           className={`
-            w-full
-            h-full
-            flex items-center
-            bg-[var(--bg)]
-            ${
-              isMobile
-                ? `
-                  min-h-[300px]
-                  h-auto
-                  overflow-visible
-                  border-b-2
-                  border-[var(--border)]
-                `
-                : `
-                  h-full
-                  overflow-x-hidden
-                  overflow-y-scroll
-                  border-r-2
-                  border-[var(--border)]
-                  scrollbar-thin
-                `
-            }
-          `}
+          w-full
+          flex-1
+          min-h-0
+          bg-[var(--bg)]
+          ${
+            isMobile
+              ? `
+                overflow-y-auto
+                border-b-2
+                border-[var(--border)]
+              `
+              : `
+                overflow-y-auto
+                overflow-x-hidden
+                border-r-2
+                border-[var(--border)]
+                scrollbar-thin
+              `
+          }
+        `}
         >
-          <div className="px-2 py-4 lg:px-4 lg:py-6">
+          <div className="w-full px-2 py-4 lg:px-4 lg:py-6">
             {/* LOADING STATE */}
             {isLoading ? (
               <div className="flex h-48 items-center justify-center">
                 <GsapLoader searchType={appliedProperty || "Properties"} />
               </div>
             ) : !hasProperties ? (
-              /* EMPTY STATE (Handles mobile & desktop when no properties match) */
+              /* EMPTY STATE */
               <NoProperties />
             ) : (
               /* PROPERTY CARDS GRID */
               <div
                 className="
-                  grid
-                  grid-cols-1
-                  items-stretch
-                  justify-center
-                  gap-5
-                  lg:grid-cols-2
-                  lg:gap-6
-                "
+                grid
+                grid-cols-1
+                items-start
+                justify-center
+                gap-5
+                lg:grid-cols-2
+                lg:gap-6
+              "
               >
                 {filteredProperties.map((house) => (
                   <Link
                     to={`/property/${house.id}`}
                     key={house.id}
                     className={`
-                      block
-                      rounded-xl
-                      no-underline
-                      transition-all
-                      duration-200
-                      focus:outline-none
-                      ${
-                        hoveredId === house.id
-                          ? `
-                            scale-[1.01]
-                            shadow-md
-                          `
-                          : ""
-                      }
-                    `}
+                    block
+                    rounded-xl
+                    no-underline
+                    transition-all
+                    duration-200
+                    focus:outline-none
+                    ${
+                      hoveredId === house.id
+                        ? `
+                          scale-[1.01]
+                          shadow-md
+                        `
+                        : ""
+                    }
+                  `}
                     onMouseEnter={() => setHoveredId(Number(house.id))}
                     onMouseLeave={() => setHoveredId(null)}
                   >

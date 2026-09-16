@@ -31,9 +31,41 @@ export const demoUser: User = {
   email: "demo@example.com",
 };
 
+// map properties type declared and  the new format data with array of objects added
+export interface MapBounds {
+  north: number;
+  east: number;
+  south: number;
+  west: number;
+}
+
 export type SocialMediaItems = SocialMediaItem[];
 
 export const bangladeshCenter: [number, number] = [23.685, 90.3563];
+
+export const TABS = ["Anyone", "Student", "Professional", "Familie"] as const;
+
+/* Types */
+export type PropertyFilterTab = (typeof TABS)[number];
+
+export type PriceRange = {
+  min: number;
+  max: number;
+};
+
+export type HouseFilterOptions = {
+  country?: string;
+  property?: string;
+  price?: string;
+  tab?: PropertyFilterTab | string;
+  mapBounds?: MapBounds | null;
+};
+
+export type ApplyFilterParamsOptions = {
+  property: string;
+  price: string;
+  tab: PropertyFilterTab | string;
+};
 
 export const staticPriceTiers = [
   "All Prices",
@@ -134,25 +166,6 @@ export interface FaqItem {
   answer: string;
   link?: string | null;
 }
-
-// export interface House {
-//   id: number;
-//   type: string;
-//   rating: number;
-//   name: string;
-//   description: string;
-//   image: string;
-//   imageLg: string;
-//   country: string;
-//   address: string;
-
-//   bedroom: string;
-//   bathroom: string;
-//   surface: string;
-//   year: string;
-//   price: string;
-//   agent: Agent;
-// }
 
 export const socialMediaLinkList: SocialMediaItems = [
   {
@@ -1186,15 +1199,6 @@ export const articleData: ArticleData = {
     },
   ],
 };
-
-// map properties type declared and  the new format data with array of objects added
-
-export interface MapBounds {
-  north: number;
-  east: number;
-  south: number;
-  west: number;
-}
 
 // Omit strict fields from MapItem/Property and make them optional/flexible
 

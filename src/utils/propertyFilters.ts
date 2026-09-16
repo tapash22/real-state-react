@@ -1,40 +1,16 @@
 import { mockDatabaseFetch } from "../components/map-search/utils";
-import type { House, MapBounds } from "../data";
+import type {
+  ApplyFilterParamsOptions,
+  House,
+  HouseFilterOptions,
+  PriceRange,
+} from "../data";
 import type { Property } from "../types/types";
 
 /* Constants */
 export const DEFAULT_TAB = "Anyone";
 export const DEFAULT_PROPERTY = "All Types";
 export const DEFAULT_PRICE = "All Prices";
-
-export const TABS = [
-  "Anyone",
-  "Students",
-  "Professionals",
-  "Families",
-] as const;
-
-/* Types */
-export type PropertyFilterTab = (typeof TABS)[number];
-
-export type PriceRange = {
-  min: number;
-  max: number;
-};
-
-export type HouseFilterOptions = {
-  country?: string;
-  property?: string;
-  price?: string;
-  tab?: PropertyFilterTab | string;
-  mapBounds?: MapBounds | null;
-};
-
-export type ApplyFilterParamsOptions = {
-  property: string;
-  price: string;
-  tab: PropertyFilterTab | string;
-};
 
 /* Property Helpers */
 /** Check whether a property filter means "no property filter".*/
@@ -105,14 +81,7 @@ export function applyFilterParams(
 }
 
 /* Price Helpers */
-/**
- * Convert price range text into min/max values.
- * Supported examples:
- * "300-600"   -> 300 to 600
- * "600-900"   -> 600 to 900
- * "3000+"     -> 3000 to Infinity
- * "All Prices" -> no restriction
- */
+
 export function getPriceRange(value: string): PriceRange {
   if (isDefaultPrice(value)) {
     return {
@@ -186,7 +155,7 @@ export function filterHouses(
   }
   /* 4. Demographic */
   if (tab !== DEFAULT_TAB) {
-    const demographicKeyword = tab.toLowerCase().replace(/s$/, "");
+    const demographicKeyword = tab.toLowerCase();
     results = results.filter((house) => {
       const targetString = `
         ${house.type || ""}
@@ -219,11 +188,7 @@ export function filterHouses(
   return results;
 }
 /* Map Transformation */
-/**
- * Convert a House into the shape expected by the map.
- * House.price is kept untouched for HouseCard.
- * Map data gets a numeric price.
- */
+/** Convert a House into the shape expected by the map.House.price is kept untouched for HouseCard. Map data gets a numeric price. */
 export function prepareMapProperty(house: House): Property {
   return {
     ...house,
