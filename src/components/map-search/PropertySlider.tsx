@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import React, { useEffect, useRef, useState } from "react";
-import { LuX } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
 // Register GSAP React plugin
 gsap.registerPlugin(useGSAP);
@@ -256,7 +256,7 @@ export function PropertySlider({ images }: PropertySliderProps) {
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 active:scale-95"
               aria-label="Close modal viewer"
             >
-              <LuX size={24} />
+              <IoClose size={24} />
             </button>
           </div>
 

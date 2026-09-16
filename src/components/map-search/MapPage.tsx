@@ -99,15 +99,6 @@ export const MapPage = () => {
       "
     >
       {/*  HEADER  */}
-      <div className="w-full bg-white flex justify-center items-center p-5">
-        <div
-          className="card"
-          style={{ boxShadow: "inset 0 0 10px rgba(0, 0, 0, 0.3)" }}
-        >
-          this is
-        </div>
-      </div>
-
       <SectionHeader
         tagTitle="Explore cities"
         headerTitle="Your next base could be here"
