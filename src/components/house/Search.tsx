@@ -152,7 +152,7 @@ export function Search(_props: SearchProps) {
           <button
             onClick={handleSearchSubmit}
             style={{ backgroundColor: "var(--bg)" }}
-            className="w-full lg:h-full py-3 px-20 lg:py-0 rounded-sm lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm shadow-[var(--primary)]"
+            className="w-full lg:h-full py-3 px-20 lg:py-0 rounded-md lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm lg:shadow-none shadow-[var(--primary)]"
             type="button"
           >
             Search

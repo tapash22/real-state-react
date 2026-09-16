@@ -100,7 +100,7 @@ export function Dropdown({
                   `
                   : `
                     flex
-                    h-auto
+                    
                     w-full
                     items-center
                     justify-between
@@ -145,8 +145,8 @@ export function Dropdown({
                     className="
                       whitespace-nowrap
                       text-sm
-                      font-bold
-                      tracking-widest
+                      font-medium
+                      tracking-wide
                     "
                   >
                     {selectedValue}
@@ -171,7 +171,7 @@ export function Dropdown({
                   className="
                     whitespace-nowrap
                     text-sm
-                    font-medium
+                    font-thin
                     tracking-wider
                     md:hidden
                     lg:block
