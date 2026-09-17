@@ -18,6 +18,7 @@ export interface MapPanelProps {
   setHoveredId?: (id: number | null) => void;
   onBoundsChange?: (bounds: MapBounds) => void;
   interactive?: boolean;
+  onManualRecenter?: () => void;
 }
 
 export const MapPanel: React.FC<MapPanelProps> = ({
@@ -29,6 +30,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   setHoveredId,
   onBoundsChange,
   interactive = true,
+  onManualRecenter,
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
@@ -149,7 +151,11 @@ export const MapPanel: React.FC<MapPanelProps> = ({
         ))}
 
         {/* Viewport & Bounds Controllers */}
-        <ViewportRecenterController center={center} />
+        <ViewportRecenterController
+          center={center}
+          zoom={8}
+          onManualRecenter={onManualRecenter}
+        />
         {onBoundsChange && (
           <MapBoundsHandler onBoundsChange={handleBoundsChange} />
         )}

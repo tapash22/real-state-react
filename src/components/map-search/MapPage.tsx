@@ -3,6 +3,7 @@ import { MapBounds, PropertyLike, cityExploreProperties } from "../../data";
 import { SectionHeader } from "../header-section/SectionHeader";
 // into this reusable component handle Generic type
 import { useAppData } from "../../hooks/useAppData";
+import { useUserLocation } from "../../hooks/useUserLocation";
 import { Tabs } from "../property-tabs/Tabs";
 import { MapPanel } from "./MapPanel";
 
@@ -14,6 +15,8 @@ export const MapPage = () => {
   // react query use for local data
   const { data, isLoading } = useAppData();
 
+  /* Get live browser coordinates */
+  const { location, getUserLocation } = useUserLocation();
   /**
    * Keeps the hover-clear timeout in the parent.
    * Marker A → null → Marker B
@@ -21,9 +24,8 @@ export const MapPage = () => {
    */
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const bangladeshCenter: [number, number] = data?.bangladeshCenter ?? [
-    23.685, 90.3563,
-  ];
+  const mapCenter: [number, number] = location ??
+    data?.bangladeshCenter ?? [23.685, 90.3563];
 
   const properties: PropertyLike[] = cityExploreProperties.slice(0, 7);
 
@@ -99,6 +101,7 @@ export const MapPage = () => {
       "
     >
       {/*  HEADER  */}
+      {location}
       <SectionHeader
         tagTitle="Explore cities"
         headerTitle="Your next base could be here"
@@ -121,12 +124,13 @@ export const MapPage = () => {
         {!isLoading && data && (
           <MapPanel
             properties={properties}
-            center={bangladeshCenter}
-            initialCenter={bangladeshCenter}
+            center={mapCenter}
+            initialCenter={mapCenter}
             hoveredId={hoveredId}
             onHover={handleHover}
             onBoundsChange={handleBoundsChange}
-            interactive={false}
+            interactive={true}
+            onManualRecenter={getUserLocation}
           />
         )}
       </div>

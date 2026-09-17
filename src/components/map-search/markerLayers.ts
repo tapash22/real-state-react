@@ -1,5 +1,3 @@
-// In markerLayers.ts
-
 import { PropertyLike } from "../../data";
 
 export interface MarkerLayer {

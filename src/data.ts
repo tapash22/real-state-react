@@ -38,6 +38,11 @@ export interface MapBounds {
   south: number;
   west: number;
 }
+// types/map.ts
+export interface UserLocation {
+  lat: number;
+  lng: number;
+}
 
 export type SocialMediaItems = SocialMediaItem[];
 
