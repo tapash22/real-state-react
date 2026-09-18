@@ -100,8 +100,7 @@ export const MapPage = () => {
         lg:px-16
       "
     >
-      {/*  HEADER  */}
-      {location}
+      {/* HEADER  */}
       <SectionHeader
         tagTitle="Explore cities"
         headerTitle="Your next base could be here"
@@ -109,17 +108,16 @@ export const MapPage = () => {
 
       {/*  CITY NAVIGATION  */}
       <Tabs items={tabs} activeId={hoveredId} onChange={handleHover} />
-
       {/*  MAP  */}
       <div
         className="
-            relative
-            h-[80vh]
-            w-full
-            overflow-hidden
-            rounded-2xl
-            shadow-lg shadow-[var(--shadow)]
-          "
+        relative
+        h-[80vh]
+        w-full
+        overflow-hidden
+        rounded-2xl
+        shadow-lg shadow-[var(--shadow)]
+        "
       >
         {!isLoading && data && (
           <MapPanel
@@ -131,6 +129,10 @@ export const MapPage = () => {
             onBoundsChange={handleBoundsChange}
             interactive={true}
             onManualRecenter={getUserLocation}
+            initialZoom={6}
+            recenterZoomStep={1}
+            maxRecenterZoom={12}
+            currentLocation={location}
           />
         )}
       </div>

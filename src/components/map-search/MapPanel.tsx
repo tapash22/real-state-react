@@ -2,6 +2,7 @@ import L from "leaflet";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MapContainer, Pane, TileLayer } from "react-leaflet";
 import { MapBounds, PropertyLike } from "../../data";
+import { CurrentLocationMarker } from "./CurrentLocationMarker";
 import { MapBoundsHandler } from "./MapBoundsHandler";
 import { MapMarker } from "./MapMarker";
 import { getMarkerLayers } from "./markerLayers";
@@ -19,6 +20,10 @@ export interface MapPanelProps {
   onBoundsChange?: (bounds: MapBounds) => void;
   interactive?: boolean;
   onManualRecenter?: () => void;
+  initialZoom?: number;
+  recenterZoomStep?: number;
+  maxRecenterZoom?: number;
+  currentLocation?: [number, number] | null;
 }
 
 export const MapPanel: React.FC<MapPanelProps> = ({
@@ -31,6 +36,10 @@ export const MapPanel: React.FC<MapPanelProps> = ({
   onBoundsChange,
   interactive = true,
   onManualRecenter,
+  initialZoom = 12,
+  recenterZoomStep = 0,
+  maxRecenterZoom = 18,
+  currentLocation = null,
 }) => {
   const [map, setMap] = useState<L.Map | null>(null);
 
@@ -104,7 +113,7 @@ export const MapPanel: React.FC<MapPanelProps> = ({
       <MapContainer
         ref={setMap}
         center={initialCenter}
-        zoom={12}
+        zoom={initialZoom}
         style={styles.mapElement}
         dragging={interactive}
         scrollWheelZoom={interactive}
@@ -125,12 +134,17 @@ export const MapPanel: React.FC<MapPanelProps> = ({
           shadow-sm
         "
       >
+        <Pane name="current-location" style={{ zIndex: 650 }}>
+          {currentLocation && (
+            <CurrentLocationMarker position={currentLocation} />
+          )}
+        </Pane>
+
         {/* Base Tile Layer */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
         {/* Layered Markers */}
         {markerLayers.map((layer) => (
           <Pane
@@ -149,11 +163,12 @@ export const MapPanel: React.FC<MapPanelProps> = ({
             ))}
           </Pane>
         ))}
-
         {/* Viewport & Bounds Controllers */}
         <ViewportRecenterController
           center={center}
-          zoom={8}
+          initialZoom={initialZoom}
+          zoomStep={recenterZoomStep}
+          maxZoom={maxRecenterZoom}
           onManualRecenter={onManualRecenter}
         />
         {onBoundsChange && (
