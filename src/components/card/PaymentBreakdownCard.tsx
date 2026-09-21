@@ -116,19 +116,19 @@ export const PaymentBreakdownCard: React.FC<PaymentBreakdownProps> = ({
             <span className="px-3 py-2 border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               VISA
             </span>
-            <span className="px-3 py-2 tracking-wider border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
+            <span className="px-3 py-2 border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               MC
             </span>
-            <span className="px-3 py-2 tracking-wider border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
+            <span className="px-3 py-2  border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               AMEX
             </span>
-            <span className="px-3 py-2 tracking-wider border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
+            <span className="px-3 py-2  border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               Sofort.
             </span>
-            <span className="px-3 py-2 tracking-wider border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
+            <span className="px-3 py-2 border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               iDEAL
             </span>
-            <span className="px-3 py-2 tracking-wider border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
+            <span className="px-3 py-2 border border-[var(--border)] rounded text-[10px] font-bold tracking-wider">
               giropay
             </span>
           </div>
