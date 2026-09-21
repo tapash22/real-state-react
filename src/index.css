@@ -11,8 +11,13 @@
        ========================================== */
     --bg: #f0f2f5;
     --text: #0F172A;
-    --primary: #544ed1;
-    --secondary: #10B981;
+    --primary: #4f46e5;
+    --secondary: #059669;
+
+    --success: #16a34a;
+    --warning: #d97706;
+    --info: #0284c7;
+    --danger: #dc2626;
     --card: #FFFFFF;
     --border: #E5E7EB;
     --muted: #64748B;
@@ -75,9 +80,13 @@
     /* Crisp white/slate mix for high readability text */
     --text: #F1F5F9;
 
-    --primary: #6366F1;
-    /* Slightly brightened for dark mode contrast */
-    --secondary: #34D399;
+    --primary: #6366f1;
+    --secondary: #34d399;
+
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --info: #38bdf8;
+    --danger: #f87171;
     /* Slightly brightened */
 
     /* Slightly lighter navy than background so cards pop out */

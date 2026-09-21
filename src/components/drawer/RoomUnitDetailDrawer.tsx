@@ -8,20 +8,24 @@ import {
   TbX,
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { RoomUnit } from "../../data";
+import { ResidenceData, RoomUnit } from "../../data";
 import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
 import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
 
 interface RoomUnitDetailDrawerProps {
   unit: RoomUnit | null;
+  residenceData?: ResidenceData | null; // Pass Parent Residence Data
   isOpen: boolean;
   onClose: () => void;
+  navHeightPx?: number;
 }
 
 export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   unit,
+  residenceData,
   isOpen,
   onClose,
+  navHeightPx = 64, // Matches standard h-16 navbar height
 }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"about" | "included" | "payment">(
@@ -42,6 +46,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
     navigate("/checkout", {
       state: {
         unit,
+        residenceTitle: residenceData?.title,
       },
     });
   };
@@ -68,33 +73,47 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end overflow-hidden">
+    <div
+      style={{
+        top: `${navHeightPx}px`,
+        height: `calc(100vh - ${navHeightPx}px)`,
+      }}
+      className="fixed inset-0 z-40 flex justify-end overflow-hidden"
+    >
       {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+        style={{ top: `${navHeightPx}px` }}
         onClick={onClose}
       />
 
       {/* Right-side Modal Container */}
-      <aside className="relative z-10 w-full max-w-xl bg-white shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out scrollbar-thin">
+      <aside className="relative z-10 w-full max-w-xl bg-[var(--bg)] shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out ">
         {/* Fixed Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-200 shrink-0">
-          <h2 className="text-xl font-bold text-[#0c2340] tracking-tight truncate pr-4">
-            {unit.title}
-          </h2>
+        <div className="flex items-center justify-between p-5 border-b border-[var(--border)] shrink-0">
+          <div className="py-1">
+            {residenceData?.title && (
+              <p className="text-lg font-semibold text-[var(--text)] uppercase tracking-wider">
+                {residenceData.title}
+              </p>
+            )}
+            <h2 className="text-sm font-bold text-[var(--muted)] tracking-tight truncate pr-4">
+              {unit.title}
+            </h2>
+          </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-full text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors"
+            className="p-2 rounded-full text-[var(--text)] hover:text-[var(--text)] hover:bg-[var(--card)] transition-colors"
             aria-label="Close panel"
           >
-            <TbX size={24} />
+            <TbX size={24} className="text-[var(--text)]" />
           </button>
         </div>
 
-        {/* Scrollable Content Body */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-6">
+        {/* Scrollable Body */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-thin">
           {/* Main Hero Slider */}
-          <div className="relative w-full h-[320px] rounded-2xl overflow-hidden group bg-slate-100">
+          <div className="relative w-full h-[320px] rounded-2xl overflow-hidden group bg-[var(--bg)]">
             <img
               src={imageList[currentImageIdx]}
               alt={unit.title}
@@ -105,15 +124,15 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               <>
                 <button
                   onClick={handlePrev}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full text-[var(--text)] flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <TbChevronLeft size={20} />
+                  <TbChevronLeft size={20} className="text-[var(--text)]" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full text-[var(--text)] flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <TbChevronRight size={20} />
+                  <TbChevronRight size={20} className="text-[var(--text)]" />
                 </button>
               </>
             )}
@@ -127,8 +146,8 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                 onClick={() => setCurrentImageIdx(idx)}
                 className={`relative h-16 rounded-lg overflow-hidden border-2 transition-all ${
                   idx === currentImageIdx
-                    ? "border-[#ff4d2d]"
-                    : "border-transparent opacity-75 hover:opacity-100"
+                    ? "border-[var(--primary)]"
+                    : "border-[var(--muted)] opacity-75 hover:opacity-100"
                 }`}
               >
                 <img src={img} alt="" className="w-full h-full object-cover" />
@@ -136,7 +155,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             ))}
 
             {/* Photo Counter Card */}
-            <div className="relative h-16 rounded-lg overflow-hidden bg-[#536b7b] text-white flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
+            <div className="relative h-16 rounded-lg overflow-hidden bg-[var(--bg)] text-[var(--text)] flex flex-col items-center justify-center text-center p-1 cursor-pointer  transition-colors">
               <span className="text-sm font-bold leading-none">
                 {unit.totalPhotosCount || 11}
               </span>
@@ -146,35 +165,35 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             </div>
 
             {/* Videos Card */}
-            <div className="relative h-16 rounded-lg overflow-hidden bg-[#536b7b] text-white flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
-              <TbVideo size={16} className="mb-0.5" />
-              <span className="text-[10px] font-medium leading-tight">
+            <div className="relative h-16 rounded-lg overflow-hidden  flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
+              <TbVideo size={16} className="mb-0.5 text-[var(--text)]" />
+              <span className="text-[10px] font-medium leading-tight text-[var(--muted)]">
                 Videos
               </span>
             </div>
 
             {/* Floor Plans Card */}
-            <div className="relative h-16 rounded-lg overflow-hidden bg-[#536b7b] text-white flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
-              <TbLayoutGrid size={16} className="mb-0.5" />
-              <span className="text-[10px] font-medium leading-tight">
+            <div className="relative h-16 rounded-lg overflow-hidden text-[var(--muted)] flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
+              <TbLayoutGrid size={16} className="mb-0.5 text-[var(--text)]" />
+              <span className="text-[10px] font-medium leading-tight text-[var(--muted)]">
                 Floor plans
               </span>
             </div>
           </div>
 
           {/* Content Navigation Tabs */}
-          <div className="border-b border-slate-200 flex items-center gap-8">
+          <div className="border-b border-[var(--border)] flex items-center gap-8">
             <button
               onClick={() => setActiveTab("about")}
               className={`pb-3 text-sm font-bold transition-all relative ${
                 activeTab === "about"
-                  ? "text-[#0c2340]"
-                  : "text-slate-400 hover:text-slate-600"
+                  ? "text-[var(--muted)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               About
               {activeTab === "about" && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0c2340]" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)]" />
               )}
             </button>
 
@@ -182,13 +201,13 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               onClick={() => setActiveTab("included")}
               className={`pb-3 text-sm font-bold transition-all relative ${
                 activeTab === "included"
-                  ? "text-[#0c2340]"
-                  : "text-slate-400 hover:text-slate-600"
+                  ? "text-[var(--text)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               What's included
               {activeTab === "included" && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0c2340]" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)] " />
               )}
             </button>
 
@@ -196,54 +215,50 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               onClick={() => setActiveTab("payment")}
               className={`pb-3 text-sm font-bold transition-all relative ${
                 activeTab === "payment"
-                  ? "text-[#0c2340]"
-                  : "text-slate-400 hover:text-slate-600"
+                  ? "text-[var(--text)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               Payment details
               {activeTab === "payment" && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0c2340]" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)] " />
               )}
             </button>
           </div>
 
           {/* Tab Content Panels */}
           {activeTab === "about" && (
-            <div className="space-y-3 text-slate-700 text-sm leading-relaxed">
-              <h3 className="font-bold text-[#0c2340] text-base">
-                {unit.descriptionHeader || "Life at Mitte-Wedding"}
+            <div className="space-y-4 text-sm leading-relaxed">
+              <h3 className="font-bold text-[var(--text)] text-base">
+                {unit.descriptionHeader ||
+                  "Life at " + (residenceData?.title || "Residence")}
               </h3>
               <p>
                 {unit.descriptionText ||
-                  "553 apartments, 553+ students... be one of us & meet extraordinary people. Mitte-Wedding is a unique meeting point of the iconic neighborhoods of Prenzlauer Berg, Mitte and Wedding. From the historical sites and clever co-working spaces near Bernauer Straße to the unique parks and eclectic cafes near Mauerpark, there is plenty to explore."}
+                  "Modern and fully equipped studio living designed for ultimate convenience and community living."}
               </p>
-              <p>
-                Our student community offers stylishly designed apartments for
-                those who thrive on the energy of the city.
-              </p>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Doloribus iste reiciendis quos dignissimos architecto maxime,
-                perspiciatis numquam reprehenderit ipsum voluptatibus rem autem
-                neque tempora at vel officia? Labore, facere ullam? lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Doloribus iste
-                reiciendis quos dignissimos architecto maxime, perspiciatis
-                numquam reprehenderit ipsum voluptatibus rem autem neque tempora
-                at vel officia? Labore, facere ullam? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Doloribus iste reiciendis quos
-                dignissimos architecto maxime, perspiciatis numquam
-                reprehenderit ipsum voluptatibus rem autem neque tempora at vel
-                officia? Labore, facere ullam? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Doloribus iste reiciendis quos
-                dignissimos architecto maxime, perspiciatis numquam
-                reprehenderit ipsum voluptatibus rem autem neque tempora at vel
-                officia? Labore, facere ullam?
-              </p>
+
+              {/* Residence Highlights Summary (Injected from residenceData) */}
+              {residenceData?.services?.general && (
+                <div className=" p-4 rounded-xl space-y-2 border border-[var(--border)]">
+                  <h4 className="font-semibold text-xs text-[var(--text)] uppercase tracking-wider">
+                    Residence Amenities
+                  </h4>
+                  <ul className="grid grid-cols-1 gap-1.5 text-xs text-[var(--muted)]">
+                    {residenceData.services.general.map((service, index) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[var(--primary)]" />
+                        {service}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
 
           {activeTab === "included" && (
-            <div className="space-y-2 text-sm text-slate-700">
+            <div className="space-y-4 text-sm text-[var(--muted)]">
               <ul className="list-disc pl-5 space-y-1">
                 {unit.whatsIncluded?.map((item, idx) => (
                   <li key={idx}>{item}</li>
@@ -255,12 +270,21 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                   </>
                 )}
               </ul>
+
+              {/* Cleaning Policy from Residence */}
+              {residenceData?.cleaningInfo && (
+                <div className="p-3 rounded-lg text-[var(--muted)] text-xs border border-[var(--warning)] tracking-wider">
+                  <strong>Cleaning Policy :</strong>{" "}
+                  {residenceData.cleaningInfo}
+                </div>
+              )}
+
               <PropertyFeaturesCard />
             </div>
           )}
 
           {activeTab === "payment" && (
-            <div className="space-y-2 text-sm text-slate-700">
+            <div className="space-y-3 text-sm text-[var(--text)]">
               <p>
                 <strong>Deposit:</strong> €
                 {unit.paymentDetails?.deposit || unit.pricePerMonth}
@@ -274,7 +298,9 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                 tenantProtectionFee="Select dates"
                 landlordName="Ivetta"
                 landlordAvatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
-                securityDeposit={900}
+                securityDeposit={
+                  unit.paymentDetails?.deposit || unit.pricePerMonth
+                }
                 onSelectDates={() => alert("Open date picker modal")}
               />
             </div>
@@ -282,24 +308,27 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         </div>
 
         {/* Fixed Footer Bar */}
-        <div className="p-5 border-t border-slate-200 bg-white space-y-3 shrink-0">
-          <div className="text-right">
-            <span className="text-2xl font-extrabold text-[#0c2340]">
-              €{unit.pricePerMonth}
+        <div className="p-3 border-t border-[var(--border)] space-y-2 shrink-0">
+          <div className="text-right px-2">
+            <span className="text-2xl font-extrabold text-[var(--muted)] tracking-wider">
+              ${unit.pricePerMonth}
             </span>
-            <span className="text-sm font-normal text-slate-500"> /month</span>
+            <span className="text-sm font-normal text-[var(--text)] tracking-wider">
+              {" "}
+              /month
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button className="flex items-center justify-center gap-2 px-4 py-3 border border-slate-300 rounded-xl font-bold text-xs text-[#0c2340] hover:bg-slate-50 transition-colors">
-              <TbCalendarEvent size={16} />
-              <span>Move-in date – Move-out date</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
+            <button className="flex items-center justify-center gap-2 px-4 py-3 border border-[var(--border)] rounded-xl font-bold text-xs text-[var(--muted)] transition-colors">
+              <TbCalendarEvent size={16} className="text-[var(--text)]" />
+              <span>Available: {unit.availableFrom}</span>
             </button>
 
             <button
               type="button"
               onClick={handleApplyToRent}
-              className="px-4 py-3 bg-[#ff4d2d] hover:bg-[#e03a1c] text-white font-bold text-xs rounded-xl shadow-sm transition-all active:scale-[0.98]"
+              className="px-4 py-3 bg-[var(--primary)] opacity-100 text-[var(--text)] font-bold text-xs rounded-xl scale-100 shadow-sm transition-all active:scale-[0.90]"
             >
               Apply to rent
             </button>

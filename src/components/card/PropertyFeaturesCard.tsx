@@ -67,25 +67,27 @@ export const PropertyFeaturesCard: React.FC<PropertyFeaturesProps> = ({
   amenities = DEFAULT_AMENITIES,
 }) => {
   return (
-    <div className="w-full max-w-3xl bg-white p-6 rounded-2xl shadow-sm text-[#0c2340] font-sans space-y-6">
+    <div className="w-full max-w-3xl p-6 rounded-2xl shadow-sm text font-sans space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* --- FACILITIES COLUMN --- */}
         <div className="space-y-4">
-          <h3 className="text-base font-bold text-slate-900">Facilities</h3>
+          <h3 className="text-base font-bold text-[var(--text)]">Facilities</h3>
           <ul className="space-y-3">
             {facilities.map((item, index) => (
               <li key={index} className="flex items-center gap-3 text-sm">
                 <item.Icon
                   size={20}
                   className={
-                    item.isAvailable ? "text-slate-700" : "text-slate-400"
+                    item.isAvailable
+                      ? "text-[var(--text)]"
+                      : "text-[var(--muted)]"
                   }
                 />
                 <span
                   className={
                     item.isAvailable
-                      ? "text-slate-800 font-medium"
-                      : "text-slate-400 line-through"
+                      ? "text-[var(--text)] font-medium"
+                      : "text-[var(--muted)] line-through"
                   }
                 >
                   {item.label}
@@ -97,21 +99,23 @@ export const PropertyFeaturesCard: React.FC<PropertyFeaturesProps> = ({
 
         {/* --- AMENITIES COLUMN --- */}
         <div className="space-y-4">
-          <h3 className="text-base font-bold text-slate-900">Amenities</h3>
+          <h3 className="text-base font-bold text-[var(--text)]">Amenities</h3>
           <ul className="space-y-3">
             {amenities.map((item, index) => (
               <li key={index} className="flex items-center gap-3 text-sm">
                 <item.Icon
                   size={20}
                   className={
-                    item.isAvailable ? "text-slate-700" : "text-slate-400"
+                    item.isAvailable
+                      ? "text-[var(--text)]"
+                      : "text-[var(--muted)]"
                   }
                 />
                 <span
                   className={
                     item.isAvailable
-                      ? "text-slate-800 font-medium"
-                      : "text-slate-400 line-through"
+                      ? "text-[var(--text)] font-medium"
+                      : "text-[var(--muted)] line-through"
                   }
                 >
                   {item.label}

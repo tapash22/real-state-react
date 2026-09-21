@@ -324,13 +324,13 @@ export default function CheckoutDetails() {
      ERROR COMPONENT
   ======================================================= */
 
-  const FieldError = ({ message }: { message?: string }) => {
+  const FieldError = ({ message }: { message?: string | undefined }) => {
     if (!message) {
       return null;
     }
 
     return (
-      <p className="mt-1 flex items-center text-xs text-red-500">
+      <p className="mt-1 flex items-center text-xs text-[var(--danger)]">
         <FaExclamationCircle className="mr-1 h-3 w-3" />
         {message}
       </p>
@@ -346,7 +346,7 @@ export default function CheckoutDetails() {
       <div className="min-h-screen bg-[#0b1329] text-slate-100">
         <header className="sticky top-0 z-20 border-b border-slate-800 bg-[#0b1329] px-6 py-4">
           <div className="mx-auto flex max-w-7xl items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-[#ff4d4d]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500 to-[var(--dager)]">
               <FaBuilding className="h-5 w-5 text-white" />
             </div>
 
@@ -407,7 +407,7 @@ export default function CheckoutDetails() {
             <button
               type="button"
               onClick={resetFlow}
-              className="mt-8 rounded-xl bg-[#ff4d4d] px-7 py-3 font-bold text-white shadow-lg shadow-red-500/20 transition hover:bg-[#e03e3e]"
+              className="mt-8 rounded-xl bg-[var(--dager)] px-7 py-3 font-bold text-white shadow-lg shadow-red-500/20 transition hover:bg-[var(--dager)]"
             >
               Start New Application
             </button>
@@ -432,7 +432,7 @@ export default function CheckoutDetails() {
             <span>/</span>
             <span>Application</span>
             <span>/</span>
-            <span className="font-semibold text-[#ff4d4d]">
+            <span className="font-semibold text-[var(--dager)]">
               Checkout Details
             </span>
           </div>
@@ -463,7 +463,7 @@ export default function CheckoutDetails() {
 
                   {/* Progress line */}
                   <div
-                    className="absolute left-[12%] top-5 h-1 bg-[#ff4d4d] transition-all duration-300"
+                    className="absolute left-[12%] top-5 h-1 bg-[var(--dager)] transition-all duration-300"
                     style={{
                       width: `${((currentStep - 1) / 3) * 76}%`,
                     }}
@@ -491,7 +491,7 @@ export default function CheckoutDetails() {
                           <div
                             className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold shadow-sm transition-all ${
                               isActive
-                                ? "scale-105 bg-[#ff4d4d] text-white ring-4 ring-red-100"
+                                ? "scale-105 bg-[var(--dager)] text-white ring-4 ring-red-100"
                                 : isCompleted
                                   ? "bg-emerald-600 text-white"
                                   : "bg-white text-slate-500 ring-1 ring-slate-300"
@@ -508,7 +508,7 @@ export default function CheckoutDetails() {
                           <span
                             className={`mt-2 hidden text-center text-[11px] font-semibold sm:block ${
                               isActive
-                                ? "text-[#ff4d4d]"
+                                ? "text-[var(--dager)]"
                                 : isCompleted
                                   ? "text-emerald-600"
                                   : "text-slate-400"
@@ -521,7 +521,7 @@ export default function CheckoutDetails() {
                           <span
                             className={`mt-2 text-center text-[10px] font-semibold sm:hidden ${
                               isActive
-                                ? "text-[#ff4d4d]"
+                                ? "text-[var(--dager)]"
                                 : isCompleted
                                   ? "text-emerald-600"
                                   : "text-slate-400"
@@ -573,9 +573,9 @@ export default function CheckoutDetails() {
                           onChange={(event) =>
                             handleInputChange("moveInDate", event.target.value)
                           }
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.moveInDate
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -599,9 +599,9 @@ export default function CheckoutDetails() {
                           onChange={(event) =>
                             handleInputChange("moveOutDate", event.target.value)
                           }
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none transition focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.moveOutDate
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -624,7 +624,7 @@ export default function CheckoutDetails() {
                           onChange={(event) =>
                             handleInputChange("occupants", event.target.value)
                           }
-                          className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d]"
+                          className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)]"
                         >
                           <option value="1">1 Person</option>
                           <option value="2">2 People</option>
@@ -649,7 +649,7 @@ export default function CheckoutDetails() {
                               event.target.value,
                             )
                           }
-                          className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d]"
+                          className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)]"
                         >
                           <option value="">Select status</option>
                           <option value="Student">Student</option>
@@ -712,9 +712,9 @@ export default function CheckoutDetails() {
                             handleInputChange("fullName", event.target.value)
                           }
                           placeholder="Enter your full name"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.fullName
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -739,8 +739,10 @@ export default function CheckoutDetails() {
                             handleInputChange("email", event.target.value)
                           }
                           placeholder="you@example.com"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
-                            errors.email ? "border-red-500" : "border-slate-300"
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
+                            errors.email
+                              ? "border-[var(--dager)]"
+                              : "border-slate-300"
                           }`}
                         />
 
@@ -764,8 +766,10 @@ export default function CheckoutDetails() {
                             handleInputChange("phone", event.target.value)
                           }
                           placeholder="+880 1XXXXXXXXX"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
-                            errors.phone ? "border-red-500" : "border-slate-300"
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
+                            errors.phone
+                              ? "border-[var(--dager)]"
+                              : "border-slate-300"
                           }`}
                         />
 
@@ -792,9 +796,9 @@ export default function CheckoutDetails() {
                             )
                           }
                           placeholder="Current residential address"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.currentAddress
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -828,7 +832,7 @@ export default function CheckoutDetails() {
                                 event.target.value,
                               )
                             }
-                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d]"
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)]"
                           />
                         </div>
 
@@ -850,7 +854,7 @@ export default function CheckoutDetails() {
                                 event.target.value,
                               )
                             }
-                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d]"
+                            className="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)]"
                           />
                         </div>
                       </div>
@@ -894,9 +898,9 @@ export default function CheckoutDetails() {
                             )
                           }
                           placeholder="e.g. Tech GmbH"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.organization
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -925,9 +929,9 @@ export default function CheckoutDetails() {
                             )
                           }
                           placeholder="e.g. 2400"
-                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[#ff4d4d] ${
+                          className={`w-full rounded-xl border bg-slate-50 px-3.5 py-3 text-sm outline-none focus:ring-2 focus:ring-[var(--dager)] ${
                             errors.monthlyIncome
-                              ? "border-red-500"
+                              ? "border-[var(--dager)]"
                               : "border-slate-300"
                           }`}
                         />
@@ -947,7 +951,7 @@ export default function CheckoutDetails() {
                             event.target.checked,
                           )
                         }
-                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#ff4d4d] focus:ring-[#ff4d4d]"
+                        className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[var(--dager)] focus:ring-[var(--dager)]"
                       />
 
                       <span className="text-xs font-medium leading-5 text-slate-700">
@@ -986,8 +990,8 @@ export default function CheckoutDetails() {
                             formData.filesUploaded.passport
                               ? "border-emerald-500 bg-emerald-50"
                               : errors.passport
-                                ? "border-red-400 bg-red-50"
-                                : "border-slate-300 bg-slate-50 hover:border-[#ff4d4d]"
+                                ? "border-[var(--dager)] bg-red-50"
+                                : "border-slate-300 bg-slate-50 hover:border-[var(--dager)]"
                           }`}
                         >
                           <div className="flex min-w-0 items-center gap-3">
@@ -1048,8 +1052,8 @@ export default function CheckoutDetails() {
                             formData.filesUploaded.income
                               ? "border-emerald-500 bg-emerald-50"
                               : errors.income
-                                ? "border-red-400 bg-red-50"
-                                : "border-slate-300 bg-slate-50 hover:border-[#ff4d4d]"
+                                ? "border-[var(--dager)] bg-red-50"
+                                : "border-slate-300 bg-slate-50 hover:border-[var(--dager)]"
                           }`}
                         >
                           <div className="flex min-w-0 items-center gap-3">
@@ -1120,7 +1124,7 @@ export default function CheckoutDetails() {
                         <button
                           type="button"
                           onClick={() => handleStepClick(1)}
-                          className="text-xs font-bold text-[#ff4d4d] hover:underline"
+                          className="text-xs font-bold text-[var(--dager)] hover:underline"
                         >
                           Edit
                         </button>
@@ -1181,7 +1185,7 @@ export default function CheckoutDetails() {
                         <button
                           type="button"
                           onClick={() => handleStepClick(2)}
-                          className="text-xs font-bold text-[#ff4d4d] hover:underline"
+                          className="text-xs font-bold text-[var(--dager)] hover:underline"
                         >
                           Edit
                         </button>
@@ -1228,7 +1232,7 @@ export default function CheckoutDetails() {
                         <button
                           type="button"
                           onClick={() => handleStepClick(3)}
-                          className="text-xs font-bold text-[#ff4d4d] hover:underline"
+                          className="text-xs font-bold text-[var(--dager)] hover:underline"
                         >
                           Edit
                         </button>
@@ -1255,7 +1259,7 @@ export default function CheckoutDetails() {
                             className={
                               formData.filesUploaded.passport
                                 ? "text-emerald-600"
-                                : "text-red-500"
+                                : "text-[var(--dager)]"
                             }
                           >
                             {formData.filesUploaded.passport
@@ -1270,7 +1274,7 @@ export default function CheckoutDetails() {
                             className={
                               formData.filesUploaded.income
                                 ? "text-emerald-600"
-                                : "text-red-500"
+                                : "text-[var(--dager)]"
                             }
                           >
                             {formData.filesUploaded.income
@@ -1310,7 +1314,7 @@ export default function CheckoutDetails() {
                           <strong>€{costs.adminFee.toLocaleString()}</strong>
                         </div>
 
-                        <div className="flex justify-between border-t border-slate-200 pt-3 text-base font-black text-[#ff4d4d]">
+                        <div className="flex justify-between border-t border-slate-200 pt-3 text-base font-black text-[var(--dager)]">
                           <span>Total Initial Payment</span>
 
                           <span>€{costs.totalDue.toLocaleString()}</span>
@@ -1330,7 +1334,7 @@ export default function CheckoutDetails() {
                               event.target.checked,
                             )
                           }
-                          className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[#ff4d4d] focus:ring-[#ff4d4d]"
+                          className="mt-0.5 h-4 w-4 rounded border-slate-300 text-[var(--dager)] focus:ring-[var(--dager)]"
                         />
 
                         <span className="text-xs leading-5 text-slate-600">
@@ -1338,7 +1342,7 @@ export default function CheckoutDetails() {
                           authentic. I accept the{" "}
                           <a
                             href="/terms"
-                            className="font-semibold text-[#ff4d4d] underline"
+                            className="font-semibold text-[var(--dager)] underline"
                           >
                             Thikana Terms of Service
                           </a>{" "}
@@ -1372,7 +1376,7 @@ export default function CheckoutDetails() {
                   className={`flex w-full items-center justify-center rounded-xl px-7 py-3 text-sm font-bold text-white shadow-lg transition sm:w-auto ${
                     currentStep === 4
                       ? "bg-emerald-600 shadow-emerald-500/20 hover:bg-emerald-700"
-                      : "bg-[#ff4d4d] shadow-red-500/20 hover:bg-[#e03e3e]"
+                      : "bg-[var(--dager)] shadow-red-500/20 hover:bg-[var(--dager)]"
                   }`}
                 >
                   {currentStep === 4 ? "Submit Application" : "Continue"}
@@ -1415,7 +1419,7 @@ export default function CheckoutDetails() {
                     </h2>
 
                     <p className="mt-2 flex items-center text-xs text-slate-500">
-                      <FaMapMarkerAlt className="mr-1.5 h-4 w-4 text-[#ff4d4d]" />
+                      <FaMapMarkerAlt className="mr-1.5 h-4 w-4 text-[var(--dager)]" />
                       Mitte-Wedding, Berlin
                     </p>
                   </div>
@@ -1495,7 +1499,9 @@ export default function CheckoutDetails() {
                   <div className="flex justify-between border-t border-slate-700 pt-3 text-sm font-black">
                     <span>Total</span>
 
-                    <span className="text-[#ff4d4d]">€{costs.totalDue}</span>
+                    <span className="text-[var(--dager)]">
+                      €{costs.totalDue}
+                    </span>
                   </div>
                 </div>
               </div>
