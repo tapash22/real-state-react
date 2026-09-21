@@ -6,6 +6,7 @@ import { AuthLayout } from "../layout/AuthLayout";
 // Pages
 import PropertyDetails from "../components/map-search/PropertyDetails";
 import AgentsDetails from "../pages/AgentsDetails";
+import CheckoutDetails from "../pages/CheckoutDetails";
 import HelpingDetails from "../pages/HelpingDetails";
 import { Home } from "../pages/Home";
 import LandLord from "../pages/LandLord";
@@ -41,6 +42,10 @@ export const routesConfig: RouteObject[] = [
       {
         path: "property/:id",
         element: createElement(PropertyDetails),
+      },
+      {
+        path: "checkout",
+        element: createElement(CheckoutDetails),
       },
       // Agent Details Page
       {

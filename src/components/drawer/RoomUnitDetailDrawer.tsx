@@ -7,6 +7,7 @@ import {
   TbVideo,
   TbX,
 } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 import { RoomUnit } from "../../data";
 import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
 import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
@@ -22,10 +23,28 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   isOpen,
   onClose,
 }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"about" | "included" | "payment">(
     "about",
   );
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  /**
+   * Navigate to checkout with the selected room unit.
+   */
+  const handleApplyToRent = () => {
+    if (!unit) return;
+
+    // Close the drawer
+    onClose();
+
+    // Navigate to checkout and pass selected unit
+    navigate("/checkout", {
+      state: {
+        unit,
+      },
+    });
+  };
 
   if (!isOpen || !unit) return null;
 
@@ -277,7 +296,11 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               <span>Move-in date – Move-out date</span>
             </button>
 
-            <button className="px-4 py-3 bg-[#ff4d2d] hover:bg-[#e03a1c] text-white font-bold text-xs rounded-xl shadow-sm transition-all active:scale-[0.98]">
+            <button
+              type="button"
+              onClick={handleApplyToRent}
+              className="px-4 py-3 bg-[#ff4d2d] hover:bg-[#e03a1c] text-white font-bold text-xs rounded-xl shadow-sm transition-all active:scale-[0.98]"
+            >
               Apply to rent
             </button>
           </div>

@@ -12,6 +12,74 @@ import { IconType } from "react-icons";
 import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Property } from "./types/types";
 
+export type Step = 1 | 2 | 3 | 4;
+
+export type FileKey = "passport" | "income";
+
+export type FormData = {
+  moveInDate: string;
+  moveOutDate: string;
+  occupants: string;
+  residentStatus: string;
+
+  fullName: string;
+  email: string;
+  phone: string;
+  currentAddress: string;
+
+  emergencyName: string;
+  emergencyPhone: string;
+
+  organization: string;
+  monthlyIncome: string;
+  hasGuarantor: boolean;
+
+  filesUploaded: {
+    passport: boolean;
+    income: boolean;
+  };
+
+  agreeTerms: boolean;
+};
+
+export type FormErrors = Partial<Record<keyof FormData | FileKey, string>>;
+
+export const STEPS: Array<{
+  id: Step;
+  title: string;
+  shortTitle: string;
+}> = [
+  {
+    id: 1,
+    title: "Lease Dates",
+    shortTitle: "Dates",
+  },
+  {
+    id: 2,
+    title: "Personal Info",
+    shortTitle: "Personal",
+  },
+  {
+    id: 3,
+    title: "Verification",
+    shortTitle: "Verify",
+  },
+  {
+    id: 4,
+    title: "Summary",
+    shortTitle: "Review",
+  },
+];
+
+export const createInitialFormData = (): FormData => {
+  return {
+    ...INITIAL_FORM_STATE,
+    filesUploaded: {
+      ...INITIAL_FORM_STATE.filesUploaded,
+    },
+  } as FormData;
+};
+
 export interface SocialMediaItem {
   id: number | null;
   title: string;
@@ -71,6 +139,52 @@ export type ApplyFilterParamsOptions = {
   price: string;
   tab: PropertyFilterTab | string;
 };
+
+// checkout demo data
+export const DEMO_DATA = {
+  moveInDate: "2026-10-01",
+  moveOutDate: "2027-03-31",
+  occupants: "1",
+  residentStatus: "Student",
+  fullName: "Tapash Paul",
+  email: "tapash.paul@example.com",
+  phone: "+49 176 9876 5432",
+  currentAddress: "Mitte Quarter 42, 10115 Berlin, Germany",
+  emergencyName: "Rahim Paul",
+  emergencyPhone: "+880 1711 000000",
+  organization: "Humboldt University of Berlin",
+  monthlyIncome: "2400",
+  hasGuarantor: true,
+  filesUploaded: {
+    passport: true,
+    income: true,
+    enrollment: true,
+  },
+  agreeTerms: true,
+};
+
+export const INITIAL_FORM_STATE = {
+  moveInDate: "2026-10-01",
+  moveOutDate: "2027-03-31",
+  occupants: "1",
+  residentStatus: "Student",
+  fullName: "",
+  email: "",
+  phone: "",
+  currentAddress: "",
+  emergencyName: "",
+  emergencyPhone: "",
+  organization: "",
+  monthlyIncome: "",
+  hasGuarantor: false,
+  filesUploaded: {
+    passport: false,
+    income: false,
+    enrollment: false,
+  },
+  agreeTerms: false,
+};
+// checkout demo data END
 
 export const staticPriceTiers = [
   "All Prices",
