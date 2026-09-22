@@ -12,11 +12,17 @@ import { IconType } from "react-icons";
 import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Property } from "./types/types";
 
-export type Step = 1 | 2 | 3 | 4;
+// Checkout NEW types Declear
+export type CheckoutStep = 1 | 2 | 3 | 4;
 
-export type FileKey = "passport" | "income";
+export type FileType = "passport" | "income";
 
-export type FormData = {
+export interface FilesUploaded {
+  passport: boolean;
+  income: boolean;
+}
+
+export interface CheckoutFormData {
   moveInDate: string;
   moveOutDate: string;
   occupants: string;
@@ -34,59 +40,141 @@ export type FormData = {
   monthlyIncome: string;
   hasGuarantor: boolean;
 
-  filesUploaded: {
-    passport: boolean;
-    income: boolean;
-  };
+  filesUploaded: FilesUploaded;
 
   agreeTerms: boolean;
-};
+}
 
-export type FormErrors = Partial<Record<keyof FormData | FileKey, string>>;
+export interface CheckoutErrors {
+  moveInDate?: string;
+  moveOutDate?: string;
 
-export const STEPS: Array<{
-  id: Step;
-  title: string;
-  shortTitle: string;
-}> = [
-  {
-    id: 1,
-    title: "Lease Dates",
-    shortTitle: "Dates",
-  },
-  {
-    id: 2,
-    title: "Personal Info",
-    shortTitle: "Personal",
-  },
-  {
-    id: 3,
-    title: "Verification",
-    shortTitle: "Verify",
-  },
-  {
-    id: 4,
-    title: "Summary",
-    shortTitle: "Review",
-  },
-];
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  currentAddress?: string;
 
-export const createInitialFormData = (): FormData => {
-  return {
-    ...INITIAL_FORM_STATE,
-    filesUploaded: {
-      ...INITIAL_FORM_STATE.filesUploaded,
-    },
-  } as FormData;
-};
+  organization?: string;
+  monthlyIncome?: string;
 
+  passport?: string;
+  income?: string;
+
+  agreeTerms?: string;
+}
+
+export interface CheckoutCosts {
+  monthlyRent: number;
+  deposit: number;
+  adminFee: number;
+  totalDue: number;
+}
+
+export interface CheckoutStepProps {
+  formData: CheckoutFormData;
+  errors: CheckoutErrors;
+  costs: CheckoutCosts;
+
+  handleInputChange: (
+    field: keyof CheckoutFormData,
+    value: string | boolean,
+  ) => void;
+
+  handleFileChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: FileType,
+  ) => void;
+
+  handleStepClick: (step: CheckoutStep) => void;
+}
+// Checkout NEW types
+
+// export type CheckoutStep  = 1 | 2 | 3 | 4;
+
+// export type FileKey = "passport" | "income";
+
+// export type FormData = {
+//   moveInDate: string;
+//   moveOutDate: string;
+//   occupants: string;
+//   residentStatus: string;
+
+//   fullName: string;
+//   email: string;
+//   phone: string;
+//   currentAddress: string;
+
+//   emergencyName: string;
+//   emergencyPhone: string;
+
+//   organization: string;
+//   monthlyIncome: string;
+//   hasGuarantor: boolean;
+
+//   filesUploaded: {
+//     passport: boolean;
+//     income: boolean;
+//   };
+
+//   agreeTerms: boolean;
+// };
+
+// export type FormErrors = Partial<Record<keyof FormData | FileKey, string>>;
+
+// export const STEPS = {
+//   1: Step1Lease,
+//   2: Step2Personal,
+//   3: Step3Verification,
+//   4: Step4Review,
+// } as const;
+
+// export const STEPS: Array<{
+//   id: Step;
+//   title: string;
+//   shortTitle: string;
+// }> = [
+//   {
+//     id: 1,
+//     title: "Lease Dates",
+//     shortTitle: "Dates",
+//   },
+//   {
+//     id: 2,
+//     title: "Personal Info",
+//     shortTitle: "Personal",
+//   },
+//   {
+//     id: 3,
+//     title: "Verification",
+//     shortTitle: "Verify",
+//   },
+//   {
+//     id: 4,
+//     title: "Summary",
+//     shortTitle: "Review",
+//   },
+// ];
+
+// export const createInitialFormData = (): FormData => {
+//   return {
+//     ...INITIAL_FORM_STATE,
+//     filesUploaded: {
+//       ...INITIAL_FORM_STATE.filesUploaded,
+//     },
+//   } as FormData;
+// };
+
+//SocialMedia ICON list
 export interface SocialMediaItem {
   id: number | null;
   title: string;
   link: string;
   icon: IconType;
 }
+//SocialMedia ICON list END
 
+// Default User ( For auth view checkig)
+//type declear
 export interface User {
   id: number;
   name: string;
@@ -98,7 +186,7 @@ export const demoUser: User = {
   name: "Demo User",
   email: "demo@example.com",
 };
-
+// Default User DONE
 // map properties type declared and  the new format data with array of objects added
 export interface MapBounds {
   north: number;

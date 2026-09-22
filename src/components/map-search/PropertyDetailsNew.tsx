@@ -110,7 +110,7 @@ export default function PropertyDetails() {
 
   if (!houseData) {
     return (
-      <div className="max-w-6xl mx-auto p-8 text-center text-[var(--dager)] font-medium">
+      <div className="max-w-6xl mx-auto p-8 text-center text-[var(--danger)] font-medium">
         Error: Property listing location could not be located. (ID: {id})
       </div>
     );
