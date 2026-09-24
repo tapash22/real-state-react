@@ -1,11 +1,10 @@
 import { ChangeEvent, useMemo, useState } from "react";
 import { CheckoutErrors, CheckoutFormData, CheckoutStep } from "../data";
 
-import {
-  BsCheckCircleFill,
-  BsChevronLeft,
-  BsChevronRight,
-} from "react-icons/bs";
+import CheckoutFormNavigation from "../components/checkout/CheckoutFormNavigation";
+import CheckoutPropertySummary from "../components/checkout/CheckoutPropertySummary";
+import CheckoutStepProgress from "../components/checkout/CheckoutStepProgress";
+import CheckoutSubmissionSuccess from "../components/checkout/CheckoutSubmissionSuccess";
 import Step1Lease from "../components/checkout/Step1Lease";
 import Step2Personal from "../components/checkout/Step2Personal";
 import Step3Verification from "../components/checkout/Step3Verification";
@@ -53,11 +52,8 @@ const INITIAL_FORM_DATA: CheckoutFormData = {
 
 export default function CheckoutDetails() {
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(1);
-
   const [formData, setFormData] = useState<CheckoutFormData>(INITIAL_FORM_DATA);
-
   const [errors, setErrors] = useState<CheckoutErrors>({});
-
   const [submitted, setSubmitted] = useState(false);
 
   /**
@@ -122,11 +118,9 @@ export default function CheckoutDetails() {
     type: "passport" | "income",
   ) => {
     const file = event.target.files?.[0];
-
     if (!file) {
       return;
     }
-
     /**
      * Update uploaded state.
      */
@@ -288,7 +282,20 @@ export default function CheckoutDetails() {
    * Current step component
    * ---------------------------------------------------------
    */
+
+  const CHECKOUT_STEPS = [1, 2, 3, 4].map((step) => ({
+    value: step as CheckoutStep,
+    label: STEP_LABELS[step as CheckoutStep],
+  }));
+
   const CurrentStep = STEP_COMPONENTS[currentStep];
+
+  const handleStartNewApplication = () => {
+    setSubmitted(false);
+    setCurrentStep(1);
+    setFormData(INITIAL_FORM_DATA);
+    setErrors({});
+  };
 
   /**
    * ---------------------------------------------------------
@@ -297,61 +304,12 @@ export default function CheckoutDetails() {
    */
   if (submitted) {
     return (
-      <div className="min-h-screen  px-4 py-10 sm:px-8">
-        <div className="mx-auto flex min-h-[70vh] max-w-2xl items-center justify-center">
-          <div className="w-full rounded-3xl border border-[var(--border)] p-8 text-center shadow-sm sm:p-12">
-            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--secondary)]">
-              <BsCheckCircleFill className="h-8 w-8 text-[var(--success)]" />
-            </div>
-
-            <h1 className="text-2xl font-black text-[var(--text)]">
-              Application Submitted
-            </h1>
-
-            <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[var(--muted)]">
-              Your rental application has been submitted successfully. We will
-              review your information and contact you shortly.
-            </p>
-
-            <div className="mt-6 rounded-2xl  p-5 text-left">
-              <div className="flex justify-between text-sm">
-                <span className="text-[var(--muted)]">Property</span>
-
-                <strong className="text-[var(--text)]">Studio Neon Gold</strong>
-              </div>
-
-              <div className="mt-3 flex justify-between text-sm">
-                <span className="text-[var(--muted)]">Monthly Rent</span>
-
-                <strong className="text-[var(--text)]">
-                  €{costs.monthlyRent.toLocaleString()}
-                </strong>
-              </div>
-
-              <div className="mt-3 flex justify-between text-sm">
-                <span className="text-[var(--muted)]">Initial Payment</span>
-
-                <strong className="text-[var(--danger)]">
-                  €{costs.totalDue.toLocaleString()}
-                </strong>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setSubmitted(false);
-                setCurrentStep(1);
-                setFormData(INITIAL_FORM_DATA);
-                setErrors({});
-              }}
-              className="mt-7 rounded-xl bg-[var(--danger)] px-6 py-3 text-sm font-bold text-[var(--text)] transition hover:opacity-90"
-            >
-              Start New Application
-            </button>
-          </div>
-        </div>
-      </div>
+      <CheckoutSubmissionSuccess
+        propertyName="Studio Neon Gold"
+        monthlyRent={costs.monthlyRent}
+        totalDue={costs.totalDue}
+        onStartNew={handleStartNewApplication}
+      />
     );
   }
 
@@ -374,64 +332,12 @@ export default function CheckoutDetails() {
         {/* --------------------------------------------------
             Step indicator
         -------------------------------------------------- */}
-        <div className="mb-8 overflow-x-auto">
-          <div className="flex min-w-[650px] items-center">
-            {[1, 2, 3, 4].map((step) => {
-              const stepNumber = step as CheckoutStep;
 
-              const isActive = currentStep === stepNumber;
-
-              const isCompleted = currentStep > stepNumber;
-
-              return (
-                <div key={stepNumber} className="flex flex-1 items-center">
-                  <button
-                    type="button"
-                    onClick={() => handleStepClick(stepNumber)}
-                    className="flex items-center gap-2 "
-                  >
-                    <span
-                      className={[
-                        "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-black transition",
-                        isActive
-                          ? "bg-[var(--secondary)] text-[var(--text)]"
-                          : isCompleted
-                            ? "bg-[var(--success)] text-[var(--text)]"
-                            : "bg-[var(--card)] text-[var(--muted)]",
-                      ].join(" ")}
-                    >
-                      {isCompleted ? (
-                        <BsCheckCircleFill className="h-4 w-4 text-[var(--success)]" />
-                      ) : (
-                        stepNumber
-                      )}
-                    </span>
-
-                    <span
-                      className={[
-                        "whitespace-nowrap text-xs font-normal tracking-wide",
-                        isActive ? "text-[var(--text)]" : "text-[var(--muted)]",
-                      ].join(" ")}
-                    >
-                      {STEP_LABELS[stepNumber]}
-                    </span>
-                  </button>
-
-                  {stepNumber < 4 && (
-                    <div
-                      className={[
-                        "mx-1 h-[3px] flex-1 rouded-sm",
-                        currentStep > stepNumber
-                          ? "bg-[var(--success)]"
-                          : "bg-[var(--border)]",
-                      ].join(" ")}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <CheckoutStepProgress
+          steps={CHECKOUT_STEPS}
+          currentStep={currentStep}
+          onStepClick={handleStepClick}
+        />
 
         {/* --------------------------------------------------
             Main checkout layout
@@ -440,7 +346,7 @@ export default function CheckoutDetails() {
           {/* ------------------------------------------------
               Form
           ------------------------------------------------ */}
-          <main className="rounded-3xl border-2 border-[var(--border)]  p-5 shadow-sm sm:p-7">
+          <main className="rounded-3xl border-2 border-[var(--border)]  p-5 shadow-sm sm:p-7 space-y-3">
             <CurrentStep
               formData={formData}
               errors={errors}
@@ -449,115 +355,25 @@ export default function CheckoutDetails() {
               handleFileChange={handleFileChange}
               handleStepClick={handleStepClick}
             />
-
             {/* ------------------------------------------------
                 Navigation
             ------------------------------------------------ */}
-            <div className="mt-8 flex items-center justify-between border-t border-[var(--border)] pt-6">
-              <button
-                type="button"
-                onClick={handleBack}
-                disabled={currentStep === 1}
-                className={[
-                  "flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-bold transition",
-                  currentStep === 1
-                    ? "cursor-not-allowed text-[var(--muted)]"
-                    : "text-[var(--text)] hover:text-[var(--text)]",
-                ].join(" ")}
-              >
-                <BsChevronLeft className="h-3.5 w-3.5" />
-                Back
-              </button>
-
-              <button
-                type="button"
-                onClick={handleNext}
-                className="flex items-center gap-2 rounded-xl  bg-[var(--primary)] px-5 py-3 text-sm font-bold text-[var(--text)] shadow-sm transition hover:opacity-90"
-              >
-                {currentStep === 4 ? "Submit Application" : "Continue"}
-
-                {currentStep !== 4 && (
-                  <BsChevronRight className="h-3.5 w-3.5" />
-                )}
-              </button>
-            </div>
+            <CheckoutFormNavigation
+              currentStep={currentStep}
+              totalSteps={4}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
           </main>
 
           {/* ------------------------------------------------
               Property / payment summary
           ------------------------------------------------ */}
-          <aside className="h-fit rounded-3xl border border-[var(--border)] p-5 shadow-sm">
-            <div className="overflow-hidden rounded-2xl">
-              <div className="flex h-36 items-center justify-center bg-gradient-to-br from-slate-200 to-slate-100">
-                <span className="text-xs font-bold text-[var(--muted)]">
-                  Property Image
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <h2 className="text-base font-black text-[var(--text)]">
-                Studio Neon Gold Floor 5
-              </h2>
-
-              <p className="mt-1 text-xs text-[var(--muted)]">
-                Mitte-Wedding, Berlin
-              </p>
-            </div>
-
-            <div className="my-5 border-t border-[var(--border)]" />
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-[var(--muted)]">
-                  Monthly Rent
-                </span>
-
-                <strong className="text-sm text-[var(--text)]">
-                  €{costs.monthlyRent.toLocaleString()}
-                </strong>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-[var(--muted)]">
-                  Security Deposit
-                </span>
-
-                <strong className="text-sm text-[var(--text)]">
-                  €{costs.deposit.toLocaleString()}
-                </strong>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-[var(--muted)]">
-                  Registration Fee
-                </span>
-
-                <strong className="text-sm text-[var(--text)]">
-                  €{costs.adminFee.toLocaleString()}
-                </strong>
-              </div>
-
-              <div className="border-t border-[var(--border)] pt-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-[var(--text)]">
-                    Total Due
-                  </span>
-
-                  <strong className="text-lg font-black text-[var(--danger)]">
-                    €{costs.totalDue.toLocaleString()}
-                  </strong>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 rounded-2xl p-4">
-              <p className="text-[11px] leading-5 text-[var(--muted)]">
-                Your initial payment is calculated from the monthly rent,
-                security deposit and registration fee.
-              </p>
-            </div>
-          </aside>
+          <CheckoutPropertySummary
+            propertyName="Studio Neon Gold Floor 5"
+            location="Mitte-Wedding, Berlin"
+            costs={costs}
+          />
         </div>
       </div>
     </div>
