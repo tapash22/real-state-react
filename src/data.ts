@@ -10,11 +10,13 @@ import assets from "./assets/assets";
 
 import { IconType } from "react-icons";
 import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Step1Lease from "./components/checkout/Step1Lease";
+import Step2Personal from "./components/checkout/Step2Personal";
+import Step3Verification from "./components/checkout/Step3Verification";
+import Step4Review from "./components/checkout/Step4Review";
 import { Property } from "./types/types";
 
 // Checkout NEW types Declear
-export type CheckoutStep = 1 | 2 | 3 | 4;
-
 export type FileType = "passport" | "income";
 
 export interface FilesUploaded {
@@ -85,86 +87,67 @@ export interface CheckoutStepProps {
     type: FileType,
   ) => void;
 
-  handleStepClick: (step: CheckoutStep) => void;
+  handleStepClick?: (step: CheckoutStep) => void;
 }
+
+//INITIAL_FORM_DATAdata
+export const INITIAL_FORM_DATA: CheckoutFormData = {
+  moveInDate: "",
+  moveOutDate: "",
+  occupants: "1",
+  residentStatus: "",
+
+  fullName: "",
+  email: "",
+  phone: "",
+  currentAddress: "",
+
+  emergencyName: "",
+  emergencyPhone: "",
+
+  organization: "",
+  monthlyIncome: "",
+  hasGuarantor: false,
+
+  filesUploaded: {
+    passport: false,
+    income: false,
+  },
+
+  agreeTerms: false,
+};
+
+export const STEP_COMPONENTS = {
+  1: Step1Lease,
+  2: Step2Personal,
+  3: Step3Verification,
+  4: Step4Review,
+} as const;
+
+export const STEP_LABELS = {
+  1: "Lease & Occupancy",
+  2: "Personal Information",
+  3: "Verification",
+  4: "Review & Confirm",
+} as const;
+
+// Derived CheckoutStep union type (1 | 2 | 3 | 4)
+export type CheckoutStep = keyof typeof STEP_COMPONENTS;
+
+// Export total steps count
+export const TOTAL_STEPS = Object.keys(STEP_COMPONENTS).length;
+
+// Export structured steps for progress bar navigation
+export const CHECKOUT_STEPS = (
+  Object.keys(STEP_LABELS) as unknown as CheckoutStep[]
+).map((step) => {
+  const stepNum = Number(step) as CheckoutStep;
+  return {
+    value: stepNum,
+    label: STEP_LABELS[stepNum],
+  };
+});
 // Checkout NEW types
-
-// export type CheckoutStep  = 1 | 2 | 3 | 4;
-
-// export type FileKey = "passport" | "income";
-
-// export type FormData = {
-//   moveInDate: string;
-//   moveOutDate: string;
-//   occupants: string;
-//   residentStatus: string;
-
-//   fullName: string;
-//   email: string;
-//   phone: string;
-//   currentAddress: string;
-
-//   emergencyName: string;
-//   emergencyPhone: string;
-
-//   organization: string;
-//   monthlyIncome: string;
-//   hasGuarantor: boolean;
-
-//   filesUploaded: {
-//     passport: boolean;
-//     income: boolean;
-//   };
-
-//   agreeTerms: boolean;
-// };
-
-// export type FormErrors = Partial<Record<keyof FormData | FileKey, string>>;
-
-// export const STEPS = {
-//   1: Step1Lease,
-//   2: Step2Personal,
-//   3: Step3Verification,
-//   4: Step4Review,
-// } as const;
-
-// export const STEPS: Array<{
-//   id: Step;
-//   title: string;
-//   shortTitle: string;
-// }> = [
-//   {
-//     id: 1,
-//     title: "Lease Dates",
-//     shortTitle: "Dates",
-//   },
-//   {
-//     id: 2,
-//     title: "Personal Info",
-//     shortTitle: "Personal",
-//   },
-//   {
-//     id: 3,
-//     title: "Verification",
-//     shortTitle: "Verify",
-//   },
-//   {
-//     id: 4,
-//     title: "Summary",
-//     shortTitle: "Review",
-//   },
-// ];
-
-// export const createInitialFormData = (): FormData => {
-//   return {
-//     ...INITIAL_FORM_STATE,
-//     filesUploaded: {
-//       ...INITIAL_FORM_STATE.filesUploaded,
-//     },
-//   } as FormData;
-// };
-
-//SocialMedia ICON list
 export interface SocialMediaItem {
   id: number | null;
   title: string;

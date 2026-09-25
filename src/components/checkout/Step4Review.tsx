@@ -20,7 +20,11 @@ export default function Step4Review({
       />
 
       {/* Lease */}
-      <ReviewSection title="Lease & Property" step={1} onEdit={handleStepClick}>
+      <ReviewSection
+        title="Lease & Property"
+        step={1}
+        onEdit={handleStepClick ?? (() => {})}
+      >
         <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
           <ReviewItem label="Property" value="Studio Neon Gold Floor 5" />
 
@@ -37,7 +41,11 @@ export default function Step4Review({
       </ReviewSection>
 
       {/* Applicant */}
-      <ReviewSection title="Applicant" step={2} onEdit={handleStepClick}>
+      <ReviewSection
+        title="Applicant"
+        step={2}
+        onEdit={handleStepClick ?? (() => {})}
+      >
         <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
           <ReviewItem label="Name" value={formData.fullName || "-"} />
 
@@ -53,7 +61,11 @@ export default function Step4Review({
       </ReviewSection>
 
       {/* Verification */}
-      <ReviewSection title="Verification" step={3} onEdit={handleStepClick}>
+      <ReviewSection
+        title="Verification"
+        step={3}
+        onEdit={handleStepClick ?? (() => {})}
+      >
         <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
           <ReviewItem
             label="Organization"
