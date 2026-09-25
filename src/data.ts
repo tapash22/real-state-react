@@ -212,28 +212,6 @@ export type ApplyFilterParamsOptions = {
 };
 
 // checkout demo data
-export const DEMO_DATA = {
-  moveInDate: "2026-10-01",
-  moveOutDate: "2027-03-31",
-  occupants: "1",
-  residentStatus: "Student",
-  fullName: "Tapash Paul",
-  email: "tapash.paul@example.com",
-  phone: "+49 176 9876 5432",
-  currentAddress: "Mitte Quarter 42, 10115 Berlin, Germany",
-  emergencyName: "Rahim Paul",
-  emergencyPhone: "+880 1711 000000",
-  organization: "Humboldt University of Berlin",
-  monthlyIncome: "2400",
-  hasGuarantor: true,
-  filesUploaded: {
-    passport: true,
-    income: true,
-    enrollment: true,
-  },
-  agreeTerms: true,
-};
-
 export const INITIAL_FORM_STATE = {
   moveInDate: "2026-10-01",
   moveOutDate: "2027-03-31",

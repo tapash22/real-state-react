@@ -9,6 +9,7 @@ import { useAppData } from "../../hooks/useAppData";
 import { useHouseContext } from "../../hooks/useHouseContext";
 import {
   CalendarInputPicker,
+  type DateMode,
   type PickerRawData,
 } from "../calendar/CalendarInputPicker";
 import { SlidingToggle } from "../toggle/SlidingToggle";
@@ -19,8 +20,6 @@ import ResidenceDetails from "./ResidenceDetails";
 type RouteParams = {
   id: string;
 };
-
-type DateMode = "month" | "exact";
 
 export default function PropertyDetails() {
   const { data, isLoading: isResidenceDataLoading } = useAppData();

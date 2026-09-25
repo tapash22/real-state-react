@@ -20,10 +20,10 @@ export default function CheckoutSubmissionSuccess({
   return (
     <div className="min-h-screen px-4 py-10 sm:px-8">
       <div className="mx-auto flex min-h-[70vh] max-w-2xl items-center justify-center">
-        <div className="w-full rounded-3xl border border-[var(--border)] p-8 text-center shadow-sm sm:p-12 space-y-2">
+        <div className="w-full rounded-3xl border-2 border-[var(--border)] p-8 text-center shadow-sm sm:p-12 space-y-2">
           {/* Success Icon */}
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--secondary)]">
-            <BsCheckCircleFill className="h-8 w-8 text-[var(--success)]" />
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--success)]">
+            <BsCheckCircleFill className="h-8 w-8 text-[var(--card)]" />
           </div>
 
           {/* Title */}

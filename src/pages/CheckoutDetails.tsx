@@ -6,6 +6,7 @@ import {
   CheckoutStep,
   FileType,
   INITIAL_FORM_DATA,
+  RoomUnit,
   STEP_COMPONENTS,
   TOTAL_STEPS,
 } from "../data";
@@ -15,23 +16,42 @@ import CheckoutPropertySummary from "../components/checkout/CheckoutPropertySumm
 import CheckoutStepProgress from "../components/checkout/CheckoutStepProgress";
 import CheckoutSubmissionSuccess from "../components/checkout/CheckoutSubmissionSuccess";
 
+import { useLocation } from "react-router-dom";
 import { STEP_SCHEMAS } from "../components/checkout/checkout.schema";
 import { validate } from "../utils/validations/formValidation";
 
+interface CheckoutLocationState {
+  unit?: RoomUnit;
+  residenceTitle?: string;
+}
+
 export default function CheckoutDetails() {
+  const location = useLocation();
+
+  const checkoutState = location.state as CheckoutLocationState | null;
+  const selectedUnit = checkoutState?.unit ?? null;
+  const residenceTitle = checkoutState?.residenceTitle || "Residence";
+
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(1);
   const [formData, setFormData] = useState<CheckoutFormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<CheckoutErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
+  const propertyName = selectedUnit?.title || "Selected Property";
+
+  const monthlyRent = selectedUnit?.pricePerMonth || 0;
+
+  const deposit = selectedUnit?.paymentDetails?.deposit || monthlyRent;
+  const adminFee = 99;
+
   const costs = useMemo(
     () => ({
-      monthlyRent: 1559,
-      deposit: 1559,
-      adminFee: 99,
-      totalDue: 1559 + 1559 + 99,
+      monthlyRent,
+      deposit,
+      adminFee,
+      totalDue: monthlyRent + deposit + adminFee,
     }),
-    [],
+    [monthlyRent, deposit],
   );
 
   const handleInputChange = (
@@ -43,11 +63,16 @@ export default function CheckoutDetails() {
       [field]: value,
     }));
 
-    // Clear error as user types
+    // Clear field error when user changes it.
     setErrors((previous) => {
-      if (!previous[field as keyof CheckoutErrors]) return previous;
+      if (!previous[field as keyof CheckoutErrors]) {
+        return previous;
+      }
+
       const nextErrors = { ...previous };
+
       delete nextErrors[field as keyof CheckoutErrors];
+
       return nextErrors;
     });
   };
@@ -89,7 +114,8 @@ export default function CheckoutDetails() {
   };
 
   const handleStepClick = (step: CheckoutStep) => {
-    setCurrentStep(step);
+    const isValid = validateStep(currentStep);
+    if (isValid) return setCurrentStep(step);
   };
 
   const handleNext = () => {
@@ -124,7 +150,7 @@ export default function CheckoutDetails() {
   if (submitted) {
     return (
       <CheckoutSubmissionSuccess
-        propertyName="Studio Neon Gold"
+        propertyName={propertyName}
         monthlyRent={costs.monthlyRent}
         totalDue={costs.totalDue}
         onStartNew={handleStartNewApplication}
@@ -165,12 +191,14 @@ export default function CheckoutDetails() {
               totalSteps={TOTAL_STEPS}
               onBack={handleBack}
               onNext={handleNext}
+              nextLabel="Continue"
+              submitLabel="Submit Application"
             />
           </main>
 
           <CheckoutPropertySummary
-            propertyName="Studio Neon Gold Floor 5"
-            location="Mitte-Wedding, Berlin"
+            propertyName={propertyName}
+            location={residenceTitle}
             costs={costs}
           />
         </div>
