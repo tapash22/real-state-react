@@ -10,14 +10,154 @@ import assets from "./assets/assets";
 
 import { IconType } from "react-icons";
 import { FaFacebook, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Step1Lease from "./components/checkout/Step1Lease";
+import Step2Personal from "./components/checkout/Step2Personal";
+import Step3Verification from "./components/checkout/Step3Verification";
+import Step4Review from "./components/checkout/Step4Review";
+import { Property } from "./types/types";
 
+// Checkout NEW types Declear
+export type FileType = "passport" | "income";
+
+export interface FilesUploaded {
+  passport: boolean;
+  income: boolean;
+}
+
+export interface CheckoutFormData {
+  moveInDate: string;
+  moveOutDate: string;
+  occupants: string;
+  residentStatus: string;
+
+  fullName: string;
+  email: string;
+  phone: string;
+  currentAddress: string;
+
+  emergencyName: string;
+  emergencyPhone: string;
+
+  organization: string;
+  monthlyIncome: string;
+  hasGuarantor: boolean;
+
+  filesUploaded: FilesUploaded;
+
+  agreeTerms: boolean;
+}
+
+export interface CheckoutErrors {
+  moveInDate?: string;
+  moveOutDate?: string;
+
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  currentAddress?: string;
+
+  organization?: string;
+  monthlyIncome?: string;
+
+  passport?: string;
+  income?: string;
+
+  agreeTerms?: string;
+}
+
+export interface CheckoutCosts {
+  monthlyRent: number;
+  deposit: number;
+  adminFee: number;
+  totalDue: number;
+}
+
+export interface CheckoutStepProps {
+  formData: CheckoutFormData;
+  errors: CheckoutErrors;
+  costs: CheckoutCosts;
+
+  handleInputChange: (
+    field: keyof CheckoutFormData,
+    value: string | boolean,
+  ) => void;
+
+  handleFileChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    type: FileType,
+  ) => void;
+
+  handleStepClick?: (step: CheckoutStep) => void;
+}
+
+//INITIAL_FORM_DATAdata
+export const INITIAL_FORM_DATA: CheckoutFormData = {
+  moveInDate: "",
+  moveOutDate: "",
+  occupants: "1",
+  residentStatus: "",
+
+  fullName: "",
+  email: "",
+  phone: "",
+  currentAddress: "",
+
+  emergencyName: "",
+  emergencyPhone: "",
+
+  organization: "",
+  monthlyIncome: "",
+  hasGuarantor: false,
+
+  filesUploaded: {
+    passport: false,
+    income: false,
+  },
+
+  agreeTerms: false,
+};
+
+export const STEP_COMPONENTS = {
+  1: Step1Lease,
+  2: Step2Personal,
+  3: Step3Verification,
+  4: Step4Review,
+} as const;
+
+export const STEP_LABELS = {
+  1: "Lease & Occupancy",
+  2: "Personal Information",
+  3: "Verification",
+  4: "Review & Confirm",
+} as const;
+
+// Derived CheckoutStep union type (1 | 2 | 3 | 4)
+export type CheckoutStep = keyof typeof STEP_COMPONENTS;
+
+// Export total steps count
+export const TOTAL_STEPS = Object.keys(STEP_COMPONENTS).length;
+
+// Export structured steps for progress bar navigation
+export const CHECKOUT_STEPS = (
+  Object.keys(STEP_LABELS) as unknown as CheckoutStep[]
+).map((step) => {
+  const stepNum = Number(step) as CheckoutStep;
+  return {
+    value: stepNum,
+    label: STEP_LABELS[stepNum],
+  };
+});
+// Checkout NEW types
 export interface SocialMediaItem {
   id: number | null;
   title: string;
   link: string;
   icon: IconType;
 }
+//SocialMedia ICON list END
 
+// Default User ( For auth view checkig)
+//type declear
 export interface User {
   id: number;
   name: string;
@@ -29,8 +169,71 @@ export const demoUser: User = {
   name: "Demo User",
   email: "demo@example.com",
 };
+// Default User DONE
+// map properties type declared and  the new format data with array of objects added
+export interface MapBounds {
+  north: number;
+  east: number;
+  south: number;
+  west: number;
+}
+// types/map.ts
+export interface UserLocation {
+  lat: number;
+  lng: number;
+}
 
 export type SocialMediaItems = SocialMediaItem[];
+
+export const bangladeshCenter: [number, number] = [23.685, 90.3563];
+
+export const TABS = ["Anyone", "Student", "Professional", "Familie"] as const;
+
+/* Types */
+export type PropertyFilterTab = (typeof TABS)[number];
+
+export type PriceRange = {
+  min: number;
+  max: number;
+};
+
+export type HouseFilterOptions = {
+  country?: string;
+  property?: string;
+  price?: string;
+  tab?: PropertyFilterTab | string;
+  mapBounds?: MapBounds | null;
+};
+
+export type ApplyFilterParamsOptions = {
+  property: string;
+  price: string;
+  tab: PropertyFilterTab | string;
+};
+
+// checkout demo data
+export const INITIAL_FORM_STATE = {
+  moveInDate: "2026-10-01",
+  moveOutDate: "2027-03-31",
+  occupants: "1",
+  residentStatus: "Student",
+  fullName: "",
+  email: "",
+  phone: "",
+  currentAddress: "",
+  emergencyName: "",
+  emergencyPhone: "",
+  organization: "",
+  monthlyIncome: "",
+  hasGuarantor: false,
+  filesUploaded: {
+    passport: false,
+    income: false,
+    enrollment: false,
+  },
+  agreeTerms: false,
+};
+// checkout demo data END
 
 export const staticPriceTiers = [
   "All Prices",
@@ -131,25 +334,6 @@ export interface FaqItem {
   answer: string;
   link?: string | null;
 }
-
-// export interface House {
-//   id: number;
-//   type: string;
-//   rating: number;
-//   name: string;
-//   description: string;
-//   image: string;
-//   imageLg: string;
-//   country: string;
-//   address: string;
-
-//   bedroom: string;
-//   bathroom: string;
-//   surface: string;
-//   year: string;
-//   price: string;
-//   agent: Agent;
-// }
 
 export const socialMediaLinkList: SocialMediaItems = [
   {
@@ -1184,35 +1368,45 @@ export const articleData: ArticleData = {
   ],
 };
 
-// map properties type declared and  the new format data with array of objects added
+// Omit strict fields from MapItem/Property and make them optional/flexible
 
-export interface MapBounds {
-  north: number;
-  east: number;
-  south: number;
-  west: number;
-}
+export type PropertyLike = Partial<Omit<MapItem & Property, "id">> & {
+  id: number;
+  id_str?: string;
+  lat?: number;
+  lng?: number;
+  name?: string;
+  title?: string;
+  price?: number;
+  image?: string;
+  currency?: string;
+  location?: string;
+};
 
 export type MapItem = {
   id: number;
   name: string;
   title: string;
-  location: string;
+  location?: string;
 
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
 
-  price: number;
-  currency: string;
+  price?: number;
+  currency?: string;
 
   image: string;
 
-  bedrooms: number;
-  bathrooms: number;
-  area: number;
-  areaUnit: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  area?: number;
+  areaUnit?: string;
 
   propertyType: string;
+
+  rating?: number;
+  type?: string;
+  country?: string;
 };
 
 export const cityExploreProperties: MapItem[] = [

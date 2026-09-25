@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { CalendarView } from "./CalendarView";
 
-type DateMode = "month" | "exact";
+export type DateMode = "month" | "exact";
 
 export interface PickerRawData {
   startDate?: Date | null;
@@ -63,16 +63,12 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     if (start && !end) {
       const partialString = `${start.toLocaleDateString()} - ...`;
       setInputValue(partialString);
-      if (onChange) {
-        onChange(partialString, { startDate: start, endDate: null });
-      }
+      onChange?.(partialString, { startDate: start, endDate: null });
     } else if (start && end) {
       const rangeString = `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
       setInputValue(rangeString);
       setIsOpen(false); // Range selection complete, close dropdown safely
-      if (onChange) {
-        onChange(rangeString, { startDate: start, endDate: end });
-      }
+      onChange?.(rangeString, { startDate: start, endDate: end });
     }
   };
 
@@ -99,7 +95,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
           readOnly
           value={inputValue}
           placeholder={placeholder}
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen((previous) => !previous)}
           className="input-field cursor-pointer"
         />
         <CiCalendar
@@ -109,7 +105,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute z-[9999] left-0 top-full mt-2 origin-top-left animate-in fade-in slide-in-from-top-2 duration-150">
+        <div className="absolute top-full left-0 mt-2 z-50  rounded-lg shadow-2xl border border-[var(--border)] p-4 min-w-[300px]">
           <CalendarView
             mode={mode}
             savedStartDate={savedStartDate}

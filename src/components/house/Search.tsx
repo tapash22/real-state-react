@@ -1,19 +1,23 @@
 import gsap from "gsap";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiHome5Line, RiMapPinLine, RiWallet3Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { useHideMessageOnOutsideClick } from "../../hooks/useHideMessageOnOutsideClick";
+import { useHouseContext } from "../../hooks/useHouseContext";
 import { hideMessage, showMessage } from "../../utils/messageAnimation";
 import { Dropdown } from "../dropdown/Dropdown";
-import { HouseContext, type HouseContextType } from "../HouseContext";
 
 type SearchProps = {
   // add later if needed
 };
 
 export function Search(_props: SearchProps) {
-  const context = useContext(HouseContext);
+  const { countries, properties, prices } = useHouseContext();
+  // const context = useContext(HouseContext);
 
+  const [country, setCountry] = useState("");
+  const [property, setProperty] = useState("");
+  const [price, setPrice] = useState("");
   const [show, setShow] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -44,39 +48,39 @@ export function Search(_props: SearchProps) {
         setShow,
       }),
   });
+  /*
+   * Check whether value is a placeholder.
+   */
+  const isDefaultValue = (value: string) => {
+    if (!value.trim()) return true;
 
-  if (!context) return null;
+    const normalized = value.toLowerCase().trim();
 
-  const {
-    country,
-    setCountry,
-    countries,
-
-    property,
-    setProperty,
-    properties,
-
-    price,
-    setPrice,
-    prices,
-  } = context as HouseContextType;
+    return (
+      normalized.includes("any") ||
+      normalized.includes("select") ||
+      normalized.includes("choose")
+    );
+  };
 
   //  Wrap handler to combine context filter updates and path redirecting
   const handleSearchSubmit = () => {
-    const hasSearchValue =
-      !!country.trim() || !!property.trim() || !!price.trim();
+    const validCountry = !isDefaultValue(country);
+    const validProperty = !isDefaultValue(property);
+    const validPrice = !isDefaultValue(price);
 
-    if (!hasSearchValue) {
+    /* At least one real search option */
+    if (!validCountry && !validProperty && !validPrice) {
       if (!show) {
         showMessage({
           messageRef,
           setShow,
         });
       }
-
       return;
     }
 
+    /* Hide validation message */
     if (show) {
       hideMessage({
         messageRef,
@@ -84,7 +88,23 @@ export function Search(_props: SearchProps) {
       });
     }
 
-    navigate("/search");
+    /*  Build URL parameters. */
+    const params: Record<string, string> = {};
+
+    if (validCountry) {
+      params.country = country.trim();
+    }
+    if (validProperty) {
+      params.property = property.trim();
+    }
+    if (validPrice) {
+      params.price = price.trim();
+    }
+
+    navigate({
+      pathname: "/search",
+      search: `?${createSearchParams(params)}`,
+    });
   };
 
   return (
@@ -132,7 +152,7 @@ export function Search(_props: SearchProps) {
           <button
             onClick={handleSearchSubmit}
             style={{ backgroundColor: "var(--bg)" }}
-            className="w-full lg:h-full py-3 px-20 lg:py-0 rounded-sm lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm shadow-[var(--primary)]"
+            className="w-full lg:h-full py-3 px-20 lg:py-0 rounded-md lg:rounded-l-none lg:rounded-r-lg  text-(--text) font-semibold transition-opacity hover:opacity-100 tracking-widest cursor-pointer shadow-sm lg:shadow-none shadow-[var(--primary)]"
             type="button"
           >
             Search

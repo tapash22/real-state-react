@@ -24,33 +24,39 @@ export function Footer() {
     >
       <div className="w-full flex flex-col gap-10 px-10 py-5 lg:py-8 lg:flex-row">
         {/* LEFT SIDE: Brand & Navigation Links */}
-        <div className="w-full lg:w-2/3 grid gap-10 sm:grid-cols-3">
+        <div className="w-full lg:w-2/3 grid gap-10 sm:grid-cols-2 ">
           {/* Brand & Socials */}
-          <div className="flex flex-col justify-between h-full min-h-[150px]">
-            <div>
+          <div className="flex flex-col justify-between h-full min-h-[150px] ">
+            <div className="space-y-2">
               <h2
                 style={{ color: "var(--footer-title)" }}
-                className="text-2xl font-bold tracking-wide"
+                className="text-2xl font-bold tracking-wide text-center lg:text-start"
               >
                 Thikana
               </h2>
-              <p className="mt-3 text-sm text-white/70 leading-relaxed max-w-sm">
-                Find your perfect home with ease. We offer verified properties,
-                prime locations, and affordable living options for everyone.
+              <p className="text-sm text-white/70 leading-relaxed max-w-sm text-justify lg:text-start">
+                Finding your perfect home is now simple, transparent, and
+                hassle-free. We connect you with fully verified property
+                listings in top-tier locations, ensuring complete peace of mind.
+                Whether you are looking for modern studio apartments or spacious
+                residences, explore affordable living options designed to fit
+                every budget and lifestyle seamlessly.
               </p>
             </div>
 
             {/* Social Media Icons */}
-            <div className="mt-6 flex gap-4 text-white/60">
+            <div className="flex gap-4 text-white/60 w-full py-5 lg:py-2 ">
               {socialMediaLinkList && socialMediaLinkList?.length > 0 && (
-                <ul className={`flex w-auto h-full p-0 md:p-2 space-x-1`}>
+                <ul
+                  className={`flex justify-center lg:justify-start w-full h-full p-0 md:p-2 space-x-1  `}
+                >
                   {data?.socialMediaLinkList.map((item, index) => {
                     //declear icon type
                     const Icon: IconType = item.icon;
                     return (
                       <li
                         key={index}
-                        className="group relative w-auto h-auto p-3 flex justify-center items-center cursor-pointer"
+                        className="group relative w-auto h-auto p-2 flex justify-center items-center cursor-pointer"
                       >
                         <a
                           href={item.link}
@@ -58,7 +64,7 @@ export function Footer() {
                           rel="noopener noreferrer"
                         >
                           <Icon
-                            size={20}
+                            size={24}
                             className=" group-hover:text-cyan-400 transition duration-300
                                           group-hover:drop-shadow-[0_0_8px_#22d3ee]"
                           />
@@ -71,89 +77,91 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Information Section */}
-          <div>
-            <h3
-              style={{ color: "var(--footer-title)" }}
-              className="mb-4 text-lg font-semibold tracking-wide"
-            >
-              Information
-            </h3>
-            <ul
-              className="space-y-2.5 text-sm"
-              style={{ color: "var(--footer-link)" }}
-            >
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  About us
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Properties
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Careers
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Payments
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Blog
-                </button>
-              </li>
-            </ul>
-          </div>
+          <div className="flex flex-row w-full h-auto justify-around lg:justify-between">
+            {/* Information Section */}
+            <div>
+              <h3
+                style={{ color: "var(--footer-title)" }}
+                className="mb-4 text-lg font-semibold tracking-wide"
+              >
+                Information
+              </h3>
+              <ul
+                className="space-y-2.5 text-sm"
+                style={{ color: "var(--footer-link)" }}
+              >
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    About us
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Properties
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Careers
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Payments
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Blog
+                  </button>
+                </li>
+              </ul>
+            </div>
 
-          {/* Support Section */}
-          <div>
-            <h3
-              style={{ color: "var(--footer-title)" }}
-              className="mb-4 text-lg font-semibold tracking-wide"
-            >
-              Support
-            </h3>
-            <ul
-              className="space-y-2.5 text-sm"
-              style={{ color: "var(--footer-link)" }}
-            >
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Add Property
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Terms & Conditions
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Help Center
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Our Agents
-                </button>
-              </li>
-              <li>
-                <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
-                  Features
-                </button>
-              </li>
-            </ul>
+            {/* Support Section */}
+            <div>
+              <h3
+                style={{ color: "var(--footer-title)" }}
+                className="mb-4 text-lg font-semibold tracking-wide"
+              >
+                Support
+              </h3>
+              <ul
+                className="space-y-2.5 text-sm"
+                style={{ color: "var(--footer-link)" }}
+              >
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Add Property
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Terms & Conditions
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Help Center
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Our Agents
+                  </button>
+                </li>
+                <li>
+                  <button className="hover:text-white transition-colors bg-transparent border-none p-0 text-left text-sm cursor-pointer w-full">
+                    Features
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* RIGHT SIDE: Address & Newsletter Card */}
-        <div className="w-full lg:w-1/3 relative overflow-hidden rounded-xl min-h-[260px] shadow-lg">
+        <div className="w-full lg:w-1/3 relative overflow-hidden rounded-xl min-h-[260px] shadow-md shadow-[var(--muted)]">
           <img
             src={ep}
             alt="Thikana building view"
@@ -161,10 +169,10 @@ export function Footer() {
           />
 
           {/* Overlay mask */}
-          <div className="absolute inset-0 flex flex-col justify-between bg-black/70 p-5 backdrop-blur-[0.5px]">
+          <div className="absolute inset-0 flex flex-col justify-between bg-blue-950/90 p-5">
             {/* Address & Quick Contacts */}
             <div>
-              <h3 className="text-xl font-semibold tracking-wide text-white">
+              <h3 className="text-xl font-semibold tracking-wide text-white ">
                 Contact Us
               </h3>
               <p className="mt-2 text-sm text-white/80 leading-relaxed">

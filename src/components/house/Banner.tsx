@@ -164,7 +164,7 @@ export function Banner() {
         {/* FLOATING SEARCH CONTAINER BAR */}
         <div
           ref={searchRef}
-          className="w-full max-w-5xl mx-auto p-2 bg-slate-900/40 border border-slate-800 rounded-2xl backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.8)] z-20"
+          className="w-full max-w-5xl mx-auto p-2 bg-slate-900/40 border border-slate-800 rounded-2xl backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.8)] z-50 relative overflow-visible"
         >
           <Search />
         </div>

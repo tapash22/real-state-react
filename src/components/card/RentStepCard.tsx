@@ -10,7 +10,7 @@ export function RentStepCard({ step }: RentStepCardProps) {
       {/* Step Image Container */}
       <div
         style={{ borderColor: "var(--border)" }}
-        className="w-full  aspect-[3/2] lg:aspect-square overflow-hidden rounded-tl-xl rounded-tr-xl  border border-[var(--border)]"
+        className="w-full  aspect-[2/1] lg:aspect-square overflow-hidden rounded-tl-xl rounded-tr-xl  border border-[var(--border)]"
       >
         <img
           src={step.rentStepImage}
@@ -20,7 +20,7 @@ export function RentStepCard({ step }: RentStepCardProps) {
       </div>
 
       {/* Title block with bold number prefix */}
-      <div className="flex items-start h-auto lg:h-auto gap-2 p-4 bg-gray-50 rounded-bl-xl rounded-br-xl">
+      <div className="flex items-start h-auto lg:h-auto gap-2 p-4  rounded-bl-xl rounded-br-xl">
         <span className="text-2xl font-bold text-[var(--muted)] leading-none">
           {step.id}.
         </span>

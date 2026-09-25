@@ -11,13 +11,20 @@
        ========================================== */
     --bg: #f0f2f5;
     --text: #0F172A;
-    --primary: #544ed1;
-    --secondary: #10B981;
+    --primary: #4f46e5;
+    --secondary: #059669;
+
+    --success: #16a34a;
+    --warning: #d97706;
+    --info: #0284c7;
+    --danger: #dc2626;
     --card: #FFFFFF;
     --border: #E5E7EB;
     --muted: #64748B;
 
     /* Map glass / glow */
+    --map: rgba(11, 68, 148, 0.7);
+
     --map-glow: rgba(51, 65, 85, 0.28);
     --map-glow-soft: rgba(51, 65, 85, 0.14);
     --map-inner-glow: rgba(51, 65, 85, 0.12);
@@ -73,9 +80,13 @@
     /* Crisp white/slate mix for high readability text */
     --text: #F1F5F9;
 
-    --primary: #6366F1;
-    /* Slightly brightened for dark mode contrast */
-    --secondary: #34D399;
+    --primary: #6366f1;
+    --secondary: #34d399;
+
+    --success: #4ade80;
+    --warning: #fbbf24;
+    --info: #38bdf8;
+    --danger: #f87171;
     /* Slightly brightened */
 
     /* Slightly lighter navy than background so cards pop out */
@@ -288,6 +299,52 @@
     .property-marker-wrapper {
         background: transparent !important;
         border: none !important;
+    }
+
+    .current-location-marker {
+        position: relative;
+        display: block;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: 0;
+    }
+
+    .current-location-marker__pulse,
+    .current-location-marker__dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: block;
+        border-radius: 9999px;
+        transform: translate(-50%, -50%);
+    }
+
+    .current-location-marker__pulse {
+        width: 28px;
+        height: 28px;
+        background: rgb(37 99 235 / 25%);
+        animation: current-location-pulse 1.8s ease-out infinite;
+    }
+
+    .current-location-marker__dot {
+        width: 12px;
+        height: 12px;
+        background: #2563eb;
+        border: 3px solid #ffffff;
+        box-shadow: 0 1px 5px rgb(15 23 42 / 55%);
+    }
+
+    @keyframes current-location-pulse {
+        0% {
+            opacity: 0.85;
+            transform: translate(-50%, -50%) scale(0.55);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.35);
+        }
     }
 
     /* .leaflet-marker-pane {

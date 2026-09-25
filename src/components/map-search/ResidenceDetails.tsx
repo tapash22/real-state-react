@@ -239,6 +239,7 @@ const ResidenceDetails: React.FC<ResidenceDetailsProps> = ({
       {/* details dialog show into right side of the screen */}
       <RoomUnitDetailDrawer
         unit={selectedUnit}
+        residenceData={data}
         isOpen={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);
