@@ -1,17 +1,15 @@
-// Returns:
 export type ValidatorFn<T> = (value: any, values: T) => string | null;
-// null → validation passed
-// string → validation failed (error message)
 
-export type ValidationSchema<T> = {
-  [K in keyof T]?: ValidatorFn<T>[];
+export type ValidationSchema<T, E = Record<string, any>> = {
+  [K in keyof T | keyof E]?: ValidatorFn<T>[];
 };
 
-export type Errors<T> = {
-  [K in keyof T]?: string;
+export type Errors<E = Record<string, any>> = {
+  [K in keyof E]?: string;
 };
 
-// reusable validators
+// --- Reusable Core Validators ---
+
 export const required =
   <T>(label = "Field"): ValidatorFn<T> =>
   (value) =>
@@ -36,12 +34,57 @@ export const match =
   (value, values) =>
     value === values[field] ? null : `${label} does not match`;
 
-// CORE VALIDATOR ENGINE
-export const validate = <T extends Record<string, any>>(
+// --- Custom Checkout Validators ---
+
+export const mustBeTrue =
+  <T>(message: string): ValidatorFn<T> =>
+  (value) =>
+    value === true ? null : message;
+
+export const isAfterDate =
+  <T extends Record<string, any>>(
+    startDateField: keyof T,
+    message: string,
+  ): ValidatorFn<T> =>
+  (value, values) => {
+    const startDate = values[startDateField];
+
+    if (!value || !startDate) return null;
+
+    return new Date(value as string | number | Date) >
+      new Date(startDate as string | number | Date)
+      ? null
+      : message;
+  };
+
+export const minNumber =
+  <T>(min: number, message: string): ValidatorFn<T> =>
+  (value) => {
+    if (value === undefined || value === null || value === "") return null;
+    return Number(value) > min ? null : message;
+  };
+
+export const requiredNestedProperty =
+  <T>(path: string, message: string): ValidatorFn<T> =>
+  (_value, values) => {
+    const keys = path.split(".");
+    let current: any = values;
+    for (const key of keys) {
+      current = current?.[key];
+    }
+    return current ? null : message;
+  };
+
+// --- CORE VALIDATOR ENGINE ---
+
+export const validate = <
+  T extends Record<string, any>,
+  E = Record<string, any>,
+>(
   values: T,
-  schema: ValidationSchema<T>,
-): Errors<T> => {
-  const errors: Errors<T> = {};
+  schema: ValidationSchema<T, E>,
+): Errors<E> => {
+  const errors: Errors<E> = {};
 
   for (const key in schema) {
     const validators = schema[key];
@@ -49,10 +92,10 @@ export const validate = <T extends Record<string, any>>(
     if (!validators) continue;
 
     for (const validator of validators) {
-      const error = validator(values[key], values);
+      const error = validator(values[key as keyof T], values);
 
       if (error) {
-        errors[key] = error;
+        errors[key as unknown as keyof E] = error;
         break;
       }
     }

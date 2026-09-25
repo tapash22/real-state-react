@@ -30,7 +30,6 @@ const previewComponentsMap: Record<number, React.ReactNode> = {
   3: <ApplicationPreview />,
   4: <PaymentPreview />,
 };
-
 export const RentalStepsCards: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-5">

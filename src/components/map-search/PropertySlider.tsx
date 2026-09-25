@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 // Register GSAP React plugin
 gsap.registerPlugin(useGSAP);
@@ -24,6 +25,17 @@ export function PropertySlider({ images }: PropertySliderProps) {
   // Maximum number of thumbnails to display inline below the main asset view
   const MAX_VISIBLE_THUMBS = 6;
   const extraImagesCount = images.length - MAX_VISIBLE_THUMBS;
+
+  // Listen for Escape key press to dismiss modal viewer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
+    if (isFullscreen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
 
   // 1. GSAP: Handles Main Inline Slider Slide Transitions & Progress Line
   useGSAP(
@@ -222,26 +234,41 @@ export function PropertySlider({ images }: PropertySliderProps) {
       {isFullscreen && (
         <div
           ref={modalRef}
-          className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex flex-col justify-between p-6 select-none"
+          onClick={() => setIsFullscreen(false)}
+          style={{
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+          }}
+          className="fixed inset-0 z-[99999] flex flex-col justify-between select-none bg-black/95 p-16"
         >
           {/* Top Info Bar Layout Header */}
-          <div className="flex justify-between items-center text-white w-full max-w-6xl mx-auto">
-            <span className="font-semibold bg-white/10 border border-white/10 px-4 py-1.5 rounded-lg text-sm tracking-wide shadow-inner">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="mx-auto flex w-full max-w-6xl items-center justify-between text-white py-2 shrink-0"
+          >
+            <span className="rounded-lg border border-white/10 bg-white/10 px-4 py-1.5 text-sm font-semibold tracking-wide shadow-inner">
               {currentIdx + 1} / {images.length}
             </span>
+
             <button
+              type="button"
               onClick={() => setIsFullscreen(false)}
-              className="text-white text-5xl font-light hover:text-red-400 transition transform hover:scale-105 active:scale-95 leading-none focus:outline-none"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white shadow-lg backdrop-blur-md transition-all hover:scale-105 hover:bg-white/20 active:scale-95"
+              aria-label="Close modal viewer"
             >
-              &times;
+              <IoClose size={24} />
             </button>
           </div>
 
           {/* Central Fullscreen Presentation Viewport */}
-          <div className="relative flex justify-center items-center flex-1 max-w-5xl mx-auto w-full my-4 overflow-hidden">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative mx-auto my-auto flex h-full max-w-5xl w-full flex-1 items-center justify-center overflow-hidden py-2"
+          >
             <button
+              type="button"
               onClick={prevSlide}
-              className="absolute left-2 text-white/50 hover:text-white bg-black/20 hover:bg-black/40 rounded-full w-14 h-14 flex items-center justify-center text-3xl font-light z-10 transition"
+              className="absolute left-2 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-black/20 text-3xl font-light text-white/50 transition hover:bg-black/40 hover:text-white"
             >
               ❮
             </button>
@@ -250,20 +277,24 @@ export function PropertySlider({ images }: PropertySliderProps) {
               ref={modalImgRef}
               src={images[currentIdx]}
               alt="Fullscreen expanded preview view"
-              className="max-h-[65vh] max-w-full object-contain rounded-xl shadow-2xl border border-white/5 will-change-transform"
+              className="max-h-[60vh] sm:max-h-[65vh] max-w-full rounded-xl border border-white/5 object-contain shadow-2xl will-change-transform"
             />
 
             <button
+              type="button"
               onClick={nextSlide}
-              className="absolute right-2 text-white/50 hover:text-white bg-black/20 hover:bg-black/40 rounded-full w-14 h-14 flex items-center justify-center text-3xl font-light z-10 transition"
+              className="absolute right-2 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-black/20 text-3xl font-light text-white/50 transition hover:bg-black/40 hover:text-white"
             >
               ❯
             </button>
           </div>
 
           {/* Fullscreen Bottom Horizontal Gallery Scroll-Track Strip */}
-          <div className="w-full max-w-4xl mx-auto overflow-x-auto overflow-y-hidden py-4 select-none scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <div className="flex gap-2 justify-start md:justify-center min-w-max px-4">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="mx-auto w-full max-w-4xl select-none overflow-x-auto overflow-y-hidden py-2 shrink-0 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div className="flex min-w-max justify-start gap-2 px-4 md:justify-center">
               {images.map((img, idx) => (
                 <div
                   key={idx}
@@ -272,16 +303,16 @@ export function PropertySlider({ images }: PropertySliderProps) {
                     setDirection(idx > currentIdx ? 1 : -1);
                     setCurrentIdx(idx);
                   }}
-                  className={`h-16 w-24 rounded-lg overflow-hidden cursor-pointer flex-shrink-0 transition-all duration-200 transform ${
+                  className={`h-16 w-24 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg transition-all duration-200 ${
                     idx === currentIdx
-                      ? "ring-2 ring-red-500 scale-105 opacity-100 shadow-lg shadow-black/50"
-                      : "opacity-40 hover:opacity-80 scale-100"
+                      ? "scale-105 opacity-100 ring-2 ring-red-500 shadow-lg shadow-black/50"
+                      : "scale-100 opacity-40 hover:opacity-80"
                   }`}
                 >
                   <img
                     src={img}
                     alt={`Modal indicator track ${idx}`}
-                    className="w-full h-full object-cover pointer-events-none"
+                    className="pointer-events-none h-full w-full object-cover"
                   />
                 </div>
               ))}

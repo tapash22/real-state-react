@@ -44,7 +44,10 @@ export const RoomUnitCard: React.FC<RoomUnitCardProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#f0f5f9] border border-[#dce5ed] rounded-2xl overflow-hidden shadow-sm flex flex-col sm:flex-row transition-all hover:shadow-md">
+    <div
+      className="w-full bg-[var(--bg)]     
+                 border border-[var(--border)] shadow-sm shadow-[var(--primary)] rounded-2xl overflow-hidden  drop-shadow-md flex flex-col sm:flex-row transition-all hover:shadow-md hover:shadow-[var(--primary)]"
+    >
       {/* Left Column: Image Slider */}
       <div className="relative w-full sm:w-[260px] h-[200px] sm:h-auto shrink-0 group overflow-hidden">
         <img
@@ -58,15 +61,15 @@ export const RoomUnitCard: React.FC<RoomUnitCardProps> = ({
           <>
             <button
               onClick={handlePrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40  flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
             >
-              <TbChevronLeft size={18} />
+              <TbChevronLeft size={18} className="text-[var(--text)]" />
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40  flex items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
             >
-              <TbChevronRight size={18} />
+              <TbChevronRight size={18} className="text-[var(--text)]" />
             </button>
           </>
         )}
@@ -78,7 +81,9 @@ export const RoomUnitCard: React.FC<RoomUnitCardProps> = ({
               <span
                 key={idx}
                 className={`h-1.5 rounded-full transition-all ${
-                  idx === currentImageIdx ? "w-4 bg-white" : "w-1.5 bg-white/60"
+                  idx === currentImageIdx
+                    ? "w-4 bg-[var(--text)]"
+                    : "w-1.5 bg-[var(--text)]"
                 }`}
               />
             ))}
@@ -91,68 +96,71 @@ export const RoomUnitCard: React.FC<RoomUnitCardProps> = ({
         {/* Top Header Section */}
         <div>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-4">
-            <h3 className="text-lg font-bold text-[#0c2340] tracking-tight">
+            <h3 className="text-lg font-bold text-[var(--text)] tracking-tight">
               {unit.title}
             </h3>
             <div className="text-right shrink-0">
-              <span className="text-xl font-extrabold text-[#0c2340]">
+              <span className="text-xl font-extrabold text-[var(--muted)]">
                 €{unit.pricePerMonth}
               </span>
-              <span className="text-sm font-normal text-gray-500"> /month</span>
+              <span className="text-sm font-normal text-[var(--text)]">
+                {" "}
+                /month
+              </span>
             </div>
           </div>
 
           {/* Grid Spec Icons */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-2 text-xs font-semibold text-[#2c3e50]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-3 gap-x-2 text-xs font-semibold text-[var(--muted)]">
             <div className="flex items-center gap-2">
-              <TbCalendar className="text-lg text-[#1e3a8a]" />
+              <TbCalendar className="text-lg text-[var(--text)]" />
               <span>{unit.stayDuration || "6–6 months"}</span>
             </div>
 
             <div className="flex items-center gap-2">
-              <TbRuler2 className="text-lg text-[#1e3a8a]" />
+              <TbRuler2 className="text-lg text-[var(--text)]" />
               <span>{unit.sizeSqm} m²</span>
             </div>
 
             {unit.hasPrivateToilet !== false && (
               <div className="flex items-center gap-2">
-                <TbToiletPaper className="text-lg text-[#1e3a8a]" />
+                <TbToiletPaper className="text-lg text-[var(--text)]" />
                 <span>Private toilet</span>
               </div>
             )}
 
             {unit.hasPrivateBathroom !== false && (
               <div className="flex items-center gap-2">
-                <TbCooker className="text-lg text-[#1e3a8a]" />
+                <TbCooker className="text-lg text-[var(--text)]" />
                 <span>Private bathroom</span>
               </div>
             )}
 
             {unit.hasPrivateKitchen !== false && (
               <div className="flex items-center gap-2">
-                <TbCooker className="text-lg text-[#1e3a8a]" />
+                <TbCooker className="text-lg text-[var(--text)]" />
                 <span>Private kitchen</span>
               </div>
             )}
 
             {unit.hasPrivateBalcony !== false && (
               <div className="flex items-center gap-2">
-                <TbCooker className="text-lg text-[#1e3a8a]" />
+                <TbCooker className="text-lg text-[var(--text)]" />
                 <span>Private balcony</span>
               </div>
             )}
 
             <div className="flex items-center gap-2 col-span-2 sm:col-span-1">
-              <TbUsers className="text-lg text-[#1e3a8a]" />
+              <TbUsers className="text-lg text-[var(--text)]" />
               <span>Max. {unit.maxCapacity} people</span>
             </div>
           </div>
         </div>
 
         {/* Footer Section: Availability & CTA */}
-        <div className="pt-4 border-t border-[#dce5ed]/80 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#0c2340]">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+        <div className="pt-4 border-t border-[var(--border)]/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs font-bold text-[var(--muted)]">
+            <span className="w-2.5 h-2.5 rounded-full bg-[var(--secondary)] inline-block animate-pulse" />
             <span>
               Available from{" "}
               <strong className="font-extrabold">{unit.availableFrom}</strong>
@@ -161,7 +169,7 @@ export const RoomUnitCard: React.FC<RoomUnitCardProps> = ({
 
           <button
             onClick={() => onShowDetails?.(unit)}
-            className="w-full sm:w-auto px-6 py-2.5 bg-[#ff4d2d] hover:bg-[#e03a1c] text-white font-bold text-xs rounded-xl shadow-sm transition-all active:scale-[0.98]"
+            className="w-full sm:w-auto px-6 py-2.5 bg-[var(--primary)] opacity-100 hover:opacity-60 text-white font-bold text-xs rounded-lg shadow-sm transition-all active:scale-[0.98]"
           >
             Show details
           </button>

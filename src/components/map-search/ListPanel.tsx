@@ -1,10 +1,10 @@
 import React from "react";
-import { MapItem } from "../../types/types";
+import { PropertyLike } from "../../data";
 import { PropertyCard } from "./PropertyCard";
 import { styles } from "./styles";
 
 interface ListPanelProps {
-  properties: MapItem[];
+  properties: PropertyLike[];
   isLoading: boolean;
   hoveredId: number | null;
   setHoveredId: (id: number | null) => void;
@@ -37,10 +37,27 @@ export const ListPanel: React.FC<ListPanelProps> = ({
       {/* Layout mapping track rendering block */}
       {hasProperties && (
         <div style={styles.grid(isLoading, isMobile)}>
-          {properties.map((prop) => (
+          {properties.map((prop: PropertyLike) => (
             <PropertyCard
               key={prop.id}
               property={prop}
+              isHovered={hoveredId === prop.id}
+              onMouseEnter={() => setHoveredId(prop.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              isMobile={isMobile}
+            />
+          ))}
+        </div>
+      )}
+      {hasProperties && (
+        <div style={styles.grid(isLoading, isMobile)}>
+          {properties.map((prop: PropertyLike) => (
+            <PropertyCard
+              key={prop.id}
+              property={{
+                ...prop,
+                title: prop.title ?? prop.name ?? "Property",
+              }}
               isHovered={hoveredId === prop.id}
               onMouseEnter={() => setHoveredId(prop.id)}
               onMouseLeave={() => setHoveredId(null)}

@@ -1,9 +1,9 @@
 import React from "react";
-import { Property } from "../../types/types";
+import { PropertyLike } from "../../data";
 import { styles } from "./styles";
 
 interface PropertyCardProps {
-  property: Property;
+  property: PropertyLike;
   isHovered: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -12,10 +12,17 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
   ({ property, isHovered, onMouseEnter, onMouseLeave, isMobile = false }) => {
+    const title = property.title || property.name || "Property";
+    const propertyType = property.type || property.propertyType || "Rental";
+    const rating = property.rating ?? undefined;
+    const currency = property.currency || "€";
+    const price = property.price ?? 0;
+    const image = property.image || "";
+
     const combinedCardStyle: React.CSSProperties = {
       ...styles.card(isHovered),
-      flexShrink: isMobile ? 0 : 1, // Locks dimensions on mobile swiper
-      width: isMobile ? "290px" : "100%", // Exact specifications mapping match
+      flexShrink: isMobile ? 0 : 1,
+      width: isMobile ? "290px" : "100%",
       minWidth: isMobile ? "290px" : "auto",
     };
 
@@ -27,8 +34,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
       >
         <div style={styles.imageWrapper}>
           <img
-            src={property.image}
-            alt={property.title}
+            src={image}
+            alt={title}
             style={styles.cardImage}
             loading="lazy"
           />
@@ -36,17 +43,20 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
 
         <div style={styles.cardBody}>
           <div style={styles.cardMeta}>
-            <span style={{ textTransform: "capitalize" }}>{property.type}</span>
-            <span style={{ fontWeight: "bold" }}>★ {property.rating}</span>
+            <span style={{ textTransform: "capitalize" }}>{propertyType}</span>
+            {rating !== undefined && (
+              <span style={{ fontWeight: "bold" }}>★ {rating}</span>
+            )}
           </div>
 
-          <h3 style={styles.cardTitle}>{property.title}</h3>
+          <h3 style={styles.cardTitle}>{title}</h3>
 
-          <div style={styles.cardPrice}>From €{property.price}/month</div>
+          <div style={styles.cardPrice}>
+            From {currency}
+            {price}/month
+          </div>
         </div>
       </div>
     );
   },
 );
-
-PropertyCard.displayName = "PropertyCard";
