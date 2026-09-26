@@ -1,5 +1,6 @@
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import {
+  BookingDatesState,
   CHECKOUT_STEPS,
   CheckoutErrors,
   CheckoutFormData,
@@ -23,6 +24,7 @@ import { validate } from "../utils/validations/formValidation";
 interface CheckoutLocationState {
   unit?: RoomUnit;
   residenceTitle?: string;
+  bookingDates?: BookingDatesState;
 }
 
 export default function CheckoutDetails() {
@@ -31,16 +33,41 @@ export default function CheckoutDetails() {
   const checkoutState = location.state as CheckoutLocationState | null;
   const selectedUnit = checkoutState?.unit ?? null;
   const residenceTitle = checkoutState?.residenceTitle || "Residence";
+  const bookingDates = checkoutState?.bookingDates;
 
   const [currentStep, setCurrentStep] = useState<CheckoutStep>(1);
-  const [formData, setFormData] = useState<CheckoutFormData>(INITIAL_FORM_DATA);
+
+  // Initialize form data with initial dates if passed from location.state
+  const [formData, setFormData] = useState<CheckoutFormData>(() => {
+    let initialMoveIn = INITIAL_FORM_DATA.moveInDate;
+    let initialMoveOut = INITIAL_FORM_DATA.moveOutDate;
+
+    if (bookingDates) {
+      if (bookingDates.mode === "exact" && bookingDates.rawData) {
+        initialMoveIn = bookingDates.rawData.startDate
+          ? new Date(bookingDates.rawData.startDate).toLocaleDateString()
+          : "";
+        initialMoveOut = bookingDates.rawData.endDate
+          ? new Date(bookingDates.rawData.endDate).toLocaleDateString()
+          : "";
+      } else if (bookingDates.mode === "month" && bookingDates.formatted) {
+        initialMoveIn = bookingDates.formatted;
+        initialMoveOut = bookingDates.formatted;
+      }
+    }
+
+    return {
+      ...INITIAL_FORM_DATA,
+      moveInDate: initialMoveIn,
+      moveOutDate: initialMoveOut,
+    };
+  });
+
   const [errors, setErrors] = useState<CheckoutErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
   const propertyName = selectedUnit?.title || "Selected Property";
-
   const monthlyRent = selectedUnit?.pricePerMonth || 0;
-
   const deposit = selectedUnit?.paymentDetails?.deposit || monthlyRent;
   const adminFee = 99;
 
@@ -53,6 +80,32 @@ export default function CheckoutDetails() {
     }),
     [monthlyRent, deposit],
   );
+
+    // Ensure formData updates if location state changes
+  useEffect(() => {
+    if (bookingDates) {
+      if (bookingDates.mode === "exact" && bookingDates.rawData) {
+        const start = bookingDates.rawData.startDate
+          ? new Date(bookingDates.rawData.startDate).toLocaleDateString()
+          : "";
+        const end = bookingDates.rawData.endDate
+          ? new Date(bookingDates.rawData.endDate).toLocaleDateString()
+          : "";
+
+        setFormData((prev) => ({
+          ...prev,
+          moveInDate: start,
+          moveOutDate: end,
+        }));
+      } else if (bookingDates.mode === "month" && bookingDates.formatted) {
+        setFormData((prev) => ({
+          ...prev,
+          moveInDate: bookingDates.formatted,
+          moveOutDate: bookingDates.formatted,
+        }));
+      }
+    }
+  }, [bookingDates]);
 
   const handleInputChange = (
     field: keyof CheckoutFormData,
@@ -79,7 +132,7 @@ export default function CheckoutDetails() {
 
   const handleFileChange = (
     event: ChangeEvent<HTMLInputElement>,
-    type: FileType,
+    type: FileType
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -182,6 +235,7 @@ export default function CheckoutDetails() {
               formData={formData}
               errors={errors}
               costs={costs}
+              bookingDates={bookingDates}
               handleInputChange={handleInputChange}
               handleFileChange={handleFileChange}
             />
@@ -200,6 +254,7 @@ export default function CheckoutDetails() {
             propertyName={propertyName}
             location={residenceTitle}
             costs={costs}
+            bookingDates={bookingDates}
           />
         </div>
       </div>

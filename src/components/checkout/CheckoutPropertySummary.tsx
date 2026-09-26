@@ -1,10 +1,12 @@
-import type { CheckoutCosts } from "../../data";
+import { TbCalendarEvent } from "react-icons/tb";
+import type { BookingDatesState, CheckoutCosts } from "../../data";
 
 interface CheckoutPropertySummaryProps {
   propertyName: string;
   location: string;
   imageUrl?: string;
   costs: CheckoutCosts;
+  bookingDates?: BookingDatesState | undefined;
 }
 
 export default function CheckoutPropertySummary({
@@ -12,6 +14,7 @@ export default function CheckoutPropertySummary({
   location,
   imageUrl,
   costs,
+  bookingDates,
 }: CheckoutPropertySummaryProps) {
   return (
     <aside className="h-fit rounded-3xl border border-[var(--border)] p-5 shadow-sm space-y-3">
@@ -39,6 +42,19 @@ export default function CheckoutPropertySummary({
         </h2>
         <p className="text-xs text-[var(--text)]">{location}</p>
       </div>
+
+      {/* Selected Rental Dates Summary */}
+      {bookingDates?.formatted && (
+        <div className="p-3 rounded-xl bg-[var(--card)] border border-[var(--border)] space-y-1">
+          <div className="flex items-center gap-1.5 text-xs font-bold text-[var(--text)]">
+            <TbCalendarEvent size={16} className="text-[var(--primary)]" />
+            <span>Rental Period</span>
+          </div>
+          <p className="text-xs font-medium text-[var(--muted)] pl-5">
+            {bookingDates.formatted}
+          </p>
+        </div>
+      )}
 
       {/* Cost Breakdown */}
       <div className="space-y-3">
