@@ -30,7 +30,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   residenceData,
   isOpen,
   onClose,
-  navHeightPx = 64, // Matches standard h-16 navbar height
+  navHeightPx = 64,
 }) => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"about" | "included" | "payment">(
