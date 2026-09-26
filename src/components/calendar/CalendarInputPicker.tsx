@@ -24,6 +24,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [openTop, setOpenTop] = useState(false);
 
   // Keep track of explicit selections here so they survive dropdown close cycles
   const [savedStartDate, setSavedStartDate] = useState<Date | null>(null);
@@ -32,6 +33,26 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
   const [savedYear, setSavedYear] = useState<number | undefined>(undefined);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Determine whether to open top or bottom based on viewport space
+  useEffect(() => {
+    if (isOpen && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const popoverEstimatedHeight = 380; // Estimated height of CalendarView
+      const spaceBelow = window.innerHeight - rect.bottom;
+
+      // If space below is less than calendar height and there's more space above, render on top
+      if (
+        spaceBelow < popoverEstimatedHeight &&
+        rect.top > popoverEstimatedHeight
+      ) {
+        setOpenTop(true);
+      } else {
+        setOpenTop(false);
+      }
+    }
+  }, [isOpen]);
 
   // Close popover when clicking anywhere outside
   useEffect(() => {
@@ -105,7 +126,12 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 z-50  rounded-lg shadow-2xl border border-[var(--border)] p-4 min-w-[300px]">
+        <div
+          ref={dropdownRef}
+          className={`absolute left-0 z-50 rounded-lg shadow-2xl border border-[var(--border)] p-4 min-w-[300px] bg-[var(--bg)] ${
+            openTop ? "bottom-full mb-2" : "top-full mt-2"
+          }`}
+        >
           <CalendarView
             mode={mode}
             savedStartDate={savedStartDate}

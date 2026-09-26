@@ -19,6 +19,18 @@ import { Property } from "./types/types";
 // Checkout NEW types Declear
 export type FileType = "passport" | "income";
 
+// Interface matching the structure passed from RoomUnitDetailDrawer
+export interface BookingDatesState {
+  formatted: string;
+  mode: "month" | "exact";
+  rawData?: {
+    startDate?: string | Date | null;
+    endDate?: string | Date | null;
+    monthIndex?: number;
+    year?: number;
+  };
+}
+
 export interface FilesUploaded {
   passport: boolean;
   income: boolean;
@@ -76,6 +88,8 @@ export interface CheckoutStepProps {
   formData: CheckoutFormData;
   errors: CheckoutErrors;
   costs: CheckoutCosts;
+
+  bookingDates?: BookingDatesState | undefined; // Add this line
 
   handleInputChange: (
     field: keyof CheckoutFormData,

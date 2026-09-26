@@ -9,6 +9,11 @@ import {
 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { ResidenceData, RoomUnit } from "../../data";
+import {
+  CalendarInputPicker,
+  DateMode,
+  PickerRawData,
+} from "../calendar/CalendarInputPicker";
 import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
 import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
 
@@ -33,11 +38,39 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   );
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
+  // Date selection states
+  const [dateMode, setDateMode] = useState<DateMode>("exact");
+  const [selectedFormattedDate, setSelectedFormattedDate] =
+    useState<string>("");
+  const [selectedDateData, setSelectedDateData] =
+    useState<PickerRawData | null>(null);
+
+  /**
+   * Check if a valid date selection has been made based on mode.
+   */
+  const isDateSelected = Boolean(
+    selectedDateData &&
+    ((dateMode === "exact" &&
+      selectedDateData.startDate &&
+      selectedDateData.endDate) ||
+      (dateMode === "month" &&
+        selectedDateData.monthIndex !== undefined &&
+        selectedDateData.year !== undefined)),
+  );
+
+  /**
+   * Handle changes emitted from CalendarInputPicker.
+   */
+  const handleDateChange = (formattedValue: string, rawData: PickerRawData) => {
+    setSelectedFormattedDate(formattedValue);
+    setSelectedDateData(rawData);
+  };
+
   /**
    * Navigate to checkout with the selected room unit.
    */
   const handleApplyToRent = () => {
-    if (!unit) return;
+    if (!unit || !isDateSelected) return;
 
     // Close the drawer
     onClose();
@@ -47,6 +80,11 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
       state: {
         unit,
         residenceTitle: residenceData?.title,
+        bookingDates: {
+          formatted: selectedFormattedDate,
+          rawData: selectedDateData,
+          mode: dateMode,
+        },
       },
     });
   };
@@ -88,7 +126,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
       />
 
       {/* Right-side Modal Container */}
-      <aside className="relative z-10 w-full max-w-xl bg-[var(--bg)] shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out ">
+      <aside className="relative z-10 w-full max-w-xl bg-[var(--bg)] shadow-2xl flex flex-col h-full transform transition-transform duration-300 ease-in-out">
         {/* Fixed Header */}
         <div className="flex items-center justify-between p-5 border-b border-[var(--border)] shrink-0">
           <div className="py-1">
@@ -155,7 +193,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             ))}
 
             {/* Photo Counter Card */}
-            <div className="relative h-16 rounded-lg overflow-hidden bg-[var(--bg)] text-[var(--text)] flex flex-col items-center justify-center text-center p-1 cursor-pointer  transition-colors">
+            <div className="relative h-16 rounded-lg overflow-hidden bg-[var(--bg)] text-[var(--text)] flex flex-col items-center justify-center text-center p-1 cursor-pointer transition-colors">
               <span className="text-sm font-bold leading-none">
                 {unit.totalPhotosCount || 11}
               </span>
@@ -165,7 +203,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             </div>
 
             {/* Videos Card */}
-            <div className="relative h-16 rounded-lg overflow-hidden  flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
+            <div className="relative h-16 rounded-lg overflow-hidden flex flex-col items-center justify-center text-center p-1 cursor-pointer hover:bg-[#435764] transition-colors">
               <TbVideo size={16} className="mb-0.5 text-[var(--text)]" />
               <span className="text-[10px] font-medium leading-tight text-[var(--muted)]">
                 Videos
@@ -207,7 +245,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             >
               What's included
               {activeTab === "included" && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)] " />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)]" />
               )}
             </button>
 
@@ -221,7 +259,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             >
               Payment details
               {activeTab === "payment" && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)] " />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--text)]" />
               )}
             </button>
           </div>
@@ -240,7 +278,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
 
               {/* Residence Highlights Summary (Injected from residenceData) */}
               {residenceData?.services?.general && (
-                <div className=" p-4 rounded-xl space-y-2 border border-[var(--border)]">
+                <div className="p-4 rounded-xl space-y-2 border border-[var(--border)]">
                   <h4 className="font-semibold text-xs text-[var(--text)] uppercase tracking-wider">
                     Residence Amenities
                   </h4>
@@ -295,42 +333,95 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </p>
               <PaymentBreakdownCard
                 platformName="HousingAnywhere"
-                tenantProtectionFee="Select dates"
+                tenantProtectionFee={
+                  isDateSelected ? selectedFormattedDate : "Select dates"
+                }
                 landlordName="Ivetta"
                 landlordAvatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
                 securityDeposit={
                   unit.paymentDetails?.deposit || unit.pricePerMonth
                 }
-                onSelectDates={() => alert("Open date picker modal")}
+                onSelectDates={() => setActiveTab("about")}
               />
             </div>
           )}
         </div>
 
         {/* Fixed Footer Bar */}
-        <div className="p-3 border-t border-[var(--border)] space-y-2 shrink-0">
-          <div className="text-right px-2">
-            <span className="text-2xl font-extrabold text-[var(--muted)] tracking-wider">
-              ${unit.pricePerMonth}
-            </span>
-            <span className="text-sm font-normal text-[var(--text)] tracking-wider">
-              {" "}
-              /month
-            </span>
+        <div className="p-4 border-t border-[var(--border)] space-y-3 shrink-0 bg-[var(--bg)]">
+          {/* Price Header */}
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center gap-1">
+              <TbCalendarEvent size={16} className="text-[var(--primary)]" />
+              <span className="text-xs font-semibold text-[var(--muted)]">
+                Available: {unit.availableFrom}
+              </span>
+            </div>
+            <div>
+              <span className="text-2xl font-extrabold text-[var(--text)] tracking-wider">
+                ${unit.pricePerMonth}
+              </span>
+              <span className="text-sm font-normal text-[var(--muted)]">
+                {" "}
+                /month
+              </span>
+            </div>
           </div>
+          <div className="flex justify-center items-center gap-10">
+            {/* Calendar Picker Block */}
+            <div className="space-y-2 ">
+              <div className="flex items-center justify-between">
+                <label className="text-xs font-bold text-[var(--text)]">
+                  Select Move-in & Move-out Dates{" "}
+                  <span className="text-red-500">*</span>
+                </label>
+                <div className="flex items-center gap-1 bg-[var(--card)] p-0.5 rounded-lg border border-[var(--border)]">
+                  <button
+                    type="button"
+                    onClick={() => setDateMode("exact")}
+                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                      dateMode === "exact"
+                        ? "bg-[var(--primary)] text-white"
+                        : "text-[var(--muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    Exact
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDateMode("month")}
+                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
+                      dateMode === "month"
+                        ? "bg-[var(--primary)] text-white"
+                        : "text-[var(--muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    By Month
+                  </button>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-            <button className="flex items-center justify-center gap-2 px-4 py-3 border border-[var(--border)] rounded-xl font-bold text-xs text-[var(--muted)] transition-colors">
-              <TbCalendarEvent size={16} className="text-[var(--text)]" />
-              <span>Available: {unit.availableFrom}</span>
-            </button>
+              <CalendarInputPicker
+                mode={dateMode}
+                placeholder="Select move-in and move-out range..."
+                onChange={handleDateChange}
+              />
+            </div>
 
+            {/* Action Button */}
             <button
               type="button"
+              disabled={!isDateSelected}
               onClick={handleApplyToRent}
-              className="px-4 py-3 bg-[var(--primary)] opacity-100 text-[var(--text)] font-bold text-xs rounded-xl scale-100 shadow-sm transition-all active:scale-[0.90]"
+              className={`w-auto h-auto p-3 rounded-sm font-bold text-xs tracking-wide transition-all  ${
+                isDateSelected
+                  ? "bg-[var(--primary)] text-white shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
+                  : "bg-gray-300 text-gray-500  opacity-60 dark:bg-slate-700 dark:text-slate-400"
+              }`}
             >
-              Apply to rent
+              {isDateSelected
+                ? "Apply to rent"
+                : "Select rental dates to continue"}
             </button>
           </div>
         </div>
