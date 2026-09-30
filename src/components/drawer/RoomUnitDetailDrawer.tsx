@@ -45,23 +45,20 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
     useState<PickerRawData | null>(null);
 
   /**
-   * Check if a valid date selection has been made based on mode.
+   * Handle changes emitted from CalendarInputPicker.
    */
   const activeMode = selectedDateData?.mode || "exact";
 
   const isDateSelected = Boolean(
     selectedDateData &&
     ((activeMode === "exact" &&
-      selectedDateData.startDate &&
-      selectedDateData.endDate) ||
+      Boolean(selectedDateData.startDate) &&
+      Boolean(selectedDateData.endDate)) ||
       (activeMode === "month" &&
         selectedDateData.monthIndex !== undefined &&
         selectedDateData.year !== undefined)),
   );
 
-  /**
-   * Handle changes emitted from CalendarInputPicker.
-   */
   const handleDateChange = (formattedValue: string, rawData: PickerRawData) => {
     setSelectedFormattedDate(formattedValue);
     setSelectedDateData(rawData);
@@ -71,7 +68,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
    * Navigate to checkout with the selected room unit.
    */
   const handleApplyToRent = () => {
-    if (!unit || !isDateSelected) return;
+    if (!unit) return;
 
     // Close the drawer
     onClose();
@@ -84,7 +81,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         bookingDates: {
           formatted: selectedFormattedDate,
           rawData: selectedDateData,
-          mode: activeMode,
+          mode: selectedDateData?.mode || "exact",
         },
       },
     });
@@ -334,9 +331,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </p>
               <PaymentBreakdownCard
                 platformName="HousingAnywhere"
-                tenantProtectionFee={
-                  isDateSelected ? selectedFormattedDate : "Select dates"
-                }
+                tenantProtectionFee={selectedFormattedDate || "Select dates"}
                 landlordName="Ivetta"
                 landlordAvatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
                 securityDeposit={
@@ -372,8 +367,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             {/* Calendar Picker Block */}
             <div className="space-y-2">
               <CalendarInputPicker
-                initialMode="exact"
-                placeholder="Select move-in and move-out range..."
+                placeholder="Select range..."
                 onChange={handleDateChange}
               />
             </div>
@@ -404,4 +398,4 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
       </aside>
     </div>
   );
-};
+};;
