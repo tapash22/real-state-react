@@ -152,7 +152,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         {/* Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-thin">
           {/* Main Hero Slider */}
-          <div className="relative w-full h-[320px] rounded-2xl overflow-hidden group bg-[var(--bg)]">
+          <div className="relative w-full h-[220px] rounded-xl overflow-hidden group bg-[var(--bg)]">
             <img
               src={imageList[currentImageIdx]}
               alt={unit.title}
@@ -349,12 +349,12 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         </div>
 
         {/* Fixed Footer Bar */}
-        <div className="p-4 border-t border-[var(--border)] space-y-3 shrink-0 bg-[var(--bg)]">
-          {/* Price Header */}
-          <div className="flex items-center justify-between px-1">
-            <div className="flex items-center gap-1">
-              <TbCalendarEvent size={16} className="text-[var(--primary)]" />
-              <span className="text-xs font-semibold text-[var(--muted)]">
+        <div className=" border-t border-[var(--border)] space-y-3 shrink-0 bg-[var(--bg)] py-2">
+          {/* Price section */}
+          <div className="flex items-center justify-between p-3 border-b-2 border-[var(--border)]">
+            <div className="flex items-center gap-3">
+              <TbCalendarEvent size={20} className="text-[var(--text)]" />
+              <span className="text-xs font-semibold text-[var(--text)] tracking-wider">
                 Available: {unit.availableFrom}
               </span>
             </div>
@@ -368,7 +368,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </span>
             </div>
           </div>
-          <div className="flex justify-center items-center gap-10">
+          <div className="flex flex-col justify-center items-center space-y-3 p-1">
             {/* Calendar Picker Block */}
             <div className="space-y-2 ">
               <div className="flex items-center justify-between">
@@ -410,20 +410,36 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             </div>
 
             {/* Action Button */}
-            <button
-              type="button"
-              disabled={!isDateSelected}
-              onClick={handleApplyToRent}
-              className={`w-auto h-auto p-3 rounded-sm font-bold text-xs tracking-wide transition-all  ${
-                isDateSelected
-                  ? "bg-[var(--primary)] text-white shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
-                  : "bg-gray-300 text-gray-500  opacity-60 dark:bg-slate-700 dark:text-slate-400"
-              }`}
-            >
-              {isDateSelected
-                ? "Apply to rent"
-                : "Select rental dates to continue"}
-            </button>
+            <div className="flex justify-end items-end p-2 gap-5 w-full ">
+              <button
+                type="button"
+                onClick={onClose}
+                className={`h-auto w-auto p-3 rounded-md font-bold flex  tracking-wider justify-center border-2 border-[var(--border)]
+                  px-5 py-2`}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!isDateSelected}
+                onClick={handleApplyToRent}
+                className={`h-auto p-3 rounded-md font-bold                   flex  justify-center w-fit 
+                  border border-[var(--card)]
+                  px-5 py-2
+                  shadow-md tracking-wider
+                  shadow-[var(--primary)]
+                  transition-all
+                  duration-300
+                  ease-out
+                   ${
+                     isDateSelected
+                       ? "bg-[var(--bg)] text-[var(--muted)] shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
+                       : "bg-[var(--bg)] text-[var(--muted)]  opacity-60 "
+                   }`}
+              >
+                {isDateSelected ? "Apply to rent" : "Select rental dates"}
+              </button>
+            </div>
           </div>
         </div>
       </aside>
