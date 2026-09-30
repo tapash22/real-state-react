@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { ResidenceData, RoomUnit } from "../../data";
 import {
   CalendarInputPicker,
-  DateMode,
   PickerRawData,
 } from "../calendar/CalendarInputPicker";
 import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
@@ -40,7 +39,6 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   // Date selection states
-  const [dateMode, setDateMode] = useState<DateMode>("exact");
   const [selectedFormattedDate, setSelectedFormattedDate] =
     useState<string>("");
   const [selectedDateData, setSelectedDateData] =
@@ -49,12 +47,14 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   /**
    * Check if a valid date selection has been made based on mode.
    */
+  const activeMode = selectedDateData?.mode || "exact";
+
   const isDateSelected = Boolean(
     selectedDateData &&
-    ((dateMode === "exact" &&
+    ((activeMode === "exact" &&
       selectedDateData.startDate &&
       selectedDateData.endDate) ||
-      (dateMode === "month" &&
+      (activeMode === "month" &&
         selectedDateData.monthIndex !== undefined &&
         selectedDateData.year !== undefined)),
   );
@@ -84,7 +84,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         bookingDates: {
           formatted: selectedFormattedDate,
           rawData: selectedDateData,
-          mode: dateMode,
+          mode: activeMode,
         },
       },
     });
@@ -355,7 +355,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
             <div className="flex items-center gap-3">
               <TbCalendarEvent size={20} className="text-[var(--text)]" />
               <span className="text-xs font-semibold text-[var(--text)] tracking-wider">
-                Available: {unit.availableFrom}
+                Available: {selectedFormattedDate}
               </span>
             </div>
             <div>
@@ -368,62 +368,22 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </span>
             </div>
           </div>
-          <div className="flex flex-col justify-center items-center space-y-3 p-1">
+          <div className="flex justify-evenly items-center space-y-3 p-1">
             {/* Calendar Picker Block */}
-            <div className="space-y-2 ">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-[var(--text)]">
-                  Select Move-in & Move-out Dates{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                <div className="flex items-center gap-1 bg-[var(--card)] p-0.5 rounded-lg border border-[var(--border)]">
-                  <button
-                    type="button"
-                    onClick={() => setDateMode("exact")}
-                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
-                      dateMode === "exact"
-                        ? "bg-[var(--primary)] text-white"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
-                  >
-                    Exact
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setDateMode("month")}
-                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
-                      dateMode === "month"
-                        ? "bg-[var(--primary)] text-white"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
-                  >
-                    By Month
-                  </button>
-                </div>
-              </div>
-
+            <div className="space-y-2">
               <CalendarInputPicker
-                mode={dateMode}
+                initialMode="exact"
                 placeholder="Select move-in and move-out range..."
                 onChange={handleDateChange}
               />
             </div>
 
             {/* Action Button */}
-            <div className="flex justify-end items-end p-2 gap-5 w-full ">
-              <button
-                type="button"
-                onClick={onClose}
-                className={`h-auto w-auto p-3 rounded-md font-bold flex  tracking-wider justify-center border-2 border-[var(--border)]
-                  px-5 py-2`}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={!isDateSelected}
-                onClick={handleApplyToRent}
-                className={`h-auto p-3 rounded-md font-bold                   flex  justify-center w-fit 
+            <button
+              type="button"
+              disabled={!isDateSelected}
+              onClick={handleApplyToRent}
+              className={`h-auto p-3 rounded-md font-bold                   flex  justify-center w-fit 
                   border border-[var(--card)]
                   px-5 py-2
                   shadow-md tracking-wider
@@ -436,10 +396,9 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
                        ? "bg-[var(--bg)] text-[var(--muted)] shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
                        : "bg-[var(--bg)] text-[var(--muted)]  opacity-60 "
                    }`}
-              >
-                {isDateSelected ? "Apply to rent" : "Select rental dates"}
-              </button>
-            </div>
+            >
+              {isDateSelected ? "Apply to rent" : "Select rental dates"}
+            </button>
           </div>
         </div>
       </aside>

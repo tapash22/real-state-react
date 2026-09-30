@@ -14,7 +14,7 @@ import Step1Lease from "./components/checkout/Step1Lease";
 import Step2Personal from "./components/checkout/Step2Personal";
 import Step3Verification from "./components/checkout/Step3Verification";
 import Step4Review from "./components/checkout/Step4Review";
-import { Property } from "./types/types";
+import { Property, TabItem } from "./types/types";
 
 // Default User ( For auth view checkig)
 //type declear
@@ -30,6 +30,15 @@ export const demoUser: User = {
   email: "demo@example.com",
 };
 // Default User DONE
+
+// Calendar handle optinos
+export type DateMode = "month" | "exact";
+
+// Define tab items for the switcher
+export const modeTabs: TabItem<DateMode>[] = [
+  { id: "exact", label: "Exact" },
+  { id: "month", label: "By Month" },
+];
 
 // Checkout NEW types Declear
 export type FileType = "passport" | "income";

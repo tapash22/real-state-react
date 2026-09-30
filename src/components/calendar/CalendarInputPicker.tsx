@@ -1,60 +1,54 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CiCalendar } from "react-icons/ci";
+import { DateMode } from "../../data";
 import { CalendarView } from "./CalendarView";
-
-export type DateMode = "month" | "exact";
 
 export interface PickerRawData {
   startDate?: Date | null;
   endDate?: Date | null;
   monthIndex?: number;
   year?: number;
+  mode?: DateMode;
 }
 
 interface CalendarInputPickerProps {
-  mode: DateMode;
+  initialMode?: DateMode;
   placeholder?: string;
   onChange?: (formattedValue: string, rawData: PickerRawData) => void;
 }
 
 export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
-  mode,
+  initialMode = "exact",
   placeholder = "Select date range...",
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [openTop, setOpenTop] = useState(false);
+  const [currentMode, setCurrentMode] = useState<DateMode>(initialMode);
 
-  // Keep track of explicit selections here so they survive dropdown close cycles
   const [savedStartDate, setSavedStartDate] = useState<Date | null>(null);
   const [savedEndDate, setSavedEndDate] = useState<Date | null>(null);
   const [savedMonth, setSavedMonth] = useState<number | undefined>(undefined);
   const [savedYear, setSavedYear] = useState<number | undefined>(undefined);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Determine whether to open top or bottom based on viewport space
+  // Viewport spatial check to anchor popover above or below
   useEffect(() => {
     if (isOpen && containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
-      const popoverEstimatedHeight = 380; // Estimated height of CalendarView
+      const popoverEstimatedHeight = 400;
       const spaceBelow = window.innerHeight - rect.bottom;
 
-      // If space below is less than calendar height and there's more space above, render on top
-      if (
+      setOpenTop(
         spaceBelow < popoverEstimatedHeight &&
-        rect.top > popoverEstimatedHeight
-      ) {
-        setOpenTop(true);
-      } else {
-        setOpenTop(false);
-      }
+          rect.top > popoverEstimatedHeight,
+      );
     }
   }, [isOpen]);
 
-  // Close popover when clicking anywhere outside
+  // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -68,14 +62,11 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Flush values automatically when user toggles modes
-  useEffect(() => {
+  const handleModeChange = (newMode: DateMode) => {
+    setCurrentMode(newMode);
+    // Clear formatted text input when switching selection strategies
     setInputValue("");
-    setSavedStartDate(null);
-    setSavedEndDate(null);
-    setSavedMonth(undefined);
-    setSavedYear(undefined);
-  }, [mode]);
+  };
 
   const handleSelectRange = (start: Date | null, end: Date | null) => {
     setSavedStartDate(start);
@@ -84,12 +75,20 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     if (start && !end) {
       const partialString = `${start.toLocaleDateString()} - ...`;
       setInputValue(partialString);
-      onChange?.(partialString, { startDate: start, endDate: null });
+      onChange?.(partialString, {
+        startDate: start,
+        endDate: null,
+        mode: "exact",
+      });
     } else if (start && end) {
       const rangeString = `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
       setInputValue(rangeString);
-      setIsOpen(false); // Range selection complete, close dropdown safely
-      onChange?.(rangeString, { startDate: start, endDate: end });
+      setIsOpen(false);
+      onChange?.(rangeString, {
+        startDate: start,
+        endDate: end,
+        mode: "exact",
+      });
     }
   };
 
@@ -103,9 +102,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
 
     setInputValue(formatted);
     setIsOpen(false);
-    if (onChange) {
-      onChange(formatted, { monthIndex, year });
-    }
+    onChange?.(formatted, { monthIndex, year, mode: "month" });
   };
 
   return (
@@ -116,24 +113,24 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
           readOnly
           value={inputValue}
           placeholder={placeholder}
-          onClick={() => setIsOpen((previous) => !previous)}
-          className="input-field cursor-pointer"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="input-field cursor-pointer w-full pr-10"
         />
         <CiCalendar
-          size={30}
-          className="text-[var(--text)] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+          size={24}
+          className="text-[var(--text)] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-80"
         />
       </div>
 
       {isOpen && (
         <div
-          ref={dropdownRef}
-          className={`absolute left-0 z-50 rounded-lg shadow-2xl border border-[var(--border)] p-4 min-w-[300px] bg-[var(--bg)] ${
+          className={`absolute left-0 z-50 ${
             openTop ? "bottom-full mb-2" : "top-full mt-2"
           }`}
         >
           <CalendarView
-            mode={mode}
+            mode={currentMode}
+            onModeChange={handleModeChange}
             savedStartDate={savedStartDate}
             savedEndDate={savedEndDate}
             savedMonth={savedMonth}

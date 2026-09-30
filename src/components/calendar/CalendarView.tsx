@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-
-type DateMode = "month" | "exact";
+import { DateMode, modeTabs } from "../../data";
+import { Tabs } from "../property-tabs/Tabs";
 
 interface CalendarViewProps {
-  mode: DateMode;
+  mode?: DateMode;
+  onModeChange?: (mode: DateMode) => void;
   savedStartDate?: Date | null;
   savedEndDate?: Date | null;
-  // Add "| undefined" explicitly here to satisfy exactOptionalPropertyTypes
   savedMonth?: number | undefined;
   savedYear?: number | undefined;
   onSelectRange?: (start: Date | null, end: Date | null) => void;
@@ -14,7 +14,8 @@ interface CalendarViewProps {
 }
 
 export const CalendarView: React.FC<CalendarViewProps> = ({
-  mode,
+  mode: externalMode = "exact",
+  onModeChange,
   savedStartDate = null,
   savedEndDate = null,
   savedMonth,
@@ -22,22 +23,29 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   onSelectRange,
   onSelectMonth,
 }) => {
+  const [internalMode, setInternalMode] = useState<DateMode>(externalMode);
+
+  useEffect(() => {
+    setInternalMode(externalMode);
+  }, [externalMode]);
+
+  const activeMode = internalMode;
+
+  const handleModeToggle = (newMode: DateMode) => {
+    setInternalMode(newMode);
+    onModeChange?.(newMode);
+  };
+
   const [startDate, setStartDate] = useState<Date | null>(savedStartDate);
   const [endDate, setEndDate] = useState<Date | null>(savedEndDate);
 
-  // Default to showing the month/year of the saved start date if it exists
   const [currentDate, setCurrentDate] = useState(() => {
     return savedStartDate ? new Date(savedStartDate) : new Date();
   });
 
-  const [selectedMonth, setSelectedMonth] = useState<number | undefined>(
-    savedMonth,
-  );
-  const [selectedYear, setSelectedYear] = useState<number | undefined>(
-    savedYear,
-  );
+  const [selectedMonth, setSelectedMonth] = useState<number | undefined>(savedMonth);
+  const [selectedYear, setSelectedYear] = useState<number | undefined>(savedYear);
 
-  // Sync internal state flags whenever the dropdown unmounts / remounts
   useEffect(() => {
     setStartDate(savedStartDate);
     setEndDate(savedEndDate);
@@ -58,18 +66,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const month = currentDate.getMonth();
 
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
   ];
   const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
@@ -79,75 +77,68 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const totalSlots = [...blanks, ...days];
 
-  const handlePrevMonth = () => setCurrentDate(new Date(year, month - 1, 1));
-  const handleNextMonth = () => setCurrentDate(new Date(year, month + 1, 1));
-
   const handleDayClick = (day: number) => {
     const clickedDate = new Date(year, month, day);
     clickedDate.setHours(0, 0, 0, 0);
 
     if (clickedDate < today) return;
 
-    // Reset instant execution check
     if (!startDate || (startDate && endDate)) {
       setStartDate(clickedDate);
       setEndDate(null);
-      if (onSelectRange) onSelectRange(clickedDate, null);
+      onSelectRange?.(clickedDate, null);
     } else if (startDate && !endDate) {
       if (clickedDate < startDate) {
         setStartDate(clickedDate);
-        if (onSelectRange) onSelectRange(clickedDate, null);
+        onSelectRange?.(clickedDate, null);
       } else {
         setEndDate(clickedDate);
-        if (onSelectRange) onSelectRange(startDate, clickedDate);
+        onSelectRange?.(startDate, clickedDate);
       }
     }
   };
 
   return (
-    <div className="w-fit border border-slate-100 bg-white shadow-xl rounded-2xl p-6 font-sans">
-      {/* Calendar Header */}
-      <div className="flex items-center justify-between mb-6 px-1">
-        <h3 className="font-bold text-slate-800 text-base">
-          {months[month]} {year}
-        </h3>
-        {mode === "exact" && (
-          <div className="flex gap-2">
-            <button
-              onClick={handlePrevMonth}
-              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 text-xs transition-all"
-            >
-              ◀
-            </button>
-            <button
-              onClick={handleNextMonth}
-              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 text-xs transition-all"
-            >
-              ▶
-            </button>
-          </div>
-        )}
+    <div className="w-80 rounded-2xl bg-[var(--bg)] p-5 font-sans shadow-xl border border-[var(--border)]">
+      {/* MODE SWITCHER & HEADER */}
+      <div className="mb-4 space-y-3">
+
+
+
+        {/* MONTH / YEAR NAVIGATION HEADER */}
+        <div className="flex items-center justify-between px-1 pt-1 border-t border-[var(--border)]">
+          <h3 className="text-sm font-bold text-[var(--text)]">
+            {months[month]} {year}
+          </h3>
+<Tabs
+    items={modeTabs}
+    activeId={activeMode}
+    onChange={(id) => handleModeToggle(id as "exact" | "month")}
+    triggerOn="click"
+    containerClassName="w-full flex items-center justify-center"
+  />
+        </div>
       </div>
 
       {/* VIEW 1: MONTH PICKER */}
-      {mode === "month" && (
-        <div className="grid grid-cols-4 gap-3 w-80">
+      {activeMode === "month" && (
+        <div className="grid grid-cols-4 gap-2">
           {months.map((m, index) => {
-            const isPickedMonth =
-              index === selectedMonth && year === selectedYear;
+            const isPickedMonth = index === selectedMonth && year === selectedYear;
             return (
               <button
                 key={m}
+                type="button"
                 onClick={() => {
                   setSelectedMonth(index);
                   setSelectedYear(year);
-                  if (onSelectMonth) onSelectMonth(index, year);
+                  onSelectMonth?.(index, year);
                   setCurrentDate(new Date(year, index, 1));
                 }}
-                className={`py-3 px-2 text-sm font-medium rounded-xl transition-all ${
+                className={`rounded-xl py-2.5 px-2 text-xs font-medium transition-all ${
                   isPickedMonth
-                    ? "bg-[#001f2b] text-white font-bold shadow-sm"
-                    : "text-slate-600 hover:bg-[#eef2f6]"
+                    ? "bg-[var(--primary)] text-white font-bold shadow-sm"
+                    : "text-[var(--text)] hover:bg-[var(--card)]"
                 }`}
               >
                 {m}
@@ -158,20 +149,21 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
       )}
 
       {/* VIEW 2: EXACT DATE RANGE PICKER */}
-      {mode === "exact" && (
-        <div className="w-80">
-          <div className="grid grid-cols-7 text-center mb-3 text-sm font-medium text-slate-400">
+      {activeMode === "exact" && (
+        <div>
+          <div className="mb-2 grid grid-cols-7 text-center text-xs font-medium text-[var(--muted)]">
             {daysOfWeek.map((day) => (
-              <div key={day} className="h-8 flex items-center justify-center">
+              <div key={day} className="flex h-7 items-center justify-center">
                 {day}
               </div>
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-1.5 text-center text-sm font-normal">
+          <div className="grid grid-cols-7 gap-1 text-center text-xs font-normal">
             {totalSlots.map((day, idx) => {
-              if (day === null)
-                return <div key={`empty-${idx}`} className="h-9 w-9" />;
+              if (day === null) {
+                return <div key={`empty-${idx}`} className="h-8 w-8" />;
+              }
 
               const thisDate = new Date(year, month, day);
               thisDate.setHours(0, 0, 0, 0);
@@ -185,14 +177,14 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                 thisDate >= startDate &&
                 thisDate <= endDate;
 
-              let dayStyles = "text-slate-600 hover:bg-[#eef2f6]";
+              let dayStyles = "text-[var(--text)] hover:bg-[var(--card)]";
 
               if (isPast) {
-                dayStyles = "text-slate-300 cursor-not-allowed line-through";
+                dayStyles = "text-slate-300 dark:text-slate-600 cursor-not-allowed line-through";
               } else if (isStart || isEnd) {
-                dayStyles = "bg-[#001f2b] text-white font-bold shadow-sm";
+                dayStyles = "bg-[var(--primary)] text-white font-bold shadow-sm";
               } else if (isInRange) {
-                dayStyles = "bg-[#eef2f6] text-slate-700 font-medium";
+                dayStyles = "bg-[var(--card)] text-[var(--text)] font-medium";
               }
 
               return (
@@ -201,7 +193,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   type="button"
                   disabled={isPast}
                   onClick={() => handleDayClick(day)}
-                  className={`h-9 w-9 flex items-center justify-center rounded-lg transition-all ${dayStyles}`}
+                  className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${dayStyles}`}
                 >
                   {day}
                 </button>
