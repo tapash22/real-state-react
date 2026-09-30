@@ -1,73 +1,128 @@
 import { useState } from "react";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { FaBars, FaPhoneAlt, FaUserPlus } from "react-icons/fa";
 import { FiDollarSign, FiMessageSquare } from "react-icons/fi";
-import { LuLayers, LuLogIn } from "react-icons/lu";
-
-import { useTranslation } from "react-i18next";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { LuLayers, LuLogIn } from "react-icons/lu";
 import { RiGlobalLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../api/auth";
+import { currentUserQueryKey, useCurrentUser } from "../hooks/useCurrentUser";
 import { useTheme } from "../hooks/useTheme";
 import { Dropdown } from "./dropdown/Dropdown";
 import { ThemeToggle } from "./toggle/ThemeToggle";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { logoutUser } from "../api/auth";
-import { currentUserQueryKey } from "../hooks/useCurrentUser";
-
 type HeaderProps = {
-  // add props later if needed
+  // Add props later if needed
 };
 
 export default function Header(_props: HeaderProps) {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  // Language mapping configuration
+  /*
+   * CURRENT USER / AUTHENTICATION
+   * currentUser = demoUser when authenticated
+   * currentUser = null when logged out
+   */
+  const { data: currentUser, isLoading: isUserLoading } = useCurrentUser();
+
+  const isAuthenticated = !!currentUser;
+
+  /*
+   * LANGUAGE
+   */
+
   const currentLangLabel = i18n.language?.startsWith("bn")
     ? "বাংলা"
     : "English";
-  const langOptions = ["English", "বাংলা "];
+
+  const langOptions = ["English", "বাংলা"];
 
   const handleLanguageChange = (selectedLang: string) => {
-    const langCode = selectedLang === "বাংলা " ? "bn" : "en";
+    const langCode = selectedLang === "বাংলা" ? "bn" : "en";
+
     i18n.changeLanguage(langCode);
   };
+
+  /*
+   * LOGOUT
+   */
 
   const logoutMutation = useMutation({
     mutationFn: logoutUser,
 
     onSuccess: () => {
-      queryClient.removeQueries({
-        queryKey: currentUserQueryKey,
-      });
+      /*
+       * Immediately update React Query.
+       * This causes:
+       * isAuthenticated = true
+       * isAuthenticated = false
+       * without waiting for the 5-minute staleTime.
+       */
+      queryClient.setQueryData(currentUserQueryKey, null);
 
+      // Close mobile drawer
+      setIsOpen(false);
+
+      // Redirect to signin
       navigate("/auth/signin", {
         replace: true,
       });
     },
   });
 
+  /*
+   * LOGOUT HANDLER
+   */
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
+
   return (
     <>
+      {/* DESKTOP / MAIN HEADER */}
+
       <header
-        style={{ backgroundColor: "var(--nav-bg)" }}
-        className="sticky top-0 z-40 flex justify-between items-center px-4 md:px-10 py-4 shadow-sm border-b transition-colors duration-300 border-[var(--border)]"
+        style={{
+          backgroundColor: "var(--nav-bg)",
+        }}
+        className="
+          sticky top-0 z-40
+          flex items-center justify-between
+          border-b border-[var(--border)]
+          px-4 py-4
+          shadow-sm
+          transition-colors duration-300
+          md:px-10
+        "
       >
-        {/* Left Side: Logo */}
+        {/* LEFT SIDE - LOGO */}
+
         <div className="flex items-center">
           <Link
             to="/"
-            style={{ color: "var(--nav-link)" }}
-            className="flex items-center gap-5 font-bold text-2xl tracking-wide transition-opacity hover:opacity-90"
+            style={{
+              color: "var(--nav-link)",
+            }}
+            className="
+              flex items-center gap-5
+              text-2xl font-bold tracking-wide
+              transition-opacity
+              hover:opacity-90
+            "
             aria-label="Thikana Home"
           >
-            {/* Combined Brand Logo & Text Mark SVG */}
+            {/* Brand Logo */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 450 120"
@@ -79,16 +134,21 @@ export default function Header(_props: HeaderProps) {
                   d="M11 49.3L47.2 20.2c2.5-2 5.9-2 8.4 0l36.2 29.1c1.7 1.4 4.2 1.1 5.5-0.6s1.1-4.2-0.6-5.5L60.5 14.1c-5.3-4.3-12.9-4.3-18.2 0L6 43.2c-1.7 1.4-2 3.8-0.6 5.5s3.9 2 5.6 0.6z"
                   fill="currentColor"
                 />
+
                 <path d="M80 24h7v13l-7-5.6V24z" fill="currentColor" />
+
                 <path d="M39 48h24v8h-8v36h-8V56h-8v-8z" fill="currentColor" />
+
                 <path
                   d="M33 56H16c-2.2 0-4 1.8-4 4v17c0 2.2 1.8 4 4 4h4l-4 7 9-7h8c2.2 0 4-1.8 4-4V60c0-2.2-1.8-4-4-4z"
                   fill="#F59E0B"
                 />
+
                 <path
                   d="M69 56h17c2.2 0 4 1.8 4 4v17c0 2.2-1.8 4-4 4h-8l9 7-4-7h-4c-2.2 0-4-1.8-4-4V60c0-2.2 1.8-4 4-4z"
                   fill="#14B8A6"
                 />
+
                 <rect
                   x="73"
                   y="66"
@@ -97,6 +157,7 @@ export default function Header(_props: HeaderProps) {
                   rx="0.5"
                   fill="#FFFFFF"
                 />
+
                 <rect
                   x="77.5"
                   y="66"
@@ -105,6 +166,7 @@ export default function Header(_props: HeaderProps) {
                   rx="0.5"
                   fill="#FFFFFF"
                 />
+
                 <rect
                   x="82"
                   y="66"
@@ -114,6 +176,7 @@ export default function Header(_props: HeaderProps) {
                   fill="#FFFFFF"
                 />
               </g>
+
               <text
                 x="135"
                 y="74"
@@ -129,76 +192,153 @@ export default function Header(_props: HeaderProps) {
           </Link>
         </div>
 
-        {/* Right Side: Desktop Navigation Links (Hidden on Mobile) */}
-        <div className="hidden lg:flex items-center gap-5 font-semibold text-sm tracking-wider whitespace-nowrap ">
+        {/* DESKTOP NAVIGATION */}
+
+        <div
+          className="
+            hidden
+            items-center
+            gap-5
+            whitespace-nowrap
+            text-sm
+            font-semibold
+            tracking-wider
+            lg:flex
+          "
+        >
+          {/* How it works */}
+
           <Link
             to="/how-it-works"
-            style={{ color: "var(--text)" }}
-            className="hover:opacity-80 transition-opacity"
+            style={{
+              color: "var(--text)",
+            }}
+            className="transition-opacity hover:opacity-80"
           >
             {t("nav.howItWorks")}
           </Link>
+
+          {/* Pricing */}
+
           <Link
             to="/pricing"
-            style={{ color: "var(--text)" }}
-            className="hover:opacity-80 transition-opacity"
+            style={{
+              color: "var(--text)",
+            }}
+            className="transition-opacity hover:opacity-80"
           >
             {t("nav.pricing")}
           </Link>
+
+          {/* Help */}
+
           <Link
             to="/help"
-            style={{ color: "var(--text)" }}
-            className="hover:opacity-80 transition-opacity"
+            style={{
+              color: "var(--text)",
+            }}
+            className="transition-opacity hover:opacity-80"
           >
             {t("nav.help")}
           </Link>
-          <Link
-            to="/auth/signin"
-            style={{ color: "var(--text)" }}
-            className="hover:opacity-80 transition-opacity ml-2"
-          >
-            {t("nav.login")}
-          </Link>
-          <Link
-            to="/auth/signup"
-            style={{ color: "var(--text)" }}
-            className="hover:opacity-80 transition-opacity"
-          >
-            {t("nav.signup")}
-          </Link>
 
-          <button
-            type="button"
-            onClick={() => logoutMutation.mutate()}
-            disabled={logoutMutation.isPending}
-            className="
-            disabled:opacity-50
-            disabled:cursor-not-allowed
-            flex
-              w-fit
-              rounded-lg
-              border
-              border-[var(--border)]
-              px-5 py-2
-              shadow-sm
-              shadow-[var(--primary)]
-            "
-          >
-            {logoutMutation.isPending ? "Logging out..." : "Logout"}
-          </button>
+          {/* AUTHENTICATION */}
 
-          {/* Landlord CTA Button */}
+          {!isUserLoading &&
+            (isAuthenticated ? (
+              /*
+               * LOGGED IN
+               * Show Logout
+               */
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={logoutMutation.isPending}
+                className="
+                  ml-2
+                  flex w-fit
+                  rounded-lg
+                  border border-[var(--border)]
+                  px-5 py-2
+                  shadow-sm
+                  shadow-[var(--primary)]
+                  transition-all
+                  duration-300
+                  ease-out
+                  hover:-translate-y-0.5
+                  hover:border-[var(--card)]
+                  hover:shadow-lg
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
+                "
+              >
+                {logoutMutation.isPending ? "Logging out..." : "Logout"}
+              </button>
+            ) : (
+              /*
+               * LOGGED OUT
+               * Show Login + Signup
+               */
+              <>
+                <Link
+                  to="/auth/signin"
+                  style={{
+                    color: "var(--text)",
+                  }}
+                  className="
+                    ml-2
+                    transition-opacity
+                    hover:opacity-80
+                  "
+                >
+                  {t("nav.login")}
+                </Link>
+
+                <Link
+                  to="/auth/signup"
+                  style={{
+                    color: "var(--text)",
+                  }}
+                  className="
+                    transition-opacity
+                    hover:opacity-80
+                  "
+                >
+                  {t("nav.signup")}
+                </Link>
+              </>
+            ))}
+
+          {/* LANDLORD CTA */}
+
           <Link
             to="/list-property"
-            className="border-2 border-[var(--muted)] text-[var(--text)] rounded-lg px-4 py-2  bg-[var(--bg)] translate-y-0 transition-all duration-300 ease-out
-hover:translate-y-0.5
-hover:border-[var(--card)]
-hover:shadow-lg"
+            style={{
+              color: "var(--text)",
+            }}
+            className="
+              rounded-lg
+              border-2
+              border-[var(--muted)]
+              bg-[var(--bg)]
+              px-4 py-2
+
+              translate-y-0
+
+              transition-all
+              duration-300
+              ease-out
+
+              hover:translate-y-0.5
+              hover:border-[var(--card)]
+              hover:shadow-lg
+            "
           >
             {t("nav.landlordCta")}
           </Link>
 
-          {/* Desktop Language Selector dropdown integration */}
+          {/* LANGUAGE */}
+
           <div className="w-auto">
             <Dropdown
               smallSize={true}
@@ -211,39 +351,86 @@ hover:shadow-lg"
             />
           </div>
 
-          {/* Theme Toggle Switch inside Desktop Menu */}
+          {/* THEME TOGGLE */}
+
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
-        {/* Mobile Hamburger Trigger (Hidden on Desktop) */}
+        {/* MOBILE HEADER ACTIONS */}
+
         <div className="flex items-center gap-4 lg:hidden">
-          {/* Mobile Theme Toggle Trigger */}
+          {/* Theme */}
+
           <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
 
+          {/* Hamburger */}
+
           <button
+            type="button"
             onClick={() => setIsOpen(true)}
-            style={{ color: "var(--text)" }}
-            className="p-1 cursor-pointer"
+            style={{
+              color: "var(--text)",
+            }}
+            className="cursor-pointer p-1"
             aria-label="Open menu"
           >
-            <FaBars className="w-6 h-6" />
+            <FaBars className="h-6 w-6" />
           </button>
         </div>
       </header>
 
-      {/* Mobile Slide-out Drawer Overlay */}
+      {/* MOBILE DRAWER */}
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/40 backdrop-blur-xs lg:hidden">
-          {/* Main Panel Container: Controlled strictly to be full screen viewport depth */}
+        <div
+          className="
+            fixed inset-0 z-50
+            flex justify-end
+            bg-black/40
+            backdrop-blur-xs
+            lg:hidden
+          "
+        >
+          {/* Drawer */}
+
           <div
-            style={{ backgroundColor: "var(--nav-bg)" }}
-            className="w-full max-w-xs h-[100dvh] flex flex-col shadow-2xl animate-in slide-in-from-right duration-200"
+            style={{
+              backgroundColor: "var(--nav-bg)",
+            }}
+            className="
+              flex
+              h-[100dvh]
+              w-full
+              max-w-xs
+              flex-col
+              shadow-2xl
+              animate-in
+              slide-in-from-right
+              duration-200
+            "
           >
-            {/* Top Header Drawer Row */}
-            <div className="flex justify-between items-center px-5 py-4 border-b border-[var(--border)] shrink-0">
-              {/* Scaled App Logo */}
-              <div style={{ color: "var(--nav-link)" }}>
+            {/*
+                DRAWER HEADER
+           = */}
+
+            <div
+              className="
+                flex
+                shrink-0
+                items-center
+                justify-between
+                border-b
+                border-[var(--border)]
+                px-5 py-4
+              "
+            >
+              {/* Logo */}
+
+              <div
+                style={{
+                  color: "var(--nav-link)",
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 450 120"
@@ -255,12 +442,15 @@ hover:shadow-lg"
                       d="M11 49.3L47.2 20.2c2.5-2 5.9-2 8.4 0l36.2 29.1c1.7 1.4 4.2 1.1 5.5-0.6s1.1-4.2-0.6-5.5L60.5 14.1c-5.3-4.3-12.9-4.3-18.2 0L6 43.2c-1.7 1.4-2 3.8-0.6 5.5s3.9 2 5.6 0.6z"
                       fill="currentColor"
                     />
+
                     <path d="M80 24h7v13l-7-5.6V24z" fill="currentColor" />
+
                     <path
                       d="M39 48h24v8h-8v36h-8V56h-8v-8z"
                       fill="currentColor"
                     />
                   </g>
+
                   <text
                     x="135"
                     y="74"
@@ -273,103 +463,168 @@ hover:shadow-lg"
                   </text>
                 </svg>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="p-1 cursor-pointer"
-                aria-label="Close menu"
-              >
-                <IoClose className="w-6 h-6" />
-              </button>
-            </div>
 
-            {/* Authentication Action Row */}
-            <div className="grid grid-cols-2 gap-3 p-4 border-b border-[var(--border)] shrink-0">
-              <Link
-                to="/auth/signup"
-                onClick={() => setIsOpen(false)}
-                style={{ borderColor: "var(--border)", color: "var(--text)" }}
-                className="flex items-center justify-center gap-2 border rounded-lg py-2.5 text-sm font-semibold hover:bg-black/5 dark:hover:bg-white/10"
-              >
-                <FaUserPlus className="w-4 h-4" /> Sign up
-              </Link>
-              <Link
-                to="/auth/signin"
-                onClick={() => setIsOpen(false)}
-                style={{ borderColor: "var(--border)", color: "var(--text)" }}
-                className="flex items-center justify-center gap-2 border rounded-lg py-2.5 text-sm font-semibold hover:bg-black/5 dark:hover:bg-white/10"
-              >
-                <LuLogIn className="w-4 h-4" /> Sign in
-              </Link>
-            </div>
-            <div className="w-full h-auto p-2 flex justify-center items-center">
+              {/* Close */}
+
               <button
                 type="button"
-                onClick={() => logoutMutation.mutate()}
-                disabled={logoutMutation.isPending}
-                className="px-4 py-2 rounded-md
-                bg-red-600
-                hover:bg-red-700
-                text-white
-                disabled:opacity-50
-                disabled:cursor-not-allowed"
+                onClick={() => setIsOpen(false)}
+                style={{
+                  color: "var(--text)",
+                }}
+                className="cursor-pointer p-1"
+                aria-label="Close menu"
               >
-                {logoutMutation.isPending ? "Logging out..." : "Logout"}
+                <IoClose className="h-6 w-6" />
               </button>
             </div>
 
-            {/* Navigation Drawer Menu List */}
-            <nav className="flex-1 overflow-y-auto py-4 flex flex-col space-y-1">
+            {/* MOBILE AUTHENTICATION */}
+
+            <nav
+              className="
+                flex
+                flex-1
+                flex-col
+                space-y-1
+                overflow-y-auto
+                py-4
+              "
+            >
+              {/* How it works */}
+
               <Link
                 to="/how-it-works"
                 onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
+                style={{
+                  color: "var(--text)",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-4
+                  px-5 py-3.5
+                  font-medium
+                  transition-colors
+                  hover:bg-black/5
+                  dark:hover:bg-white/10
+                "
               >
-                <LuLayers className="w-5 h-5 opacity-70" />
+                <LuLayers className="h-5 w-5 opacity-70" />
+
                 <span>{t("nav.howItWorks")}</span>
               </Link>
+
+              {/* Pricing */}
 
               <Link
                 to="/pricing"
                 onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
+                style={{
+                  color: "var(--text)",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-4
+                  px-5 py-3.5
+                  font-medium
+                  transition-colors
+                  hover:bg-black/5
+                  dark:hover:bg-white/10
+                "
               >
-                <FiDollarSign className="w-5 h-5 opacity-70" />
+                <FiDollarSign className="h-5 w-5 opacity-70" />
+
                 <span>{t("nav.pricing")}</span>
               </Link>
+
+              {/* Help */}
 
               <Link
                 to="/help"
                 onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
+                style={{
+                  color: "var(--text)",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-4
+                  px-5 py-3.5
+                  font-medium
+                  transition-colors
+                  hover:bg-black/5
+                  dark:hover:bg-white/10
+                "
               >
-                <IoMdHelpCircleOutline className="w-5 h-5 opacity-70" />
+                <IoMdHelpCircleOutline className="h-5 w-5 opacity-70" />
+
                 <span>{t("nav.help")}</span>
               </Link>
+
+              {/* Live Chat */}
 
               <Link
                 to="/chat-support"
                 onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
+                style={{
+                  color: "var(--text)",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-4
+                  px-5 py-3.5
+                  font-medium
+                  transition-colors
+                  hover:bg-black/5
+                  dark:hover:bg-white/10
+                "
               >
-                <FiMessageSquare className="w-5 h-5 opacity-70" />
+                <FiMessageSquare className="h-5 w-5 opacity-70" />
+
                 <span>{t("nav.liveChat")}</span>
               </Link>
+
+              {/* Contact */}
 
               <Link
                 to="/contact"
                 onClick={() => setIsOpen(false)}
-                style={{ color: "var(--text)" }}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-black/5 dark:hover:bg-white/10 font-medium transition-colors"
+                style={{
+                  color: "var(--text)",
+                }}
+                className="
+                  flex
+                  items-center
+                  gap-4
+                  px-5 py-3.5
+                  font-medium
+                  transition-colors
+                  hover:bg-black/5
+                  dark:hover:bg-white/10
+                "
               >
-                <FaPhoneAlt className="w-4 h-4 opacity-70" />
+                <FaPhoneAlt className="h-4 w-4 opacity-70" />
+
                 <span>{t("nav.contactUs")}</span>
               </Link>
-              <div className="p-5 border-t border-[var(--border)] bg-[var(--nav-bg)] shrink-0 flex justify-center items-center">
+
+              {/* MOBILE LANGUAGE */}
+
+              <div
+                className="
+                  flex
+                  shrink-0
+                  items-center
+                  justify-center
+                  border-t
+                  border-[var(--border)]
+                  bg-[var(--nav-bg)]
+                  p-5
+                "
+              >
                 <Dropdown
                   smallSize={true}
                   showValue={true}
@@ -380,6 +635,122 @@ hover:shadow-lg"
                   Icon={RiGlobalLine}
                 />
               </div>
+
+              {/* MOBILE NAVIGATION */}
+
+              {!isUserLoading &&
+                (isAuthenticated ? (
+                  /*
+                   * LOGGED IN
+                   */
+
+                  <div
+                    className="
+                        w-full
+                        shrink-0
+                        border-b
+                        border-[var(--border)]
+                        p-4
+                      "
+                  >
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      disabled={logoutMutation.isPending}
+                      className="
+                                  ml-2
+                  flex w-fit
+                  rounded-lg
+                  border border-[var(--border)]
+                  px-5 py-2
+                  shadow-sm
+                  shadow-[var(--primary)]
+                  transition-all
+                  duration-300
+                  ease-out
+                  hover:-translate-y-0.5
+                  hover:border-[var(--card)]
+                  hover:shadow-lg
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
+                              "
+                    >
+                      {logoutMutation.isPending ? "Logging out..." : "Logout"}
+                    </button>
+                  </div>
+                ) : (
+                  /*
+                   * LOGGED OUT
+                   */
+
+                  <div
+                    className="
+                    grid
+                    shrink-0
+                    grid-cols-2
+                    gap-3
+                    border-b
+                    border-[var(--border)]
+                    p-4
+                  "
+                  >
+                    {/* Sign up */}
+
+                    <Link
+                      to="/auth/signup"
+                      onClick={() => setIsOpen(false)}
+                      style={{
+                        borderColor: "var(--border)",
+                        color: "var(--text)",
+                      }}
+                      className="
+                      flex
+                      items-center
+                      justify-center
+                      gap-2
+                      rounded-lg
+                      border
+                      py-2.5
+                      text-sm
+                      font-semibold
+                      transition-colors
+                      hover:bg-black/5
+                      dark:hover:bg-white/10
+                    "
+                    >
+                      <FaUserPlus className="h-4 w-4" />
+                      Sign up
+                    </Link>
+
+                    {/* Sign in */}
+
+                    <Link
+                      to="/auth/signin"
+                      onClick={() => setIsOpen(false)}
+                      style={{
+                        borderColor: "var(--border)",
+                        color: "var(--text)",
+                      }}
+                      className="
+                      flex
+                      items-center
+                      justify-center
+                      gap-2
+                      rounded-lg
+                      border
+                      py-2.5
+                      text-sm
+                      font-semibold
+                      transition-colors
+                      hover:bg-black/5
+                      dark:hover:bg-white/10
+                    "
+                    >
+                      <LuLogIn className="h-4 w-4" />
+                      Sign in
+                    </Link>
+                  </div>
+                ))}
             </nav>
           </div>
         </div>

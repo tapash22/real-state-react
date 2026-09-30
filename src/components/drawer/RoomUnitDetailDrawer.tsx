@@ -19,7 +19,8 @@ import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
 
 interface RoomUnitDetailDrawerProps {
   unit: RoomUnit | null;
-  residenceData?: ResidenceData | null; // Pass Parent Residence Data
+  residenceData?: ResidenceData | null;
+  // Pass Parent Residence Data
   isOpen: boolean;
   onClose: () => void;
   navHeightPx?: number;

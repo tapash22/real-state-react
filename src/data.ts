@@ -16,6 +16,21 @@ import Step3Verification from "./components/checkout/Step3Verification";
 import Step4Review from "./components/checkout/Step4Review";
 import { Property } from "./types/types";
 
+// Default User ( For auth view checkig)
+//type declear
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+export const demoUser: User = {
+  id: 1,
+  name: "Demo User",
+  email: "demo@example.com",
+};
+// Default User DONE
+
 // Checkout NEW types Declear
 export type FileType = "passport" | "income";
 
@@ -170,20 +185,6 @@ export interface SocialMediaItem {
 }
 //SocialMedia ICON list END
 
-// Default User ( For auth view checkig)
-//type declear
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
-export const demoUser: User = {
-  id: 1,
-  name: "Demo User",
-  email: "demo@example.com",
-};
-// Default User DONE
 // map properties type declared and  the new format data with array of objects added
 export interface MapBounds {
   north: number;
