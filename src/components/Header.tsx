@@ -171,12 +171,18 @@ export default function Header(_props: HeaderProps) {
             type="button"
             onClick={() => logoutMutation.mutate()}
             disabled={logoutMutation.isPending}
-            className="px-4 py-2 rounded-md
-            bg-red-600
-            hover:bg-red-700
-            text-white
+            className="
             disabled:opacity-50
-            disabled:cursor-not-allowed"
+            disabled:cursor-not-allowed
+            flex
+              w-fit
+              rounded-lg
+              border
+              border-[var(--border)]
+              px-5 py-2
+              shadow-sm
+              shadow-[var(--primary)]
+            "
           >
             {logoutMutation.isPending ? "Logging out..." : "Logout"}
           </button>
@@ -184,8 +190,10 @@ export default function Header(_props: HeaderProps) {
           {/* Landlord CTA Button */}
           <Link
             to="/list-property"
-            style={{ borderColor: "var(--border)", color: "var(--text)" }}
-            className="border rounded-lg px-4 py-2 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+            className="border-2 border-[var(--muted)] text-[var(--text)] rounded-lg px-4 py-2  bg-[var(--bg)] translate-y-0 transition-all duration-300 ease-out
+hover:translate-y-0.5
+hover:border-[var(--card)]
+hover:shadow-lg"
           >
             {t("nav.landlordCta")}
           </Link>
