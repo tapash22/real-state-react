@@ -136,16 +136,14 @@ export function Banner() {
           </h1>
 
           {/* DYNAMIC COUNTING SUBTITLE */}
-          <h3 className="text-xl sm:text-2xl font-bold tracking-wider flex items-center justify-center gap-2">
-            <span style={{ color: "var(--text-heading)" }}>
-              {t("banner.stayFor")}
-            </span>
+          <h3 className="text-xl sm:text-3xl font-bold tracking-wider flex items-center justify-center gap-5">
+            <span style={{ color: "var(--bg)" }}>{t("banner.stayFor")}</span>
 
             {/* MASK WINDOW */}
             <span className="relative overflow-hidden h-[40px] lg:h-[50px] w-[120px] lg:w-[150px] flex items-center rounded">
               <span
                 ref={subtitleTextRef}
-                className="w-full text-center whitespace-nowrap leading-none bg-indigo-600 text-white font-bold p-2 lg:p-2 rounded shadow-md"
+                className="w-full text-center whitespace-nowrap leading-none bg-[var(--bg)] text-var[(--text)] font-bold p-2 lg:p-2 rounded shadow-md"
                 style={{ color: "var(--text)" }}
               />
             </span>

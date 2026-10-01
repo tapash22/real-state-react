@@ -10,6 +10,7 @@
        LIGHT THEME (Your Original + Palette)
        ========================================== */
     --bg: #f0f2f5;
+    --logo: #110769;
     --text: #0F172A;
     --primary: #4f46e5;
     --secondary: #059669;
@@ -76,6 +77,7 @@
        ========================================== */
     /* Dominant Deep Navy for body background */
     --bg: #0B132B;
+    --logo: #8f7cfacc;
 
     /* Crisp white/slate mix for high readability text */
     --text: #F1F5F9;
@@ -358,7 +360,8 @@
 
 
     .scrollbar-thin {
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .scrollbar-thin::-webkit-scrollbar {
@@ -403,7 +406,8 @@
 
 /* scrollbar explain with details using  */
 .scrollbar-thin {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* scrollbar size */

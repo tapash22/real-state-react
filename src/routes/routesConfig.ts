@@ -43,10 +43,7 @@ export const routesConfig: RouteObject[] = [
         path: "property/:id",
         element: createElement(PropertyDetails),
       },
-      {
-        path: "checkout",
-        element: createElement(CheckoutDetails),
-      },
+
       // Agent Details Page
       {
         path: "agents/:id",
@@ -73,6 +70,10 @@ export const routesConfig: RouteObject[] = [
           {
             path: "list-property",
             element: createElement(LandLord),
+          },
+          {
+            path: "checkout",
+            element: createElement(CheckoutDetails),
           },
         ],
       },
