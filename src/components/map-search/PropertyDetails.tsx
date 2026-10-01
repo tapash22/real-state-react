@@ -1,17 +1,12 @@
-import { useState } from "react";
 import { BiArea, BiBath, BiBed, BiStar } from "react-icons/bi";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiShieldStarFill } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 
 import { FiDollarSign } from "react-icons/fi";
-import { DateMode } from "../../data";
 import { useAppData } from "../../hooks/useAppData";
 import { useHouseContext } from "../../hooks/useHouseContext";
-import {
-  CalendarInputPicker,
-  type PickerRawData,
-} from "../calendar/CalendarInputPicker";
+import { CalendarInputPicker } from "../calendar/CalendarInputPicker";
 import { PropertySlider } from "./PropertySlider";
 import ResidenceDetails from "./ResidenceDetails";
 
@@ -28,27 +23,26 @@ export default function PropertyDetails() {
   const { id } = useParams<RouteParams>();
 
   // 1. Manage current toggle mode state
-  const [dateMode, setDateMode] = useState<DateMode>("exact");
 
   // State logs for displaying choice status details cleanly to the screen
-  const [displayString, setDisplayString] = useState<string>("");
-  const [rawOutput, setRawOutput] = useState<string>("{}");
+  // const [displayString, setDisplayString] = useState<string>("");
+  // const [rawOutput, setRawOutput] = useState<string>("{}");
 
-  const handleToggleChange = (val: DateMode) => {
-    setDateMode(val);
-    setDisplayString(""); // Reset to empty string whenever toggle mode shifts
-    setRawOutput("{}"); // Reset raw output string payload
-  };
+  // const handleToggleChange = (val: DateMode) => {
+  //   setDateMode(val);
+  //   setDisplayString(""); // Reset to empty string whenever toggle mode shifts
+  //   setRawOutput("{}"); // Reset raw output string payload
+  // };
 
   /* Calendar Handler                                                         */
-  const handlePickerChange = (
-    formattedValue: string,
-    rawData: PickerRawData,
-  ) => {
-    setDisplayString(formattedValue);
+  // const handlePickerChange = (
+  //   formattedValue: string,
+  //   rawData: PickerRawData,
+  // ) => {
+  //   setDisplayString(formattedValue);
 
-    setRawOutput(JSON.stringify(rawData, null, 2));
-  };
+  //   setRawOutput(JSON.stringify(rawData, null, 2));
+  // };
 
   // Mocking all data retrieved from the image layout
   const residenceData = data?.residenceData;
@@ -322,10 +316,7 @@ export default function PropertyDetails() {
             {/* Move Planner                                                 */}
             <div className="flex flex-col items-center space-y-3 p-2">
               {/* Calendar */}
-              <CalendarInputPicker
-                placeholder="Select range..."
-                onChange={handlePickerChange}
-              />
+              <CalendarInputPicker placeholder="Select range..." />
               {/* Available Places Button */}
               <button
                 type="button"
