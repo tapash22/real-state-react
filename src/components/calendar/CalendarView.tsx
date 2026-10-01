@@ -171,6 +171,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
       </div>
 
       {/* VIEW 1: MONTH PICKER */}
+      {/* VIEW 1: MONTH PICKER */}
       {activeMode === "month" && (
         <div className="grid grid-cols-4 gap-2">
           {months.map((m, index) => {
@@ -228,16 +229,16 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                 thisDate >= startDate &&
                 thisDate <= endDate;
 
-              let dayStyles = "text-[var(--text)] hover:bg-[var(--card)]";
+              let dayStyles = "text-[var(--text)] hover:bg-[var(--primary)]";
 
               if (isPast) {
-                dayStyles =
-                  "text-slate-300 dark:text-slate-600 cursor-not-allowed line-through";
+                dayStyles = "text-[var(--muted)]";
               } else if (isStart || isEnd) {
                 dayStyles =
-                  "bg-[var(--primary)] text-white font-bold shadow-sm";
+                  "bg-[var(--primary)] text-[var(--text)] font-bold shadow-sm opacity-90";
               } else if (isInRange) {
-                dayStyles = "bg-[var(--card)] text-[var(--text)] font-medium";
+                dayStyles =
+                  "bg-[var(--primary)] opacity-50 text-[var(--card)]   font-medium";
               }
 
               return (
@@ -246,7 +247,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                   type="button"
                   disabled={isPast}
                   onClick={() => handleDayClick(day)}
-                  className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all ${dayStyles}`}
+                  className={`flex h-8 w-8 items-center justify-center  rounded-lg transition-all ${dayStyles}`}
                 >
                   {day}
                 </button>

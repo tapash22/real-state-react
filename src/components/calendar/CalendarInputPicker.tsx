@@ -35,7 +35,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Get start of today (midnight) for validating past dates
   const getToday = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -48,7 +47,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     return checkDate < getToday();
   };
 
-  // Viewport spatial check to anchor popover above or below
   useEffect(() => {
     if (isOpen && containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
@@ -62,7 +60,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     }
   }, [isOpen]);
 
-  // Handle outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -76,9 +73,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  /**
-   * Reset all date selections and input values
-   */
   const handleClear = (e: React.MouseEvent) => {
     e.stopPropagation();
 
@@ -88,7 +82,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     setSavedYear(undefined);
     setInputValue("");
 
-    // Omit monthIndex and year entirely instead of passing undefined
     onChange?.("", {
       startDate: null,
       endDate: null,
@@ -96,10 +89,11 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     });
   };
 
+  // Keep calendar open when switching between "exact" and "month" modes
   const handleModeChange = (newMode: DateMode) => {
     setCurrentMode(newMode);
+    setIsOpen(true); // Ensures the calendar stays open during tab switching
 
-    // Restore saved selection string for the selected mode
     if (newMode === "exact") {
       if (savedStartDate && savedEndDate) {
         setInputValue(
@@ -122,20 +116,14 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
   };
 
   const handleSelectRange = (start: Date | null, end: Date | null) => {
-    // Guard: Prevent selecting past start date
-    if (start && isPastDate(start)) {
-      return;
-    }
-    // Guard: Prevent selecting past end date
-    if (end && isPastDate(end)) {
-      return;
-    }
+    if (start && isPastDate(start)) return;
+    if (end && isPastDate(end)) return;
 
     setSavedStartDate(start);
     setSavedEndDate(end);
 
     if (start && !end) {
-      // Start date only: update input display and keep calendar OPEN
+      // Partial range (1st date selected): KEEP OPEN
       const partialString = `${start.toLocaleDateString()} - ...`;
       setInputValue(partialString);
       setIsOpen(true);
@@ -145,7 +133,7 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
         mode: "exact",
       });
     } else if (start && end) {
-      // Both dates selected: update display and CLOSE calendar
+      // Complete range (both dates selected): CLOSE CALENDAR
       const rangeString = `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
       setInputValue(rangeString);
       setIsOpen(false);
@@ -157,34 +145,34 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
     }
   };
 
-  const handleSelectMonth = (monthIndex: number, year: number) => {
-    // Guard: Prevent selecting past months
-    const today = getToday();
-    const currentYear = today.getFullYear();
-    const currentMonth = today.getMonth();
+const handleSelectMonth = (monthIndex: number, year: number) => {
+  const today = getToday();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
 
-    if (
-      year < currentYear ||
-      (year === currentYear && monthIndex < currentMonth)
-    ) {
-      return;
-    }
+  // Guard: Prevent selecting past months
+  if (
+    year < currentYear ||
+    (year === currentYear && monthIndex < currentMonth)
+  ) {
+    return;
+  }
 
-    setSavedMonth(monthIndex);
-    setSavedYear(year);
+  setSavedMonth(monthIndex);
+  setSavedYear(year);
 
-    const formatter = new Intl.DateTimeFormat("en", { month: "long" });
-    const monthName = formatter.format(new Date(year, monthIndex));
-    const formatted = `${monthName} ${year}`;
+  const formatter = new Intl.DateTimeFormat("en", { month: "long" });
+  const monthName = formatter.format(new Date(year, monthIndex));
+  const formatted = `${monthName} ${year}`;
 
-    setInputValue(formatted);
-    setIsOpen(false);
-    onChange?.(formatted, { monthIndex, year, mode: "month" });
-  };
+  setInputValue(formatted);
+  
+  // REMOVED setIsOpen(false) -> Popover stays open after selecting a month
+  onChange?.(formatted, { monthIndex, year, mode: "month" });
+};
 
   return (
     <div ref={containerRef} className="relative w-full font-sans z-50">
-      {isOpen}
       <div className="relative border-2 border-[var(--card)] rounded-lg">
         <input
           type="text"
@@ -192,12 +180,10 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
           value={inputValue}
           placeholder={placeholder}
           onClick={() => setIsOpen((prev) => !prev)}
-          className="input-field cursor-pointer w-full pr-16" // Adjusted padding for icons
+          className="input-field cursor-pointer w-full pr-16"
         />
 
-        {/* Action icons container */}
         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-          {/* Clear Button (Shown only when input has a value) */}
           {inputValue && (
             <button
               type="button"
@@ -210,7 +196,6 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
             </button>
           )}
 
-          {/* Calendar Icon */}
           <CiCalendar
             size={22}
             className="text-[var(--text)] pointer-events-none opacity-80"
@@ -238,4 +223,4 @@ export const CalendarInputPicker: React.FC<CalendarInputPickerProps> = ({
       )}
     </div>
   );
-};
+};;
