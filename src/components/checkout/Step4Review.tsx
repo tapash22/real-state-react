@@ -55,7 +55,7 @@ export default function Step4Review({
 
           <ReviewItem
             label="Income"
-            value={`€${formData.monthlyIncome || "0"} / month`}
+            value={`$${formData.monthlyIncome || "0"} / month`}
           />
         </div>
       </ReviewSection>
@@ -109,32 +109,32 @@ export default function Step4Review({
           <div className="flex justify-between">
             <span className="text-[var(--muted)]">Monthly Rent</span>
 
-            <strong>€{costs.monthlyRent.toLocaleString()}</strong>
+            <strong>${costs.monthlyRent.toLocaleString()}</strong>
           </div>
 
           <div className="flex justify-between">
             <span className="text-[var(--muted)]">Security Deposit</span>
 
-            <strong>€{costs.deposit.toLocaleString()}</strong>
+            <strong>${costs.deposit.toLocaleString()}</strong>
           </div>
 
           <div className="flex justify-between">
             <span className="text-[var(--muted)]">Registration Fee</span>
 
-            <strong>€{costs.adminFee.toLocaleString()}</strong>
+            <strong>${costs.adminFee.toLocaleString()}</strong>
           </div>
 
-          <div className="flex justify-between border-t border-[var(--border)] pt-3 text-base font-black text-[var(--danger)]">
+          <div className="flex justify-between border-t border-[var(--border)] pt-3 text-base font-black text-[var(--danger)] tracking-wider">
             <span>Total Initial Payment</span>
 
-            <span>€{costs.totalDue.toLocaleString()}</span>
+            <span>${costs.totalDue.toLocaleString()}</span>
           </div>
         </div>
       </div>
 
       {/* Terms */}
       <div>
-        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[var(--border)]p-4">
+        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[var(--border)] p-4">
           <input
             type="checkbox"
             checked={formData.agreeTerms}
@@ -149,7 +149,7 @@ export default function Step4Review({
             accept the{" "}
             <a
               href="/terms"
-              className="font-semibold text-[var(--danger)] underline"
+              className="font-semibold text-[var(--danger)] underline tracking-wider"
             >
               Thikana Terms of Service
             </a>{" "}

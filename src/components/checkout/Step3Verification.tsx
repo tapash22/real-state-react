@@ -1,9 +1,10 @@
+import { FiCheck } from "react-icons/fi";
 import type { CheckoutStepProps } from "../../data";
 
 import CheckoutStepHeader from "./CheckoutStepHeader";
 import FileUploadField from "./FileUploadField";
 import FormField from "./FormField";
-import { checkboxClass, inputClass } from "./formStyles";
+import { inputClass } from "./formStyles";
 
 export default function Step3Verification({
   formData,
@@ -38,7 +39,7 @@ export default function Step3Verification({
         </FormField>
 
         <FormField
-          label="Net Monthly Income (€)"
+          label="Net Monthly Income ( $ )"
           htmlFor="monthlyIncome"
           required
           error={errors.monthlyIncome}
@@ -57,15 +58,26 @@ export default function Step3Verification({
         </FormField>
       </div>
 
+      {/* JSX Usage */}
       <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-[var(--border)] p-4">
+        {/* Hidden real input for form state */}
         <input
           type="checkbox"
           checked={formData.hasGuarantor}
-          onChange={(event) =>
-            handleInputChange("hasGuarantor", event.target.checked)
-          }
-          className={checkboxClass}
+          onChange={(e) => handleInputChange("hasGuarantor", e.target.checked)}
+          className="sr-only"
         />
+
+        {/* Custom styled box */}
+        <div
+          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded transition-colors ring-2 ring-[var(--card)]  ${
+            formData.hasGuarantor ? "bg-[var(--bg)]" : "bg-[var(--bg)]"
+          }`}
+        >
+          {formData.hasGuarantor && (
+            <FiCheck className="h-3.5 w-3.5 text-[var(--text)] stroke-[4]" />
+          )}
+        </div>
 
         <span className="text-xs font-medium leading-5 text-[var(--text)]">
           I have a parent or third-party guarantor for my rental payments.

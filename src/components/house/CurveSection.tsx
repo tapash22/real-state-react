@@ -36,7 +36,7 @@ export function CurveSection({
   children,
 }: CurveSectionProps) {
   const shadowFilter = showShadow
-    ? "drop-shadow(0px -10px 20px rgba(0, 0, 0, 0.35)) drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.35))"
+    ? "drop-shadow(0px -10px 20px rgba(0, 0, 0, 0.15)) drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.15))"
     : undefined;
 
   return (
