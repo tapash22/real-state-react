@@ -49,7 +49,7 @@ export default function FileUploadField({
           <div
             className={[
               "shrink-0 rounded-xl p-3",
-              uploaded ? " text-[var(--danger)]" : " text-[var(--danger)]",
+              uploaded ? " text-[var(--text)]" : " text-[var(--danger)]",
             ].join(" ")}
           >
             <BsFileEarmarkCheck className="h-5 w-5" />

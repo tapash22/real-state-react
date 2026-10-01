@@ -132,7 +132,7 @@ export interface CheckoutStepProps {
 export const INITIAL_FORM_DATA: CheckoutFormData = {
   moveInDate: "",
   moveOutDate: "",
-  occupants: "1",
+  occupants: "",
   residentStatus: "",
 
   fullName: "",
@@ -239,7 +239,7 @@ export type ApplyFilterParamsOptions = {
 export const INITIAL_FORM_STATE = {
   moveInDate: "2026-10-01",
   moveOutDate: "2027-03-31",
-  occupants: "1",
+  occupants: "",
   residentStatus: "Student",
   fullName: "",
   email: "",
