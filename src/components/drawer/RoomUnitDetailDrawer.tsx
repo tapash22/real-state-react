@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { ResidenceData, RoomUnit } from "../../data";
 import {
   CalendarInputPicker,
-  DateMode,
   PickerRawData,
 } from "../calendar/CalendarInputPicker";
 import { PaymentBreakdownCard } from "../card/PaymentBreakdownCard";
@@ -19,7 +18,8 @@ import { PropertyFeaturesCard } from "../card/PropertyFeaturesCard";
 
 interface RoomUnitDetailDrawerProps {
   unit: RoomUnit | null;
-  residenceData?: ResidenceData | null; // Pass Parent Residence Data
+  residenceData?: ResidenceData | null;
+  // Pass Parent Residence Data
   isOpen: boolean;
   onClose: () => void;
   navHeightPx?: number;
@@ -39,28 +39,26 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   // Date selection states
-  const [dateMode, setDateMode] = useState<DateMode>("exact");
   const [selectedFormattedDate, setSelectedFormattedDate] =
     useState<string>("");
   const [selectedDateData, setSelectedDateData] =
     useState<PickerRawData | null>(null);
 
   /**
-   * Check if a valid date selection has been made based on mode.
+   * Handle changes emitted from CalendarInputPicker.
    */
+  const activeMode = selectedDateData?.mode || "exact";
+
   const isDateSelected = Boolean(
     selectedDateData &&
-    ((dateMode === "exact" &&
-      selectedDateData.startDate &&
-      selectedDateData.endDate) ||
-      (dateMode === "month" &&
+    ((activeMode === "exact" &&
+      Boolean(selectedDateData.startDate) &&
+      Boolean(selectedDateData.endDate)) ||
+      (activeMode === "month" &&
         selectedDateData.monthIndex !== undefined &&
         selectedDateData.year !== undefined)),
   );
 
-  /**
-   * Handle changes emitted from CalendarInputPicker.
-   */
   const handleDateChange = (formattedValue: string, rawData: PickerRawData) => {
     setSelectedFormattedDate(formattedValue);
     setSelectedDateData(rawData);
@@ -70,7 +68,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
    * Navigate to checkout with the selected room unit.
    */
   const handleApplyToRent = () => {
-    if (!unit || !isDateSelected) return;
+    if (!unit) return;
 
     // Close the drawer
     onClose();
@@ -83,7 +81,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         bookingDates: {
           formatted: selectedFormattedDate,
           rawData: selectedDateData,
-          mode: dateMode,
+          mode: selectedDateData?.mode || "exact",
         },
       },
     });
@@ -151,7 +149,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         {/* Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-thin">
           {/* Main Hero Slider */}
-          <div className="relative w-full h-[320px] rounded-2xl overflow-hidden group bg-[var(--bg)]">
+          <div className="relative w-full h-[220px] rounded-xl overflow-hidden group bg-[var(--bg)]">
             <img
               src={imageList[currentImageIdx]}
               alt={unit.title}
@@ -333,9 +331,7 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </p>
               <PaymentBreakdownCard
                 platformName="HousingAnywhere"
-                tenantProtectionFee={
-                  isDateSelected ? selectedFormattedDate : "Select dates"
-                }
+                tenantProtectionFee={selectedFormattedDate || "Select dates"}
                 landlordName="Ivetta"
                 landlordAvatarUrl="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"
                 securityDeposit={
@@ -348,13 +344,13 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
         </div>
 
         {/* Fixed Footer Bar */}
-        <div className="p-4 border-t border-[var(--border)] space-y-3 shrink-0 bg-[var(--bg)]">
-          {/* Price Header */}
-          <div className="flex items-center justify-between px-1">
-            <div className="flex items-center gap-1">
-              <TbCalendarEvent size={16} className="text-[var(--primary)]" />
-              <span className="text-xs font-semibold text-[var(--muted)]">
-                Available: {unit.availableFrom}
+        <div className=" border-t border-[var(--border)] space-y-3 shrink-0 bg-[var(--bg)] py-2">
+          {/* Price section */}
+          <div className="flex items-center justify-between p-3 border-b-2 border-[var(--border)]">
+            <div className="flex items-center gap-3">
+              <TbCalendarEvent size={20} className="text-[var(--text)]" />
+              <span className="text-xs font-semibold text-[var(--text)] tracking-wider">
+                Available: {selectedFormattedDate}
               </span>
             </div>
             <div>
@@ -367,43 +363,11 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               </span>
             </div>
           </div>
-          <div className="flex justify-center items-center gap-10">
+          <div className="flex justify-evenly items-center space-y-3 p-1">
             {/* Calendar Picker Block */}
-            <div className="space-y-2 ">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-[var(--text)]">
-                  Select Move-in & Move-out Dates{" "}
-                  <span className="text-red-500">*</span>
-                </label>
-                <div className="flex items-center gap-1 bg-[var(--card)] p-0.5 rounded-lg border border-[var(--border)]">
-                  <button
-                    type="button"
-                    onClick={() => setDateMode("exact")}
-                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
-                      dateMode === "exact"
-                        ? "bg-[var(--primary)] text-white"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
-                  >
-                    Exact
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setDateMode("month")}
-                    className={`px-2 py-0.5 text-[10px] font-bold rounded-md transition-all ${
-                      dateMode === "month"
-                        ? "bg-[var(--primary)] text-white"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
-                    }`}
-                  >
-                    By Month
-                  </button>
-                </div>
-              </div>
-
+            <div className="space-y-2">
               <CalendarInputPicker
-                mode={dateMode}
-                placeholder="Select move-in and move-out range..."
+                placeholder="Select range..."
                 onChange={handleDateChange}
               />
             </div>
@@ -413,19 +377,25 @@ export const RoomUnitDetailDrawer: React.FC<RoomUnitDetailDrawerProps> = ({
               type="button"
               disabled={!isDateSelected}
               onClick={handleApplyToRent}
-              className={`w-auto h-auto p-3 rounded-sm font-bold text-xs tracking-wide transition-all  ${
-                isDateSelected
-                  ? "bg-[var(--primary)] text-white shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
-                  : "bg-gray-300 text-gray-500  opacity-60 dark:bg-slate-700 dark:text-slate-400"
-              }`}
+              className={`h-auto p-3 rounded-md font-bold                   flex  justify-center w-fit 
+                  border border-[var(--card)]
+                  px-5 py-2
+                  shadow-md tracking-wider
+                  shadow-[var(--primary)]
+                  transition-all
+                  duration-300
+                  ease-out
+                   ${
+                     isDateSelected
+                       ? "bg-[var(--bg)] text-[var(--muted)] shadow-md hover:brightness-105 active:scale-[0.98] cursor-pointer opacity-100"
+                       : "bg-[var(--bg)] text-[var(--muted)]  opacity-60 "
+                   }`}
             >
-              {isDateSelected
-                ? "Apply to rent"
-                : "Select rental dates to continue"}
+              {isDateSelected ? "Apply to rent" : "Select rental dates"}
             </button>
           </div>
         </div>
       </aside>
     </div>
   );
-};
+};;

@@ -72,7 +72,7 @@ export function CurveSection({
         >
           {imageUrl && (
             <div className="absolute inset-0 w-full h-full overflow-hidden">
-              <div className="absolute inset-0 z-10 pointer-events-none bg-slate-950/45" />
+              <div className="absolute inset-0 z-10 pointer-events-none bg-slate-950/20" />
               <img
                 src={imageUrl}
                 alt={imageAlt}
