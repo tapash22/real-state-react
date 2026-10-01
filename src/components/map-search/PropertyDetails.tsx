@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BiArea, BiBath, BiBed, BiStar } from "react-icons/bi";
 import { IoShieldCheckmarkOutline } from "react-icons/io5";
 import { RiShieldStarFill } from "react-icons/ri";
@@ -7,12 +6,7 @@ import { useParams } from "react-router-dom";
 import { FiDollarSign } from "react-icons/fi";
 import { useAppData } from "../../hooks/useAppData";
 import { useHouseContext } from "../../hooks/useHouseContext";
-import {
-  CalendarInputPicker,
-  type DateMode,
-  type PickerRawData,
-} from "../calendar/CalendarInputPicker";
-import { SlidingToggle } from "../toggle/SlidingToggle";
+import { CalendarInputPicker } from "../calendar/CalendarInputPicker";
 import { PropertySlider } from "./PropertySlider";
 import ResidenceDetails from "./ResidenceDetails";
 
@@ -29,27 +23,26 @@ export default function PropertyDetails() {
   const { id } = useParams<RouteParams>();
 
   // 1. Manage current toggle mode state
-  const [dateMode, setDateMode] = useState<DateMode>("exact");
 
   // State logs for displaying choice status details cleanly to the screen
-  const [displayString, setDisplayString] = useState<string>("");
-  const [rawOutput, setRawOutput] = useState<string>("{}");
+  // const [displayString, setDisplayString] = useState<string>("");
+  // const [rawOutput, setRawOutput] = useState<string>("{}");
 
-  const handleToggleChange = (val: DateMode) => {
-    setDateMode(val);
-    setDisplayString(""); // Reset to empty string whenever toggle mode shifts
-    setRawOutput("{}"); // Reset raw output string payload
-  };
+  // const handleToggleChange = (val: DateMode) => {
+  //   setDateMode(val);
+  //   setDisplayString(""); // Reset to empty string whenever toggle mode shifts
+  //   setRawOutput("{}"); // Reset raw output string payload
+  // };
 
   /* Calendar Handler                                                         */
-  const handlePickerChange = (
-    formattedValue: string,
-    rawData: PickerRawData,
-  ) => {
-    setDisplayString(formattedValue);
+  // const handlePickerChange = (
+  //   formattedValue: string,
+  //   rawData: PickerRawData,
+  // ) => {
+  //   setDisplayString(formattedValue);
 
-    setRawOutput(JSON.stringify(rawData, null, 2));
-  };
+  //   setRawOutput(JSON.stringify(rawData, null, 2));
+  // };
 
   // Mocking all data retrieved from the image layout
   const residenceData = data?.residenceData;
@@ -321,64 +314,13 @@ export default function PropertyDetails() {
             </div>
 
             {/* Move Planner                                                 */}
-            <div className="flex h-auto w-full flex-col justify-start space-y-2 p-3">
-              <h2 className="whitespace-nowrap text-start text-lg font-semibold tracking-wider">
-                Plan your move
-              </h2>
-
-              <div className="flex flex-col items-center space-y-3">
-                {/* Date Mode */}
-                <div className="w-full px-5">
-                  <SlidingToggle<DateMode>
-                    selectedValue={dateMode}
-                    onChange={handleToggleChange}
-                    options={[
-                      {
-                        value: "month",
-                        label: "By month",
-                      },
-                      {
-                        value: "exact",
-                        label: "Exact dates",
-                      },
-                    ]}
-                  />
-                </div>
-
-                {/* Calendar */}
-                <CalendarInputPicker
-                  mode={dateMode}
-                  placeholder={
-                    dateMode === "exact"
-                      ? "Choose exact date"
-                      : "Choose target month"
-                  }
-                  onChange={handlePickerChange}
-                />
-
-                {/* Calendar Debug Output */}
-                {displayString.trim() !== "" && (
-                  <div className="space-y-2">
-                    <p className="text-xs text-slate-500">
-                      <strong>Formatted String:</strong> {displayString}
-                    </p>
-
-                    <div>
-                      <p className="mb-1 text-xs text-slate-500">
-                        <strong>Raw Database Payload Object:</strong>
-                      </p>
-
-                      <pre className="max-h-40 overflow-y-auto rounded-lg bg-slate-50 p-2 font-mono text-[10px] text-slate-700">
-                        {rawOutput}
-                      </pre>
-                    </div>
-                  </div>
-                )}
-
-                {/* Available Places Button */}
-                <button
-                  type="button"
-                  className="
+            <div className="flex flex-col items-center space-y-3 p-2">
+              {/* Calendar */}
+              <CalendarInputPicker placeholder="Select range..." />
+              {/* Available Places Button */}
+              <button
+                type="button"
+                className="
                     h-full
                     w-full
                     rounded-md
@@ -389,10 +331,9 @@ export default function PropertyDetails() {
                     shadow-sm
                     shadow-[var(--primary)]
                   "
-                >
-                  Show Available Places
-                </button>
-              </div>
+              >
+                Show Available Places
+              </button>
             </div>
           </div>
         </div>

@@ -165,6 +165,31 @@ export default function Header(_props: HeaderProps) {
             {t("nav.help")}
           </Link>
 
+          <Link
+            to="/list-property"
+            style={{ color: "var(--text)" }}
+            className="
+              rounded-lg border-2 border-[var(--muted)] bg-[var(--bg)]
+              px-4 py-2 transition-all duration-300 ease-out
+              hover:translate-y-0.5 hover:border-[var(--card)] hover:shadow-lg
+            "
+          >
+            {t("nav.landlordCta")}
+          </Link>
+
+          <div className="w-auto">
+            <Dropdown
+              smallSize={true}
+              showValue={true}
+              selectedValue={currentLangLabel}
+              onSelect={handleLanguageChange}
+              options={langOptions}
+              label={t("nav.language")}
+              Icon={RiGlobalLine}
+            />
+          </div>
+
+          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
           {!isUserLoading &&
             (isAuthenticated ? (
               <button
@@ -172,7 +197,7 @@ export default function Header(_props: HeaderProps) {
                 onClick={handleLogout}
                 disabled={logoutMutation.isPending}
                 className="
-                  ml-2 flex w-fit rounded-lg border border-[var(--border)]
+                  flex w-fit rounded-lg border border-[var(--border)]
                   px-5 py-2 shadow-sm shadow-[var(--primary)]
                   transition-all duration-300 ease-out
                   hover:-translate-y-0.5 hover:border-[var(--card)] hover:shadow-lg
@@ -199,32 +224,6 @@ export default function Header(_props: HeaderProps) {
                 </Link>
               </>
             ))}
-
-          <Link
-            to="/list-property"
-            style={{ color: "var(--text)" }}
-            className="
-              rounded-lg border-2 border-[var(--muted)] bg-[var(--bg)]
-              px-4 py-2 transition-all duration-300 ease-out
-              hover:translate-y-0.5 hover:border-[var(--card)] hover:shadow-lg
-            "
-          >
-            {t("nav.landlordCta")}
-          </Link>
-
-          <div className="w-auto">
-            <Dropdown
-              smallSize={true}
-              showValue={true}
-              selectedValue={currentLangLabel}
-              onSelect={handleLanguageChange}
-              options={langOptions}
-              label={t("nav.language")}
-              Icon={RiGlobalLine}
-            />
-          </div>
-
-          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
         </div>
 
         {/* MOBILE HEADER ACTIONS */}
