@@ -6,6 +6,7 @@ import { AuthLayout } from "../layout/AuthLayout";
 // Pages
 import PropertyDetails from "../components/map-search/PropertyDetails";
 import AgentsDetails from "../pages/AgentsDetails";
+import { ArticlePage } from "../pages/ArticlePage";
 import CheckoutDetails from "../pages/CheckoutDetails";
 import HelpingDetails from "../pages/HelpingDetails";
 import { Home } from "../pages/Home";
@@ -61,6 +62,10 @@ export const routesConfig: RouteObject[] = [
       {
         path: "help",
         element: createElement(HelpingDetails),
+      },
+      {
+        path: "help/:id",
+        element: createElement(ArticlePage),
       },
       // Protected
       {
