@@ -7,8 +7,10 @@ interface TabsProps<T extends string | number> {
   onChange: (id: T) => void;
   /** Trigger mode selection on click instead of hover */
   triggerOn?: "click" | "hover";
-  /** Optional custom container styles to override default grid layouts */
+  /** Optional custom container styles for the outer wrapper */
   containerClassName?: string;
+  /** Optional custom grid layout styles for inner items wrapper */
+  gridClassName?: string;
 }
 
 export function Tabs<T extends string | number>({
@@ -16,20 +18,15 @@ export function Tabs<T extends string | number>({
   activeId,
   onChange,
   triggerOn = "click",
-  containerClassName,
+  containerClassName = "flex w-full items-center justify-center p-0 lg:p-4",
+  gridClassName,
 }: TabsProps<T>) {
   return (
-    <div
-      className={
-        containerClassName ||
-        "flex w-full items-center justify-center p-0 lg:p-4"
-      }
-    >
+    <div className={containerClassName}>
       <div
         className={
-          containerClassName
-            ? "grid w-full grid-cols-2 gap-1"
-            : "grid w-full grid-cols-3 gap-1 lg:w-3/4 lg:grid-cols-7 lg:gap-3 xl:w-1/2"
+          gridClassName ||
+          "grid w-full grid-cols-3 gap-1 lg:w-3/4 lg:grid-cols-7 lg:gap-3 xl:w-1/2"
         }
       >
         {items.map((item) => {
@@ -49,10 +46,10 @@ export function Tabs<T extends string | number>({
                 triggerOn === "hover" ? () => onChange(item.id) : undefined
               }
               aria-pressed={isActive}
-              className={`w-full text-xs font-semibold transition-all ${
+              className={`w-full text-sm font-semibold transition-all tracking-widest outline-none focus:outline-none focus:ring-0 focus:shadow-none active:outline-none active:shadow-none select-none ${
                 isActive
-                  ? "border-b-2 border-violet-500 opacity-100"
-                  : "border-b-2 border-transparent opacity-70"
+                  ? "border-b-2 border-[var(--primary)] opacity-100"
+                  : "border-b-0 border-transparent opacity-70"
               }`}
             >
               {item.label}
