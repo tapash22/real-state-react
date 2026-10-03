@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { LuSlidersHorizontal } from "react-icons/lu";
 import { useSearchParams } from "react-router-dom";
 import { MapPanel } from "../components/map-search/MapPanel";
@@ -10,9 +17,11 @@ import { NoProperties } from "../components/empty/NoProperties";
 import { FilterBar } from "../components/filter/FilterBar";
 import { HouseCard } from "../components/house/HouseCard";
 import { GsapLoader } from "../components/loader/GsapLoader";
+import { Tabs } from "../components/property-tabs/Tabs";
 import { TABS } from "../data";
 import { useHouseContext } from "../hooks/useHouseContext";
 import { useRecentSearches } from "../hooks/useRecentSearches";
+import { animatePropertyGrid } from "../utils/cardAnimations";
 import {
   applyFilterParams,
   buildPriceList,
@@ -36,6 +45,15 @@ export default function RealEstateSearchModule() {
 
   // Read search parameters from current URL
   const [searchParams, setSearchParams] = useSearchParams();
+
+  //tabs list
+  const propertyTabs: string[] = TABS.slice();
+
+  /* Tabs - Safe fallback guarantees string type for label */
+  const tabs = propertyTabs.map((property, i) => ({
+    id: property, // <--- Using string property name as the ID
+    label: property || `Property ${i + 1}`,
+  }));
 
   // Extract query parameters with fallbacks
   const appliedCountry = searchParams.get("country") || "";
@@ -133,7 +151,25 @@ export default function RealEstateSearchModule() {
     mapBounds,
   ]);
 
-  const [isFiltering, setIsFiltering] = useState(false);
+  // 2. DOM Reference for GSAP
+
+  const gridRef = useRef<HTMLDivElement>(null);
+  const hasProperties = filteredProperties.length > 0;
+  const isLoading = isHouseDataLoading;
+
+  // Handles smooth card transition animation whenever filteredProperties changes
+  useLayoutEffect(() => {
+    if (isLoading || !hasProperties || !gridRef.current) return;
+
+    const ctx = animatePropertyGrid({
+      container: gridRef.current,
+      cardSelector: ".property-card-item",
+    });
+
+    return () => ctx.revert();
+  }, [filteredProperties, isLoading, hasProperties]);
+
+  const [, setIsFiltering] = useState(false);
 
   useEffect(() => {
     if (isHouseDataLoading) {
@@ -156,12 +192,26 @@ export default function RealEstateSearchModule() {
     mapBounds,
   ]);
 
-  const isLoading = isHouseDataLoading || isFiltering;
-
   /* Map Bounds */
   const handleBoundsChange = useCallback((bounds: MapBounds) => {
     setMapBounds(bounds);
   }, []);
+
+  /* Handle Tab Click directly from Top Navigation */
+  const handleTabChange = useCallback(
+    (selectedTabId: string) => {
+      const nextParams = new URLSearchParams(searchParams);
+
+      if (selectedTabId === DEFAULT_TAB) {
+        nextParams.delete("tab");
+      } else {
+        nextParams.set("tab", selectedTabId);
+      }
+
+      setSearchParams(nextParams);
+    },
+    [searchParams, setSearchParams],
+  );
 
   /* Apply Filter Drawer */
   const handleApplyFilters = useCallback(() => {
@@ -197,8 +247,6 @@ export default function RealEstateSearchModule() {
       (appliedTab !== DEFAULT_TAB ? 1 : 0)
     );
   }, [appliedProperty, appliedPrice, appliedTab]);
-
-  const hasProperties = filteredProperties.length > 0;
 
   const mapProperties = useMemo(() => {
     return filteredProperties.map(prepareMapProperty);
@@ -251,55 +299,14 @@ export default function RealEstateSearchModule() {
           font-medium
         "
         >
-          {TABS.map((tab) => {
-            const isActive = appliedTab === tab;
-
-            return (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => {
-                  const nextParams = new URLSearchParams(searchParams);
-
-                  if (tab === DEFAULT_TAB) {
-                    nextParams.delete("tab");
-                  } else {
-                    nextParams.set("tab", tab);
-                  }
-
-                  setSearchParams(nextParams);
-                }}
-                className={`
-                relative
-                whitespace-nowrap
-                tracking-wide
-                transition-colors
-                ${
-                  isActive
-                    ? `
-                      rounded-lg
-                      bg-[var(--card)]
-                      p-3
-                      text-sm
-                      font-bold
-                      text-[var(--text)]
-                      shadow-md
-                      lg:p-4
-                      lg:shadow-sm
-                    `
-                    : `
-                      text-sm
-                      font-normal
-                      text-[var(--muted)]
-                      hover:text-[var(--text)]
-                    `
-                }
-              `}
-              >
-                {tab}
-              </button>
-            );
-          })}
+          {/* <Tabs items={tabs} activeId={appliedTab} onChange={handleTabChange} /> */}
+          <Tabs
+            items={tabs}
+            activeId={appliedTab}
+            onChange={handleTabChange}
+            containerClassName="w-auto"
+            gridClassName="flex items-center gap-3"
+          />
         </div>
 
         {/* FILTER BUTTON */}
@@ -445,17 +452,18 @@ export default function RealEstateSearchModule() {
         `}
         >
           <div className="w-full px-2 py-4 lg:px-4 lg:py-6">
-            {/* LOADING STATE */}
+            {/* 1. LOADING STATE */}
             {isLoading ? (
               <div className="flex h-48 items-center justify-center">
                 <GsapLoader searchType={appliedProperty || "Properties"} />
               </div>
             ) : !hasProperties ? (
-              /* EMPTY STATE */
+              /* 2. EMPTY STATE (Uses GSAP floating animation internally) */
               <NoProperties />
             ) : (
-              /* PROPERTY CARDS GRID */
+              /* 3. PROPERTY CARDS GRID WITH GSAP REF */
               <div
+                ref={gridRef}
                 className="
                 grid
                 grid-cols-1
@@ -471,6 +479,7 @@ export default function RealEstateSearchModule() {
                     to={`/property/${house.id}`}
                     key={house.id}
                     className={`
+                    property-card-item
                     block
                     rounded-xl
                     no-underline

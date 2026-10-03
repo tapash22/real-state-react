@@ -107,7 +107,12 @@ export const MapPage = () => {
       />
 
       {/*  CITY NAVIGATION  */}
-      <Tabs items={tabs} activeId={hoveredId} onChange={handleHover} />
+      <Tabs
+        items={tabs}
+        triggerOn="hover"
+        activeId={hoveredId}
+        onChange={handleHover}
+      />
       {/*  MAP  */}
       <div
         className="
