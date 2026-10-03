@@ -1328,6 +1328,62 @@ export interface ArticleData {
   sections: Section[];
 }
 
+
+// help ceter data
+export interface TenantHelpArticle {
+  id: number;
+  title: string;
+  url: string;
+}
+
+export const tenantHelpArticles: TenantHelpArticle[] = [
+  {
+    id: 1,
+    title: "What is HousingAnywhere? (for tenants)",
+    url: "https://answers.housinganywhere.com/en/articles/2498487-what-is-housinganywhere-for-tenants",
+  },
+  {
+    id: 2,
+    title: "Is HousingAnywhere a real estate agency?",
+    url: "https://answers.housinganywhere.com/en/articles/2651596-is-housinganywhere-a-real-estate-agency",
+  },
+  {
+    id: 3,
+    title: "How do I rent a place on HousingAnywhere?",
+    url: "https://answers.housinganywhere.com/en/articles/2268990-how-do-i-rent-a-place-on-housinganywhere",
+  },
+  {
+    id: 4,
+    title: "How is rent calculated for the first and last months?",
+    url: "https://answers.housinganywhere.com/en/articles/6674927-how-is-rent-calculated-for-the-first-and-last-months",
+  },
+  {
+    id: 5,
+    title: "Cancellation policies for tenants",
+    url: "https://answers.housinganywhere.com/en/articles/2185219-cancellation-policies-for-tenants",
+  },
+  {
+    id: 6,
+    title: "How can I enable or disable SMS notifications?",
+    url: "https://answers.housinganywhere.com/en/articles/2498699-how-can-i-enable-or-disable-sms-notifications",
+  },
+  {
+    id: 7,
+    title: "Secure payment system for tenants",
+    url: "https://answers.housinganywhere.com/en/articles/2270144-secure-payment-system-for-tenants",
+  },
+  {
+    id: 8,
+    title: "What is Tenant Protection, and when do I pay for it?",
+    url: "https://answers.housinganywhere.com/en/articles/2501611-what-is-tenant-protection-and-when-do-i-pay-for-it",
+  },
+  {
+    id: 9,
+    title: "How can I get in touch with HousingAnywhere?",
+    url: "https://answers.housinganywhere.com/en/articles/2498509-how-can-i-get-in-touch-with-housinganywhere",
+  },
+];
+
 export const articleData: ArticleData = {
   title: "What is HousingAnywhere? (for tenants)",
   subtitle:
@@ -1391,9 +1447,10 @@ export const articleData: ArticleData = {
     },
   ],
 };
+// help ceter data 
+
 
 // Omit strict fields from MapItem/Property and make them optional/flexible
-
 export type PropertyLike = Partial<Omit<MapItem & Property, "id">> & {
   id: number;
   id_str?: string;
